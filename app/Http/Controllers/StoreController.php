@@ -1,0 +1,267 @@
+<?php
+
+namespace LaravelAcl\Http\Controllers;
+
+use LaravelAcl\Store;
+use LaravelAcl\StoreEmployees;
+use LaravelAcl\Company;
+use Illuminate\Http\Request;
+use view;
+use Validator;
+use Redirect;
+use Hash;
+use File;
+class StoreController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    
+    public function index(Request $request)
+    {
+        $name=$request->input('name');
+        $companyId=$request->companyId;
+        $ordering=$request->input('ordering');
+        if($name)
+        {
+            $getStores=Store::where('store_name', 'like', '%'.$name.'%')->orderBy('id', $request->ordering)->paginate(10);
+        }
+        else
+        {
+            $getStores=Store::where('company_id', $companyId)->paginate(10);
+        }
+        return view::make('admin.store.list')->with(['stores'=>$getStores, "request" => $request, "companyId"=>$companyId]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $id=$request->id;
+        $validator = Validator::make($request->all(), [
+            'store_name' => 'required',
+            'email' => 'required|email|unique:stores,email,'.$id,
+            'phone_number' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'zip_code' => 'required',
+            'store_logo' => 'required|mimes:jpeg,bmp,png',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect::back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        if($id)
+        {
+            $addStore=Store::find($id);
+            $message="Store has been updated Successfully";
+        }
+        else
+        {
+            $addStore=new Store;
+            $message="Store has been added Successfully";
+        }
+        $addStore->store_name=$request->store_name;
+        $addStore->email=$request->email;
+        $addStore->phone_number=$request->phone_number;
+        $addStore->address=$request->address;
+        $addStore->city=$request->city;
+        $addStore->zip_code=$request->zip_code;
+        $addStore->status=$request->status;
+        $addStore->company_id=$request->company_id;
+        if(!empty($request->file('store_logo')))
+        {
+            $images=$request->file('store_logo');
+            $addStore->save();
+            $type='storeLogo'.$addStore->id;
+            $name=DeliveryController::storeImage($images, $request->store_name, $type);
+            $addStore->store_logo=$name;
+         }
+        $addStore->save();
+
+        return redirect::to('/admin/store/list/'.$request->company_id)->with('message', $message);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \LaravelAcl\Store  $store
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Store $store)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \LaravelAcl\Store  $store
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request)
+    {
+        $id=$request->id;
+        $companyId=$request->companyId;
+        $storeInfo='';
+        if($id)
+        {
+            $storeInfo=Store::find($id);
+        }
+        else
+        {
+            $storeInfo = new Store;
+        }
+        return view::make('admin.store.edit')->with(['store'=>$storeInfo, "request" => $request, "companyId"=>$companyId]); 
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \LaravelAcl\Store  $store
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Store $store)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \LaravelAcl\Store  $store
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        $id=$request->id;
+        $getStore=Store::find($id);
+        $getStore->delete();
+        return redirect::back()->with('message', "Store has been deleted Successfully");
+    }
+    public function destroyCompany(Request $request)
+    {
+        $id=$request->id;
+        $getStore=Company::find($id);
+        $getStore->delete();
+        return redirect::to('/admin/company/list')->with('message', "Company has been deleted Successfully");
+    }
+    /**** Store Employees function***/
+    public function storeEmployees(Request $request)
+    {
+        $stores=$request->input('stores');
+        $name=$request->input('name');
+        $type=$request->input('type');
+        $email=$request->input('email');
+        $storeId=$request->storeId;
+        $ordering=$request->input('ordering');
+        $getEmployees=StoreEmployees::join('stores', 'store_employees.store_id', 'stores.id')->where('store_id', $storeId);
+        if($stores)
+        {
+            $getEmployees=$getEmployees->where('store_id', $stores);
+        }
+        if($type)
+        {
+            $getEmployees=$getEmployees->where('type', $type);
+        }
+        if($name)
+        {
+            $getEmployees=$getEmployees->where('name', 'like', '%'.$name.'%');
+        }
+        if($email)
+        {
+            $getEmployees=$getEmployees->where('email_address', $email);
+        }
+        $getEmployees=$getEmployees->select('store_employees.*', 'stores.store_name')->paginate(10);
+        $getStores=Store::select('stores.id', 'stores.store_name')->get();
+        $allStores[0]='Select Store';
+        foreach($getStores as $store)
+        {
+            $allStores[$store->id]=$store->store_name;
+        }
+        return view::make('admin.store.employees-list')->with(['employees'=>$getEmployees, "request" => $request, 'stores'=>$allStores, 'storeId'=>$storeId]);
+    }
+    public function addEmployee(Request $request)
+    {
+        $id=$request->id;
+        $storeId=$request->storeId;
+        $storeInfo='';
+        if($id)
+        {
+            $employeeInfo=StoreEmployees::find($id);
+        }
+        else
+        {
+            $employeeInfo = new StoreEmployees;
+        }
+        return view::make('admin.store.edit-employee')->with(['store'=>$employeeInfo, "request" => $request, 'storeId'=>$storeId]);  
+    }
+    public function pAddEmployee(Request $request)
+    {
+        $id=$request->id;
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email_address' => 'required|email|unique:store_employees,email_address,'.$id,
+            'landline' => 'required',
+            'mobile_number' => 'required',
+            'type' => 'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect::back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        if($id)
+        {
+            $addEmployee=StoreEmployees::find($id);
+            $message="Employee has been updated Successfully";
+        }
+        else
+        {
+            $addEmployee=new StoreEmployees;
+            $message="Employee has been added Successfully";
+        }
+        $addEmployee->name=$request->name;
+        $addEmployee->email_address=$request->email_address;
+        $addEmployee->landline=$request->landline;
+        $addEmployee->mobile_number=$request->mobile_number;
+        $addEmployee->type=$request->type;
+        $addEmployee->mobile_number=$request->mobile_number;
+        $addEmployee->store_id=$request->store_id;
+        $addEmployee->save();
+        return redirect::to('/admin/store/employee/list/'.$request->store_id)->with('message', $message);
+    }
+    public function deleteEmployee(Request $request)
+    {
+        $id=$request->id;
+        $getStore=StoreEmployees::find($id);
+        $getStore->delete();
+        return redirect::back()->with('message', "Employee has been deleted Successfully");
+    }
+    public static function getCompanyId(Request $request)
+    {
+        return $companyId=$request->companyId;
+    }
+}

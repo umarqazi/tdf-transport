@@ -1,0 +1,83 @@
+.clear {clear: both; line-height: 0; font-size: 0; height: 0;}
+.clear5 {clear: both; line-height: 0; font-size: 0; height: 5px;}
+.clear10 {clear: both; line-height: 0; font-size: 0; height: 10px;}
+.clear15 {clear: both; line-height: 0; font-size: 0; height: 15px;}
+.clear20 {clear: both; line-height: 0; font-size: 0; height: 20px;}
+.clear30 {clear: both; line-height: 0; font-size: 0; height: 30px;}
+.clear40 {clear: both; line-height: 0; font-size: 0; height: 40px;}
+.clear80 {clear: both; line-height: 0; font-size: 0; height: 80px;}
+
+#page-wrapper {position: relative;}
+.add-new-circle {position: fixed; bottom: 20px; right: 20px;}
+.add-new-circle .fa {font-size: 30px;}
+.navbar-brand{    padding: 5px 15px !important;
+    height: 71px !important;}
+.navbar-brand img {max-width: 85px;}
+#side-menu .fa {float: right; color: #999;}
+
+.page-icon {margin-top: 30px;}
+.page-icon .fa {font-size: 28px; display: inline-block;}
+.page-icon .icon-wrapper {position: relative; display: inline-block;}
+.page-icon .icon-wrapper:before {
+	content: "";
+	position: absolute;
+	left: -70px; top:55%;
+	height:2px; width:60px; z-index: 10;
+	background-color: #999;
+}
+.page-icon .icon-wrapper:after {
+	content: "";
+	position: absolute;
+	right: -70px; top:55%;
+	height:2px; width:60px; z-index: 10;
+	background-color: #999;
+}
+
+.page-header {margin: 30px 0 0 0; padding-bottom: 26px; margin-bottom: 0px; border: 0; font-size: 28px;}
+.frm-title-icon {text-align: center;}
+.frm-title-icon {font-size: 20px;}
+.frm-title-icon .fa {font-size: 20px;}
+.frm-title-icon a {color: #000;}
+.frm-title-icon a:hover {text-decoration: none;}
+
+.sort {text-align: center; margin-top: 20px;}
+
+.actions .fa {display: inline-block; color: #fff;}
+.actions .edit {text-align: center; display: inline-block; width: 20px; height: 20px; background-color: #c76905; border-radius: 4px;}
+.actions .trash {text-align: center; display: inline-block; width: 20px; height: 20px; background-color: #c71010; border-radius: 4px;}
+
+.data-sets th, .data-sets td.side-first, .data-sets th.side-first {text-align: center; vertical-align: middle; font-weight: bold;}
+
+.tbl-internal {margin-bottom: 1px;}
+.tbl-internal td {font-size: 12px; vertical-align: middle;}
+.tbl-internal td:not(:first-child) {text-align: center; max-width: 26px; vertical-align: middle;}
+.tbl-internal td:first-child {background-color: #eee;}
+.tbl-internal td:nth-child(2) {background-color: #18b510;}
+.tbl-internal td:nth-child(3) {background-color: #db590a;}
+.tbl-internal td:nth-child(4) {background-color: #c42a2a;}
+.tbl-internal td .fa {color: #fff;}
+
+.calendar-control {text-align: center; margin-bottom: 30px;}
+.calendar-control i {display: inline-block;}
+.calendar-control i {margin:0 10px;}
+
+.data-sets .checkbox, .data-sets .radio {margin-top: 0px; margin-bottom: 0px;}
+.data-sets .checkbox {display: inline-block;}
+.data-sets .checkbox input {position: static !important;}
+
+.tbl-btns a, input[type=submit] {display: inline-block; border:1px solid #93c47d; color: #93c47d; padding:10px 40px 10px 20px; margin:10px; font-size: 16px; font-weight: bold;}
+.tbl-btns a:hover,input[type=submit]:hover, .tbl-btns a.active, input[type=submit].active {border:1px solid #93c47d; color: #fff; background-color: #93c47d; text-decoration: none;}
+
+.tbl-btns a .fa {float: right; margin-right: -30px; margin-top: -8px;}
+.tbl-btns input[type=submit]{
+
+}
+
+.calendar-control .text-danger{
+	display: block;
+	text-align: left;
+}
+
+.calendar-control .form-inline .form-group{
+	vertical-align: top;
+}

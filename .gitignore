@@ -1,0 +1,8 @@
+/vendor
+/node_modules
+.env
+composer.lock
+.idea
+TODO.md
+/public/storage
+/public/hot
