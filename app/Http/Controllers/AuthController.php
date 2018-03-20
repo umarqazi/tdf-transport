@@ -25,12 +25,9 @@ class AuthController extends Controller {
 
     public function getClientLogin()
     {
-        if (App::make('sentry')->getUser()) {
-            if(App::make('sentry')->getUser()->type!='Admin')
-            {
-                return redirect('/dashboard');
-            }
-            
+        
+        if (Auth::check() && Auth::user()->type!='Admin') {
+            return redirect('/dashboard');
         }
         return view('client.home.home');
     }
@@ -43,22 +40,18 @@ class AuthController extends Controller {
                 "email" => $email,
                 "password" => $password,
                 'activated'=> "1");
-            $this->authenticator->authenticate(array(
-                                                "email" => $email,
-                                                "password" => $password,
-                                                "activated" => "1"
-                                             ), $remember);
-            // if(Auth::attempt($credientials))
-            // {
-            //     $storeId=Auth::user()->store_id;
-            //     $getStoreName=Store::find($storeId);
-            //     Session::put('store_name',$getStoreName['store_name']);
-            // }
-            // else
-            // {
-            //     Toast::error('Login Fail');
-            //     return redirect::to('/');
-            // }
+            if(Auth::attempt($credientials))
+            {
+                $storeId=Auth::user()->store_id;
+                $getStoreName=Store::find($storeId);
+                Session::put('store_name',$getStoreName['store_name']);
+                return redirect::to('/dashboard');
+            }
+            else
+            {
+                Toast::error('Login Fail');
+                return redirect::to('/');
+            }
         }
         catch(JacopoExceptionsInterface $e)
         {
@@ -66,7 +59,7 @@ class AuthController extends Controller {
             
             return redirect()->route("user.login")->withInput()->withErrors($errors);
         }
-        return redirect::to('/dashboard');
+        
     }
 
     /**
@@ -82,7 +75,7 @@ class AuthController extends Controller {
     }
     public function getClientLogout()
     {
-        $this->authenticator->logout();
+        Auth::logout();
         return redirect('/');
     }
     /**

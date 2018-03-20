@@ -3,8 +3,7 @@
 namespace LaravelAcl\Http\Middleware;
 
 use Closure;
-use Auth;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class IsUser
 {
@@ -18,8 +17,7 @@ class IsUser
     public function handle($request, Closure $next, $custom_url = null)
     {
         $redirect_url = $custom_url ?: '/';
-        $authentication_helper = App::make('authentication_helper');
-        if ($authentication_helper->LoginUser()->type != 'Admin') {
+        if (Auth::user()->type != 'Admin') {
             return $next($request);     
         }
         return redirect($redirect_url);

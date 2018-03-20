@@ -24,8 +24,7 @@ class DeliveryController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $login=App::make('sentry');
-            $this->authUser=$login->getUser();
+            $this->authUser=Auth::user();
             if($this->authUser)
             {
                 $this->type=$this->authUser->type;
@@ -85,7 +84,6 @@ class DeliveryController extends Controller
             'pdf' => 'mimes:pdf,'.$request->id
 
         ]);
-
         if ($validator->fails()) {
             return redirect::back()
                         ->withErrors($validator)
@@ -151,20 +149,13 @@ class DeliveryController extends Controller
         $id=$request->id;
         if($id)
         {
-            $getDelivery=Delivery::find($id);
-            $products=self::getProducts($id);
-        }
-        return view::make('client.cashier.view_delivery')->with(['delivery'=> $getDelivery, 'products'=>$products]);
-    }
-    public static function getProducts($id)
-    {
-        $products='';
-        $getProduct=DB::table('delivery_products')->leftJoin('products', 'delivery_products.product_id', '=', 'products.id')->where('delivery_id', $id)->select('products.product_family')->get();
-            foreach($getProduct as $key=>$product)
+            $getDelivery=Delivery::with('products')->find($id);
+            foreach($getDelivery['products'] as $key=>$product)
             {
                 $products[$key]=$product->product_family;
             }
-            return $products; 
+        }
+        return view::make('client.cashier.view_delivery')->with(['delivery'=> $getDelivery, 'products'=>$products]);
     }
     public function uploadPdf(Request $request)
     {

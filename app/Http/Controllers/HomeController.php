@@ -28,8 +28,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $login=App::make('sentry');
-            $this->authUser=$login->getUser();
+            $this->authUser=Auth::user();
             if($this->authUser)
             {
                 $this->type=$this->authUser->type;

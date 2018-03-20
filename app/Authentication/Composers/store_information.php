@@ -6,9 +6,9 @@ use Carbon\Carbon;
  * Dashboard information
  */
 View::composer(['client.layout*'], function($view){
-	if(App::make('sentry')->getUser())
+	if(Auth::user())
 	{
-		$storeId=App::make('sentry')->getUser()->store_id;
+		$storeId=Auth::user()->store_id;
 	    $getStoreInfo=Store::find($storeId);
 	    $view->with(['store_info' => $getStoreInfo]);
 	}
@@ -19,6 +19,6 @@ View::composer(['client.cashier*'], function($view){
 	$view->with(['nextDate' => $nextDate]);
 });
 View::composer(['client*'], function($view){
-	$getUser=App::make('sentry')->getUser();
+	$getUser=Auth::user();
 	$view->with(['authUser'=> $getUser]);
 });

@@ -109,7 +109,7 @@
                                         <?php $selected=''?>
                                     @if($delivery)
                                         @foreach($delivery['products'] as $key2=>$deliveryPoduct)
-                                        @if($key==$deliveryPoduct['product_id'])
+                                        @if($prod==$deliveryPoduct['product_family'])
                                         <?php $selected='selected'?>
                                         @endif
                                         @endforeach

@@ -135,8 +135,6 @@
         <div class="row">
             <div class="col-md-12 text-center tbl-btns">
                 <a href="{{route('user.dashboard')}}" class="active green">Arrière</a>
-                <!-- <a href="#" class="active green">Valider ma demande<i class="fa fa-save"></i></a>
-                <a href="#" class="red">Annuler ma demande<i class="fa fa-trash-o"></i></a> -->
             </div>
         </div>
     {!! Form::hidden('id') !!}
