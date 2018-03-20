@@ -79,8 +79,8 @@
                         if($delivery['products']){
                             foreach($delivery['products'] as $key=>$product){
                                 $items[$key]=$product['product_family'];
-                            }
-                            $items=implode(',', $items);    
+                           }
+                           $items=implode(',', $items);
                         }
                         ?>
                         <tr>
