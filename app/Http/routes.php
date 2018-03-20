@@ -109,15 +109,15 @@ Route::group(['middleware' => ['web']], function ()
             "as"   => "validate.delivery",
             "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@deliveryValidate'
         ]);
-        Route::get('/history', ['middleware' => 'has_perm:_manager',
+        Route::get('/history', [
             "as"   => "delivery.history",
             "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@history'
         ]);
-        Route::post('/history', [ 'middleware' => 'has_perm:_manager',
+        Route::post('/history', [ 
             "as"   => "post.delivery.history",
             "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@history'
         ]);
-        Route::post('/exportHistory', [ 'middleware' => 'has_perm:_manager',
+        Route::post('/exportHistory', [ 
             "as"   => "delivery.export",
             "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@exportHistory'
         ]);
