@@ -201,7 +201,7 @@ class HomeController extends Controller
         $getDeliveryRecords=Delivery::with('products');
         if(!empty($request['customer_name']))
         {
-           $getDeliveryRecords=$getDeliveryRecords->where('first_name', 'like', '%'.$request['customer_name'].'%')->orwhere('last_name', 'like', '%'.$request['customer_name'].'%');
+           $getDeliveryRecords=$getDeliveryRecords->whereRaw('concat(first_name," ",last_name) like ?', '%'.$request['customer_name'].'%');
         }
         if(!empty($request['order_id']))
         {
