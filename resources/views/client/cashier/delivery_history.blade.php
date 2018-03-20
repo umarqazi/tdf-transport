@@ -70,7 +70,7 @@
                 <tbody>
                     @foreach($allDeliveries as $delivery)
                         <?php 
-                        $items='';
+                        $items=array();
                         if($delivery['delivery_price']=='Free'){ 
                             $price= 'Free';
                         }else{ 
