@@ -6,3 +6,11 @@ composer.lock
 TODO.md
 /public/storage
 /public/hot
+.env.example
+.env.testing
+.gitattributes
+.gitignore
+.travis.yml
+"LaravelAcl\\Http\\Controllers\\StoreController@deleteEmployee"
+gulpfile.js
+.gitignore
