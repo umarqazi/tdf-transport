@@ -222,7 +222,7 @@ class DeliveryController extends Controller
         $records = [];
         $records[] = ['Date de la livraison', 'Client','Numero de commande','Numero du bon de livraison','Telephone', 'Villes', 'Code Postal', 'Type de Prestation', 'Produit(s) commande(s)', 'Prix de la livraison'];
         foreach($deliveries as $key=>$delivery){
-            $items='';
+            $items=array();
             if($delivery['delivery_price']=='Free'){ 
                 $price= 'Free';
             }else{ 
