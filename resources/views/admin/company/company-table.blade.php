@@ -24,9 +24,9 @@
               <table class="table table-hover">
                       <thead>
                           <tr>
-                              <th>Company Name</th>
-                              <th>Stores</th>
-                              <th>Products</th>
+                              <th>Nom de la compagnie</th>
+                              <th>Magasins</th>
+                              <th>Des produits</th>
                               <th>Operations</th>
                           </tr>
                       </thead>

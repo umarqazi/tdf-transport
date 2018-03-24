@@ -73,6 +73,7 @@ button:focus {
     font-size: 32px;
     margin: 50px 0px;
     font-weight: 400;
+    line-height: 1.6;
     padding: 0px;
     font-family: 'Roboto', sans-serif;
 }
@@ -138,6 +139,7 @@ display: block;
 }
 .modal-dialog{
     width: 90% !important;
+    margin: 10px auto !important;
 }
 .login-footer{
     position: fixed;
@@ -166,6 +168,9 @@ display: block;
 .login-footer .footer-links li i{
     padding-right:5px; 
 }
+.login-footer .footer-links li a{
+    color: white !important; 
+}
 .give-margin{
     margin: 15px 0px;
 }
@@ -178,6 +183,43 @@ display: block;
     padding:6px 12px !important;
     margin: 0px !important;
     border: 0px !important;
+}
+.capitalize{
+    text-transform: capitalize;
+}
+.button-styling
+{
+    padding: 10px 40px 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #93c47d;
+    color: #fff;
+    background-color: #93c47d;
+    text-decoration: none;
+}
+.content_wrapper {
+    border: 2px solid #000;
+    padding: 20px;
+    text-align: center;
+}
+.content_wrapper .form-inline{
+    margin-bottom: 50px;
+}
+.content_wrapper .form-inline .form-group{
+    margin: 10px;
+}
+.content_wrapper .form-inline h3{
+    margin-bottom: 30px;
+}
+.cancel-request i
+{
+    margin-top: 0px !important;
+}
+.cancel-request
+{
+    color: white !important;
+    border:0px !important;
 }
 /*Responsive style*/
 

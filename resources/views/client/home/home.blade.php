@@ -11,9 +11,9 @@
         <div class="form-section">
             @include('toast::messages')
             {!! Form::model(null, [ 'url' => URL::route('user.login')] )  !!}
-                <input type="text" name="email" class="fld" placeholder="Name">
+                <input type="text" name="email" class="fld" placeholder="Identifiant">
                 <span class="text-danger">{!! $errors->first('email') !!}</span>
-                <input type="password" name="password" class="fld" placeholder="Password">
+                <input type="password" name="password" class="fld" placeholder="Mot de passe">
                 <button type="submit" class="submit-btn">CONNEXION <i class="fa fa-arrow-alt-circle-right"></i></button>
                 <p class="forget-pass"><a href="{{route('forgetPassword')}}">Mot de passe oublie?</a></p>
             {!! Form::close() !!}

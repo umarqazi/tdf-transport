@@ -169,7 +169,8 @@
         <div class="clear20"></div>
         <div class="row">
             <div class="col-md-12 text-center tbl-btns">
-                <input type="submit" name="" class="active green" value='Ajouter une demande'>
+                <button class="button-styling" type="submit">Ajouter une demande <i class="fa fa-save"></i></button>
+                <a href="{{url('/')}}" class="btn btn-danger cancel-request">Annuler Ma Demande <i class="fa fa-trash"></i></a>
                 <!-- <a href="#" class="active green">Valider ma demande<i class="fa fa-save"></i></a>
                 <a href="#" class="red">Annuler ma demande<i class="fa fa-trash-o"></i></a> -->
             </div>

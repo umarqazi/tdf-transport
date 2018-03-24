@@ -1,7 +1,7 @@
 <?php 
 return [
     'Users' => [
-    	"" => "Select User Type",
+    	"" => "Sélectionnez le type d'utilisateur",
         "Admin" => "Admin", 
         "Manager" => "Manager", 
         "Cashier" => "Cashier",

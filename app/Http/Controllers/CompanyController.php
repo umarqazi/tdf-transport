@@ -18,8 +18,19 @@ class CompanyController extends Controller
      */
     public function companyList(Request $request)
     {
+        $id=$request->id;
+        $modal="";
+        if($id)
+        {
+            $company=Company::find($id);
+            $modal="addCompany";
+        }
+        else
+        {
+            $company = new Company;
+        }
         $getCompany=Company::paginate(10);
-        return view::make('admin.company.list')->with(['stores'=>$getCompany, "request" => $request]);
+        return view::make('admin.company.list')->with(['company'=>$company,'stores'=>$getCompany, "request" => $request, 'modal'=>$modal]);
     }
     public function editCompany(Request $request)
     {
@@ -32,7 +43,7 @@ class CompanyController extends Controller
         {
             $company = new Company;
         }
-        return view::make('admin.company.edit')->with(['company'=>$company, "request" => $request]); 
+        return view::make('admin.company.edit')->with(['company'=>$company, "request" => $request,'modal'=>"addCompany"]); 
     }
     public function pEditCompany(Request $request)
     {
@@ -49,12 +60,12 @@ class CompanyController extends Controller
         if($id)
         {
             $addStore=Company::find($id);
-            $message="Company has been updated Successfully";
+            $message="La société a été mise à jour avec succès";
         }
         else
         {
             $addStore=new Company;
-            $message="Company has been added Successfully";
+            $message="La société a été ajoutée avec succès";
         }
         $addStore->company_name=$request->company_name;
         $addStore->save();
