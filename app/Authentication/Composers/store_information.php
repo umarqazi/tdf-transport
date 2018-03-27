@@ -22,3 +22,7 @@ View::composer(['client*'], function($view){
 	$getUser=Auth::user();
 	$view->with(['authUser'=> $getUser]);
 });
+View::composer(['admin.layouts*'], function($view){
+	$getUser=App::make('sentry')->getUser();
+	$view->with(['authUser'=> $getUser]);
+});
