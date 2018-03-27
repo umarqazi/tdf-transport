@@ -7,7 +7,7 @@
     <meta name="keywords" content="">
     <meta name="author" content="">
 
-    {!! HTML::style('assets/css/main.css') !!}    
+    {!! HTML::style('assets/css/main.css') !!}
     {!! HTML::style('assets/styles/bootstrap.min.css') !!}
     {!! HTML::style('//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css')!!}
     {!! HTML::style('assets/css/bootstrap-datetimepicker.css')!!}
@@ -21,6 +21,7 @@
     <script type="text/javascript">
         var APP_URL = {!! json_encode(url('/')) !!}
     </script>
+    {!! HTML::style('assets/css/select2.min.css') !!}
     @yield('head_css')
     {{-- End head css --}}
 
@@ -47,5 +48,7 @@
         {!! HTML::script('assets/scripts/sb-admin-2.min.js') !!}
         {!! HTML::script('assets/scripts/custom.js') !!}
         {!! HTML::script('assets/js/delivery.js') !!}
+        {!! HTML::script('assets/js/select2.min.js') !!}
+        {!! HTML::script('assets/js/tour_plan.js') !!}
     </body>
 </html>

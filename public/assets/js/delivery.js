@@ -16,35 +16,56 @@ function freeDelivery(check){
 };
 function upload()
 {
+	var orderPdf='';
 	var file_data = $('#pdfFile').prop('files')[0];
+	if(!file_data)
+	{
+		var file_data = $('#orderPdfFile').prop('files')[0];
+		orderPdf='Yes';
+	}
 	var uploadPdf = new FormData();
 	uploadPdf.append('pdf', file_data);
 	var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 	uploadPdf.append('_token', CSRF_TOKEN);
 	$.ajax({
-        url: APP_URL+"/uploadPdf",
-        type:"POST",
-        dataType: 'JSON',
-        cache : false,
-        contentType : false,
-        processType : false,
-        processData : false,
-        data: uploadPdf,
-        success: function(data) {
-        	$('#showErrorPdf').html('');
-        	$('#showPdftable').show();
-        	$('#addPdfLink').html(data.name);
-        	$('#dummyFile').val(data.name);
-        	$('#pdfFile').val('');
-        	document.getElementById("addPdfLink").href=APP_URL+"/assets/images/dummyImages/"+data.name;
-        },
-        error: function(xhr, status, error) {
-        	$('#showErrorPdf').html(xhr.responseText);
+		url: APP_URL+"/uploadPdf",
+		type:"POST",
+		dataType: 'JSON',
+		cache : false,
+		contentType : false,
+		processType : false,
+		processData : false,
+		data: uploadPdf,
+		success: function(data) {
+			if(orderPdf=='Yes'){
+				$('#showOrderErrorPdf').html('');
+				$('#OrderShowPdftable').show();
+				$('#OrderAddPdfLink').html(data.name);
+				$('#OrderdummyFile').val(data.name);
+				$('#orderPdfFile').val('');
+			}
+			else{
+				$('#showErrorPdf').html('');
+				$('#showPdftable').show();
+				$('#addPdfLink').html(data.name);
+				$('#dummyFile').val(data.name);
+				$('#pdfFile').val('');
+			}
+			document.getElementById("addPdfLink").href=APP_URL+"/assets/images/dummyImages/"+data.name;
+		},
+		error: function(xhr, status, error) {
+			if(orderPdf=='Yes')
+			{
+				$('#showOrderErrorPdf').html(xhr.responseText);
+			}
+			else{
+				$('#showErrorPdf').html(xhr.responseText);
+			}
 		}
-    });
+	});
 }
 $(".delete").click(function(){
-    return confirm("Are you sure to delete this item?");
+	return confirm("Are you sure to delete this item?");
 });
 function showView(view)
 {
@@ -65,41 +86,41 @@ function searchResult()
 	var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 	searchResult.append('_token', CSRF_TOKEN);
 	$.ajax({
-        url: APP_URL+"/searchRecords",
-        type:"POST",
-        dataType: 'text',
-        cache : false,
-        contentType : false,
-        processType : false,
-        processData : false,
-        data: searchResult,
-        success: function(data) {
-        	$('#searchResult').html(data);
-        	$('#searchModal').modal('show');
-        	$('#customer2').val($("#customer").val());
-        	$('#orderId2').val($("#orderId").val());
-        	$('#dateTime2').val($("#datetime").val());
-        	// $('#showPdftable').show();
-        	// $('#addPdfLink').html(data.name);
-        	// $('#dummyFile').val(data.name);
-        	// $('#pdfFile').val('');
-        	// document.getElementById("addPdfLink").href=APP_URL+"/assets/images/dummyImages/"+data.name;
-        },
-        error: function(xhr, status, error) {
-        	$('#showErrorPdf').html(xhr.responseText);
+		url: APP_URL+"/searchRecords",
+		type:"POST",
+		dataType: 'text',
+		cache : false,
+		contentType : false,
+		processType : false,
+		processData : false,
+		data: searchResult,
+		success: function(data) {
+			$('#searchResult').html(data);
+			$('#searchModal').modal('show');
+			$('#customer2').val($("#customer").val());
+			$('#orderId2').val($("#orderId").val());
+			$('#dateTime2').val($("#datetime").val());
+			// $('#showPdftable').show();
+			// $('#addPdfLink').html(data.name);
+			// $('#dummyFile').val(data.name);
+			// $('#pdfFile').val('');
+			// document.getElementById("addPdfLink").href=APP_URL+"/assets/images/dummyImages/"+data.name;
+		},
+		error: function(xhr, status, error) {
+			$('#showErrorPdf').html(xhr.responseText);
 		}
-    });
+	});
 }
 $(document).ready(function () {
-    $(".validate-check").click(function () {
-    	$("#validateForm").submit();
-    });
+	$(".validate-check").click(function () {
+		$("#validateForm").submit();
+	});
 });
 jQuery(function() {
-    // setTimeout() function will be fired after page is loaded
-    // it will wait for 5 sec. and then will fire
-    // $("#successMessage").hide() function
-    setTimeout(function() {
-        jQuery("#message").hide()
-    }, 5000);
+	// setTimeout() function will be fired after page is loaded
+	// it will wait for 5 sec. and then will fire
+	// $("#successMessage").hide() function
+	setTimeout(function() {
+		jQuery("#message").hide()
+	}, 5000);
 });

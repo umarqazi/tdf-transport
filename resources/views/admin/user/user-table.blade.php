@@ -30,6 +30,7 @@
                               <th>Email</th>
                               <th class="hidden-xs">First name</th>
                               <th class="hidden-xs">Last name</th>
+                              <th>Type</th>
                               <th>Active</th>
                               <th class="hidden-xs">Last login</th>
                               <th>Operations</th>
@@ -39,8 +40,9 @@
                           @foreach($users as $user)
                           <tr>
                               <td>{!! $user->email !!}</td>
-                              <td class="hidden-xs">{!! $user->first_name !!}</td>
-                              <td class="hidden-xs">{!! $user->last_name !!}</td>
+                              <td class="hidden-xs">{!! $user->user_first_name !!}</td>
+                              <td class="hidden-xs">{!! $user->user_last_name !!}</td>
+                              <td>{!! $user->type !!}</td>
                               <td>{!! $user->activated ? '<i class="fa fa-circle green"></i>' : '<i class="fa fa-circle-o red"></i>' !!}</td>
                               <td class="hidden-xs">{!! $user->last_login ? $user->last_login : 'not logged yet.' !!}</td>
                               <td>

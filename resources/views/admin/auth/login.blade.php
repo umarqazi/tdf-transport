@@ -1,6 +1,6 @@
 @extends('laravel-authentication-acl::admin.layouts.baseauth')
 @section('title')
-Admin login
+TDF Admin login
 @stop
 @section('container')
     <div class="row centered-form">
