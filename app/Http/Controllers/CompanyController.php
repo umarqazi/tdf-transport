@@ -11,54 +11,65 @@ use Redirect;
 
 class CompanyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function companyList(Request $request)
+  /**
+  * Display a listing of the resource.
+  *
+  * @return \Illuminate\Http\Response
+  */
+  public function companyList(Request $request)
+  {
+    $id=$request->id;
+    $modal="";
+    if($id)
     {
-        $getCompany=Company::paginate(10);
-        return view::make('admin.company.list')->with(['stores'=>$getCompany, "request" => $request]);
+      $company=Company::find($id);
+      $modal="addCompany";
     }
-    public function editCompany(Request $request)
+    else
     {
-        $id=$request->id;
-        if($id)
-        {
-            $company=Company::find($id);
-        }
-        else
-        {
-            $company = new Company;
-        }
-        return view::make('admin.company.edit')->with(['company'=>$company, "request" => $request]); 
+      $company = new Company;
     }
-    public function pEditCompany(Request $request)
+    $getCompany=Company::paginate(10);
+    return view::make('admin.company.list')->with(['company'=>$company,'stores'=>$getCompany, "request" => $request, 'modal'=>$modal]);
+  }
+  public function editCompany(Request $request)
+  {
+    $id=$request->id;
+    if($id)
     {
-        $id=$request->id;
-        $validator = Validator::make($request->all(), [
-            'company_name' => 'required',
-        ]);
+      $company=Company::find($id);
+    }
+    else
+    {
+      $company = new Company;
+    }
+    return view::make('admin.company.edit')->with(['company'=>$company, "request" => $request,'modal'=>"addCompany"]);
+  }
+  public function pEditCompany(Request $request)
+  {
+    $id=$request->id;
+    $validator = Validator::make($request->all(), [
+      'company_name' => 'required',
+    ]);
 
-        if ($validator->fails()) {
-            return redirect::back()
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-        if($id)
-        {
-            $addStore=Company::find($id);
-            $message="Company has been updated Successfully";
-        }
-        else
-        {
-            $addStore=new Company;
-            $message="Company has been added Successfully";
-        }
-        $addStore->company_name=$request->company_name;
-        $addStore->save();
-
-        return redirect::to('admin/company/list')->with('message', $message);
+    if ($validator->fails()) {
+      return redirect::back()
+      ->withErrors($validator)
+      ->withInput();
     }
+    if($id)
+    {
+      $addStore=Company::find($id);
+      $message="La société a été mise à jour avec succès";
+    }
+    else
+    {
+      $addStore=new Company;
+      $message="La société a été ajoutée avec succès";
+    }
+    $addStore->company_name=$request->company_name;
+    $addStore->save();
+
+    return redirect::to('admin/company/list')->with('message', $message);
+  }
 }

@@ -77,12 +77,12 @@ class UserController extends Controller {
         }
         $presenter = new UserPresenter($user);
         $storeList= Store::all();
-        $allStores[0]='Select Store';
+        $allStores[0]='Choisir un magasin';
         foreach($storeList as $store)
         {
             $allStores[$store->id]=$store->store_name;
         }
-        return View::make('laravel-authentication-acl::admin.user.edit')->with(["user" => $user, "presenter" => $presenter, "stores" => $allStores]);
+        return View::make('admin.user.list')->with(["user" => $user, "presenter" => $presenter, "stores" => $allStores]);
     }
 
     public function postEditUser(Request $request)
@@ -98,12 +98,12 @@ class UserController extends Controller {
             DbHelper::rollback();
             $errors = $this->f->getErrors();
             // passing the id incase fails editing an already existing item
-            return Redirect::route("users.edit", $id ? ["id" => $id] : [])->withInput()->withErrors($errors);
+            return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors($errors);
         }
 
         DbHelper::commit();
 
-        return Redirect::route('users.edit', ["id" => $user->id])
+        return Redirect::route('users.list')
                        ->withMessage(Config::get('acl_messages.flash.success.user_edit_success'));
     }
 

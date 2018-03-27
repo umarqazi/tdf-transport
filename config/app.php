@@ -131,7 +131,9 @@ return [
             Illuminate\Translation\TranslationServiceProvider::class,
             Illuminate\Validation\ValidationServiceProvider::class,
             Illuminate\View\ViewServiceProvider::class,
-
+            Yajra\Datatables\DatatablesServiceProvider::class,
+            Yajra\Datatables\ButtonsServiceProvider::class,
+            Illuminate\Notifications\NotificationServiceProvider::class,
             /*
              * Application Service Providers...
              */
@@ -194,6 +196,8 @@ return [
             'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
             'Toast'     => Grimthorr\LaravelToast\Facade::class,
             'Input' => Illuminate\Support\Facades\Input::class,
+            'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+            'Notification' => Illuminate\Support\Facades\Notification::class,
     ],
 
 ];

@@ -1,9 +1,9 @@
-<?php 
+<?php
 return [
     'Users' => [
-    	"" => "Select User Type",
-        "Admin" => "Admin", 
-        "Manager" => "Manager", 
+    	"" => "Sélectionnez le type d'utilisateur",
+        "TDF Manager" => "TDF Manager",
+        "Manager" => "Manager",
         "Cashier" => "Cashier",
         "Driver"  => "Driver"
     ],

@@ -25,7 +25,7 @@ class AuthController extends Controller {
 
     public function getClientLogin()
     {
-        
+
         if (Auth::check() && Auth::user()->type!='Admin') {
             return redirect('/dashboard');
         }
@@ -45,7 +45,11 @@ class AuthController extends Controller {
                 $storeId=Auth::user()->store_id;
                 $getStoreName=Store::find($storeId);
                 Session::put('store_name',$getStoreName['store_name']);
-                return redirect::to('/dashboard');
+                if(Auth::user()->type=='TDF Manager'){
+                    return redirect::to('/planDriverTour');
+                }else{
+                    return redirect::to('/dashboard');
+                }
             }
             else
             {
@@ -56,15 +60,15 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->authenticator->getErrors();
-            
+
             return redirect()->route("user.login")->withInput()->withErrors($errors);
         }
-        
+
     }
 
     /**
      * Logout utente
-     * 
+     *
      * @return string
      */
     public function getLogout()

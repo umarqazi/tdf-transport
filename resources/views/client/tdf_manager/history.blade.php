@@ -1,4 +1,4 @@
-@extends('client.layouts.menu')
+@extends('client.layouts.tdf-menu')
 
 @section('title')
 TDF History
@@ -44,7 +44,7 @@ TDF History
     </div>
   </div>
   {!! Form::close() !!}
-  {!! Form::model(null, [ 'url' => URL::route('post.delivery.history'), "enctype"=>"multipart/form-data"] )  !!}
+  {!! Form::model(null, [ 'url' => URL::route('post.manager.history'), "enctype"=>"multipart/form-data"] )  !!}
   @include('client.cashier.search-form')
   {!! Form::close() !!}
 </div>
