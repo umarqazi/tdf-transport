@@ -10,7 +10,7 @@ use Cartalyst\Sentry\Users\LoginRequiredException;
 
 class User extends CartaUser
 {
-    protected $fillable = ["user_first_name","user_last_name","type","store_id","email", "password", "permissions", "activated", "activation_code", "activated_at", "last_login", "protected", "banned"];
+    protected $fillable = ["user_first_name","user_last_name","type", "number_plate", "vehicle_name","store_id","email", "password", "permissions", "activated", "activation_code", "activated_at", "last_login", "protected", "banned"];
 
     protected $guarded = ["id"];
 
@@ -45,4 +45,4 @@ class User extends CartaUser
     {
         return $this->hasMany('LaravelAcl\Authentication\Models\UserProfile');
     }
-} 
+}
