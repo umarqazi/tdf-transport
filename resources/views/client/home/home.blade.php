@@ -5,7 +5,6 @@ TDF Transport
 @stop
 
 @section('content')
-
 <div class="login-wrapper">
   <h1>Bienvenue sur la web application de la societe TDF Transport</h1>
   <div class="form-section">
