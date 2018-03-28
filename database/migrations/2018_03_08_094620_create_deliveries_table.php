@@ -27,6 +27,8 @@ class CreateDeliveriesTable extends Migration
             $table->integer('landline');
             $table->dateTime('datetime');
             $table->string('day_period');
+            $table->string('order_pdf');
+            $table->string('delivery_pdf');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

@@ -15,8 +15,8 @@ class CreateDeliveryProduct extends Migration
     {
         Schema::create('delivery_products', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('deliver_id')->unsigned();
-            $table->foreign('deliver_id')->references('id')->on('deliveries');
+            $table->integer('delivery_id')->unsigned();
+            $table->foreign('delivery_id')->references('id')->on('deliveries');
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
             $table->timestamps();
