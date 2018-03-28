@@ -26,7 +26,10 @@ class AuthController extends Controller {
     public function getClientLogin()
     {
 
-        if (Auth::check() && Auth::user()->type!='Admin') {
+        if (Auth::check()) {
+          if(Auth::user()->type==Config::get('constants.Users.TDF Manager')) {
+            return redirect('/allDeliveryHistory');
+          }
             return redirect('/dashboard');
         }
         return view('client.home.home');
@@ -46,7 +49,7 @@ class AuthController extends Controller {
                 $getStoreName=Store::find($storeId);
                 Session::put('store_name',$getStoreName['store_name']);
                 if(Auth::user()->type=='TDF Manager'){
-                    return redirect::to('/planDriverTour');
+                    return redirect::to('/allDeliveryHistory');
                 }else{
                     return redirect::to('/dashboard');
                 }

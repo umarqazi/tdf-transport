@@ -27,11 +27,10 @@
           }else{
             $price=$delivery['delivery_price']." €";
           }
-          if($delivery['products']){
-            foreach($delivery['products'] as $key=>$product){
-              $items[$key]=$product['product_family'];
-            }
-            $items=implode(',', $items);
+          if($delivery['product_id']==0){
+            $type="Multi-produits";
+          }else{
+            $type=$delivery['product_family'];
           }
           ?>
           <tr>
@@ -43,7 +42,7 @@
             <td>{{$delivery['city']}}</td>
             <td>{{$delivery['postal_code']}}</td>
             <td>{{$delivery['service']}}</td>
-            <td>{{$items}}</td>
+            <td>{{$type}}</td>
             <td>{{$price}}</td>
             <td>@if($delivery['customer_feedback']==1) <i class="fa fa-circle green-circle"></i> @elseif($delivery['customer_feedback']==2) <i class="fa fa-circle yellow-circle"></i> @else <i class="fa fa-circle red-circle"></i> @endif</td>
           </tr>

@@ -104,7 +104,12 @@ TDF Create Delivery
             <span class="text-danger">{!! $errors->first('order_id') !!}</span>
           </div>
           <div class="form-group">
-            {{Form::text('product', implode(',', $products), ['class'=>'form-control', 'readonly'])}}
+            @if($delivery['product_id']==0)
+              <?php $type="Multi-produits";?>
+            @else
+              <?php $type=$delivery['product_family'];?>
+            @endif
+            {{Form::text('product_family', $type, ['class'=>'form-control', 'readonly'])}}
           </div>
         </div>
         <div class="col-md-6">

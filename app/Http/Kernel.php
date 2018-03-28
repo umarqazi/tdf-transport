@@ -47,5 +47,6 @@ class Kernel extends HttpKernel {
         'can_see' => \LaravelAcl\Http\Middleware\CanSee::class,
         'has_perm' => \LaravelAcl\Http\Middleware\HasPerm::class,
         'user_logged' => \LaravelAcl\Http\Middleware\IsUser::class,
+        'tdf_manager' => \LaravelAcl\Http\Middleware\TdfManager::class,
 	];
 }

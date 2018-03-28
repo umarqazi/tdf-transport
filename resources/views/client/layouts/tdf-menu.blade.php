@@ -8,7 +8,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="{{URL::to('/planDriverTour')}}"><img src="{{asset('assets/images')}}/logoTDF.png" class="img-responsive"></a>
+    <a class="navbar-brand" href="{{URL::to('/allDeliveryHistory')}}"><img src="{{asset('assets/images')}}/logoTDF.png" class="img-responsive"></a>
   </div>
   <!-- /.navbar-header -->
   <ul class="nav navbar-top-links navbar-left">

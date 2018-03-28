@@ -4,7 +4,7 @@ namespace LaravelAcl\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-
+use Config;
 class IsUser
 {
     /**
@@ -17,9 +17,13 @@ class IsUser
     public function handle($request, Closure $next, $custom_url = null)
     {
         $redirect_url = $custom_url ?: '/';
-        if (Auth::user()->type != 'Admin') {
-            return $next($request);     
+        $getUser=Auth::user();
+        if($getUser){
+          if (Auth::user()->type != 'Admin' && Auth::user()->type != Config::get('constants.Users.TDF Manager')) {
+              return $next($request);
+          }
         }
+
         return redirect($redirect_url);
     }
 }

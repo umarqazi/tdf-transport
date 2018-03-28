@@ -8,4 +8,6 @@ class TourPlan extends Model
 {
   protected $table='tour_plan';
   public $timestamps=false;
+
+
 }

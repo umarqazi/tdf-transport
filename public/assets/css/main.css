@@ -259,3 +259,6 @@ display: block;
         width: 270px;
     }
 }
+.capitalLetter{
+  text-transform: uppercase;
+}
