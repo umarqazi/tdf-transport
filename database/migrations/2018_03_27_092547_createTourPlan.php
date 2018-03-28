@@ -15,12 +15,12 @@ class CreateTourPlan extends Migration
      {
          Schema::create('tour_plan', function($t) {
              $t->increments('id');
-             $t->integer('time_id')->unsigned();
-             $t->foreign('time_id')->references('id')->on('time_slot')->onDelete('cascade');
+             $t->integer('time_slot_id')->unsigned();
+             $t->foreign('time_slot_id')->references('id')->on('time_slot')->onDelete('cascade');
              $t->integer('delivery_id')->unsigned();
              $t->foreign('delivery_id')->references('id')->on('deliveries')->onDelete('cascade');
-             $t->integer('driver_id')->unsigned();
-             $t->foreign('driver_id')->references('id')->on('users')->onDelete('cascade');
+             $t->integer('user_id')->unsigned();
+             $t->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
              $t->integer('status')->unsigned();
          });
      }
