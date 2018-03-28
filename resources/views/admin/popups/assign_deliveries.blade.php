@@ -17,7 +17,7 @@
             <div class="col-md-12">
               <div class="table-responsive">
                 <input type="hidden" name="time_slot" id="time_slot">
-                <input type="hidden" name="driver_id" id="driver_id">
+                {{Form::hidden('user_id', $user_id, [])}}
                 <table class="table table-striped table-bordered text-center">
                   <thead>
                     <tr>
@@ -35,37 +35,41 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($deliveries as $delivery)
-                    <?php
-                    $items=array();
-                    if($delivery['delivery_price']=='Free'){
-                      $price= 'Free';
-                    }else{
-                      $price=$delivery['delivery_price']." €";
-                    }
-                    if($delivery['products']){
-                      foreach($delivery['products'] as $key=>$product){
-                        $items[$key]=$product['product_family'];
+                    @if(!empty($deliveries))
+                      @foreach($deliveries as $delivery)
+                      <?php
+                      $items=array();
+                      if($delivery['delivery_price']=='Free'){
+                        $price= 'Free';
+                      }else{
+                        $price=$delivery['delivery_price']." €";
                       }
-                      $items=implode(',', $items);
-                    }
-                    ?>
-                    <tr>
-                      <td>{{$delivery['datetime']}}</td>
-                      <td>{{$delivery['first_name']}} {{$delivery['last_name']}}</td>
-                      <td>@if($delivery['order_pdf'])<a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['order_pdf']}}" target="_blank"><i class="fa fa-2x fa-file-pdf-o"></i></a>@endif {{$delivery['order_id']}}</td>
-                      <td><a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink">{{$delivery['delivery_pdf']}}</a></td>
-                      <td>{{$delivery['mobile_number']}}</td>
-                      <td>{{$delivery['city']}}</td>
-                      <td>{{$delivery['postal_code']}}</td>
-                      <td>{{$delivery['service']}}</td>
-                      <td>{{$items}}</td>
-                      <td>{{$price}}</td>
-                      <td>
-                        <div class="checkboxDiv"><input type="checkbox" name="delivery_id" value="{{$delivery['id']}}"></div>
-                      </td>
-                    </tr>
-                    @endforeach
+                      if($delivery['products']){
+                        foreach($delivery['products'] as $key=>$product){
+                          $items[$key]=$product['product_family'];
+                        }
+                        $items=implode(',', $items);
+                      }
+                      ?>
+                      <tr>
+                        <td>{{$delivery['datetime']}}</td>
+                        <td>{{$delivery['first_name']}} {{$delivery['last_name']}}</td>
+                        <td>@if($delivery['order_pdf'])<a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['order_pdf']}}" target="_blank"><i class="fa fa-2x fa-file-pdf-o"></i></a>@endif {{$delivery['order_id']}}</td>
+                        <td><a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink">{{$delivery['delivery_pdf']}}</a></td>
+                        <td>{{$delivery['mobile_number']}}</td>
+                        <td>{{$delivery['city']}}</td>
+                        <td>{{$delivery['postal_code']}}</td>
+                        <td>{{$delivery['service']}}</td>
+                        <td>{{$items}}</td>
+                        <td>{{$price}}</td>
+                        <td>
+                          <div class="checkboxDiv"><input type="checkbox" name="delivery_id" value="{{$delivery['id']}}"></div>
+                        </td>
+                      </tr>
+                      @endforeach
+                    @else
+                      <tr><td colspan="11">Records not found</td></tr>
+                    @endif
                   </tbody>
                 </table>
               </div>

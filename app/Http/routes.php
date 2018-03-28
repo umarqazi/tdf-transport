@@ -135,11 +135,8 @@ Route::group(['middleware' => ['web']], function ()
       "as"   => "delete.delivery",
       "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@destroy'
     ]);
-    Route::post('/searchRecords', [
-      "as"   => "search.records",
-      "uses" => 'LaravelAcl\Http\Controllers\HomeController@searchRecords'
-    ]);
-    Route::post('/validateDelivery/', [
+
+    Route::post('/validateDelivery', [
       "as"   => "validate.delivery",
       "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@deliveryValidate'
     ]);
@@ -151,28 +148,51 @@ Route::group(['middleware' => ['web']], function ()
       "as"   => "post.delivery.history",
       "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@history'
     ]);
+    });
+    Route::post('/searchRecords', [
+      "as"   => "search.records",
+      "uses" => 'LaravelAcl\Http\Controllers\HomeController@searchRecords'
+    ]);
     Route::post('/exportHistory', [
       "as"   => "delivery.export",
       "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@exportHistory'
     ]);
+    Route::get('/getDeliveryPrice', [
+      "as"   => "price",
+      "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@getDeliveryPrice'
+    ]);
+    Route::group(['middleware' => ['tdf_manager', 'can_see']], function ()
+    {
+      Route::get('/planDriverTour', [
+        "as"   => "plan.tour",
+        "uses" => 'LaravelAcl\Http\Controllers\HomeController@tourPlan'
+      ]);
+      Route::get('/planDriverTour/{id}', [
+        "as"   => "tour.plan",
+        "uses" => 'LaravelAcl\Http\Controllers\HomeController@tourPlan'
+      ]);
+      Route::post('/planDriverTour', [
+        "as"   => "tour.plan",
+        "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@pTourPlan'
+      ]);
+      Route::get('/allDeliveryHistory', [
+        "as"   => "history.deliveries",
+        "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@allManagerDeliveries'
+      ]);
+      Route::post('/allDeliveryHistory', [
+        "as"   => "post.manager.history",
+        "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@allManagerDeliveries'
+      ]);
+      Route::get('/deleteTour/{id}', [
+        "as"   => "delete.tour",
+        "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@deleteTour'
+      ]);
+      Route::get('/sendDriverEmail/{id}', [
+        "as"   => "send.driver.email",
+        "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@sendDriverEmail'
+      ]);
+    });
 
-    Route::get('/planDriverTour', [
-      "as"   => "plan.tour",
-      "uses" => 'LaravelAcl\Http\Controllers\HomeController@tourPlan'
-    ]);
-    Route::post('/planDriverTour', [
-      "as"   => "tour.plan",
-      "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@pTourPlan'
-    ]);
-    Route::get('/allDeliveryHistory', [
-      "as"   => "history.deliveries",
-      "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@allManagerDeliveries'
-    ]);
-    Route::post('/allDeliveryHistory', [
-      "as"   => "post.manager.history",
-      "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@allManagerDeliveries'
-    ]);
-  });
 
 
   /*

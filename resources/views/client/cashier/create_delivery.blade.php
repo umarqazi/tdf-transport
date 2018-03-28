@@ -121,16 +121,16 @@ TDF Create Delivery
           </table>
         </div>
         <div class="form-group">
-          <select name="product[]" class="selectpicker form-control" multiple="multiple">
+          <select name="product_id" class="selectpicker form-control" onchange="getPrice(this)">
             @foreach($products as $key => $prod)
             <?php $selected=''?>
-            @if($delivery)
-            @foreach($delivery['products'] as $key2=>$deliveryPoduct)
-            @if($prod==$deliveryPoduct['product_family'])
-            <?php $selected='selected'?>
-            @endif
-            @endforeach
-            @endif
+              @if($delivery)
+                @foreach($delivery['products'] as $key2=>$deliveryPoduct)
+                  @if($prod==$deliveryPoduct['product_family'])
+                    <?php $selected='selected'?>
+                  @endif
+                @endforeach
+              @endif
             <option value="{{$key}}" {{$selected}}>{{$prod}}</option>
             @endforeach
           </select>

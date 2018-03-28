@@ -15,7 +15,7 @@ $(document).ready(function(){
 function getTours(option){
   var driver_id=option.value;
   if(driver_id!=''){
-    $("#showTour").show();
+    window.location.href = APP_URL+"/planDriverTour/"+driver_id;
   }else{
     $("#showTour").hide();
   }
@@ -30,7 +30,6 @@ $('.checkboxDiv input:checkbox').click(function(){
 });
 function showDeliveries(time){
   var user_id = $('#selUser option:selected').val();
-  $("#driver_id").val(user_id);
   $("#time_slot").val(time);
   $("#deliveries").modal("show");
 }

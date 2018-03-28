@@ -33,8 +33,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 * @var array
 	 */
 	protected $hidden = ['password', 'remember_token'];
-	public function routeNotificationForMail()
-    {
-        return $this->email;
-    }
+
+	public function deliveryTour()
+	{
+			return $this->belongsTo('LaravelAcl\Delivery', 'tour_plan');
+	}
+	public function delivery()
+	{
+			return $this->hasOne('LaravelAcl\Delivery', 'tour_plan');
+	}
 }

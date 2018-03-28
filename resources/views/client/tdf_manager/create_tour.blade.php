@@ -39,7 +39,7 @@ TDF Dashboard
 
 <div class="clear20"></div>
 
-<div class="row" id="showTour" style="display:none">
+<div class="row" id="showTour" @if(empty($toursList)) style="display:none" @endif>
   <div class="text-center page-icon">
     <div class="icon-wrapper"><i class="fa fa-calendar fa-fw"></i></div>
   </div>
@@ -49,46 +49,30 @@ TDF Dashboard
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th class="text-center"><i class="fa fa-truck fa-fw"></i> CAMION - zx-095-AB, Julien GONGALVES</th>
-            <th colspan="2">Mercredi 28 Fevrier 2018</th>
+            <th class="text-center"><i class="fa fa-truck fa-fw"></i> <span class="capitalLetter">@if($vehicle_info){{$vehicle_info['vehicle_name']}} {{$vehicle_info['number_plate']}} {{$vehicle_info['user_first_name']}} {{$vehicle_info['user_last_name']}} @endif</span></th>
+            <th colspan="2">{{$date}}</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="text-center">8h - 10h</td>
-            <td class="bg-grey">Commande n 13546 - 28/2/2018 - Matin - SAINT DENIS - 93000 - Montage - Literie</td>
-            <td class="text-center actions">
-              <a href="#" class="trash"><i class="fa fa-trash-o fa-fw"></i></a>
-            </td>
-          </tr>
-          <tr>
-            <td class="text-center">10h - 12h</td>
-            <td colspan="2" class="text-center">
-              <button class="btn btn-green" onclick="showDeliveries('2')">Ajouter une livraison <i class="fa fa-plus-circle fa-fw"></i></button>
-            </td>
-          </tr>
-          <tr>
-            <td class="text-center">12h - 14h</td>
-            <td class="bg-grey">Commande n 13546 - 28/2/2018 - Matin - SAINT DENIS - 93000 - Montage - Literie</td>
-            <td class="text-center actions">
-              <a href="#" class="trash"><i class="fa fa-trash-o fa-fw"></i></a>
-            </td>
-          </tr>
-          <tr>
-            <td class="text-center">14h - 16h</td>
-            <td class="bg-grey">Commande n 13546 - 28/2/2018 - Matin - SAINT DENIS - 93000 - Montage - Literie</td>
-            <td class="text-center actions">
-              <a href="#" class="trash"><i class="fa fa-trash-o fa-fw"></i></a>
-            </td>
-          </tr>
+          @foreach($toursList as $key=>$tours)
+            <tr>
+              <td class="text-center" width="30%">{{$key}}</td>
+              <td class="bg-grey" > @if($tours['delivery']!=NULL) {{$tours['delivery']}} @else <button class="btn btn-green" onclick="showDeliveries({{$tours['time_id']}})">Ajouter une livraison <i class="fa fa-plus-circle fa-fw"></i></button> @endif</td>
+              <td class="text-center actions">
+                @if($tours['delivery']!=NULL) <a href="{{URL('/deleteTour', ['id'=>$tours['id']])}}" class="trash"><i class="fa fa-trash-o fa-fw"></i></a> @endif
+              </td>
+            </tr>
+          @endforeach
         </tbody>
       </table>
     </div>
   </div>
-  <div class="col-md-12 text-center tbl-btns">
-    <a href="#">Envoi du planning<br>aux chauffeurs <i class="fa fa-check-square"></i></a>
-    <a href="#" class="active">Envoi du sms<br>aux clients <i class="fa fa-check-square"></i></a>
-  </div>
+  @if($tour_plan)
+    <div class="col-md-12 text-center tbl-btns">
+      <a href="{{url('/sendDriverEmail', ['id'=>$user_id])}}">Envoi du planning<br>aux chauffeurs <i class="fa fa-check-square"></i></a>
+      <a href="#" class="active">Envoi du sms<br>aux clients <i class="fa fa-check-square"></i></a>
+    </div>
+  @endif
 </div>
 @stop
 @section('footer_scripts')

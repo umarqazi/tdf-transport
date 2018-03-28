@@ -10,6 +10,7 @@ use LaravelAcl\Company;
 use LaravelAcl\DeliveryProduct;
 use LaravelAcl\Store;
 use LaravelAcl\TourPlan;
+use LaravelAcl\Product;
 use view;
 use Validator;
 use Redirect;
@@ -19,6 +20,7 @@ use File;
 use Carbon\Carbon;
 use DB;
 use Excel;
+use Mail;
 use Illuminate\Support\Facades\App;
 use LaravelAcl\Notifications\DeliveryNotification;
 class DeliveryController extends Controller
@@ -50,7 +52,7 @@ class DeliveryController extends Controller
     }
 
     $dayPeriod=$request->period;
-    $products=array();
+    $products=['0'=>'Multi-produits'];
     if($id)
     {
       $getDelivery=Delivery::with('products')->where('id',$id)->first();
@@ -81,7 +83,7 @@ class DeliveryController extends Controller
       'landline'=> 'required',
       'mobile_number'=> 'required',
       'order_id'=> 'required',
-      'product'=> 'required',
+      'product_id'=> 'required',
       'service'=> 'required',
       'address' => 'required',
       'pdf' => 'mimes:pdf,'.$request->id
@@ -97,11 +99,6 @@ class DeliveryController extends Controller
     if($deliveryId)
     {
       $delivery=Delivery::find($deliveryId);
-      $checkProduct=DB::table('delivery_products')->where('delivery_id', $deliveryId)->get();
-      if($checkProduct)
-      {
-        $checkProduct=DB::table('delivery_products')->where('delivery_id', $deliveryId)->delete();
-      }
     }
     else
     {
@@ -155,6 +152,7 @@ class DeliveryController extends Controller
     $delivery->postal_code=$request->postal_code;
     $delivery->comment=$request->comment;
     $delivery->delivery_price=$request->delivery_price;
+    $delivery->product_id=$request->product_id;
     if(Auth::user()->type==Config::get('constants.Users.Manager')){
       $delivery->status=Config::get('constants.Status.Active');
       $getManager=User::where('type', 'Manager')->where('store_id', $this->authUser->store_id)->first();
@@ -164,11 +162,6 @@ class DeliveryController extends Controller
       }
     }
     $delivery->save();
-
-    foreach($request->product as $product){
-      $productArray=['delivery_id'=>$delivery->id, 'product_id'=>$product];
-      DB::table('delivery_products')->insert($productArray);
-    }
     Toast::success(Config::get('constants.Create Delivery Message'));
     return redirect::to('/dashboard');
   }
@@ -178,17 +171,9 @@ class DeliveryController extends Controller
     $products=array();
     if($id)
     {
-      $getDelivery=Delivery::with('products')->find($id);
-      if($getDelivery['products'])
-      {
-        foreach($getDelivery['products'] as $key=>$product)
-        {
-          $products[$key]=$product->product_family;
-        }
-      }
-
+      $getDelivery=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type')->find($id);
     }
-    return view::make('client.cashier.view_delivery')->with(['delivery'=> $getDelivery, 'products'=>$products]);
+    return view::make('client.cashier.view_delivery')->with(['delivery'=> $getDelivery]);
   }
   public function uploadPdf(Request $request)
   {
@@ -241,7 +226,7 @@ class DeliveryController extends Controller
     return view::make('client.cashier.delivery_history')->with('allDeliveries', $getDeliveryHistory)->withInput($request->all());
   }
   public function exportHistory(Request $request) {
-    $deliveries = Delivery::where('store_id', $this->authUser->store_id)->with('products');
+    $deliveries = Delivery::where('store_id', $this->authUser->store_id)->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
     if($request->fromDate)
     {
       $fromDate=Carbon::parse($request->fromDate)->format('Y-m-d h:i:s');
@@ -262,13 +247,11 @@ class DeliveryController extends Controller
       }else{
         $price=$delivery['delivery_price']." €";
       }
-      if($delivery['products']){
-        foreach($delivery['products'] as $key=>$product){
-          $items[$key]=$product['product_family'];
-        }
-        $items=implode(',', $items);
+      if($delivery['product_id']==0){
+        $items="Multi-produits";
+      }else{
+        $items=$delivery['product_family'];
       }
-
       $name=$delivery['first_name'].' '.$delivery['last_name'];
       $records[]=[$delivery['datetime'], $name,$delivery['order_id'],1,$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price];
     }
@@ -284,20 +267,48 @@ class DeliveryController extends Controller
   }
   public function pTourPlan(Request $request){
     $addTour=new TourPlan;
-    $addTour->time_id=$request->time_slot;
+    $addTour->time_slot_id=$request->time_slot;
     $addTour->delivery_id=$request->delivery_id;
-    $addTour->driver_id=$request->driver_id;
+    $addTour->user_id=$request->user_id;
     $addTour->status='0';
     $addTour->save();
     $updateDelivery=Delivery::find($request->delivery_id);
     $updateDelivery->flag='1';
     $updateDelivery->save();
     Toast::success('La livraison a été assignée au conducteur');
-    return redirect::to('/planDriverTour');
+    return redirect::to('/planDriverTour/'.$request->user_id.'?tourPlan='.$addTour->id)->with('tourId', $addTour->id);
   }
   public function allManagerDeliveries(Request $request){
     $getDeliveryHistory=HomeController::searchResults($request->all());
     $getDeliveryHistory=$getDeliveryHistory->where('status', '1')->orderby('datetime', 'desc')->paginate(10);
     return view::make('client.tdf_manager.history')->with('allDeliveries', $getDeliveryHistory)->withInput($request->all());
+  }
+  public function deleteTour(Request $request){
+    $id=$request->id;
+    $tour=TourPlan::find($id);
+    $updateFlag=Delivery::where('id', $tour->delivery_id)->update(['flag'=>'0']);
+    $tour=$tour->delete();
+    Toast::success('Delivery has been deleted Successfully');
+    return Redirect::back();
+  }
+  public function sendDriverEmail(Request $request){
+    $user=User::find($request->id);
+    $email=$user->email;
+    $delivery=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->where('tour_plan.user_id', $request->id)->select('deliveries.*', 'tour_plan.id as tour_id', 'tour_plan.delivery_id')->orderBy('tour_plan.id', 'dsc')->first();
+    $mail=Mail::send('client.email.driver_tours', ['data'=>$delivery], function($message) use ($email)
+    {
+      $message->to($email, 'TDF Transport')->subject('Tour Plan');
+    });
+    Toast::success('Message has been delivered to the driver');
+    return Redirect::back();
+  }
+  public function getDeliveryPrice(Request $request){
+    $id=$request->id;
+    $amount='';
+    $price=Product::where('id', $id)->first();
+    if($price){
+      $amount=$price->delivery_charges;
+    }
+    return $amount;
   }
 }

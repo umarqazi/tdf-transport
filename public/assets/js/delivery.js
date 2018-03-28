@@ -124,3 +124,15 @@ jQuery(function() {
 		jQuery("#message").hide()
 	}, 5000);
 });
+function getPrice(option){
+	var id=option.value;
+	$.ajax({
+		url: APP_URL+"/getDeliveryPrice/",
+		type:"GET",
+		dataType: 'text',
+		data: { id : id},
+		success: function(data) {
+			$('#delivery_charges').val(data);
+		},
+	});
+}

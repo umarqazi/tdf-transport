@@ -5,7 +5,7 @@ namespace LaravelAcl\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Config;
-class IsUser
+class TdfManager
 {
     /**
      * Handle an incoming request.
@@ -16,14 +16,14 @@ class IsUser
      */
     public function handle($request, Closure $next, $custom_url = null)
     {
-        $redirect_url = $custom_url ?: '/';
-        $getUser=Auth::user();
-        if($getUser){
-          if (Auth::user()->type != 'Admin' && Auth::user()->type != Config::get('constants.Users.TDF Manager')) {
-              return $next($request);
-          }
+      $redirect_url = $custom_url ?: '/';
+      $getUser=Auth::user();
+      if($getUser){
+        if (Auth::user()->type == Config::get('constants.Users.TDF Manager')) {
+            return $next($request);
         }
+      }
 
-        return redirect($redirect_url);
+      return redirect($redirect_url);
     }
 }

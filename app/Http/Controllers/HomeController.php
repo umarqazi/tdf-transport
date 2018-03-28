@@ -7,6 +7,7 @@ use LaravelAcl\StoreEmployees;
 use LaravelAcl\Company;
 use LaravelAcl\User;
 use LaravelAcl\Delivery;
+use LaravelAcl\TimeSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Config;
@@ -91,15 +92,41 @@ class HomeController extends Controller
 		}
 		return view::make($view)->with(['startDate'=>$startDate, 'endDate'=>$endDate, 'currentDate'=>$date, 'deliveries'=>$deliveries, 'checkDate'=>$checkDate]);
 	}
-	public function tourPlan()
+	public function tourPlan(Request $request)
 	{
 		$drivers=[''=>'Choisir un vehicule'];
+		$user_id=$request->id;
+		$tour_plan=$request->tourPlan;
 		$getDrivers=User::where('type', 'Driver')->get();
 		foreach($getDrivers as $driver){
 			$drivers[$driver['id']]=$driver['vehicle_name'].', '.$driver['number_plate'];
 		}
-		$getDeliveries=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '0')->with('products')->get();
-		return view::make('client.tdf_manager.create_tour')->with(['drivers'=>$drivers, 'deliveries'=>$getDeliveries]);
+		$getTime=TimeSlot::all();
+		$nextDay=Carbon::now()->addDay(1)->format('Y-m-d');
+		$date=Carbon::now()->addDay(1)->format('D d M Y');
+		$tours=array();
+		$getDeliveries='';
+		$user_record='';
+		if($user_id){
+			$user_record=User::where('id',$user_id)->select('number_plate', 'vehicle_name', 'user_first_name', 'user_last_name')->first();
+			$getDeliveries=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->with('products')->get();
+			$getDeliveries2=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '1')->whereDate('datetime', $nextDay)->select('id','deliveries.first_name', 'deliveries.last_name', 'deliveries.datetime','deliveries.day_period', 'deliveries.mobile_number')->with(array('time'=>function($query){
+	        $query->select('tour_plan.id as tour_id','time_slot_id', 'delivery_id', 'user_id');
+	    }))->get();
+			foreach($getTime as $time){
+				$tours[$time['time']]=['id'=>'','delivery'=>'','time_id'=>$time['id']];
+				if($getDeliveries2){
+					foreach ($getDeliveries2 as $key => $value) {
+						foreach ($value['time'] as $key => $record) {
+							if($time['id']==$record['time_slot_id'] && $user_id==$record['user_id']){
+								$tours[$time['time']]=['time_id'=>$time['id'],'id'=>$record['tour_id'],'delivery_id'=>$record['pivot']['delivery_id'],'delivery'=>$value['first_name'].' '.$value['last_name'].' '.$value['datetime'].' '.$value['day_period']];
+							}
+						}
+					}
+				}
+			}
+		}
+		return view::make('client.tdf_manager.create_tour')->with(['date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries]);
 	}
 	public function monthView()
 	{
@@ -211,7 +238,7 @@ class HomeController extends Controller
 		return $searchResult;
 	}
 	public static function searchResults($request){
-		$getDeliveryRecords=Delivery::with('products');
+		$getDeliveryRecords=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
 		if(!empty($request['customer_name']))
 		{
 			$getDeliveryRecords=$getDeliveryRecords->whereRaw('concat(first_name," ",last_name) like ?', '%'.$request['customer_name'].'%');

@@ -17,4 +17,12 @@ class Delivery extends Model
     {
         return $this->belongsToMany('LaravelAcl\Product', 'delivery_products');
     }
+    public function time()
+    {
+        return $this->belongsToMany('LaravelAcl\TimeSlot', 'tour_plan');
+    }
+    public function user()
+  	{
+  			return $this->belongsTo('LaravelAcl\User', 'tour_plan');
+  	}
 }
