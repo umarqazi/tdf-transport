@@ -70,7 +70,7 @@
                     {!! Form::select('type', Config::get('constants.Users'), null, ["class"=> "form-control", "onchange"=>"showStoreName(this)"] ) !!}
                   </div>
                 </div>
-                <div class="form-group" style=display:{{($user->type=="Admin" || $user->type=="Driver") ? "none":""}} id="storeName">
+                <div class="form-group" style=display:{{($user->type=="TDF Manager" || $user->type=="Driver") ? "none":""}} id="storeName">
                   <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-id-card fa-fw"></i></div>
                     {!! Form::select('store_id', $stores, null, ["class"=> "form-control"] ) !!}
