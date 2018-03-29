@@ -1,9 +1,9 @@
 @extends('admin.layouts.base')
 {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js') !!}
-<?php 
+<?php
     if(isset($modal)) {
         echo '<script>$(document).ready(function () {$("#' . $modal . '").modal(\'show\');});</script>';
-    }      
+    }
 ?>
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">

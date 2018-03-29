@@ -123,21 +123,17 @@ TDF Create Delivery
         <div class="form-group">
           <select name="product_id" class="selectpicker form-control" onchange="getPrice(this)">
             @foreach($products as $key => $prod)
-            <?php $selected=''?>
-              @if($delivery)
-                @foreach($delivery['products'] as $key2=>$deliveryPoduct)
-                  @if($prod==$deliveryPoduct['product_family'])
-                    <?php $selected='selected'?>
-                  @endif
-                @endforeach
-              @endif
-            <option value="{{$key}}" {{$selected}}>{{$prod}}</option>
+            <option value="{{$key}}" {{($delivery['product_id']==$key)? 'selected':''}}>{{$prod}}</option>
             @endforeach
           </select>
           <span class="text-danger">{!! $errors->first('product') !!}</span>
         </div>
       </div>
       <div class="col-md-6">
+        <div class="form-group">
+          {{Form::text('delivery_number', null, ['class'=>'form-control', 'placeholder'=>'Numéro de livraison'])}}
+          <span class="text-danger">{!! $errors->first('delivery_number') !!}</span>
+        </div>
         <div class="form-group">
           <div class="input-group">
             <div class="input-group">

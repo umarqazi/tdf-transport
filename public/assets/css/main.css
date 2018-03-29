@@ -262,3 +262,20 @@ display: block;
 .capitalLetter{
   text-transform: uppercase;
 }
+.date_class{
+  width:100%;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  padding:10px 0px;
+  font-size:14pt;
+}
+.pdf-space{
+  padding:10px 0px;
+  display: inline-block;
+  z-index: 9999;
+}
+.pdf-space a{
+  margin-left: 10px;
+  cursor: pointer;
+}
