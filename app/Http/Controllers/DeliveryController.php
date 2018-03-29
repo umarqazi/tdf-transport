@@ -83,6 +83,7 @@ class DeliveryController extends Controller
       'landline'=> 'required',
       'mobile_number'=> 'required',
       'order_id'=> 'required',
+      'delivery_number'=> 'required',
       'product_id'=> 'required',
       'service'=> 'required',
       'address' => 'required',
@@ -146,13 +147,19 @@ class DeliveryController extends Controller
     $delivery->landline=$request->landline;
     $delivery->mobile_number=$request->mobile_number;
     $delivery->order_id=$request->order_id;
+    $delivery->delivery_number=$request->delivery_number;
     $delivery->service=$request->service;
     $delivery->address=$request->address;
     $delivery->city=$request->city;
     $delivery->postal_code=$request->postal_code;
     $delivery->comment=$request->comment;
     $delivery->delivery_price=$request->delivery_price;
-    $delivery->product_id=$request->product_id;
+    if($request->product_id){
+      $product_id=$request->product_id;
+    }else{
+      $product_id=NULL;
+    }
+    $delivery->product_id=$product_id;
     if(Auth::user()->type==Config::get('constants.Users.Manager')){
       $delivery->status=Config::get('constants.Status.Active');
       $getManager=User::where('type', 'Manager')->where('store_id', $this->authUser->store_id)->first();

@@ -29,6 +29,8 @@ class AuthController extends Controller {
         if (Auth::check()) {
           if(Auth::user()->type==Config::get('constants.Users.TDF Manager')) {
             return redirect('/allDeliveryHistory');
+          }elseif(Auth::user()->type==Config::get('constants.Users.Driver')) {
+            return redirect('/driverTours');
           }
             return redirect('/dashboard');
         }
@@ -50,6 +52,8 @@ class AuthController extends Controller {
                 Session::put('store_name',$getStoreName['store_name']);
                 if(Auth::user()->type=='TDF Manager'){
                     return redirect::to('/allDeliveryHistory');
+                }elseif(Auth::user()->type==Config::get('constants.Users.Driver')) {
+                  return redirect('/driverTours');
                 }else{
                     return redirect::to('/dashboard');
                 }

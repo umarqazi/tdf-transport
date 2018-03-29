@@ -192,7 +192,18 @@ Route::group(['middleware' => ['web']], function ()
         "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@sendDriverEmail'
       ]);
     });
-
+    Route::get('/driverTours', [
+      "as"   => "driver.tours",
+      "uses" => 'LaravelAcl\Http\Controllers\VehicleController@toursList'
+    ]);
+    Route::get('/tourDeliveryDetail/{id}', [
+      "as"   => "driver.tours.detail",
+      "uses" => 'LaravelAcl\Http\Controllers\VehicleController@deliveryDetail'
+    ]);
+    Route::post('/tourDeliveryDetail', [
+      "as"   => "update.delivery.status",
+      "uses" => 'LaravelAcl\Http\Controllers\VehicleController@updateDeliveryStatus'
+    ]);
 
 
   /*
