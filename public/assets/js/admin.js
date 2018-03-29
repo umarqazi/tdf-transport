@@ -1,7 +1,7 @@
 function showStoreName(type)
 {
     var type=type.value;
-    if(type=='Admin' || type=='Driver')
+    if(type=='TDF Manager' || type=='Driver')
     {
         $("#storeName").hide();
         if(type=='Driver')
