@@ -27,7 +27,7 @@ Admin area: User Management
     <div class="col-md-12 frm-title-icon"><a href="#">A Jout Rapide <i class="fa fa-plus-circle fa-fw"></i></a></div>
     <div class="col-md-12">
       <div class="sort">
-        <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addUser">Ajounter un vehicule <i class="fa fa-plus-circle fa-fw"></i></button>
+        <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addUser">Ajounter un Utilisateurs <i class="fa fa-plus-circle fa-fw"></i></button>
       </div>
     </div>
   </div>
