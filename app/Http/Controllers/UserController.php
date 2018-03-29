@@ -111,7 +111,7 @@ class UserController extends Controller {
     {
         $id = $request->get('id');
         $type=$request->type;
-        if($type=='Manager' || $type='Cashier')
+        if($type=='Manager' || $type=='Cashier')
         {
           if($request->store_id==0){
             return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors("Veuillez sélectionner un magasin");
