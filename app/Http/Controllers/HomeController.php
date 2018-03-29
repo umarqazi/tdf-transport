@@ -111,6 +111,9 @@ class HomeController extends Controller
 			$getDeliveries=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->with('products')->get();
 			$tours=self::manageTours($user_id, $nextDay);
 		}
+		echo "<pre>";
+		print_R($tours);
+		die();
 		return view::make('client.tdf_manager.create_tour')->with(['date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries]);
 	}
 	public static function manageTours($user_id, $nextDay, $driver=NULL){
