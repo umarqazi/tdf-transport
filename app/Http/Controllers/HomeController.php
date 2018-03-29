@@ -107,18 +107,13 @@ class HomeController extends Controller
 		$user_record='';
 		$tours=array();
 		if($user_id){
-			echo $user_id;
 			$user_record=User::where('id',$user_id)->select('number_plate', 'vehicle_name', 'user_first_name', 'user_last_name')->first();
 			$getDeliveries=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->with('products')->get();
 			$tours=self::manageTours($user_id, $nextDay);
-			echo "<pre>";
-			print_R($tours);
-			die();
 		}
 		return view::make('client.tdf_manager.create_tour')->with(['date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries]);
 	}
 	public static function manageTours($user_id, $nextDay, $driver=NULL){
-		$tours=array();
 		$getDeliveries2=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '1')->whereDate('datetime', $nextDay)->select('deliveries.*', 'products.product_family', 'products.product_type')->with(array('time'=>function($query){
 				$query->select('tour_plan.id as tour_id','time_slot_id', 'delivery_id', 'user_id');
 		}))->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->get();
