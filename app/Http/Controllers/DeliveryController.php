@@ -220,10 +220,14 @@ class DeliveryController extends Controller
   {
     $deliveryId=$request->delivery_id;
     $status=Config::get('constants.Status');
-    foreach($deliveryId as $delivery){
-      $updateStatus=Delivery::where('id', $delivery)->update(['status'=>$status['Active'] ]);
+    if($deliveryId){
+      foreach($deliveryId as $delivery){
+        $updateStatus=Delivery::where('id', $delivery)->update(['status'=>$status['Active'] ]);
+      }
+      Toast::success(Config::get('constants.Validate Delivery'));
+    }else{
+      Toast::error("sélectionnez une livraison en premier");
     }
-    Toast::success(Config::get('constants.Validate Delivery'));
     return redirect::back();
   }
   public function history(Request $request)
@@ -233,7 +237,11 @@ class DeliveryController extends Controller
     return view::make('client.cashier.delivery_history')->with('allDeliveries', $getDeliveryHistory)->withInput($request->all());
   }
   public function exportHistory(Request $request) {
-    $deliveries = Delivery::where('store_id', $this->authUser->store_id)->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
+    if(Auth::user()->type==Config::get('constants.Users.TDF Manager')){
+      $deliveries = Delivery::where('flag', 1)->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
+    }else{
+      $deliveries = Delivery::where('store_id', $this->authUser->store_id)->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
+    }
     if($request->fromDate)
     {
       $fromDate=Carbon::parse($request->fromDate)->format('Y-m-d h:i:s');
