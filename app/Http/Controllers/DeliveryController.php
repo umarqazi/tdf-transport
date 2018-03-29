@@ -281,17 +281,23 @@ class DeliveryController extends Controller
     })->download('xlsx');
   }
   public function pTourPlan(Request $request){
-    $addTour=new TourPlan;
-    $addTour->time_slot_id=$request->time_slot;
-    $addTour->delivery_id=$request->delivery_id;
-    $addTour->user_id=$request->user_id;
-    $addTour->status='0';
-    $addTour->save();
-    $updateDelivery=Delivery::find($request->delivery_id);
-    $updateDelivery->flag='1';
-    $updateDelivery->save();
-    Toast::success('La livraison a été assignée au conducteur');
-    return redirect::to('/planDriverTour/'.$request->user_id.'?tourPlan='.$addTour->id)->with('tourId', $addTour->id);
+    if($request->delivery_id){
+      $addTour=new TourPlan;
+      $addTour->time_slot_id=$request->time_slot;
+      $addTour->delivery_id=$request->delivery_id;
+      $addTour->user_id=$request->user_id;
+      $addTour->status='0';
+      $addTour->save();
+      $updateDelivery=Delivery::find($request->delivery_id);
+      $updateDelivery->flag='1';
+      $updateDelivery->save();
+      Toast::success('La livraison a été assignée au conducteur');
+      $link='?tourPlan='.$addTour->id;
+    }else{
+      $link='';
+      Toast::error("Il n'y a pas de plan de tournée pour le moment");
+    }
+    return redirect::to('/planDriverTour/'.$request->user_id.$link);
   }
   public function allManagerDeliveries(Request $request){
     $getDeliveryHistory=HomeController::searchResults($request->all());
