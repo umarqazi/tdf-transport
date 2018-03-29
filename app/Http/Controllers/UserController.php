@@ -113,6 +113,9 @@ class UserController extends Controller {
         $type=$request->type;
         if($type=='Manager' || $type='Cashier')
         {
+          if($request->store_id==''){
+            return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors("Veuillez sélectionner un magasin");
+          }
           $checkUser=User::where('type', $type)->where('store_id', $request->store_id)->first();
           if(!empty($checkUser) && $checkUser->activated=='1')
           {
