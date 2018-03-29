@@ -238,7 +238,7 @@ class DeliveryController extends Controller
   }
   public function exportHistory(Request $request) {
     if(Auth::user()->type==Config::get('constants.Users.TDF Manager')){
-      $deliveries = Delivery::where('flag', 1)->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
+      $deliveries = Delivery::where('flag', '1')->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
     }else{
       $deliveries = Delivery::where('store_id', $this->authUser->store_id)->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
     }
