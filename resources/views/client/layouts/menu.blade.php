@@ -8,7 +8,11 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="{{URL::to('/')}}"><img src="{{asset('assets/images')}}/{{$store_info['store_name']}}/{{$store_info['store_logo']}}" class="img-responsive"></a>
+    @if($store_info['store_logo'])
+      <a class="navbar-brand" href="{{URL::to('/')}}"><img src="{{asset('assets/images')}}/{{$store_info['store_name']}}/{{$store_info['store_logo']}}" class="img-responsive"></a>
+    @else
+      <a class="navbar-brand" href="{{URL::to('/')}}"><img src="{{asset('assets/images')}}/logoTDF.png}}" class="img-responsive"></a>
+    @endif
   </div>
   @if($authUser->type== Config::get('constants.Users.Manager'))
   <ul class="nav navbar-top-links navbar-left">
