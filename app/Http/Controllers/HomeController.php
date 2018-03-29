@@ -107,6 +107,7 @@ class HomeController extends Controller
 		$user_record='';
 		$tours=array();
 		if($user_id){
+			echo $user_id;
 			$user_record=User::where('id',$user_id)->select('number_plate', 'vehicle_name', 'user_first_name', 'user_last_name')->first();
 			$getDeliveries=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->with('products')->get();
 			$tours=self::manageTours($user_id, $nextDay);
