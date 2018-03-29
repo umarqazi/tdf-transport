@@ -16,6 +16,7 @@
             <th class="text-center">Produit(s) commande(s)</th>
             <th class="text-center">Prix de la livraison</th>
             <th class="text-center">Satisfaction client</th>
+            <th class="text-center">Statut</th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +33,13 @@
           }else{
             $type=$delivery['product_family'];
           }
+          if($delivery['status']==1){
+            $status="Validé";
+          }elseif($status==2){
+            $status="Livré";
+          }else{
+            $status="Attendre";
+          }
           ?>
           <tr>
             <td>{{$delivery['datetime']}}</td>
@@ -45,6 +53,7 @@
             <td>{{$type}}</td>
             <td>{{$price}}</td>
             <td>@if($delivery['customer_feedback']==1) <i class="fa fa-circle green-circle"></i> @elseif($delivery['customer_feedback']==2) <i class="fa fa-circle yellow-circle"></i> @else <i class="fa fa-circle red-circle"></i> @endif</td>
+            <td>{{$status}}</td>
           </tr>
           @endforeach
         </tbody>

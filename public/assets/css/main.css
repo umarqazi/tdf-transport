@@ -259,6 +259,11 @@ display: block;
         width: 270px;
     }
 }
+@media only screen and (max-width:767px){
+  .login-footer{
+    position:inherit !important;
+  }
+}
 .capitalLetter{
   text-transform: uppercase;
 }
