@@ -130,8 +130,8 @@ TDF Dashboard
               <tr>
                 <td width="50%">{{$dayDelivery['first_name']}}</td>
                 <td><a href="#"><i class="fa fa-eye fa-fw"></i></a></td>
-                <td><a href="{{URL::to('/delivery', ['id'=>$dayDelivery['id']])}}" class="delete"><i class="fa fa-edit fa-fw"></i></a></td>
-                <td><a href="#"><i class="fa fa-trash-o fa-fw"></i></a></td>
+                <td><a href="{{URL::to('/delivery', ['id'=>$dayDelivery['id']])}}" ><i class="fa fa-edit fa-fw"></i></a></td>
+                <td><a href="#" class="delete"><i class="fa fa-trash-o fa-fw"></i></a></td>
                 @if($authUser->type==Config::get('constants.Users.Manager'))
                 <td><input type="checkbox" name="delivery_id[]" value="{{$dayDelivery['id']}}" {{($dayDelivery['status']=='1')?'checked':''}} class="" @if($key!=date('d-M-Y', strtotime($nextDate))) disabled @endif>
                 </td>
