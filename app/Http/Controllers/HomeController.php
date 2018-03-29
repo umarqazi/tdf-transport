@@ -105,6 +105,7 @@ class HomeController extends Controller
 		$date=Carbon::now()->addDay(1)->format('D d M Y');
 		$getDeliveries='';
 		$user_record='';
+		$tours=array();
 		if($user_id){
 			$user_record=User::where('id',$user_id)->select('number_plate', 'vehicle_name', 'user_first_name', 'user_last_name')->first();
 			$getDeliveries=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->with('products')->get();
