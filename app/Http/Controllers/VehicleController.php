@@ -17,7 +17,7 @@ class VehicleController extends Controller
     public function toursList(){
       if(Auth::user()){
         $user_id=Auth::user()->id;
-        $nextDay=Carbon::now()->addDay(1)->format('Y-m-d');
+        $nextDay=Carbon::now()->format('Y-m-d');
         $date=Carbon::now()->format('D d M Y');
         $tours=HomeController::manageTours($user_id, $nextDay, 'driver');
         return view::make('client.driver.index')->with(['tours'=>$tours, 'date'=>$date]);
