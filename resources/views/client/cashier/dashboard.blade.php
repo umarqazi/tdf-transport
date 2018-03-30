@@ -30,7 +30,7 @@ TDF Dashboard
             <span class="text-danger">{!! $errors->first('order_id') !!}</span>
           </div></td>
           <td>&nbsp;</td>
-          <td width=50%><div class="form-group">
+          <td><div class="form-group">
             <div class="input-group">
               {{Form::text('order_id', null, ['class'=>'form-control', 'placeholder'=>'Rechercher une commande', 'id'=>'orderId'])}}
             </div>
