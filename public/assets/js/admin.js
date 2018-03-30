@@ -8,6 +8,11 @@ function showStoreName(type)
         {
           $('#driverRecord').show();
         }
+        if(type=='TDF Manager')
+        {
+          $("#storeName").hide();
+          $('#driverRecord').hide();
+        }
     }
     else
     {

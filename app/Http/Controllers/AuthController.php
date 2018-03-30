@@ -25,7 +25,6 @@ class AuthController extends Controller {
 
     public function getClientLogin()
     {
-
         if (Auth::check()) {
           if(Auth::user()->type==Config::get('constants.Users.TDF Manager')) {
             return redirect('/allDeliveryHistory');
@@ -60,7 +59,7 @@ class AuthController extends Controller {
             }
             else
             {
-                Toast::error('Login Fail');
+                Toast::error('Il semble que votre identifiant ou votre mot de passe soient incorrects. Veuillez essayer à nouveau s’il vous plaît.');
                 return redirect::to('/');
             }
         }

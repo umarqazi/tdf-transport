@@ -16,10 +16,7 @@ TDF Dashboard
     <a href="{{route('user.date.dashboard', ['startDate'=>$checkDate->startOfWeek()->addDay(-7)])}}"><i class="fa fa-arrow-circle-left"></i></a>
     <span class="start">{{$startDate}}</span> - <span class="end">{{$endDate}}</span>
     <a href="{{route('user.date.dashboard', ['endDate'=>$checkDate->endOfWeek()->addDay(8)])}}"><i class="fa fa-arrow-circle-right"></i></a>
-    <select onchange="showView(this)">
-      <option value="dashboard">Weekly</option>
-      <option value="monthlyRecords">Monthly</option>
-    </select>
+
   </div>
   <div class="col-lg-12 calendar-control">
     <table class="align-center">
@@ -33,7 +30,7 @@ TDF Dashboard
             <span class="text-danger">{!! $errors->first('order_id') !!}</span>
           </div></td>
           <td>&nbsp;</td>
-          <td><div class="form-group">
+          <td width=50%><div class="form-group">
             <div class="input-group">
               {{Form::text('order_id', null, ['class'=>'form-control', 'placeholder'=>'Rechercher une commande', 'id'=>'orderId'])}}
             </div>
@@ -62,6 +59,12 @@ TDF Dashboard
   </tr>
 </table>
 </div>
+<div class="pull-right selector">
+  <select onchange="showView(this)">
+    <option value="dashboard">Weekly</option>
+    <option value="monthlyRecords">Monthly</option>
+  </select>
+</div>
 </div>
 {!! Form::model(null, [ 'url' => URL::route('validate.delivery'), "enctype"=>"multipart/form-data", "id"=>"validateForm"] )  !!}
 <div class="row">
@@ -70,12 +73,12 @@ TDF Dashboard
       <thead>
         <tr>
           <th class="side-first">TRANCHE HORAIRE</th>
-          <th @if(strtotime($currentDate->startOfWeek()->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif>LUNDI<div class="date">{{date('d-M-Y', strtotime($currentDate->startOfWeek()))}}</div></th>
-          <th @if(strtotime($currentDate->startOfWeek()->addDay(1)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif>MARDI<div class="date">{{date('d-M-Y', strtotime($currentDate->startOfWeek()->addDay(1)))}}</div></th>
-          <th @if(strtotime($currentDate->startOfWeek()->addDay(2)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif>MERCREDI<div class="date">{{date('d-M-Y', strtotime($currentDate->startOfWeek()->addDay(2)))}}</div></th>
-          <th @if(strtotime($currentDate->startOfWeek()->addDay(3)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif>JEUDI<div class="date">{{date('d-M-Y', strtotime($currentDate->startOfWeek()->addDay(3)))}}</div></th>
-          <th @if(strtotime($currentDate->startOfWeek()->addDay(4)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif>VENDREDI<div class="date">{{date('d-M-Y', strtotime($currentDate->startOfWeek()->addDay(4)))}}</div></th>
-          <th @if(strtotime($currentDate->startOfWeek()->addDay(5)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif>SAMEDI<div class="date">{{date('d-M-Y', strtotime($currentDate->startOfWeek()->addDay(5)))}}</div></th>
+          <th @if(strtotime($currentDate->startOfWeek()->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">LUNDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()))}}</div></th>
+          <th @if(strtotime($currentDate->startOfWeek()->addDay(1)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">MARDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(1)))}}</div></th>
+          <th @if(strtotime($currentDate->startOfWeek()->addDay(2)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">MERCREDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(2)))}}</div></th>
+          <th @if(strtotime($currentDate->startOfWeek()->addDay(3)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">JEUDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(3)))}}</div></th>
+          <th @if(strtotime($currentDate->startOfWeek()->addDay(4)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">VENDREDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(4)))}}</div></th>
+          <th @if(strtotime($currentDate->startOfWeek()->addDay(5)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">SAMEDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(5)))}}</div></th>
         </tr>
       </thead>
       <tbody>

@@ -25,18 +25,25 @@
   <![endif]-->
 </head>
 
-<body>
-  <div class="login-container">
-    @yield('content')
-    <footer class="login-footer">
-      <a href="" class="footer-logo"><img src="{{asset('assets/images')}}/logoTDF.png"></a>
-      <ul class="footer-links">
-        <li><i class="fa fa-map-marker"></i> 20 rue de Moreau - 75012 PARIS</li>
-        <li><i class="fa fa-envelope"></i> <a href="mailto: contact@tdf-transport.com">contact@tdf-transport.com</a> </li>
-      </ul>
-    </footer>
-  </div>
+<body class="login-background">
+  <div class="main-wrapper">
+    <div class="login-container">
+      @yield('content')
+    </div>
+</div>
+  <footer class="login-footer">
+    <a href="" class="footer-logo"><img src="{{asset('assets/images')}}/logoTDF.png"></a>
+    <ul class="footer-links">
+      <li><i class="fa fa-map-marker"></i> 20 rue de Moreau - 75012 PARIS</li>
+      <li><i class="fa fa-envelope"></i> <a href="mailto: contact@tdf-transport.com">contact@tdf-transport.com</a> </li>
+    </ul>
+  </footer>
   {!! HTML::script('assets/js/bootstrap.js') !!}
   {!! HTML::script('assets/js/jquery.js') !!}
+  <script>
+    function showForgotPassword(){
+      $("#forgotPassword").removeClass("hidden");
+    }
+  </script>
 </body>
 </html>

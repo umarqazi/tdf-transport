@@ -11,7 +11,7 @@ TDF Transport
   @include('toast::messages')
   <div class="form-section">
     {!! Form::model(null, [ 'url' => URL::route('post.forgetPassword')] )  !!}
-    <input type="text" name="email" class="fld" placeholder="Email">
+    <input type="text" name="email" class="fld" placeholder="Identifiant">
     <span class="text-danger">{!! $errors->first('email') !!}</span>
     <button type="submit" class="submit-btn">Envoyer un email<i class="fa fa-arrow-alt-circle-right"></i></button>
     {!! Form::close() !!}

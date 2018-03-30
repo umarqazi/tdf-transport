@@ -102,13 +102,14 @@ class HomeController extends Controller
 			$drivers[$driver['id']]=$driver['vehicle_name'].', '.$driver['number_plate'];
 		}
 		$nextDay=Carbon::now()->addDay(1)->format('Y-m-d');
-		$date=Carbon::now()->addDay(1)->format('D d M Y');
+		$date=Carbon::now()->addDay(1)->format('l d M Y');
 		$getDeliveries='';
 		$user_record='';
 		$tours=array();
 		if($user_id){
 			$user_record=User::where('id',$user_id)->select('number_plate', 'vehicle_name', 'user_first_name', 'user_last_name')->first();
-			$getDeliveries=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->with('products')->get();
+			$getDeliveries=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type')->get();
+
 			$tours=self::manageTours($user_id, $nextDay);
 		}
 		return view::make('client.tdf_manager.create_tour')->with(['date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries]);
@@ -178,7 +179,7 @@ class HomeController extends Controller
 		}
 		else
 		{
-			Toast::error('There is no Email associated with this Email Address');
+			Toast::error("Aucun e-mail n'est associé à cette adresse e-mail");
 			return redirect::back();
 		}
 		Toast::success("Please check your Email");
