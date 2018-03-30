@@ -309,7 +309,7 @@ class DeliveryController extends Controller
     $tour=TourPlan::find($id);
     $updateFlag=Delivery::where('id', $tour->delivery_id)->update(['flag'=>'0']);
     $tour=$tour->delete();
-    Toast::success('Delivery has been deleted Successfully');
+    Toast::success('La livraison a été supprimée avec succès');
     return Redirect::back();
   }
   public function sendDriverEmail(Request $request){
@@ -320,7 +320,7 @@ class DeliveryController extends Controller
     {
       $message->to($email, 'TDF Transport')->subject('Tour Plan');
     });
-    Toast::success('Message has been delivered to the driver');
+    Toast::success('Merci, le planning a été envoyé au chauffeur.');
     return Redirect::back();
   }
   public function getDeliveryPrice(Request $request){

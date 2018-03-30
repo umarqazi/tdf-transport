@@ -15,19 +15,19 @@ TDF Dashboard
 <div class="row">
   @include('toast::messages')
   <div class="clear20"></div>
-  <div class="text-center">CREATION D'UNE TOURNEE</div>
+  <div class="text-center page-header">CREATION D'UNE TOURNEE</div>
   <hr>
 
   <div class="col-lg-12">
     <div class="text-center page-icon">
       <div class="icon-wrapper"><i class="fa fa-truck fa-fw"></i></div>
     </div>
-    <h2 class="page-header small-heading text-center">ETAPE 1: CHOIX DU VEHICULE</h2>
+    <h2 class=" small-heading text-center">ETAPE 1: CHOIX DU VEHICULE</h2>
     <div class="text-center">
       <div class="form-inline" id="slect-wo">
         <select id='selUser' style="width:200px" onchange="getTours(this)">
           @foreach($drivers as $key=>$driver)
-          <option value='{{$key}}'>{{$driver}}</option>
+          <option value='{{$key}}' @if($user_id==$key) selected="selected" @endif>{{$driver}}</option>
           @endforeach
         </select>
       </div>
@@ -43,25 +43,32 @@ TDF Dashboard
   <div class="text-center page-icon">
     <div class="icon-wrapper"><i class="fa fa-calendar fa-fw"></i></div>
   </div>
-  <h2 class="page-header small-heading text-center">ETAPE 2: CREATION DU PLANNING</h2>
+  <h2 class=" small-heading text-center">ETAPE 2: CREATION DU PLANNING</h2>
   <div class="col-md-12">
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
             <th class="text-center"><i class="fa fa-truck fa-fw"></i> <span class="capitalLetter">@if($vehicle_info){{$vehicle_info['vehicle_name']}} {{$vehicle_info['number_plate']}} {{$vehicle_info['user_first_name']}} {{$vehicle_info['user_last_name']}} @endif</span></th>
-            <th colspan="2">{{$date}}</th>
+            <th colspan="2" class="text-center">{{$date}}</th>
           </tr>
         </thead>
         <tbody>
+          <?php $number=1;?>
           @foreach($toursList as $key=>$tours)
+            <?php if ($number % 2 == 0) {
+                $color='blue-color';
+              }else{
+                $color='grey-color';
+              }?>
             <tr>
               <td class="text-center" width="30%">{{$key}}</td>
-              <td class="bg-grey" > @if($tours['delivery']!=NULL) {{$tours['delivery']}} @else <button class="btn btn-green" onclick="showDeliveries({{$tours['time_id']}})">Ajouter une livraison <i class="fa fa-plus-circle fa-fw"></i></button> @endif</td>
-              <td class="text-center actions">
+              <td width="66%" class="text-style @if($tours['delivery']!=NULL) {{$color}} @endif" > @if($tours['delivery']!=NULL) {{$tours['delivery']}} @else <button class="btn btn-green" onclick="showDeliveries({{$tours['time_id']}})">Ajouter une livraison <i class="fa fa-plus-circle fa-fw"></i></button> @endif</td>
+              <td class="text-center @if($tours['delivery']!=NULL)delete-column @endif">
                 @if($tours['delivery']!=NULL) <a href="{{URL('/deleteTour', ['id'=>$tours['id']])}}" class="trash"><i class="fa fa-trash-o fa-fw"></i></a> @endif
               </td>
             </tr>
+            <?php $number++; ?>
           @endforeach
         </tbody>
       </table>

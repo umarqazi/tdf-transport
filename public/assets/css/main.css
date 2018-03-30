@@ -5,16 +5,22 @@
 		font-family: 'Lobster', cursive;
 		font-family: 'Quicksand', sans-serif;
 *********/
-
-body {
-    margin: 0px;
-    padding: 0px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    background: url(../images/main_bg.png) repeat;
-    color: #fff;
+body,html{
+  height: calc(100% - 100px);
 }
-
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: #fff;
+}
+.login-background{
+  background: url(../images/main-bg.jpg) no-repeat fixed top center/cover;
+}
+.main-wrapper{
+  min-height: 100%;
+}
 * {
     margin: 0;
     padding: 0px;
@@ -57,15 +63,11 @@ button:focus {
 .login-container {
     display: block;
     text-align: center;
-    background: url(../images/main-bg.jpg) no-repeat center top;
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
 }
 
 .login-wrapper {
     max-width: 700px;
-    display: inline-block;
+    margin: 0 auto;
 }
 
 .login-wrapper h1 {
@@ -80,7 +82,7 @@ button:focus {
 
 .login-wrapper .form-section {
     width: 360px;
-    display: inline-block;
+    margin: 0 auto;
 }
 
 .login-wrapper .form-section .fld {
@@ -142,10 +144,6 @@ display: block;
     margin: 10px auto !important;
 }
 .login-footer{
-    position: fixed;
-    bottom:0px;
-    left: 0px;
-    width: 100%;
     text-align: center;
     padding:10px 0px;
 }
@@ -283,4 +281,45 @@ display: block;
 .pdf-space a{
   margin-left: 10px;
   cursor: pointer;
+}
+.selector{
+  margin-bottom: 20px;
+}
+.day-name{
+  display: block;
+  font-size: 12px;
+}
+.date{
+  display: block;
+  font-size: 24px;
+}
+.grey-color{
+  background-color: #989898;
+}
+.blue-color{
+  background-color: #457F8F;
+}
+.text-style{
+  text-align: center;
+  color:white;
+  text-transform: capitalize;
+  padding:15px 0px !important;
+}
+.delete-column{
+  background-color: #D20000;
+}
+.delete-column i{
+  color:white;
+  font-size:18pt;
+  margin-top: 6px;
+}
+.heading-font th{
+  font-size: 9pt;
+}
+.button-styling i{
+  font-size: 17pt;
+  margin-left: 10px;
+}
+.heading-title{
+  font-size: 28px;
 }
