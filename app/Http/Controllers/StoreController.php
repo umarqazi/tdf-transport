@@ -70,8 +70,7 @@ class StoreController extends Controller
       'address' => 'required',
       'city' => 'required',
       'zip_code' => 'required',
-      'store_logo' => 'required,'.$request->id.'|mimes:jpeg,bmp,png,'.$request->id,
-
+      'store_logo' => 'required|mimes:jpeg,bmp,png,'.$request->id,
     ]);
 
     if ($validator->fails()) {
