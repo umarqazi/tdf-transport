@@ -153,7 +153,11 @@ class DeliveryController extends Controller
     $delivery->city=$request->city;
     $delivery->postal_code=$request->postal_code;
     $delivery->comment=$request->comment;
-    $delivery->delivery_price=$request->delivery_price;
+    if($request->delivery_price=='Gratuit'){
+      $delivery->delivery_price='0';
+    }else{
+      $delivery->delivery_price=$request->delivery_price;
+    }
     if($request->product_id){
       $product_id=$request->product_id;
     }else{
