@@ -1,12 +1,14 @@
 $('select').selectpicker();
 $(function () {
-	$('#datetimepicker5').datetimepicker();
-	$('#datetimepicker6').datetimepicker();
+	$('#datetimepicker5').datetimepicker({
+                 format: 'DD/MM/YYYY'
+           }).val();
+	$('#datetimepicker6').datetimepicker().val();
 });
 function freeDelivery(check){
 	if($('input[name="free"]').is(':checked'))
 	{
-		$('#delivery_charges').val('Free');
+		$('#delivery_charges').val('Gratuit');
 	}
 	else
 	{
@@ -42,14 +44,16 @@ function upload()
 				$('#OrderShowPdftable').show();
 				$('#OrderAddPdfLink').html(data.name);
 				$('#OrderdummyFile').val(data.name);
-				$('#orderPdfFile').val('');
+				// $('#orderPdfFile').val('');
+				$('#orderPdfDiv').hide();
 			}
 			else{
 				$('#showErrorPdf').html('');
 				$('#showPdftable').show();
 				$('#addPdfLink').html(data.name);
 				$('#dummyFile').val(data.name);
-				$('#pdfFile').val('');
+				// $('#pdfFile').val('');
+				$('#PdfDiv').hide();
 			}
 			document.getElementById("addPdfLink").href=APP_URL+"/assets/images/dummyImages/"+data.name;
 		},

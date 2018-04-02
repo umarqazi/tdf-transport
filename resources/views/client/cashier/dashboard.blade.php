@@ -72,26 +72,32 @@ TDF Dashboard
     <table class="table table-striped table-bordered data-sets">
       <thead>
         <tr>
-          <th class="side-first">TRANCHE HORAIRE</th>
-          <th @if(strtotime($currentDate->startOfWeek()->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">LUNDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()))}}</div></th>
-          <th @if(strtotime($currentDate->startOfWeek()->addDay(1)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">MARDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(1)))}}</div></th>
-          <th @if(strtotime($currentDate->startOfWeek()->addDay(2)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">MERCREDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(2)))}}</div></th>
-          <th @if(strtotime($currentDate->startOfWeek()->addDay(3)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">JEUDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(3)))}}</div></th>
-          <th @if(strtotime($currentDate->startOfWeek()->addDay(4)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">VENDREDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(4)))}}</div></th>
-          <th @if(strtotime($currentDate->startOfWeek()->addDay(5)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">SAMEDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(5)))}}</div></th>
+          <th class="side-first" width=20%>TABLEAU DE BORD DES LIVRAISONS</th>
+          <th width=14% @if(strtotime($currentDate->startOfWeek()->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">LUNDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()))}}</div></th>
+          <th width=14% @if(strtotime($currentDate->startOfWeek()->addDay(1)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">MARDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(1)))}}</div></th>
+          <th width=14% @if(strtotime($currentDate->startOfWeek()->addDay(2)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">MERCREDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(2)))}}</div></th>
+          <th width=14% @if(strtotime($currentDate->startOfWeek()->addDay(3)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">JEUDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(3)))}}</div></th>
+          <th width=14% @if(strtotime($currentDate->startOfWeek()->addDay(4)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">VENDREDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(4)))}}</div></th>
+          <th width=14% @if(strtotime($currentDate->startOfWeek()->addDay(5)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">SAMEDI</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay(5)))}}</div></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="side-first">MATIN</td>
+          <td class="side-first">MATIN </td>
+          <?php $number=1;?>
           @foreach($deliveries as $key=>$delivery)
           @if(!empty($delivery))
           <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div" @endif>
             @foreach($delivery as $dayDelivery)
             @if($dayDelivery['day_period']=='Matin')
+            <?php if ($number % 2 == 0) {
+                $color='blue-color';
+              }else{
+                $color='grey-color';
+              }?>
             <table class="table table-striped table-bordered tbl-internal" >
               <tr>
-                <td width="40%">{{$dayDelivery['first_name']}}</td>
+                <td width="70%" class="{{$color}}">{{$dayDelivery['first_name']}} {{$dayDelivery['last_name']}} {{$dayDelivery['city']}} {{$dayDelivery['postal_code']}}</td>
                 <td><a href="{{URL::to('/viewDelivery', ['id'=>$dayDelivery['id']])}}"><i class="fa fa-eye fa-fw"></i></a></td>
                 <td><a href="{{URL::to('/delivery', ['id'=>$dayDelivery['id']])}}"><i class="fa fa-edit fa-fw"></i></a></td>
                 <td><a href="{{URL::to('/deleteDelivery', ['id'=>$dayDelivery['id']])}}" class="delete"><i class="fa fa-trash-o fa-fw"></i></a></td>
@@ -103,9 +109,10 @@ TDF Dashboard
 
             </table>
             @endif
+            <?php  $number++ ?>
             @endforeach
             <div class="clearfix"></div>
-            <a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Matin'])}}" class="anchor-space"></a>
+            @if($key >= date('d-M-Y', strtotime($nextDate))) <a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Matin'])}}" class="anchor-space"></a> @endif
           </td>
           <!-- <div class="clearfix"></div>
           <a href="" class="anchor-space">&nbsp;</a> -->
@@ -114,7 +121,7 @@ TDF Dashboard
           <td>
 
             <div class="clearfix"></div>
-            <a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Matin'])}}" class="anchor-space"></a>
+            @if($key >=date('d-M-Y', strtotime($nextDate)))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Matin'])}}" class="anchor-space"></a> @endif
           </td>
           @endif
 
@@ -131,7 +138,7 @@ TDF Dashboard
             @if($dayDelivery['day_period']=='Apres - Midi')
             <table class="table table-striped table-bordered tbl-internal">
               <tr>
-                <td width="50%">{{$dayDelivery['first_name']}}</td>
+                <td width="50%">{{$dayDelivery['first_name']}} {{$dayDelivery['last_name']}} {{$dayDelivery['city']}} {{$dayDelivery['postal_code']}}</td>
                 <td><a href="{{URL::to('/viewDelivery', ['id'=>$dayDelivery['id']])}}"><i class="fa fa-eye fa-fw"></i></a></td>
                 <td><a href="{{URL::to('/delivery', ['id'=>$dayDelivery['id']])}}" ><i class="fa fa-edit fa-fw"></i></a></td>
                 <td><a href="{{URL::to('/deleteDelivery', ['id'=>$dayDelivery['id']])}}" class="delete"><i class="fa fa-trash-o fa-fw"></i></a></td>
@@ -145,7 +152,7 @@ TDF Dashboard
             @endif
             @endforeach
             <div class="clearfix"></div>
-            <a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Apres - Midi'])}}" class="anchor-space"></a>
+            @if($key >= date('d-M-Y', strtotime($nextDate)))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Apres - Midi'])}}" class="anchor-space"></a> @endif
           </td>
           <!-- <div class="clearfix"></div>
           <a href="" class="anchor-space">&nbsp;</a> -->
@@ -154,7 +161,7 @@ TDF Dashboard
           <td>
 
             <div class="clearfix"></div>
-            <a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Apres - Midi'])}}" class="anchor-space"></a>
+            @if($key >= date('d-M-Y', strtotime($nextDate)))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Apres - Midi'])}}" class="anchor-space"></a> @endif
           </td>
           @endif
 
@@ -168,11 +175,7 @@ TDF Dashboard
 <div class="clear20"></div>
 <div class="row">
   <div class="col-md-12 text-center tbl-btns">
-    <a class="active green"  data-toggle="modal" data-target="#valdiateMessage">
-      Valider les livraisons sélectionnées
-    </a>
-    <!-- <a href="#" class="active green">Valider ma demande<i class="fa fa-save"></i></a>
-    <a href="#" class="red">Annuler ma demande<i class="fa fa-trash-o"></i></a> -->
+    <button class="button-styling" type="button" data-toggle="modal" data-target="#valdiateMessage">Valider les livraisons sélectionnées <i class="fa fa-save"></i></button>
   </div>
 </div>
 @endif

@@ -91,7 +91,7 @@
           </div>
         </div>
 
-        <div class="modal-footer">
+        <div class=" text-center modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">NON</button>
           <button type="button" class="btn btn-primary validate-check">OUI</button>
         </div>

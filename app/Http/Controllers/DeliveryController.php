@@ -44,11 +44,11 @@ class DeliveryController extends Controller
     $id=$request->id;
     if($request->date)
     {
-      $dateTime=date('m/d/Y h:i:s', strtotime($request->date));
+      $dateTime=date('d/m/Y', strtotime($request->date));
     }
     else
     {
-      $dateTime=date('m/d/Y h:i:s');
+      $dateTime=date('d/m/Y');
     }
 
     $dayPeriod=$request->period;
@@ -254,11 +254,11 @@ class DeliveryController extends Controller
     }
     $deliveries=$deliveries->get();
     $records = [];
-    $records[] = ['Date de la livraison', 'Client','Numero de commande','Numero du bon de livraison','Telephone', 'Villes', 'Code Postal', 'Type de Prestation', 'Produit(s) commande(s)', 'Prix de la livraison'];
+    $records[] = ['Date de la livraison', 'Client','Numero de commande','Numero du bon de livraison','Telephone', 'Villes', 'Code Postal', 'Type de Prestation', 'Produit(s) commande(s)', 'Prix de la livraison', 'Status', 'Customer Feedback'];
     foreach($deliveries as $key=>$delivery){
       $items=array();
-      if($delivery['delivery_price']=='Free'){
-        $price= 'Free';
+      if($delivery['delivery_price']=='Gratuit'){
+        $price= 'Gratuit';
       }else{
         $price=$delivery['delivery_price']." €";
       }
@@ -268,7 +268,8 @@ class DeliveryController extends Controller
         $items=$delivery['product_family'];
       }
       $name=$delivery['first_name'].' '.$delivery['last_name'];
-      $records[]=[$delivery['datetime'], $name,$delivery['order_id'],1,$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price];
+      if($delivery['status']==1){ $status= "Validé";}elseif($delivery['status']==2){$status= "Livre"; }else{ $status="Attendre"; };
+      $records[]=[$delivery['datetime'], $name,$delivery['order_id'],1,$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, $delivery['customer_feedback']];
     }
     Excel::create('All Deliveries', function($excel) use ($records) {
       $excel->setTitle('Deliveries History');

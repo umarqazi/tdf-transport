@@ -14,12 +14,12 @@
   <!-- /.navbar-header -->
   @if($authUser->type==Config::get('constants.Users.TDF Manager'))
     <ul class="nav navbar-top-links navbar-left">
-      <li><a href="{{URL('/planDriverTour')}}"><i class="fa fa-car fa-fw"></i> Creation d'une Tournee</a></li>
+      <li><a href="{{URL('/planDriverTour')}}"><i class="fa fa-truck fa-fw"></i> Creation d'une Tournee</a></li>
       <li><a href="{{URL('/allDeliveryHistory')}}"><i class="fa fa-calendar fa-fw"></i> Historique des livraisons</a></li>
     </ul>
   @endif
   <ul class="nav navbar-top-links navbar-right">
-    <li><strong>{{$authUser->user_first_name}} {{$authUser->user_last_name}} ({{$authUser->type}})</strong></li>
+    <li><strong class="user-name">{{$authUser->user_first_name}} {{$authUser->user_last_name}} ({{$authUser->type}})</strong></li>
     <li><a href="{{URL::to('/logout')}}"><i class="fa fa-sign-out fa-fw"></i> Deconnexion</a></li>
     <li><a href="#"><i class="fa fa-question-circle fa-fw"></i> Aide</a></li>
   </ul>
