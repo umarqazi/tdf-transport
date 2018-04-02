@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php $total='';?>
+          <?php $total=0;?>
           @foreach($allDeliveries as $delivery)
           <?php
           $items=array();
