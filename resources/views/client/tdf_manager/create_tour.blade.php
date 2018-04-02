@@ -11,7 +11,12 @@ TDF Dashboard
   display: none;
 }
 </style>
-
+{!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js') !!}
+<?php
+    if(isset($modal)) {
+        echo '<script>$(document).ready(function () {$("#' . $modal . '").modal(\'show\');});</script>';
+    }
+?>
 <div class="row">
   @include('toast::messages')
   <div class="clear20"></div>
@@ -49,7 +54,7 @@ TDF Dashboard
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th class="text-center"><i class="fa fa-truck fa-fw"></i> <span class="capitalLetter">@if($vehicle_info){{$vehicle_info['vehicle_name']}} {{$vehicle_info['number_plate']}} {{$vehicle_info['user_first_name']}} {{$vehicle_info['user_last_name']}} @endif</span></th>
+            <th class="text-center"><i class="fa fa-truck fa-fw"></i> @if($vehicle_info)<span class="capitalLetter"> {{$vehicle_info['vehicle_name']}} {{$vehicle_info['number_plate']}}</span> <span class="forname-capitalize">{{$vehicle_info['user_first_name']}} {{$vehicle_info['user_last_name']}}</span> @endif</span></th>
             <th colspan="2" class="text-center">{{$date}}</th>
           </tr>
         </thead>

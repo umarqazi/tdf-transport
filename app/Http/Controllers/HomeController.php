@@ -84,7 +84,7 @@ class HomeController extends Controller
 			foreach($getDeliveries as $key2=>$del){
 				if($deliveryDate==Carbon::parse($del['datetime'])->format('d-M-Y'))
 				{
-					$records=['id'=>$del['id'], 'datetime'=>$del['datetime'],'first_name'=>$del['first_name'], 'day_period'=>$del['day_period'],'status'=>$del['status']];
+					$records=['id'=>$del['id'], 'datetime'=>$del['datetime'],'first_name'=>$del['first_name'],'last_name'=>$del['last_name'],'city'=>$del['city'],'postal_code'=>$del['postal_code'], 'day_period'=>$del['day_period'],'status'=>$del['status']];
 					$deliveries[$deliveryDate][$key2]=$records;
 				}
 
@@ -94,6 +94,7 @@ class HomeController extends Controller
 	}
 	public function tourPlan(Request $request)
 	{
+		$addmodal='';
 		$drivers=[''=>'Choisir un vehicule'];
 		$user_id=$request->id;
 		$tour_plan=$request->tourPlan;
@@ -108,11 +109,24 @@ class HomeController extends Controller
 		$tours=array();
 		if($user_id){
 			$user_record=User::where('id',$user_id)->select('number_plate', 'vehicle_name', 'user_first_name', 'user_last_name')->first();
-			$getDeliveries=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type')->get();
+			$getDeliveries=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
+			if($request->type){
+				if($request->type=='city'){
+					$getDeliveries=$getDeliveries->orderBy('city', 'desc');
+				}
+				if($request->type=='service'){
+					$getDeliveries=$getDeliveries->orderBy('service', 'desc');
+				}
+				if($request->type=='product'){
+					$getDeliveries=$getDeliveries->orderBy('product_type', 'desc');
+				}
+				$addmodal="deliveries";
+			}
+			$getDeliveries=$getDeliveries->get();
 
 			$tours=self::manageTours($user_id, $nextDay);
 		}
-		return view::make('client.tdf_manager.create_tour')->with(['date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries]);
+		return view::make('client.tdf_manager.create_tour')->with(['date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries, 'modal'=>$addmodal]);
 	}
 	public static function manageTours($user_id, $nextDay, $driver=NULL){
 		$getDeliveries2=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '1')->whereDate('datetime', $nextDay)->select('deliveries.*', 'products.product_family', 'products.product_type')->with(array('time'=>function($query){

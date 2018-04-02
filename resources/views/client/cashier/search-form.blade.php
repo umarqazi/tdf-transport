@@ -10,7 +10,7 @@
           <span class="text-danger">{!! $errors->first('order_id') !!}</span>
         </div></td>
         <td>&nbsp;</td>
-        <td><div class="form-group">
+        <td ><div class="form-group">
           <div class="input-group">
             {{Form::text('order_id', Input::get('order_id'), ['class'=>'form-control', 'placeholder'=>'Rechercher une commande', 'id'=>'orderId'])}}
           </div>

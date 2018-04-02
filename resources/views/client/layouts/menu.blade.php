@@ -17,13 +17,13 @@
   @if($authUser->type== Config::get('constants.Users.Manager'))
   <ul class="nav navbar-top-links navbar-left">
     <li><a href="{{URL('/')}}"><i class="fa fa-home fa-fw"></i> Accueil</a></li>
-    <li><a href="{{URL('/delivery')}}"><i class="fa fa-car fa-fw"></i> Ajouter une livraison</a></li>
+    <li><a href="{{URL('/delivery')}}"><i class="fa fa-truck fa-fw"></i> Ajouter une livraison</a></li>
     <li><a href="{{URL('/history')}}"><i class="fa fa-calendar fa-fw"></i> Historique des livraisons</a></li>
   </ul>
   @endif
   <!-- /.navbar-header -->
   <ul class="nav navbar-top-links navbar-right">
-    <li><strong>{{$authUser->user_first_name}} {{$authUser->user_last_name}} ({{$store_info['store_name']}})</strong></li>
+    <li><strong class="user-name">{{$authUser->user_first_name}} {{$authUser->user_last_name}} ({{$store_info['store_name']}})</strong></li>
     <li><a href="{{URL::to('/logout')}}"><i class="fa fa-sign-out fa-fw"></i> Deconnexion</a></li>
     <li><a href="#"><i class="fa fa-question-circle fa-fw"></i> Aide</a></li>
     @if($authUser->type== Config::get('constants.Users.Manager'))

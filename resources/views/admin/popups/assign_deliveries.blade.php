@@ -13,6 +13,21 @@
           <div class="col-lg-12">
             <h1 class="page-header text-center">CHOIX DE LA LIVRAISAN</h1>
           </div>
+          <div class="col-md-6">
+              <span class="delivery-heading">liste des livraison du jour <i class="fa fa-cubes fa-fw"></i></span>
+          </div>
+          <div class="col-md-6 pull-right text-center">
+              <table class="filter-tale">
+                  <tr>
+                      <td><i class="fa fa-filter"></i></td>
+                      <td>
+                          <a href="{{url('/planDriverTour', ['id'=>$user_id, 'city'=>'city'])}}" class="filter-button color1">VILLE</a>
+                          <a href="{{url('/planDriverTour', ['id'=>$user_id, 'service'=>'service'])}}" class="filter-button color2">TYPE DE PRESTATION</a>
+                            <a href="{{url('/planDriverTour', ['id'=>$user_id, 'product'=>'product'])}}" class="filter-button color3">PRODUITS</a>
+                    </td>
+                  </tr>
+              </table>
+          </div>
           <div class="row">
             <div class="col-md-12">
               <div class="table-responsive">
@@ -39,8 +54,8 @@
                       @foreach($deliveries as $delivery)
                       <?php
                       $items=array();
-                      if($delivery['delivery_price']=='Free'){
-                        $price= 'Free';
+                      if($delivery['delivery_price']=='Gratuit'){
+                        $price= 'Gratuit';
                       }else{
                         $price=$delivery['delivery_price']." €";
                       }

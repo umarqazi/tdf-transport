@@ -171,6 +171,10 @@ Route::group(['middleware' => ['web']], function ()
         "as"   => "tour.plan",
         "uses" => 'LaravelAcl\Http\Controllers\HomeController@tourPlan'
       ]);
+      Route::get('/planDriverTour/{id}/{type}', [
+        "as"   => "tour.plan.type",
+        "uses" => 'LaravelAcl\Http\Controllers\HomeController@tourPlan'
+      ]);
       Route::post('/planDriverTour', [
         "as"   => "tour.plan",
         "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@pTourPlan'

@@ -20,11 +20,12 @@
           </tr>
         </thead>
         <tbody>
+          <?php $total='';?>
           @foreach($allDeliveries as $delivery)
           <?php
           $items=array();
-          if($delivery['delivery_price']=='Free'){
-            $price= 'Free';
+          if($delivery['delivery_price']=='Gratuit'){
+            $price= 'Gratuit';
           }else{
             $price=$delivery['delivery_price']." €";
           }
@@ -40,6 +41,7 @@
           }else{
             $status="Attendre";
           }
+          $total+=$delivery['delivery_price'];
           ?>
           <tr>
             <td>{{$delivery['datetime']}}</td>
@@ -56,6 +58,10 @@
             <td>{{$status}}</td>
           </tr>
           @endforeach
+          <tr>
+              <td colspan="9" align=right>Total: </td>
+              <td>{{$total}} €</td>
+          </tr>
         </tbody>
       </table>
     </div>
