@@ -28,6 +28,7 @@
             $price= 'Gratuit';
           }else{
             $price=$delivery['delivery_price']." €";
+            $total+=$delivery['delivery_price'];
           }
           if($delivery['product_id']==0){
             $type="Multi-produits";
@@ -41,7 +42,6 @@
           }else{
             $status="Attendre";
           }
-          $total+=$delivery['delivery_price'];
           ?>
           <tr>
             <td>{{$delivery['datetime']}}</td>
