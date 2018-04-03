@@ -480,3 +480,14 @@ display: block;
 .active-link{
   color:#337ab7;
 }
+.make-center{
+  display: inline-block;
+}
+.back-button{
+  float:left;
+  margin: 20px 0 0 0;
+  padding:10px;
+  background-color: #93c47d;
+  color:white;
+  border-radius:5px;
+}

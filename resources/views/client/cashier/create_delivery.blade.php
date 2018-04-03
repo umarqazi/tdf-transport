@@ -8,8 +8,8 @@ TDF Create Delivery
 
 {!! Form::model($delivery, [ 'url' => URL::route('delivery.edit'), "enctype"=>"multipart/form-data"] )  !!}
 <div class="row">
-  <div class="col-lg-12">
-    <h1 class="page-header text-center">CREATION D'UNE LIVRAISON</h1>
+  <div class="col-lg-12 text-center">
+    <a href="{{url('/dashboard')}}" class="back-button">Retour <i class="fa fa-arrow-left"></i></a><h1 class="page-header text-center make-center">CREATION D'UNE LIVRAISON</h1>
   </div>
   <div class="col-lg-12 calendar-control">
     <div class="form-inline">
@@ -32,7 +32,7 @@ TDF Create Delivery
 </div>
 <div class="row">
   <div class="col-md-6">
-    <h3 class="text-center">Coordonees</h3>
+    <h3 class="text-center">Coordonnées</h3>
     <div class="clear20"></div>
     <div class="row">
       <div class="div-border">
@@ -49,14 +49,14 @@ TDF Create Delivery
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-addon"><i class="fa fa-user fa-fw"></i></div>
-              {{Form::text('last_name', null, ['class'=>'form-control', 'placeholder'=>'Prenom'])}}
+              {{Form::text('last_name', null, ['class'=>'form-control', 'placeholder'=>'Prénom'])}}
             </div>
             <span class="text-danger">{!! $errors->first('last_name') !!}</span>
           </div>
         </div>
         <div class="col-md-12">
           <div class="form-group">
-            {{Form::text('address', null, ['class'=>'form-control', 'placeholder'=>'Numero et rue'])}}
+            {{Form::text('address', null, ['class'=>'form-control', 'placeholder'=>'Numéro et rue'])}}
           </div>
           <span class="text-danger">{!! $errors->first('address') !!}</span>
         </div>
@@ -76,7 +76,7 @@ TDF Create Delivery
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-addon"><i class="fa fa-phone fa-fw"></i></div>
-              {{Form::text('landline', null, ['class'=>'form-control', 'placeholder'=>'Telephone fixe'])}}
+              {{Form::text('landline', null, ['class'=>'form-control', 'placeholder'=>'Téléphone fixe'])}}
             </div>
             <span class="text-danger">{!! $errors->first('landline') !!}</span>
           </div>
@@ -85,7 +85,7 @@ TDF Create Delivery
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-addon"><i class="fa fa-mobile fa-fw"></i></div>
-              {{Form::text('mobile_number', null, ['class'=>'form-control', 'placeholder'=>'Telephone mobile'])}}
+              {{Form::text('mobile_number', null, ['class'=>'form-control', 'placeholder'=>'Téléphone mobile'])}}
             </div>
             <span class="text-danger">{!! $errors->first('mobile_number') !!}</span>
           </div>
@@ -100,7 +100,7 @@ TDF Create Delivery
       <div class="div-border">
         <div class="col-md-6">
           <div class="form-group">
-            {{Form::text('order_id', null, ['class'=>'form-control', 'placeholder'=>'Numero de commande'])}}
+            {{Form::text('order_id', null, ['class'=>'form-control', 'placeholder'=>'Numéro de commande'])}}
             <span class="text-danger">{!! $errors->first('order_id') !!}</span>
           </div>
           <div class="form-group">
