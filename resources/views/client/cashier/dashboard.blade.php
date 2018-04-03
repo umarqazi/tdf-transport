@@ -117,7 +117,6 @@ TDF Dashboard
             <table class="table table-striped table-bordered tbl-internal" >
               <tr>
                 <td width="70%" class="{{$color}}">{{$dayDelivery['first_name']}} {{$dayDelivery['last_name']}} {{$dayDelivery['city']}} {{$dayDelivery['postal_code']}}</td>
-                <td><a href="{{URL::to('/viewDelivery', ['id'=>$dayDelivery['id']])}}"><i class="fa fa-eye fa-fw"></i></a></td>
                 <td><a href="{{URL::to('/delivery', ['id'=>$dayDelivery['id']])}}"><i class="fa fa-edit fa-fw"></i></a></td>
                 <td><a href="{{URL::to('/deleteDelivery', ['id'=>$dayDelivery['id']])}}" class="delete"><i class="fa fa-trash-o fa-fw"></i></a></td>
                 @if($authUser->type==Config::get('constants.Users.Manager'))
@@ -163,7 +162,6 @@ TDF Dashboard
             <table class="table table-striped table-bordered tbl-internal">
               <tr>
                 <td width="70%" class="{{$color}}">{{$dayDelivery['first_name']}} {{$dayDelivery['last_name']}} {{$dayDelivery['city']}} {{$dayDelivery['postal_code']}}</td>
-                <td><a href="{{URL::to('/viewDelivery', ['id'=>$dayDelivery['id']])}}"><i class="fa fa-eye fa-fw"></i></a></td>
                 <td><a href="{{URL::to('/delivery', ['id'=>$dayDelivery['id']])}}" ><i class="fa fa-edit fa-fw"></i></a></td>
                 <td><a href="{{URL::to('/deleteDelivery', ['id'=>$dayDelivery['id']])}}" class="delete"><i class="fa fa-trash-o fa-fw"></i></a></td>
                 @if($authUser->type==Config::get('constants.Users.Manager'))
