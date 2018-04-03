@@ -18,72 +18,67 @@ TDF Dashboard
     <a href="{{route('user.date.dashboard', ['endDate'=>$checkDate->endOfWeek()->addDay(8)])}}"><i class="fa fa-arrow-circle-right"></i></a>
 
   </div>
-
-
-
-
-
-    <div class="custom_search">
-      <input type="text" value="{{Input::get('search_field')}}" class="form-control search_dropdown" name="search_field" id='search_field' placeholder="Rechercher un client, une commande..">
-      <a href="#" class="dropdown_btn"><i class="fa fa-chevron-down"></i></a>
-      <button type="button" onclick="searchResult()" class="btn btn_search"><i class="fa fa-search"></i></button>
-      <div class="toggle_div">
-        <span>Rechercher par</span>
-        <div class="form-group">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" id="customerCheck" name="customerCheck">
-            </label>
-          </div>
-          <div class="input-group">
-            <meta name="csrf-token" content="{{ csrf_token() }}" />
-            {{Form::text('customer_name', Input::get('customer_name'), ['class'=>'form-control', 'placeholder'=>'Rechercher un client', 'id'=>'customer'])}}
-          </div>
+  <div class="custom_search">
+    <input type="text" value="{{Input::get('search_field')}}" class="form-control search_dropdown" name="search_field" id='search_field' placeholder="Rechercher un client, une commande..">
+    <a href="#" class="dropdown_btn"><i class="fa fa-chevron-down"></i></a>
+    <button type="button" onclick="searchResult()" class="btn btn_search"><i class="fa fa-search"></i></button>
+    <div class="toggle_div">
+      <span>Rechercher par</span>
+      <div class="form-group">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="customerCheck" name="customerCheck">
+          </label>
         </div>
-
-        <div class="form-group">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" id="orderCheck" name="orderCheck">
-            </label>
-          </div>
-          <div class="input-group">
-            {{Form::text('order_id', Input::get('order_id'), ['class'=>'form-control', 'placeholder'=>'Rechercher une commande', 'id'=>'orderId'])}}
-          </div>
-
-        </div>
-
-        <div class="form-group">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" id="dateCheck" name="dateCheck">
-            </label>
-          </div>
-          <div class='input-group date' id='datetimepicker7'>
-            {{ Form::text('datetime', Input::get('datetime'), ['class'=>'form-control', 'id'=>'datetime'])}}
-            <span class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-          </div>
-
-        </div>
-
-        <div class="form-group">
-          <div class="input-group text-center tbl-btns">
-              <button type="button" onclick="searchResult()" class='btn btn-primary button-padding'>
-                RECHERCHER <i class="fa fa-search"></i>
-              </button>
-          </div>
-
+        <div class="input-group">
+          <meta name="csrf-token" content="{{ csrf_token() }}" />
+          {{Form::text('customer_name', Input::get('customer_name'), ['class'=>'form-control', 'placeholder'=>'Rechercher un client', 'id'=>'customer'])}}
         </div>
       </div>
+
+      <div class="form-group">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="orderCheck" name="orderCheck">
+          </label>
+        </div>
+        <div class="input-group">
+          {{Form::text('order_id', Input::get('order_id'), ['class'=>'form-control', 'placeholder'=>'Rechercher une commande', 'id'=>'orderId'])}}
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="dateCheck" name="dateCheck">
+          </label>
+        </div>
+        <div class='input-group date' id='datetimepicker7'>
+          {{ Form::text('datetime', Input::get('datetime'), ['class'=>'form-control', 'id'=>'datetime'])}}
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <div class="input-group text-center tbl-btns">
+          <button type="button" onclick="searchResult()" class='btn btn-primary button-padding'>
+            RECHERCHER <i class="fa fa-search"></i>
+          </button>
+        </div>
+
+      </div>
     </div>
-<div class="pull-right selector">
-  <select onchange="showView(this)">
-    <option value="dashboard">Semaine</option>
-    <option value="monthlyRecords">Mois</option>
-  </select>
-</div>
+  </div>
+  <div class="pull-right selector">
+    <select onchange="showView(this)">
+      <option value="dashboard">Semaine</option>
+      <option value="monthlyRecords">Mois</option>
+    </select>
+  </div>
 </div>
 {!! Form::model(null, [ 'url' => URL::route('validate.delivery'), "enctype"=>"multipart/form-data", "id"=>"validateForm"] )  !!}
 <div class="row">
@@ -110,17 +105,17 @@ TDF Dashboard
             @foreach($delivery as $dayDelivery)
             @if($dayDelivery['day_period']=='Matin')
             <?php if ($number % 2 == 0) {
-                $color='blue-color';
-              }else{
-                $color='grey-color';
-              }?>
+              $color='blue-color';
+            }else{
+              $color='grey-color';
+            }?>
             <table class="table table-striped table-bordered tbl-internal" >
               <tr>
                 <td width="70%" class="{{$color}}">{{$dayDelivery['first_name']}} {{$dayDelivery['last_name']}} {{$dayDelivery['city']}} {{$dayDelivery['postal_code']}}</td>
                 <td><a href="{{URL::to('/delivery', ['id'=>$dayDelivery['id']])}}"><i class="fa fa-edit fa-fw"></i></a></td>
                 <td><a href="{{URL::to('/deleteDelivery', ['id'=>$dayDelivery['id']])}}" class="delete"><i class="fa fa-trash-o fa-fw"></i></a></td>
                 @if($authUser->type==Config::get('constants.Users.Manager'))
-                <td><input type="checkbox" name="delivery_id[]" value="{{$dayDelivery['id']}}" {{($dayDelivery['status']=='1')?'checked':''}} class="" @if($key!=date('d-M-Y', strtotime($nextDate))) disabled @endif>
+                <td><input type="checkbox" name="delivery_id[]" value="{{$dayDelivery['id']}}" {{($dayDelivery['status']=='1')?'checked disabled':''}} class="" @if($key!=date('d-M-Y', strtotime($nextDate))) disabled @endif>
                 </td>
                 @endif
               </tr>
@@ -152,10 +147,10 @@ TDF Dashboard
           @foreach($deliveries as $key=>$delivery)
           @if(!empty($delivery))
           <?php if ($number % 2 == 0) {
-              $color='blue-color';
-            }else{
-              $color='grey-color';
-            }?>
+            $color='blue-color';
+          }else{
+            $color='grey-color';
+          }?>
           <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div" @endif>
             @foreach($delivery as $dayDelivery)
             @if($dayDelivery['day_period']=='Apres - Midi')
