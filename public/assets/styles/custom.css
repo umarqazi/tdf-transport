@@ -56,9 +56,8 @@
 .tbl-internal td {font-size: 12px; vertical-align: middle;}
 .tbl-internal td:not(:first-child) {text-align: center; max-width: 26px; vertical-align: middle;}
 .tbl-internal td:first-child {color:white; font-size: 7pt;}
-.tbl-internal td:nth-child(2) {background-color: #86D27C;}
-.tbl-internal td:nth-child(3) {background-color: #FFA000;}
-.tbl-internal td:nth-child(4) {background-color: #D20000;}
+.tbl-internal td:nth-child(2) {background-color: #FFA000;}
+.tbl-internal td:nth-child(3) {background-color: #D20000;}
 .tbl-internal td .fa {color: #fff;}
 
 .calendar-control {text-align: center; margin-bottom: 30px;}
