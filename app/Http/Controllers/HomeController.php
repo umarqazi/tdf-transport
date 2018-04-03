@@ -230,6 +230,7 @@ class HomeController extends Controller
 
 		$searchResult='';
 		$getDeliveryRecords=self::searchResults($request->all());
+		$getDeliveryRecords=$getDeliveryRecords;
 		if($this->type==$this->users['Cashier'])
 		{
 			$getDeliveryRecords=$getDeliveryRecords->where('user_id', $this->authUser->id);
@@ -243,18 +244,18 @@ class HomeController extends Controller
 		foreach($getDeliveryRecords as $key=>$record){
 			$products='';
 			$getProduct=array();
-			if($record['products']){
-				foreach($record['products'] as $key=>$product){
-					$getProduct[$key]=$product['product_family'];
-				}
-				$products=implode(',', $getProduct);
+			if($record['product_id']==''){
+				$products='Multi';
 			}
-			if($record['delivery_price']=='Free'){
-				$price= 'Free';
+			else{
+				$products=$record['product_family'];
+			}
+			if($record['delivery_price']=='Gratuit'){
+				$price= 'Gratuit';
 			}else{
 				$price=$record['delivery_price']." €";
 			}
-			$searchResult.="<tr><td>".Carbon::parse($record['datetime'])->format('Y-m-d')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td></td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
+			$searchResult.="<tr><td>".Carbon::parse($record['datetime'])->format('Y-m-d')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
 		}
 		return $searchResult;
 	}

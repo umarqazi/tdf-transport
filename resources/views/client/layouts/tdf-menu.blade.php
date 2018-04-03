@@ -14,8 +14,8 @@
   <!-- /.navbar-header -->
   @if($authUser->type==Config::get('constants.Users.TDF Manager'))
     <ul class="nav navbar-top-links navbar-left">
-      <li><a href="{{URL('/planDriverTour')}}"><i class="fa fa-truck fa-fw"></i> Creation d'une Tournee</a></li>
-      <li><a href="{{URL('/allDeliveryHistory')}}"><i class="fa fa-calendar fa-fw"></i> Historique des livraisons</a></li>
+      <li><a href="{{URL('/planDriverTour')}}" class="{{ request()->is('planDriverTour') ? 'active-link' : '' }}"><i class="fa fa-truck fa-fw"></i> Creation d'une Tournee</a></li>
+      <li><a href="{{URL('/allDeliveryHistory')}}" class="{{ request()->is('allDeliveryHistory') ? 'active-link' : '' }}"><i class="fa fa-calendar fa-fw"></i> Historique des livraisons</a></li>
     </ul>
   @endif
   <ul class="nav navbar-top-links navbar-right">
