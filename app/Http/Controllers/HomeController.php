@@ -66,14 +66,7 @@ class HomeController extends Controller
 		$endDate=Carbon::parse($date->endOfWeek())->format('d M y');
 		$view='client.cashier.dashboard';
 		$getDeliveries=Delivery::whereBetween('datetime', [$date->startOfWeek()->format('Y-m-d h:i:s'), $date->endOfWeek()->format('Y-m-d h:i:s')]);
-		if($this->type==$this->users['Cashier'])
-		{
-			$getDeliveries=$getDeliveries->where('user_id', $this->authUser->id);
-		}
-		else
-		{
-			$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id);
-		}
+		$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id);
 		$getDeliveries=$getDeliveries->get();
 		for($i=0; $i<=5; $i++){
 			$deliveries[$date->startOfWeek()->addday($i)->format('d-M-Y')]=array();
@@ -267,19 +260,22 @@ class HomeController extends Controller
 	}
 	public static function searchResults($request){
 		$getDeliveryRecords=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
-		if(!empty($request['customer_name']))
+		if(!empty($request['search_field'])){
+			$getDeliveryRecords=$getDeliveryRecords->where('order_id', $request['search_field'])->orwhereRaw('concat(first_name," ",last_name) like ?', '%'.$request['search_field'].'%');
+		}
+		if(array_key_exists('customerCheck', $request))
 		{
 			$getDeliveryRecords=$getDeliveryRecords->whereRaw('concat(first_name," ",last_name) like ?', '%'.$request['customer_name'].'%');
 		}
-		if(!empty($request['order_id']))
+		if(array_key_exists('orderCheck', $request))
 		{
 			$getDeliveryRecords=$getDeliveryRecords->where('order_id', $request['order_id']);
 		}
-		if(!empty($request['date']))
+		if(array_key_exists('dateCheck', $request))
 		{
-			$getDeliveryRecords=$getDeliveryRecords->where('datetime','<=', $request['date']);
+			$date=date('Y-m-d',strtotime($request['date']));
+			$getDeliveryRecords=$getDeliveryRecords->whereDate('datetime','<=', $date);
 		}
-
 		return $getDeliveryRecords;
 	}
 

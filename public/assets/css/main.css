@@ -356,13 +356,13 @@ display: block;
   text-transform: capitalize;
 }
 .user-name{
-  color:#337ab7;
+  color:black;
   font-weight: bold;
 }
 .history-heading{
   padding:10px 0px !important;
   border: 1px solid #ccc !important;
-  margin-bottom: 10px !important;
+  margin-bottom: 20px !important;
 }
 .start{
   font-size:22px;
@@ -469,5 +469,14 @@ display: block;
 }
 .toggle_div{
   display: none;
-  margin-top: 30px;
+}
+.toggle_div > span{
+  padding:10px;
+  float:left;
+  width:100%;
+  text-align: left;
+  font-weight: bold;
+}
+.active-link{
+  color:#337ab7;
 }

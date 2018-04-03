@@ -1,9 +1,8 @@
 $('select').selectpicker();
 $(function () {
-	$('#datetimepicker5').datetimepicker({
-                 format: 'DD/MM/YYYY'
-           }).val();
-	$('#datetimepicker6').datetimepicker().val();
+	$('#datetimepicker5').datetimepicker();
+	$('#datetimepicker6').datetimepicker();
+	$('#datetimepicker7').datetimepicker();
 });
 function freeDelivery(check){
 	if($('input[name="free"]').is(':checked'))
@@ -84,6 +83,16 @@ function searchResult()
 {
 	$('#searchResult').html('');
 	var searchResult = new FormData();
+	if($('#customerCheck').is(":checked")!=false){
+		searchResult.append('customerCheck', $('#customerCheck').is(":checked"));
+	}
+	if($('#orderCheck').is(":checked")!=false){
+		searchResult.append('orderCheck', $('#orderCheck').is(":checked"));
+	}
+	if($('#dateCheck').is(":checked")!=false){
+		searchResult.append('dateCheck', $('#dateCheck').is(":checked"));
+	}
+	searchResult.append('search_field', $("#search_field").val());
 	searchResult.append('customer_name', $("#customer").val());
 	searchResult.append('order_id', $("#orderId").val());
 	searchResult.append('date', $("#datetime").val());

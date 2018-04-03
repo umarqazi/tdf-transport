@@ -14,55 +14,74 @@ TDF Dashboard
   </div>
   <div class="col-lg-12 calendar-control">
     <a href="{{route('user.date.dashboard', ['startDate'=>$checkDate->startOfWeek()->addDay(-7)])}}"><i class="fa fa-arrow-circle-left"></i></a>
-    <span class="start">{{$startDate}}</span> - <span class="end">{{$endDate}}</span>
+    <span class="start">{{date('M Y', strtotime($startDate))}}</span> @if(date('M Y', strtotime($endDate)) != date('M Y', strtotime($startDate)))- <span class="end">{{date('M Y', strtotime($endDate))}} @endif</span>
     <a href="{{route('user.date.dashboard', ['endDate'=>$checkDate->endOfWeek()->addDay(8)])}}"><i class="fa fa-arrow-circle-right"></i></a>
 
   </div>
-  <div class="col-lg-12 calendar-control">
-    <table class="align-center">
-      <tr>
-        <td>
-          <div class="form-group">
-            <div class="input-group">
-              <meta name="csrf-token" content="{{ csrf_token() }}" />
-              {{Form::text('customer_name', null, ['class'=>'form-control', 'placeholder'=>'Rechercher un client', 'id'=>'customer'])}}
-            </div>
-            <span class="text-danger">{!! $errors->first('order_id') !!}</span>
-          </div></td>
-          <td>&nbsp;</td>
-          <td><div class="form-group">
-            <div class="input-group">
-              {{Form::text('order_id', null, ['class'=>'form-control', 'placeholder'=>'Rechercher une commande', 'id'=>'orderId'])}}
-            </div>
-            <span class="text-danger">{!! $errors->first('order_id') !!}</span>
+
+
+
+
+
+    <div class="custom_search">
+      <input type="text" value="{{Input::get('search_field')}}" class="form-control search_dropdown" name="search_field" id='search_field' placeholder="Rechercher un client, une commande..">
+      <a href="#" class="dropdown_btn"><i class="fa fa-chevron-down"></i></a>
+      <button type="button" onclick="searchResult()" class="btn btn_search"><i class="fa fa-search"></i></button>
+      <div class="toggle_div">
+        <span>Rechercher par</span>
+        <div class="form-group">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="customerCheck" name="customerCheck">
+            </label>
           </div>
-        </td>
-        <td>&nbsp;</td>
-        <td><div class="form-group">
-          <div class='input-group date' id='datetimepicker5'>
-            {{ Form::text('datetime', null, ['class'=>'form-control', 'id'=>'datetime'])}}
+          <div class="input-group">
+            <meta name="csrf-token" content="{{ csrf_token() }}" />
+            {{Form::text('customer_name', Input::get('customer_name'), ['class'=>'form-control', 'placeholder'=>'Rechercher un client', 'id'=>'customer'])}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="orderCheck" name="orderCheck">
+            </label>
+          </div>
+          <div class="input-group">
+            {{Form::text('order_id', Input::get('order_id'), ['class'=>'form-control', 'placeholder'=>'Rechercher une commande', 'id'=>'orderId'])}}
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="dateCheck" name="dateCheck">
+            </label>
+          </div>
+          <div class='input-group date' id='datetimepicker7'>
+            {{ Form::text('datetime', Input::get('datetime'), ['class'=>'form-control', 'id'=>'datetime'])}}
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
           </div>
-          <span class="text-danger">{!! $errors->first('datetime') !!}</span>
+
         </div>
-      </td>
-      <td>&nbsp;</td>
-      <td><div class="form-group">
-        <div class="input-group text-center tbl-btns">
-          <button class="btn btn-primary" onclick="searchResult()">Search</button>
+
+        <div class="form-group">
+          <div class="input-group text-center tbl-btns">
+              <button type="button" onclick="searchResult()" class='btn btn-primary button-padding'>
+                RECHERCHER <i class="fa fa-search"></i>
+              </button>
+          </div>
+
         </div>
-        <span class="text-danger">{!! $errors->first('order_id') !!}</span>
       </div>
-    </td>
-  </tr>
-</table>
-</div>
+    </div>
 <div class="pull-right selector">
   <select onchange="showView(this)">
-    <option value="dashboard">Weekly</option>
-    <option value="monthlyRecords">Monthly</option>
+    <option value="dashboard">Semaine</option>
+    <option value="monthlyRecords">Mois</option>
   </select>
 </div>
 </div>

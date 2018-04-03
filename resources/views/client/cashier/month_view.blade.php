@@ -10,8 +10,8 @@ TDF Month View
 </div>
 <div class="col-lg-12 calendar-control">
   <select onchange="showView(this)">
-    <option value="dashboard">Weekly</option>
-    <option value="monthlyRecords" selected="selected">Monthly</option>
+    <option value="dashboard">Semaine</option>
+    <option value="monthlyRecords" selected="selected">Mois</option>
   </select>
 </div>
 
