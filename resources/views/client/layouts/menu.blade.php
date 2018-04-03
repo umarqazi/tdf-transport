@@ -16,9 +16,9 @@
   </div>
   @if($authUser->type== Config::get('constants.Users.Manager'))
   <ul class="nav navbar-top-links navbar-left">
-    <li><a href="{{URL('/')}}"><i class="fa fa-home fa-fw"></i> Accueil</a></li>
-    <li><a href="{{URL('/delivery')}}"><i class="fa fa-truck fa-fw"></i> Ajouter une livraison</a></li>
-    <li><a href="{{URL('/history')}}"><i class="fa fa-calendar fa-fw"></i> Historique des livraisons</a></li>
+    <li><a href="{{URL('/')}}" class="{{ request()->is('dashboard') ? 'active-link' : '' }}"><i class="fa fa-home fa-fw"></i> Accueil</a></li>
+    <li><a href="{{URL('/delivery')}}" class="{{ request()->is('delivery') ? 'active-link' : '' }}"><i class="fa fa-truck fa-fw"></i> Ajouter une livraison</a></li>
+    <li><a href="{{URL('/history')}}" class="{{ request()->is('history') ? 'active-link' : '' }}"><i class="fa fa-calendar fa-fw"></i> Historique des livraisons</a></li>
   </ul>
   @endif
   <!-- /.navbar-header -->

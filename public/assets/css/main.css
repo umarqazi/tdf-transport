@@ -478,7 +478,11 @@ display: block;
   font-weight: bold;
 }
 .active-link{
-  color:#337ab7;
+  color:#337ab7 !important;
+  font-weight: bold;
+}
+.navbar-top-links li a:hover{
+  color:#337ab7 !important;
 }
 .make-center{
   display: inline-block;
