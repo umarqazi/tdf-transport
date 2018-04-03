@@ -6,7 +6,7 @@ TDF Month View
 
 @section('content')
 <div class="col-lg-12">
-  <h1 class="page-header text-center">TABLEAU DE BORD LIVRAISONS</h1>
+  <h1 class="page-header text-center">TABLEAU DE BORD DES LIVRAISONS</h1>
 </div>
 <div class="col-lg-12 calendar-control">
   <select onchange="showView(this)">
