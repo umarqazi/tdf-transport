@@ -39,7 +39,7 @@
           }elseif($status==2){
             $status="Livré";
           }else{
-            $status="Attendre";
+            $status="En attente";
           }
           $total+=$delivery['delivery_price'];
           ?>
@@ -54,7 +54,7 @@
             <td>{{$delivery['service']}}</td>
             <td>{{$type}}</td>
             <td>{{$price}}</td>
-            <td>@if($delivery['customer_feedback']==1) <i class="fa fa-circle green-circle"></i> @elseif($delivery['customer_feedback']==2) <i class="fa fa-circle yellow-circle"></i> @else <i class="fa fa-circle red-circle"></i> @endif</td>
+            <td>@if($delivery['customer_feedback']==1) <i class="fa fa-circle green-circle"></i> @elseif($delivery['customer_feedback']==2) <i class="fa fa-circle yellow-circle"></i> @elseif($delivery['customer_feedback']==3) <i class="fa fa-circle red-circle"></i> @endif</td>
             <td>{{$status}}</td>
           </tr>
           @endforeach

@@ -66,7 +66,7 @@
 <!-- validate Popup -->
 
 <div class="modal fade" id="valdiateMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog validateMessagePopup" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"></h5>
@@ -83,17 +83,12 @@
               <br>
               <span>une fois validees, les informations seront communiquees a la societe TDF</span>
             </div>
-            <div class="page-header text-center col-lg-12">
-
-            </div>
-
-
           </div>
         </div>
 
-        <div class=" text-center modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">NON</button>
-          <button type="button" class="btn btn-primary validate-check">OUI</button>
+        <div class=" text-center">
+          <button type="button" class="btn btn-primary validate-check green-color">OUI</button>
+          <button type="button" class="btn btn-secondary red-color" data-dismiss="modal">NON</button>
         </div>
       </div>
 
