@@ -119,6 +119,10 @@ $(document).ready(function () {
 	$(".validate-check").click(function () {
 		$("#validateForm").submit();
 	});
+
+	$(".dropdown_btn").click(function(){
+		$(".toggle_div").slideToggle();
+	});
 });
 jQuery(function() {
 	// setTimeout() function will be fired after page is loaded

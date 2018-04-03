@@ -6,7 +6,7 @@ TDF History
 
 @section('content')
 <div class="row">
-  <div class="col-lg-12">
+  <div class="">
     <h1 class="page-header text-center">HISTORIQUE DES LIVRAISONS</h1>
   </div>
   {!! Form::model(null, [ 'url' => URL::route('delivery.export'), "enctype"=>"multipart/form-data", 'id'=>'searchForm'] )  !!}
