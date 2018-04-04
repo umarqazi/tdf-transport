@@ -9,7 +9,7 @@
 
 #page-wrapper {position: relative;}
 .add-new-circle {position: fixed; bottom: 20px; right: 20px;}
-.add-new-circle .fa {font-size: 40px;}
+.add-new-circle .fa {font-size: 50px; z-index: 9999;}
 .navbar-brand{    padding: 5px 15px !important;
     height: 80px !important; width: 180px;}
     .navbar-brand img {
