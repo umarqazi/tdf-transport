@@ -272,13 +272,13 @@ class DeliveryController extends Controller
         $items=$delivery['product_family'];
       }
       $name=$delivery['first_name'].' '.$delivery['last_name'];
-      if($delivery['status']==1){ $status= "Validé";}elseif($delivery['status']==2){$status= "Livre"; }else{ $status="Attendre"; };
+      if($delivery['status']==1){ $status= "Validé";}elseif($delivery['status']==2){$status= "Livre"; }else{ $status="En attente"; };
       $records[]=[$delivery['datetime'], $name,$delivery['order_id'],1,$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, $delivery['customer_feedback']];
     }
-    Excel::create('All Deliveries', function($excel) use ($records) {
-      $excel->setTitle('Deliveries History');
+    Excel::create('Historique des livraisons', function($excel) use ($records) {
+      $excel->setTitle('Historique des livraisons');
       $excel->setCreator('TDF Transport')->setCompany('WJ Gilmore, LLC');
-      $excel->setDescription('History of Deliveries');
+      $excel->setDescription('Historique des livraisons');
       $excel->sheet('sheet1', function($sheet) use ($records) {
         $sheet->fromArray($records, null, 'A1', false, false);
       });

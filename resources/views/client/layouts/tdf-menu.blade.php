@@ -21,7 +21,9 @@
   <ul class="nav navbar-top-links navbar-right">
     <li><strong class="capitalize user-name">{{$authUser->user_first_name}} {{$authUser->user_last_name}} ({{$authUser->type}})</strong></li>
     <li><a href="{{URL::to('/logout')}}"><i class="fa fa-sign-out fa-fw"></i> Deconnexion</a></li>
+    @if($authUser->type==Config::get('constants.Users.TDF Manager'))
     <li><a href="#"><i class="fa fa-question-circle fa-fw"></i> Aide</a></li>
+    @endif
   </ul>
   <!-- /.navbar-top-links -->
 

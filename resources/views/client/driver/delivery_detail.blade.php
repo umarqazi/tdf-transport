@@ -15,12 +15,14 @@ TDF Driver
                 <table class="table table-striped table-bordered">
                     <tbody>
                           <tr>
-                              <td width=30%><i class="fa fa-user fa-fw"></i> Coordonnees du client</td>
+                              <td width=20%><i class="fa fa-user fa-fw"></i> Coordonnées du client</td>
                               <td>
                                     <ul class="list-unstyled icons">
-                                    <li><i class="fa fa-user fa-fw"></i>{{$detail['first_name']}}</li>
+                                    <li><i class="fa fa-user fa-fw"></i>{{$detail['first_name']}} {{$detail['last_name']}}</li>
                                     <li>&nbsp;</li>
                                     <li>{{$detail['address']}}</li>
+                                    <li>&nbsp;</li>
+                                    <li>{{$detail['postal_code']}} {{$detail['city']}}</li>
                                     <li>&nbsp;</li>
                                     <li><i class="fa fa-phone fa-fw"></i> {{$detail['mobile_number']}}</li>
                                     <li>&nbsp;</li>
@@ -28,21 +30,21 @@ TDF Driver
                               </td>
                           </tr>
                           <tr>
-                              <td><i class="fa fa-cubes fa-fw"></i> Informations dur la Livraison</td>
+                              <td><i class="fa fa-cubes fa-fw"></i> Informations sur la livraison</td>
                               <td>
                                 <ul class="list-unstyled icons">
-                                  <li><strong>Commande n: </strong></li>
+                                  <li><strong>Commande N° : </strong></li>
                                   <li>
                                     <div class="col-md-12 pdf-space">
-                                      <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a>
+                                      <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>
                                       <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['order_pdf']}}" target="_blank" id="OrderAddPdfLink">{{$detail['order_id']}}</a></li>
                                     </div>
                                   <li>
                                   <li>&nbsp;</li>
-                                  <li><strong>Bon de Livaraison: </strong></li>
+                                  <li><strong>Bon de livraison : </strong></li>
                                   <li>
                                     <div class="col-md-12 pdf-space">
-                                      <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['delivery_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a>
+                                      <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['delivery_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>
                                       <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['delivery_pdf']}}" target="_blank" id="OrderAddPdfLink">{{$detail['delivery_number']}}</a></li>
                                     </div>
                                   <li>
@@ -106,7 +108,7 @@ TDF Driver
 
     <div class="row">
         <div class="col-md-12 text-center tbl-btns tbl-btns-2">
-            <button type="submit" class="active button-styling">Envoier les Informations <i class="fa fa-check-square"></i></button>
+            <button type="submit" class="active button-styling">Envoyer les informations <i class="fa fa-check-square"></i></button>
         </div>
     </div>
     {!! Form::hidden('id', $detail['id'], []) !!}

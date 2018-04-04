@@ -258,6 +258,9 @@ button:focus {
     .login-wrapper .form-section {
         width: 270px;
     }
+    .login-wrapper h1{
+      font-size: 20px;
+    }
 }
 @media only screen and (max-width:767px){
   .login-footer{
@@ -498,4 +501,8 @@ button:focus {
 }
 .set-heigth{
   height: 50px;
+}
+.pdf-font{
+  font-size: 17pt !important;
+  margin-top: 10px;
 }
