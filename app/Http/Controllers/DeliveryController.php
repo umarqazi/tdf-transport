@@ -44,11 +44,11 @@ class DeliveryController extends Controller
     $id=$request->id;
     if($request->date)
     {
-      $dateTime=date('d/m/Y', strtotime($request->date));
+      $dateTime=date('m/d/Y', strtotime($request->date));
     }
     else
     {
-      $dateTime=date('d/m/Y');
+      $dateTime=date('m/d/Y');
     }
 
     $dayPeriod=$request->period;
@@ -164,8 +164,8 @@ class DeliveryController extends Controller
       $product_id=NULL;
     }
     $delivery->product_id=$product_id;
+    $delivery->status=Config::get('constants.Status.Pending');
     if(Auth::user()->type==Config::get('constants.Users.Manager')){
-      $delivery->status=Config::get('constants.Status.Active');
       $getManager=User::where('type', 'Manager')->where('store_id', $this->authUser->store_id)->first();
       if(!empty($getManager))
       {
@@ -173,7 +173,7 @@ class DeliveryController extends Controller
       }
     }
     $delivery->save();
-    Toast::success(Config::get('constants.Create Delivery Message'));
+    Toast::success(Config::get('constants.Create Delivery'));
     return redirect::to('/dashboard');
   }
   public function viewDeliver(Request $request)
@@ -258,7 +258,7 @@ class DeliveryController extends Controller
     }
     $deliveries=$deliveries->get();
     $records = [];
-    $records[] = ['Date de la livraison', 'Client','Numero de commande','Numero du bon de livraison','Telephone', 'Villes', 'Code Postal', 'Type de Prestation', 'Produit(s) commande(s)', 'Prix de la livraison', 'Status', 'Customer Feedback'];
+    $records[] = ['Date de la livraison', 'Client','Numéro de commande','Numéro du bon de livraison','Téléphone', 'Ville', 'Code Postal', 'Type de prestation', 'Produit commandé', 'Prix de la livraison', 'Statut', 'Satisfaction client'];
     foreach($deliveries as $key=>$delivery){
       $items=array();
       if($delivery['delivery_price']=='Gratuit'){

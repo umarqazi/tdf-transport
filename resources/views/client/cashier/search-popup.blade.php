@@ -79,9 +79,9 @@
 
           <div class="">
             <div class="page-header text-center col-lg-12">
-              <span>Etes-vous sur de vouloir valider les livraisons selectionnees?</span>
+              <span>Etes-vous sur de vouloir valider les livraisons sélectionnées ?</span>
               <br>
-              <span>une fois validees, les informations seront communiquees a la societe TDF</span>
+              <span>Une fois validées, les informations seront communiquées à la société TDF.</span>
             </div>
           </div>
         </div>

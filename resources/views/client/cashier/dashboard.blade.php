@@ -55,7 +55,7 @@ TDF Dashboard
           </label>
         </div>
         <div class='input-group date' id='datetimepicker7'>
-          {{ Form::text('datetime', Input::get('datetime'), ['class'=>'form-control', 'id'=>'datetime'])}}
+          {{ Form::text('datetime', Input::get('datetime'), ['placeholder'=>'Rechercher par date','class'=>'form-control', 'id'=>'datetime'])}}
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -131,7 +131,7 @@ TDF Dashboard
           <a href="" class="anchor-space">&nbsp;</a> -->
 
           @else
-          <td>
+          <td class="set-heigth">
 
             <div class="clearfix"></div>
             @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Matin'])}}" class="anchor-space"></a> @endif
@@ -171,11 +171,8 @@ TDF Dashboard
             <div class="clearfix"></div>
             @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Apres - Midi'])}}" class="anchor-space"></a> @endif
           </td>
-          <!-- <div class="clearfix"></div>
-          <a href="" class="anchor-space">&nbsp;</a> -->
-
           @else
-          <td>
+          <td class="set-heigth">
 
             <div class="clearfix"></div>
             @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Apres - Midi'])}}" class="anchor-space"></a> @endif

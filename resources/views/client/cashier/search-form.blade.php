@@ -39,7 +39,7 @@
         </label>
       </div>
       <div class='input-group date' id='datetimepicker7'>
-        {{ Form::text('datetime', Input::get('datetime'), ['class'=>'form-control', 'id'=>'datetime'])}}
+        {{ Form::text('datetime', Input::get('datetime'), ['placeholder'=>"Rechercher par date",'class'=>'form-control', 'id'=>'datetime'])}}
         <span class="input-group-addon">
           <span class="glyphicon glyphicon-calendar"></span>
         </span>

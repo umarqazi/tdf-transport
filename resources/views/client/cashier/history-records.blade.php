@@ -7,13 +7,13 @@
           <tr>
             <th class="text-center">Date de la livraison</th>
             <th class="text-center">Client</th>
-            <th class="text-center">Numero de commande</th>
-            <th class="text-center">Numero du bon de livraison</th>
-            <th class="text-center">Telephone</th>
-            <th class="text-center">Villes</th>
+            <th class="text-center">Numéro de commande</th>
+            <th class="text-center">Numéro du bon de livraison</th>
+            <th class="text-center">Téléphone</th>
+            <th class="text-center">Ville</th>
             <th class="text-center">Code Postal</th>
-            <th class="text-center">Type de Prestation</th>
-            <th class="text-center">Produit(s) commande(s)</th>
+            <th class="text-center">Type de prestation</th>
+            <th class="text-center">Produit commandé</th>
             <th class="text-center">Prix de la livraison</th>
             <th class="text-center">Satisfaction client</th>
             <th class="text-center">Statut</th>
