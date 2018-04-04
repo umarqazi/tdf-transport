@@ -11,10 +11,10 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-lg-12">
-            <h1 class="page-header text-center">CHOIX DE LA LIVRAISAN</h1>
+            <h1 class="page-header text-center">Choix de la livraison</h1>
           </div>
           <div class="col-md-6">
-              <span class="delivery-heading">liste des livraison du jour <i class="fa fa-cubes fa-fw"></i></span>
+              <span class="delivery-heading">Liste des livraisons du jour <i class="fa fa-cubes fa-fw"></i></span>
           </div>
           <div class="col-md-6 pull-right text-center">
               <table class="filter-tale">

@@ -129,9 +129,10 @@ button:focus {
     color: white;
 }
 .anchor-space{
-display: block;
-    clear: both;
-    padding: 30px 0px;
+  display: block;
+  clear: both;
+  padding: 30px 0px;
+  height: 100%;
 }
 .cursor-pointer{
     cursor: pointer;
@@ -494,4 +495,7 @@ display: block;
   background-color: #93c47d;
   color:white;
   border-radius:5px;
+}
+.set-heigth{
+  height: 50px;
 }
