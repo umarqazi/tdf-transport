@@ -120,6 +120,7 @@ TDF Create Delivery
                 <td><i class="fa fa-2x fa-file-pdf-o"></i></td>
                 <td>&nbsp;</td>
                 <td><a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['order_pdf']}}" target="_blank" id="OrderAddPdfLink">{{$delivery['order_pdf']}}</a></td>
+                <td><a onclick="cancelpdf('order')" class="cancelpdf"><i class="fa fa-close"></i></a></td>
               </tr>
             </table>
           </div>
@@ -154,6 +155,7 @@ TDF Create Delivery
                 <td><i class="fa fa-2x fa-file-pdf-o"></i></td>
                 <td>&nbsp;</td>
                 <td><a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink">{{$delivery['delivery_pdf']}}</a></td>
+                <td><a onclick="cancelpdf('delivery')" class="cancelpdf"><i class="fa fa-close"></i></a></td>
               </tr>
             </table>
           </div>
