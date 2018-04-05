@@ -22,6 +22,7 @@ TDF Month View
 $(document).ready(function() {
   // page is now ready, initialize the calendar...
   $('#calendar').fullCalendar({
+    fixedWeekCount: false,
     // put your options and callbacks here
     events : [
       @foreach($deliveries as $task)
