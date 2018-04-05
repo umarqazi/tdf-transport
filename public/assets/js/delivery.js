@@ -153,3 +153,18 @@ function getPrice(option){
 		},
 	});
 }
+function cancelpdf(type){
+	if(type=='delivery'){
+		$('#showPdftable').hide();
+		$('#addPdfLink').html('');
+		$('#dummyFile').val('');
+		$('#PdfDiv').show();
+		$('#pdfFile').val('');
+	}else{
+		$('#OrderShowPdftable').hide();
+		$('#OrderAddPdfLink').html('');
+		$('#OrderdummyFile').val('');
+		$('#orderPdfFile').val('');
+		$('#orderPdfDiv').show();
+	}
+}
