@@ -13,12 +13,12 @@
   </div>
   <!-- /.navbar-header -->
   @if($authUser->type==Config::get('constants.Users.TDF Manager'))
-    <ul class="nav navbar-top-links navbar-left">
+    <ul class="nav navbar-top-links navbar-left hide-menu">
       <li><a href="{{URL('/planDriverTour')}}" class="{{ request()->is('planDriverTour') ? 'active-link' : '' }}"><i class="fa fa-truck fa-fw"></i> Creation d'une Tournee</a></li>
       <li><a href="{{URL('/allDeliveryHistory')}}" class="{{ request()->is('allDeliveryHistory') ? 'active-link' : '' }}"><i class="fa fa-calendar fa-fw"></i> Historique des livraisons</a></li>
     </ul>
   @endif
-  <ul class="nav navbar-top-links navbar-right">
+  <ul class="nav navbar-top-links navbar-right hide-menu">
     <li><strong class="capitalize user-name">{{$authUser->user_first_name}} {{$authUser->user_last_name}} ({{$authUser->type}})</strong></li>
     <li><a href="{{URL::to('/logout')}}"><i class="fa fa-sign-out fa-fw"></i> Deconnexion</a></li>
     @if($authUser->type==Config::get('constants.Users.TDF Manager'))
@@ -26,6 +26,34 @@
     @endif
   </ul>
   <!-- /.navbar-top-links -->
+  <div class="navbar-default sidebar toggle-menu" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+      <ul class="nav" id="side-menu">
+        @if($authUser->type==Config::get('constants.Users.TDF Manager'))
+            <li>
+              <a href="{{URL('/planDriverTour')}}" class="{{ request()->is('planDriverTour') ? 'active-link' : '' }}">
+                <i class="fa fa-truck fa-fw"></i> Creation d'une Tournee</a>
+            </li>
+            <li>
+              <a href="{{URL('/allDeliveryHistory')}}" class="{{ request()->is('allDeliveryHistory') ? 'active-link' : '' }}">
+                <i class="fa fa-calendar fa-fw"></i> Historique des livraisons</a>
+            </li>
+        @endif
 
+          <li>
+            <a>
+              <strong class="capitalize user-name">{{$authUser->user_first_name}} {{$authUser->user_last_name}} ({{$authUser->type}})</strong>
+            </a>
+          </li>
+          <li>
+            <a href="{{URL::to('/logout')}}"><i class="fa fa-sign-out fa-fw"></i> Deconnexion</a>
+          </li>
+          @if($authUser->type==Config::get('constants.Users.TDF Manager'))
+            <li><a href="#"><i class="fa fa-question-circle fa-fw"></i> Aide</a></li>
+          @endif
+      </ul>
+    </div>
+    <!-- /.sidebar-collapse -->
+  </div>
   <!-- /.navbar-static-side -->
 </nav>

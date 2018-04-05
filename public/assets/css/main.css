@@ -433,6 +433,11 @@ button:focus {
   border: 1px solid #93c47d !important;
 }
 
+.nav>li.toggle-menu,
+.toggle-menu{
+    display: none;
+}
+
 /* Ahmad styles */
 
 .custom_search {
