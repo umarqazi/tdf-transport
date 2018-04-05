@@ -20,3 +20,8 @@ function showStoreName(type)
         $('#driverRecord').hide();
     }
 }
+function addSubProduct(product_name){
+  $('#product_family').val(product_name);
+  $("#product_family").prop("readonly", true);
+  $("#addProduct").modal('show');
+}

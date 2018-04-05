@@ -324,6 +324,10 @@ Route::group(['middleware' => ['web']], function ()
         'as'   => 'product.delete',
         'uses' => 'LaravelAcl\Http\Controllers\ProductController@destroy'
       ]);
+      Route::get('/subProduct/delete', [
+        'as'   => 'sub.product.delete',
+        'uses' => 'LaravelAcl\Http\Controllers\ProductController@destroySubProduct'
+      ]);
       Route::post('importExport', [
         'as'   => 'import',
         'uses'=>'LaravelAcl\Http\Controllers\ProductController@importExport']);

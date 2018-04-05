@@ -14,4 +14,8 @@ class Product extends Model
 	{
 	    return $this->belongsToMany('LaravelAcl\Delivery', 'delivery_products');
 	}
+  public function subProducts()
+	{
+	    return $this->hasMany('LaravelAcl\SubProduct');
+	}
 }

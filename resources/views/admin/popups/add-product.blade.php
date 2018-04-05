@@ -20,7 +20,7 @@
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::text('product_family', null, ['class' => 'form-control', 'placeholder' => 'Product Family', 'autocomplete' => 'off']) !!}
+                    {!! Form::text('product_family', null, ['class' => 'form-control', 'placeholder' => 'Product Family', 'id'=>'product_family' ,'autocomplete' => 'off']) !!}
                     {!! Form::hidden('id') !!}
                     {!! Form::hidden('company_id', $companyId) !!}
                   </div>
@@ -35,17 +35,45 @@
                 </div>
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-phone fa-fw"></i></div>
-                    {!! Form::number('delivery_charges', null, ['class' => 'form-control', 'placeholder' => 'Delivery Charges', 'autocomplete' => 'off']) !!}
+                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
+                    {!! Form::number('sav', null, ['class' => 'form-control', 'placeholder' => 'SAV Service Charges', 'autocomplete' => 'off']) !!}
                   </div>
-                  <span class="text-danger">{!! $errors->first('phone_number') !!}</span>
+                  <span class="text-danger">{!! $errors->first('sav') !!}</span>
                 </div>
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::number('comission', null, ['class' => 'form-control', 'placeholder' => 'Comission', 'autocomplete' => 'off']) !!}
+                    {!! Form::number('livraison', null, ['class' => 'form-control', 'placeholder' => 'Livraison Service Charges', 'autocomplete' => 'off']) !!}
                   </div>
-                  <span class="text-danger">{!! $errors->first('city') !!}</span>
+                  <span class="text-danger">{!! $errors->first('livraison') !!}</span>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
+                    {!! Form::number('livraison_montage', null, ['class' => 'form-control', 'placeholder' => 'Livraison Montage Service Charges', 'autocomplete' => 'off']) !!}
+                  </div>
+                  <span class="text-danger">{!! $errors->first('livraison_montage') !!}</span>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
+                    {!! Form::number('rétrocession', null, ['class' => 'form-control', 'placeholder' => 'Rétrocession Montage Service Charges', 'autocomplete' => 'off']) !!}
+                  </div>
+                  <span class="text-danger">{!! $errors->first('rétrocession') !!}</span>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
+                    {!! Form::number('prestataire', null, ['class' => 'form-control', 'placeholder' => 'Prestataire Montage Service Charges', 'autocomplete' => 'off']) !!}
+                  </div>
+                  <span class="text-danger">{!! $errors->first('prestataire') !!}</span>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
+                    {!! Form::number('montage', null, ['class' => 'form-control', 'placeholder' => 'Montage Montage Service Charges', 'autocomplete' => 'off']) !!}
+                  </div>
+                  <span class="text-danger">{!! $errors->first('montage') !!}</span>
                 </div>
               </div>
               <div class="clearfix popuup_submit">

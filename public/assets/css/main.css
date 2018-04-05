@@ -6,7 +6,7 @@
 		font-family: 'Quicksand', sans-serif;
 *********/
 body,html{
-  height: calc(100% - 100px);
+  /* height: calc(100% - 120px); */
 }
 body {
   margin: 0px;
@@ -147,6 +147,7 @@ button:focus {
 .login-footer{
     text-align: center;
     padding:10px 0px;
+    bottom:10px;
 }
 .login-footer > .footer-logo img{
     max-width: 350px;
@@ -301,9 +302,11 @@ button:focus {
 }
 .grey-color{
   background-color: #989898;
+  color:white;
 }
 .blue-color{
-  background-color: #457F8F;
+  background-color: #457F8F !important;
+  color:white;
 }
 .text-style{
   text-align: center;
@@ -505,4 +508,14 @@ button:focus {
 .pdf-font{
   font-size: 17pt !important;
   margin-top: 10px;
+}
+.anchor-color{
+  color:white !important;
+  padding:5px;
+  border-radius:5px;
+    background-color: #c76905;
+    display: inline-block;
+}
+.trash{
+  background-color: #c71010 !important;
 }

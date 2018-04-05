@@ -3,6 +3,7 @@
 namespace LaravelAcl\Http\Controllers;
 
 use LaravelAcl\Product;
+use LaravelAcl\SubProduct;
 use Illuminate\Http\Request;
 use view;
 use Validator;
@@ -28,10 +29,11 @@ class ProductController extends Controller
     }
     else
     {
-      $product=Product::where('company_id', $companyId)->paginate(10);
+      $product=Product::where('company_id', $companyId)->with('subProducts')->orderBy('id', 'desc')->paginate(10);
+      // echo "<pre>";print_r($product->toArray());die();
     }
     if($id){
-      $newProduct=Product::find($id);
+      $newProduct=SubProduct::leftJoin('products', 'sub_products.product_id', '=', 'products.id')->find($id);
       $modal="addProduct";
     }else{
       $newProduct=New Product;
@@ -57,13 +59,10 @@ class ProductController extends Controller
   */
   public function store(Request $request)
   {
-    $id=$request->id;
     $company_id=$request->company_id;
     $validator = Validator::make($request->all(), [
       'product_family' => 'required',
       'product_type' => 'required',
-      'delivery_charges' => 'required|numeric',
-      'comission' => 'required|numeric',
     ]);
 
     if ($validator->fails()) {
@@ -71,26 +70,51 @@ class ProductController extends Controller
       ->withErrors($validator)
       ->withInput();
     }
-    if($id)
-    {
-      $addStore=Product::find($id);
-      $message="Product has been updated Successfully";
+    $message="Product has been updated Successfully";
+    $addStore=self::insertProduct($request);
+    if($request->product_type){
+      $request['id']=$addStore->id;
+      $addSubProduct=self::insertSubProduct($request);
     }
-    else
-    {
-      $addStore=new Product;
-      $message="Product has been added Successfully";
-    }
-    $addStore->product_family=$request->product_family;
-    $addStore->product_type=$request->product_type;
-    $addStore->delivery_charges=$request->delivery_charges;
-    $addStore->comission=$request->comission;
-    $addStore->company_id=$request->company_id;
-    $addStore->save();
-
     return redirect::to('/admin/product/list/'.$addStore->company_id)->with('message', $message);
   }
 
+  public function insertProduct($product){
+    $id='';
+    if(array_key_exists('id', $product)){
+      $id=$product->id;
+    }
+    if($id)
+    {
+      $addStore=Product::find($id);
+    }
+    else
+    {
+      $addStore=Product::where('product_family', $product['product_family'])->first();
+      if(empty($addStore)){
+        $addStore=new Product;
+      }
+    }
+    $addStore->product_family=$product['product_family'];
+    $addStore->company_id=$product['company_id'];
+    $addStore->save();
+    return $addStore;
+  }
+  public function insertSubProduct($product){
+    $addSubProduct=SubProduct::where('product_type', $product['product_type'])->where('product_id', $product['id'])->first();
+    if(empty($addSubProduct)){
+      $addSubProduct=new SubProduct;
+    }
+    $addSubProduct->product_type=$product['product_type'];
+    $addSubProduct->sav=$product['sav'];
+    $addSubProduct->livraison=$product['livraison'];
+    $addSubProduct->livraison_Montage=$product['livraison_montage'];
+    $addSubProduct->rétrocession=$product['rétrocession'];
+    $addSubProduct->prestataire=$product['prestataire'];
+    $addSubProduct->montage=$product['montage'];
+    $addSubProduct->product_id=$product['id'];
+    $addSubProduct->save();
+  }
   /**
   * Display the specified resource.
   *
@@ -114,11 +138,11 @@ class ProductController extends Controller
     $companyId=$request->companyId;
     if($id)
     {
-      $getProduct=Product::find($id);
+      $getProduct=SubProduct::find($id);
     }
     else
     {
-      $getProduct=new Product;
+      $getProduct=new SubProduct;
     }
     return view::make('admin.company.edit-product')->with(['product'=>$getProduct, 'companyId'=>$companyId]);
   }
@@ -164,14 +188,20 @@ class ProductController extends Controller
       })->get();
       if(!empty($data) && $data->count()){
         foreach ($data as $key => $value) {
-          $insert[] = ['product_family' => $value->family
-          , 'product_type' => $value->type, 'delivery_charges' => $value->delivery, 'comission' => $value->commission, 'company_id'=>$company_id];
-        }
-        if(!empty($insert)){
-          DB::table('products')->insert($insert);
+          $product = ['product_family' => $value->product_family, 'company_id'=>$company_id];
+          $addProduct=self::insertProduct($product);
+          $sub_product = ['id'=>$addProduct->id,'product_type' => $value->product_detail,'sav' => $value->sav,'livraison' => $value->livraison,'livraison_montage' => $value->livraison_montage,'rétrocession' => $value->retrocession,'prestataire' => $value->livraison_prestataire,'montage' => $value->montage];
+          $addProduct=self::insertSubProduct($sub_product);
         }
       }
     }
     return redirect::back()->with('message', 'Product has been uploaded Successfully');
+  }
+  public function destroySubProduct(Request $request)
+  {
+    $id=$request->id;
+    $getStore=SubProduct::find($id);
+    $getStore->delete();
+    return redirect::back()->with('message', "Product Detail has been deleted Successfully");
   }
 }
