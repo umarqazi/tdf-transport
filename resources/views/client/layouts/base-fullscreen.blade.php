@@ -18,6 +18,7 @@
     {!! HTML::style('assets/styles/responsive.css') !!}
     {!! HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') !!}
     {!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css') !!}
+    {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js') !!}
     <script type="text/javascript">
         var APP_URL = {!! json_encode(url('/')) !!}
     </script>
@@ -38,9 +39,10 @@
                 @yield('content')
             </div>
         </div>
-        {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js') !!}
-        {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js')!!}
-        {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js')!!}
+        {!! HTML::script('assets/js/moment.min.js')!!}
+        {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.js') !!}
+        {!! HTML::script('assets/js/fullcalendar.js')!!}
+        {!! HTML::script('assets/js/fr.js') !!}
         {!! HTML::script('assets/scripts/bootstrap.min.js') !!}
         {!! HTML::script('assets/js/bootstrap-datetimepicker.min.js')!!}
         {!! HTML::script('http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js') !!}
