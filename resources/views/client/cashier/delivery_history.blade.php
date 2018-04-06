@@ -54,9 +54,17 @@ TDF History
 </div>
 @stop
 @section('footer_scripts')
+<<<<<<< HEAD
+    <script>
+        $(".delete").click(function(){
+            return confirm("Are you sure to delete this item?");
+        });
+    </script>
+=======
 <script>
 $(".delete").click(function(){
   return confirm("Are you sure to delete this item?");
 });
 </script>
+>>>>>>> 22acd44e7f0e606d3830249d730d20456cf9596c
 @stop
