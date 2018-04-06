@@ -7,7 +7,7 @@ return [
         "Cashier" => "Cashier",
         "Driver"  => "Driver"
     ],
-    'Day Period' => ['Matin' => 'Matin', 'Apres - Midi'=>'Apres - Midi'],
+    'Day Period' => ['matin' => 'matin', 'après-midi'=>'après-midi'],
     'Services' => [''=>'Prestation(s) Choisie(s)','SAV'=>'SAV','Livraison'=>'Livraison','Livraison + Montage'=>'Livraison + Montage', 'Retrocession'=>'Retrocession','Livraison Prestataire'=>'Livraison Prestataire', 'Montage'=>'Montage'],
     'Create Delivery' => 'Merci votre demande de livraison a été créée.',
     'Create Delivery Message' =>'Vos demandes de livraisons ont été validées et les informations ont été transmises à la société TDF Transport.',
