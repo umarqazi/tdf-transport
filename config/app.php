@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'timezone'        => 'UTC',
+    'timezone'        => 'Europe/Paris',
 
     /*
     |--------------------------------------------------------------------------
@@ -132,6 +132,7 @@ return [
             Illuminate\Validation\ValidationServiceProvider::class,
             Illuminate\View\ViewServiceProvider::class,
             Illuminate\Notifications\NotificationServiceProvider::class,
+            Jenssegers\Date\DateServiceProvider::class,
             /*
              * Application Service Providers...
              */
@@ -195,6 +196,7 @@ return [
             'Toast'     => Grimthorr\LaravelToast\Facade::class,
             'Input' => Illuminate\Support\Facades\Input::class,
             'Notification' => Illuminate\Support\Facades\Notification::class,
+            'Date' => Jenssegers\Date\Date::class,
     ],
 
 ];

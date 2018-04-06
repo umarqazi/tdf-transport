@@ -103,7 +103,7 @@ TDF Dashboard
           @if(!empty($delivery))
           <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div" @else class="disabled-div" @endif>
             @foreach($delivery as $dayDelivery)
-            @if($dayDelivery['day_period']=='Matin')
+            @if($dayDelivery['day_period']==Config::get('constants.Day Period.matin'))
             <?php if ($number % 2 == 0) {
               $color='blue-color';
             }else{
@@ -153,7 +153,7 @@ TDF Dashboard
           }?>
           <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div" @else class="disabled-div" @endif>
             @foreach($delivery as $dayDelivery)
-            @if($dayDelivery['day_period']=='Apres - Midi')
+            @if($dayDelivery['day_period']==Config::get('constants.Day Period.après-midi'))
             <table class="table table-striped table-bordered tbl-internal">
               <tr>
                 <td width="70%" class="{{$color}}">{{$dayDelivery['first_name']}} {{$dayDelivery['last_name']}} {{$dayDelivery['city']}} {{$dayDelivery['postal_code']}}</td>

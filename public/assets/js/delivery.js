@@ -1,8 +1,14 @@
 $('select').selectpicker();
 $(function () {
-	$('#datetimepicker5').datetimepicker();
-	$('#datetimepicker6').datetimepicker();
-	$('#datetimepicker7').datetimepicker();
+	$('#datetimepicker5').datetimepicker({
+		format: 'M/D/Y'
+	});
+	$('#datetimepicker6').datetimepicker({
+		format: 'M/D/Y'
+	});
+	$('#datetimepicker7').datetimepicker({
+		format: 'M/D/Y'
+	});
 });
 function freeDelivery(check){
 	if($('input[name="free"]').is(':checked'))

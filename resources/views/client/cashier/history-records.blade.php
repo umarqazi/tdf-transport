@@ -36,7 +36,7 @@
           }
           if($delivery['status']==1){
             $status="Validé";
-          }elseif($status==2){
+          }elseif($delivery['status']==2){
             $status="Livré";
           }else{
             $status="En attente";

@@ -65,7 +65,7 @@ class HomeController extends Controller
 		$startDate=Carbon::parse($date->startOfWeek())->format('d M y');
 		$endDate=Carbon::parse($date->endOfWeek())->format('d M y');
 		$view='client.cashier.dashboard';
-		$getDeliveries=Delivery::whereBetween('datetime', [$date->startOfWeek()->format('Y-m-d h:i:s'), $date->endOfWeek()->format('Y-m-d h:i:s')]);
+		$getDeliveries=Delivery::whereBetween('datetime', [$date->startOfWeek()->format('Y-m-d'), $date->endOfWeek()->format('Y-m-d')]);
 		$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id);
 		$getDeliveries=$getDeliveries->get();
 		for($i=0; $i<=5; $i++){
