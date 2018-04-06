@@ -231,14 +231,7 @@ class HomeController extends Controller
 		$searchResult='';
 		$getDeliveryRecords=self::searchResults($request->all());
 		$getDeliveryRecords=$getDeliveryRecords;
-		if($this->type==$this->users['Cashier'])
-		{
-			$getDeliveryRecords=$getDeliveryRecords->where('user_id', $this->authUser->id);
-		}
-		else
-		{
-			$getDeliveryRecords=$getDeliveryRecords->where('store_id', $this->authUser->store_id);
-		}
+		$getDeliveryRecords=$getDeliveryRecords->where('store_id', $this->authUser->store_id);
 		$getDeliveryRecords=$getDeliveryRecords->orderby('datetime', 'desc')->get();
 		$searchResult='<thead><tr><th class="text-center">Date de la livraison</th><th class="text-center">Client</th><th class="text-center">Numero de commande</th><th class="text-center">Numero du bon de livraison</th><th class="text-center">Telephone</th><th class="text-center">Villes</th><th class="text-center">Code Postal</th><th class="text-center">Type de Prestation</th><th class="text-center">Produit(s) commande(s)</th><th class="text-center">Prix de la livraison</th></tr></thead>';
 		foreach($getDeliveryRecords as $key=>$record){
