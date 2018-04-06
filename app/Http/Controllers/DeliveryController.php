@@ -23,11 +23,13 @@ use Excel;
 use Mail;
 use Illuminate\Support\Facades\App;
 use LaravelAcl\Notifications\DeliveryNotification;
+use Jenssegers\Date\Date;
 class DeliveryController extends Controller
 {
   public $authUser;
   public function __construct()
   {
+    Date::setLocale('fr');
     $this->middleware(function ($request, $next) {
       $this->authUser=Auth::user();
       if($this->authUser)
@@ -44,11 +46,11 @@ class DeliveryController extends Controller
     $id=$request->id;
     if($request->date)
     {
-      $dateTime=date('d/m/Y', strtotime($request->date));
+      $dateTime=date('m/d/Y', strtotime($request->date));
     }
     else
     {
-      $dateTime=date('d/m/Y');
+      $dateTime=Date::now();
     }
 
     $dayPeriod=$request->period;
@@ -56,7 +58,7 @@ class DeliveryController extends Controller
     if($id)
     {
       $getDelivery=Delivery::with('products')->where('id',$id)->first();
-      $dateTime=date('m/d/Y h:i:s', strtotime($getDelivery['datetime']));
+      $dateTime=date('m/d/Y', strtotime($getDelivery['datetime']));
     }
     else
     {
@@ -142,7 +144,7 @@ class DeliveryController extends Controller
       $name=self::storeImage($pdf, $getStoreName, $type);
       $delivery->order_pdf=$name;
     }
-    $delivery->datetime=Carbon::parse($request->datetime)->format('Y-m-d h:i:s');
+    $delivery->datetime=Carbon::parse($request->datetime);
     $delivery->day_period=$request->day_period;
     $delivery->first_name=$request->first_name;
     $delivery->last_name=$request->last_name;
@@ -250,12 +252,12 @@ class DeliveryController extends Controller
     }
     if($request->fromDate)
     {
-      $fromDate=Carbon::parse($request->fromDate)->format('Y-m-d h:i:s');
+      $fromDate=Carbon::parse($request->fromDate)->format('Y-m-d');
       $deliveries= $deliveries->where('datetime', '>=', $fromDate);
     }
     if($request->toDate)
     {
-      $toDate=Carbon::parse($request->toDate)->format('Y-m-d h:i:s');
+      $toDate=Carbon::parse($request->toDate)->format('Y-m-d');
       $deliveries= $deliveries->where('datetime', '<=', $toDate);
     }
     $deliveries=$deliveries->get();
