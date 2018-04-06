@@ -100,12 +100,14 @@ class DeliveryController extends Controller
     if($deliveryId)
     {
       $delivery=Delivery::find($deliveryId);
+      $message=Config::get('constants.Edit Delivery');
     }
     else
     {
       $delivery=new Delivery;
       $delivery->user_id=$this->authUser->id;
       $delivery->store_id=$this->authUser->store_id;
+      $message=Config::get('constants.Create Delivery');
     }
     $delivery->save();
     $fileName='DeliveryNote'.$delivery->id;
@@ -173,7 +175,7 @@ class DeliveryController extends Controller
       }
     }
     $delivery->save();
-    Toast::success(Config::get('constants.Create Delivery'));
+    Toast::success($message);
     return redirect::to('/dashboard');
   }
   public function viewDeliver(Request $request)

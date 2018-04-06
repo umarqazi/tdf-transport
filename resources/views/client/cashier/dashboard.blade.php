@@ -101,7 +101,7 @@ TDF Dashboard
           <?php $number=1;?>
           @foreach($deliveries as $key=>$delivery)
           @if(!empty($delivery))
-          <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div" @endif>
+          <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div" @else class="disabled-div" @endif>
             @foreach($delivery as $dayDelivery)
             @if($dayDelivery['day_period']=='Matin')
             <?php if ($number % 2 == 0) {
@@ -131,7 +131,7 @@ TDF Dashboard
           <a href="" class="anchor-space">&nbsp;</a> -->
 
           @else
-          <td class="set-heigth">
+          <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div set-heigth" @else class="disabled-div" @endif>
 
             <div class="clearfix"></div>
             @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Matin'])}}" class="anchor-space"></a> @endif
@@ -151,7 +151,7 @@ TDF Dashboard
           }else{
             $color='grey-color';
           }?>
-          <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div" @endif>
+          <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div" @else class="disabled-div" @endif>
             @foreach($delivery as $dayDelivery)
             @if($dayDelivery['day_period']=='Apres - Midi')
             <table class="table table-striped table-bordered tbl-internal">
@@ -172,7 +172,7 @@ TDF Dashboard
             @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Apres - Midi'])}}" class="anchor-space"></a> @endif
           </td>
           @else
-          <td class="set-heigth">
+          <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div set-heigth" @else class="disabled-div" @endif>
 
             <div class="clearfix"></div>
             @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Apres - Midi'])}}" class="anchor-space"></a> @endif

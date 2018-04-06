@@ -41,15 +41,16 @@ function upload()
 			if(orderPdf=='Yes'){
 				$('#showOrderErrorPdf').html('');
 				$('#OrderShowPdftable').show();
-				$('#OrderAddPdfLink').html(data.name);
+				// $('#OrderAddPdfLink').html(data.name);
 				$('#OrderdummyFile').val(data.name);
 				// $('#orderPdfFile').val('');
 				$('#orderPdfDiv').hide();
+				document.getElementById("OrderAddPdfLink").href=APP_URL+"/assets/images/dummyImages/"+data.name;
 			}
 			else{
 				$('#showErrorPdf').html('');
 				$('#showPdftable').show();
-				$('#addPdfLink').html(data.name);
+				// $('#addPdfLink').html(data.name);
 				$('#dummyFile').val(data.name);
 				// $('#pdfFile').val('');
 				$('#PdfDiv').hide();
@@ -108,16 +109,12 @@ function searchResult()
 		processData : false,
 		data: searchResult,
 		success: function(data) {
+			console.log(data);
 			$('#searchResult').html(data);
 			$('#searchModal').modal('show');
 			$('#customer2').val($("#customer").val());
 			$('#orderId2').val($("#orderId").val());
 			$('#dateTime2').val($("#datetime").val());
-			// $('#showPdftable').show();
-			// $('#addPdfLink').html(data.name);
-			// $('#dummyFile').val(data.name);
-			// $('#pdfFile').val('');
-			// document.getElementById("addPdfLink").href=APP_URL+"/assets/images/dummyImages/"+data.name;
 		},
 		error: function(xhr, status, error) {
 			$('#showErrorPdf').html(xhr.responseText);
@@ -156,13 +153,11 @@ function getPrice(option){
 function cancelpdf(type){
 	if(type=='delivery'){
 		$('#showPdftable').hide();
-		$('#addPdfLink').html('');
 		$('#dummyFile').val('');
 		$('#PdfDiv').show();
 		$('#pdfFile').val('');
 	}else{
 		$('#OrderShowPdftable').hide();
-		$('#OrderAddPdfLink').html('');
 		$('#OrderdummyFile').val('');
 		$('#orderPdfFile').val('');
 		$('#orderPdfDiv').show();
