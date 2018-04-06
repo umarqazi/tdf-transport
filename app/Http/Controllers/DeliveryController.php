@@ -144,7 +144,7 @@ class DeliveryController extends Controller
       $name=self::storeImage($pdf, $getStoreName, $type);
       $delivery->order_pdf=$name;
     }
-    $delivery->datetime=Carbon::parse($request->datetime);
+    $delivery->datetime=date('Y-d-m', strtotime($request->datetime));
     $delivery->day_period=$request->day_period;
     $delivery->first_name=$request->first_name;
     $delivery->last_name=$request->last_name;

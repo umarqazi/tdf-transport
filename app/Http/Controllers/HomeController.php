@@ -269,7 +269,7 @@ class HomeController extends Controller
 		}
 		if(array_key_exists('dateCheck', $request))
 		{
-			$date=date('Y-m-d',strtotime($request['date']));
+			$date=date('Y-d-m',strtotime($request['date']));
 			$getDeliveryRecords=$getDeliveryRecords->whereDate('datetime','<=', $date);
 		}
 		return $getDeliveryRecords;
