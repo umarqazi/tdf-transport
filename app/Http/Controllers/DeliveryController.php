@@ -44,11 +44,11 @@ class DeliveryController extends Controller
     $id=$request->id;
     if($request->date)
     {
-      $dateTime=date('m/d/Y', strtotime($request->date));
+      $dateTime=date('d/m/Y', strtotime($request->date));
     }
     else
     {
-      $dateTime=date('m/d/Y');
+      $dateTime=date('d/m/Y');
     }
 
     $dayPeriod=$request->period;
