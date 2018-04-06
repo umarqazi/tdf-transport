@@ -20,6 +20,7 @@ use Mail;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\App;
+use Jenssegers\Date\Date;
 class HomeController extends Controller
 {
 	protected $hashKey;
@@ -28,6 +29,7 @@ class HomeController extends Controller
 	public $authUser;
 	public function __construct()
 	{
+		Date::setLocale('fr');
 		$this->middleware(function ($request, $next) {
 			$this->authUser=Auth::user();
 			if($this->authUser)
@@ -62,8 +64,8 @@ class HomeController extends Controller
 			$date = Carbon::now();
 			$checkDate = Carbon::now();
 		}
-		$startDate=Carbon::parse($date->startOfWeek())->format('d M y');
-		$endDate=Carbon::parse($date->endOfWeek())->format('d M y');
+		$startDate=Date::parse($date->startOfWeek())->format('M Y');
+		$endDate=Date::parse($date->endOfWeek())->format('M Y');
 		$view='client.cashier.dashboard';
 		$getDeliveries=Delivery::whereBetween('datetime', [$date->startOfWeek()->format('Y-m-d'), $date->endOfWeek()->format('Y-m-d')]);
 		$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id);

@@ -14,7 +14,7 @@ TDF Dashboard
   </div>
   <div class="col-lg-12 calendar-control">
     <a href="{{route('user.date.dashboard', ['startDate'=>$checkDate->startOfWeek()->addDay(-7)])}}"><i class="fa fa-arrow-circle-left"></i></a>
-    <span class="start">{{date('M Y', strtotime($startDate))}}</span> @if(date('M Y', strtotime($endDate)) != date('M Y', strtotime($startDate)))- <span class="end">{{date('M Y', strtotime($endDate))}} @endif</span>
+    <span class="start">{{$startDate}}</span> @if($endDate != $startDate)- <span class="end">{{$endDate}} @endif</span>
     <a href="{{route('user.date.dashboard', ['endDate'=>$checkDate->endOfWeek()->addDay(8)])}}"><i class="fa fa-arrow-circle-right"></i></a>
 
   </div>
@@ -98,10 +98,10 @@ TDF Dashboard
       <tbody>
         <tr>
           <td class="side-first">MATIN </td>
-          <?php $number=1;?>
           @foreach($deliveries as $key=>$delivery)
           @if(!empty($delivery))
-          <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div" @else class="disabled-div" @endif>
+          <td @if($key >=date('d-M-Y', strtotime($nextDate))) class="enabled-div" @else class="disabled-div" @endif>
+            <?php $number=1;?>
             @foreach($delivery as $dayDelivery)
             @if($dayDelivery['day_period']==Config::get('constants.Day Period.matin'))
             <?php if ($number % 2 == 0) {
@@ -121,20 +121,20 @@ TDF Dashboard
               </tr>
 
             </table>
-            @endif
             <?php  $number++ ?>
+            @endif
             @endforeach
             <div class="clearfix"></div>
-            @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate)))) <a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Matin'])}}" class="anchor-space"></a> @endif
+            @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate)))) <a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.matin')])}}" class="anchor-space"></a> @endif
           </td>
           <!-- <div class="clearfix"></div>
           <a href="" class="anchor-space">&nbsp;</a> -->
 
           @else
-          <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div set-heigth" @else class="disabled-div" @endif>
+          <td @if($key >= date('d-M-Y', strtotime($nextDate))) class="enabled-div set-heigth" @else class="disabled-div" @endif>
 
             <div class="clearfix"></div>
-            @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Matin'])}}" class="anchor-space"></a> @endif
+            @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.matin')])}}" class="anchor-space"></a> @endif
           </td>
           @endif
 
@@ -143,17 +143,17 @@ TDF Dashboard
         </tr>
         <tr>
           <td class="side-first">APRES - MIDI</td>
-          <?php $number=1;?>
           @foreach($deliveries as $key=>$delivery)
           @if(!empty($delivery))
-          <?php if ($number % 2 == 0) {
-            $color='blue-color';
-          }else{
-            $color='grey-color';
-          }?>
-          <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div" @else class="disabled-div" @endif>
+          <td @if($key >= date('d-M-Y', strtotime($nextDate))) class="enabled-div" @else class="disabled-div" @endif>
+            <?php $number2=1;?>
             @foreach($delivery as $dayDelivery)
             @if($dayDelivery['day_period']==Config::get('constants.Day Period.après-midi'))
+            <?php if ($number2 % 2 == 0) {
+              $color='blue-color';
+            }else{
+              $color='grey-color';
+            }?>
             <table class="table table-striped table-bordered tbl-internal">
               <tr>
                 <td width="70%" class="{{$color}}">{{$dayDelivery['first_name']}} {{$dayDelivery['last_name']}} {{$dayDelivery['city']}} {{$dayDelivery['postal_code']}}</td>
@@ -166,16 +166,17 @@ TDF Dashboard
               </tr>
 
             </table>
+            <?php $number2++;?>
             @endif
             @endforeach
             <div class="clearfix"></div>
-            @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Apres - Midi'])}}" class="anchor-space"></a> @endif
+            @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.après-midi')])}}" class="anchor-space"></a> @endif
           </td>
           @else
-          <td @if($key==date('d-M-Y', strtotime($nextDate))) class="enabled-div set-heigth" @else class="disabled-div" @endif>
+          <td @if($key >=date('d-M-Y', strtotime($nextDate))) class="enabled-div set-heigth" @else class="disabled-div" @endif>
 
             <div class="clearfix"></div>
-            @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>'Apres - Midi'])}}" class="anchor-space"></a> @endif
+            @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.après-midi')])}}" class="anchor-space"></a> @endif
           </td>
           @endif
 
