@@ -46,7 +46,7 @@ class DeliveryController extends Controller
     $id=$request->id;
     if($request->date)
     {
-      $dateTime=date('m/d/Y', strtotime($request->date));
+      $dateTime=date('d/m/Y', strtotime($request->date));
     }
     else
     {
@@ -58,7 +58,7 @@ class DeliveryController extends Controller
     if($id)
     {
       $getDelivery=Delivery::with('products')->where('id',$id)->first();
-      $dateTime=date('m/d/Y', strtotime($getDelivery['datetime']));
+      $dateTime=date('d/m/Y', strtotime($getDelivery['datetime']));
     }
     else
     {
