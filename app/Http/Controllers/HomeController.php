@@ -64,8 +64,8 @@ class HomeController extends Controller
 			$date = Carbon::now();
 			$checkDate = Carbon::now();
 		}
-		$startDate=Date::parse($date->startOfWeek())->format('M Y');
-		$endDate=Date::parse($date->endOfWeek())->format('M Y');
+		$startDate=Date::parse($date->startOfWeek())->format('F Y');
+		$endDate=Date::parse($date->endOfWeek())->format('F Y');
 		$view='client.cashier.dashboard';
 		$getDeliveries=Delivery::whereBetween('datetime', [$date->startOfWeek()->format('Y-m-d'), $date->endOfWeek()->format('Y-m-d')]);
 		$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id);
