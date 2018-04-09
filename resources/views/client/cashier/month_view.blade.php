@@ -31,7 +31,7 @@ $(document).ready(function() {
       },
       @endforeach
     ],
-    eventOrder: '-title',
+    eventOrder: '-color',
     dayClick: function(date, jsEvent, view) {
       window.location = APP_URL+'/dashboard/'+date.format();
   }
