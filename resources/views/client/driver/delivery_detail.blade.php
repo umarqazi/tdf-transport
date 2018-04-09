@@ -109,6 +109,7 @@ TDF Driver
     <div class="row">
         <div class="col-md-12 text-center tbl-btns tbl-btns-2">
             <button type="submit" class="active button-styling">Envoyer les informations <i class="fa fa-check-square"></i></button>
+            <a href="{{url('/driverTours')}}" class="btn btn-primary cancel-request">Retour <i class="fa fa-arrow-left"></i></a>
         </div>
     </div>
     {!! Form::hidden('id', $detail['id'], []) !!}
