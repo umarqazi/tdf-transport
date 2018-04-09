@@ -7,6 +7,10 @@ return [
         "Cashier" => "Cashier",
         "Driver"  => "Driver"
     ],
+    'User Type'=>[
+      'TDF Manager'=>'Manager TDF',
+      'Driver' =>'Chauffeur-Livreur'
+    ],
     'Day Period' => ['matin' => 'matin', 'après-midi'=>'après-midi'],
     'Services' => [''=>'Prestation(s) Choisie(s)','SAV'=>'SAV','Livraison'=>'Livraison','Livraison + Montage'=>'Livraison + Montage', 'Retrocession'=>'Retrocession','Livraison Prestataire'=>'Livraison Prestataire', 'Montage'=>'Montage'],
     'Create Delivery' => 'Merci votre demande de livraison a été créée.',

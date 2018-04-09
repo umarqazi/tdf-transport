@@ -13,39 +13,6 @@
           <div class="col-lg-12">
             <h1 class="page-header text-center">Listes des résultats</h1>
           </div>
-          <div class="col-lg-12 calendar-control">
-            <table class="align-center">
-              <tr>
-                <td>
-                  <div class="form-group">
-                    <div class="input-group">
-                      <meta name="csrf-token" content="{{ csrf_token() }}" />
-                      {{Form::text('customer_name', null, ['class'=>'form-control', 'placeholder'=>'Rechercher un client', 'id'=>'customer2'])}}
-                    </div>
-                    <span class="text-danger">{!! $errors->first('order_id') !!}</span>
-                  </div></td>
-                  <td>&nbsp;</td>
-                  <td><div class="form-group">
-                    <div class="input-group">
-                      {{Form::text('order_id', null, ['class'=>'form-control', 'placeholder'=>'Rechercher une commande', 'id'=>'orderId2'])}}
-                    </div>
-                    <span class="text-danger">{!! $errors->first('order_id') !!}</span>
-                  </div>
-                </td>
-                <td>&nbsp;</td>
-                <td><div class="form-group">
-                  <div class="input-group">
-                    {{Form::text('date', null, ['class'=>'form-control', 'placeholder'=>'Rechercher par date', 'id'=>'dateTime2'])}}
-                  </div>
-                  <span class="text-danger">{!! $errors->first('order_id') !!}</span>
-                </div>
-              </td>
-              <td>&nbsp;</td>
-              <td>
-              </td>
-            </tr>
-          </table>
-        </div>
       </div>
 
       <div class="row">

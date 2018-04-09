@@ -24,7 +24,7 @@ class VehicleController extends Controller
       if(Auth::user()){
         $user_id=Auth::user()->id;
         $nextDay=Carbon::now()->format('Y-m-d');
-        $date=Date::now()->format('D d M Y');
+        $date=Date::now()->format('l d F Y');
         $tours=HomeController::manageTours($user_id, $nextDay, 'driver');
         return view::make('client.driver.index')->with(['tours'=>$tours, 'date'=>$date]);
       }
@@ -32,7 +32,7 @@ class VehicleController extends Controller
     public function deliveryDetail(Request $request){
       $id=$request->id;
       $getDetail=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'products.product_type', 'products.product_family', 'stores.store_name')->find($id);
-      $date=Date::now()->format('D d M Y');
+      $date=Date::now()->format('l d F Y');
       $time=$request->time;
       return view::make('client.driver.delivery_detail')->with(['time'=>$time,'date'=>$date, 'detail'=>$getDetail]);
     }

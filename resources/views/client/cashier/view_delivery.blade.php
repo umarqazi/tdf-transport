@@ -9,7 +9,7 @@ TDF Create Delivery
   {!! Form::model($delivery, [ 'url' => URL::route('delivery.edit'), "enctype"=>"multipart/form-data"] )  !!}
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header text-center">CREATION D'UNE LIVRAISON</h1>
+      <h1 class="page-header text-center">InformationsN</h1>
     </div>
     <div class="col-lg-12 calendar-control">
       <div class="form-inline">
@@ -32,7 +32,7 @@ TDF Create Delivery
   </div>
   <div class="row">
     <div class="col-md-6">
-      <h3 class="text-center">Coordonees</h3>
+      <h3 class="text-center">Coordonnées</h3>
       <div class="clear20"></div>
       <div class="row">
         <div class="col-md-6">
@@ -139,7 +139,7 @@ TDF Create Delivery
   <div class="clear20"></div>
   <div class="row">
     <div class="col-md-12 text-center tbl-btns">
-      <a href="{{route('user.dashboard')}}" class="active green">Arrière</a>
+      <a href="{{route('delivery.history')}}" class="active green">Retour aux résultats</a>
     </div>
   </div>
   {!! Form::hidden('id') !!}

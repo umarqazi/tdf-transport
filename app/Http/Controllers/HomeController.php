@@ -98,7 +98,7 @@ class HomeController extends Controller
 			$drivers[$driver['id']]=$driver['vehicle_name'].', '.$driver['number_plate'];
 		}
 		$nextDay=Carbon::now()->addDay(1)->format('Y-m-d');
-		$date=Date::now()->addDay(1)->format('l d M Y');
+		$date=Date::now()->addDay(1)->format('l d F Y');
 		$getDeliveries='';
 		$user_record='';
 		$tours=array();
@@ -135,7 +135,7 @@ class HomeController extends Controller
 					foreach ($value['time'] as $key => $record) {
 						if($time['id']==$record['time_slot_id'] && $user_id==$record['user_id']){
 							if($driver==NULL){
-								$records=$value['first_name'].' '.$value['last_name'].' '.$value['datetime'].' '.$value['day_period'];
+								$records=$value['first_name'].' '.$value['last_name'].' '.Date::parse($value['datetime'])->format('l d F Y').' '.$value['day_period'];
 							}
 							else{
 								$records=$value;
@@ -221,7 +221,6 @@ class HomeController extends Controller
 		$name=$request->customer_name;
 		$order_id=$request->order_id;
 		$date=Carbon::parse($request->datetime)->format('Y-m-d h:i:s');
-
 		$searchResult='';
 		$getDeliveryRecords=self::searchResults($request->all());
 		$getDeliveryRecords=$getDeliveryRecords;
@@ -243,11 +242,12 @@ class HomeController extends Controller
 				$price=$record['delivery_price']." €";
 			}
 			$url=URL('viewDelivery').'/'.$record['id'];
-			$searchResult.="<tr onclick=viewDelivery('$url') class='clickable'><td>".Carbon::parse($record['datetime'])->format('d-M-Y')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
+			$searchResult.="<tr onclick=viewDelivery('$url') class='clickable'><td>".Date::parse($record['datetime'])->format('d/m/Y')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
 		}
 		return $searchResult;
 	}
 	public static function searchResults($request){
+
 		$getDeliveryRecords=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'products.product_family', 'products.product_type','stores.store_name');
 		if(!empty($request['search_field'])){
 			$getDeliveryRecords=$getDeliveryRecords->where('order_id', $request['search_field'])->orwhereRaw('concat(first_name," ",last_name) like ?', '%'.$request['search_field'].'%');
@@ -262,7 +262,7 @@ class HomeController extends Controller
 		}
 		if(array_key_exists('dateCheck', $request))
 		{
-			$date=date('Y-d-m',strtotime($request['date']));
+			$date=date('Y-d-m',strtotime($request['datetime']));
 			$getDeliveryRecords=$getDeliveryRecords->whereDate('datetime','<=', $date);
 		}
 		return $getDeliveryRecords;

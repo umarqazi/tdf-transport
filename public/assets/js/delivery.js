@@ -102,7 +102,7 @@ function searchResult()
 	searchResult.append('search_field', $("#search_field").val());
 	searchResult.append('customer_name', $("#customer").val());
 	searchResult.append('order_id', $("#orderId").val());
-	searchResult.append('date', $("#datetime").val());
+	searchResult.append('datetime', $("#datetime").val());
 	var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 	searchResult.append('_token', CSRF_TOKEN);
 	$.ajax({
