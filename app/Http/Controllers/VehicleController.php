@@ -13,13 +13,18 @@ use Carbon\Carbon;
 use view;
 use Toast;
 use Config;
+use Jenssegers\Date\Date;
 class VehicleController extends Controller
 {
+  public function __construct()
+  {
+    Date::setLocale('fr');
+  }
     public function toursList(){
       if(Auth::user()){
         $user_id=Auth::user()->id;
         $nextDay=Carbon::now()->format('Y-m-d');
-        $date=Carbon::now()->format('D d M Y');
+        $date=Date::now()->format('D d M Y');
         $tours=HomeController::manageTours($user_id, $nextDay, 'driver');
         return view::make('client.driver.index')->with(['tours'=>$tours, 'date'=>$date]);
       }

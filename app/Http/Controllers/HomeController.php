@@ -98,7 +98,7 @@ class HomeController extends Controller
 			$drivers[$driver['id']]=$driver['vehicle_name'].', '.$driver['number_plate'];
 		}
 		$nextDay=Carbon::now()->addDay(1)->format('Y-m-d');
-		$date=Carbon::now()->addDay(1)->format('l d M Y');
+		$date=Date::now()->addDay(1)->format('l d M Y');
 		$getDeliveries='';
 		$user_record='';
 		$tours=array();

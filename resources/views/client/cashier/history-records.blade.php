@@ -45,7 +45,7 @@
           $url=URL('viewDelivery').'/'.$delivery['id'];
           ?>
           <tr onclick="viewDelivery('{{$url}}')" class="clickable">
-            <td>{{date('d-M-Y', strtotime($delivery['datetime']))}}</td>
+            <td>{{date('d/M/Y', strtotime($delivery['datetime']))}}</td>
             <td>{{$delivery['first_name']}} {{$delivery['last_name']}}</td>
             <td>@if($delivery['order_pdf'])<a href="{{asset('assets/images')}}/{{ $delivery['store_name'] }}/{{$delivery['order_pdf']}}" target="_blank"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['order_id']}}</td>
             <td>@if($delivery['delivery_pdf'])<a href="{{asset('assets/images')}}/{{ $delivery['store_name'] }}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['delivery_number']}}</td>
