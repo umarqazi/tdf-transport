@@ -155,16 +155,8 @@ class HomeController extends Controller
 	{
 		$startDate=carbon::now()->startofMonth();
 		$endDate=carbon::now()->endofMonth();
-		$getDeliveries=Delivery::select('day_period', DB::raw("DATE(datetime) as 'task_date'"), DB::raw('count(*) as total' ))->groupBy(DB::raw("DATE(datetime)"))->groupBy('day_period')->orderBy(DB::raw("DATE(datetime)"), 'asc');
-		if($this->type==$this->users['Cashier'])
-		{
-			$getDeliveries=$getDeliveries->where('user_id', $this->authUser->id);
-		}
-		else
-		{
-			$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id);
-		}
-		$getDeliveries=$getDeliveries->get();
+		$getDeliveries=Delivery::select('day_period', DB::raw("DATE(datetime) as 'task_date'"), DB::raw('count(*) as total' ))->groupBy(DB::raw("DATE(datetime)"))->groupBy('day_period')->orderBy('id', 'desc');
+		$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id)->get();
 		return view::make('client.cashier.month_view')->with(['deliveries'=>$getDeliveries]);
 	}
 	public function forgetPassword()
