@@ -32,7 +32,7 @@ class VehicleController extends Controller
     public function deliveryDetail(Request $request){
       $id=$request->id;
       $getDetail=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'products.product_type', 'products.product_family', 'stores.store_name')->find($id);
-      $date=Carbon::now()->format('D d M Y');
+      $date=Date::now()->format('D d M Y');
       return view::make('client.driver.delivery_detail')->with(['date'=>$date, 'detail'=>$getDetail]);
     }
     public function updateDeliveryStatus(Request $request){
@@ -40,13 +40,13 @@ class VehicleController extends Controller
       $delivery_status=$request->delivery_status;
       $id=$request->id;
       if($delivery_status=='4'){
-        $updateDelivery=Delivery::where('id', $id)->update(['delivery_problem'=>$delivery_status,'status'=>Config::get('constants.Status.Delivered')]);
+        $updateDelivery=Delivery::where('id', $id)->update(['status'=>Config::get('constants.Status.Delivered')]);
       }
       else{
-        $updateDelivery=Delivery::where('id', $id)->update(['delivery_problem'=>$delivery_status]);
+        $updateDelivery=Delivery::where('id', $id)->update(['delivery_problem'=>$delivery_status,'status'=>Config::get('constants.Status.Return')]);
       }
       Toast::success('Le statut de livraison a été mis à jour');
-      return redirect::back();
+      return redirect::to('/driverTours');
     }
 
 }
