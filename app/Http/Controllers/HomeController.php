@@ -191,7 +191,7 @@ class HomeController extends Controller
 			Toast::error("Aucun e-mail n'est associé à cette adresse e-mail");
 			return redirect::back();
 		}
-		Toast::success("Please check your Email");
+		Toast::success("Votre demande de mot de passe oublié a bien été prise en compte. Merci de vérifier vos mails.");
 		return redirect('/');
 	}
 	public function changePassword(Request $request)
@@ -250,12 +250,13 @@ class HomeController extends Controller
 			}else{
 				$price=$record['delivery_price']." €";
 			}
-			$searchResult.="<tr><td>".Carbon::parse($record['datetime'])->format('Y-m-d')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
+			$url=URL('viewDelivery').'/'.$record['id'];
+			$searchResult.="<tr onclick=viewDelivery('$url') class='clickable'><td>".Carbon::parse($record['datetime'])->format('d-M-Y')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
 		}
 		return $searchResult;
 	}
 	public static function searchResults($request){
-		$getDeliveryRecords=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
+		$getDeliveryRecords=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'products.product_family', 'products.product_type','stores.store_name');
 		if(!empty($request['search_field'])){
 			$getDeliveryRecords=$getDeliveryRecords->where('order_id', $request['search_field'])->orwhereRaw('concat(first_name," ",last_name) like ?', '%'.$request['search_field'].'%');
 		}

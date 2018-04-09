@@ -169,3 +169,13 @@ function cancelpdf(type){
 		$('#orderPdfDiv').show();
 	}
 }
+
+$(document).ready(function($) {
+    $(".clickable-row").click(function() {
+			alert();
+        window.location = $(this).data("href");
+    });
+});
+function viewDelivery(url){
+	window.location = url;
+}

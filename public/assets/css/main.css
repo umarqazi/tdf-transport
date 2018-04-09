@@ -515,8 +515,11 @@ button:focus {
   margin-left: 10px
 }
 .disabled-div{
-  background-color: #f9f9f9 !important;
+  background-color: #989898 !important;
 }
 .table-striped>tbody>tr:nth-of-type(odd){
   background-color: white !important;
+}
+.clickable{
+  cursor: pointer;
 }

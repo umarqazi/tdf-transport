@@ -310,7 +310,7 @@ class DeliveryController extends Controller
   }
   public function allManagerDeliveries(Request $request){
     $getDeliveryHistory=HomeController::searchResults($request->all());
-    $getDeliveryHistory=$getDeliveryHistory->where('status', '1')->orderby('datetime', 'desc')->paginate(10);
+    $getDeliveryHistory=$getDeliveryHistory->where('deliveries.status', '1')->orderby('datetime', 'desc')->paginate(10);
     return view::make('client.tdf_manager.history')->with('allDeliveries', $getDeliveryHistory)->withInput($request->all());
   }
   public function deleteTour(Request $request){

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use view;
 use Toast;
+use Config;
 class VehicleController extends Controller
 {
     public function toursList(){
