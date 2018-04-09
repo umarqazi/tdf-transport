@@ -200,7 +200,7 @@ Route::group(['middleware' => ['web']], function ()
       "as"   => "driver.tours",
       "uses" => 'LaravelAcl\Http\Controllers\VehicleController@toursList'
     ]);
-    Route::get('/tourDeliveryDetail/{id}', [
+    Route::get('/tourDeliveryDetail/{id}/{time}', [
       "as"   => "driver.tours.detail",
       "uses" => 'LaravelAcl\Http\Controllers\VehicleController@deliveryDetail'
     ]);

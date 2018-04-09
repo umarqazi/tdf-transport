@@ -508,7 +508,7 @@ button:focus {
   height: 50px;
 }
 .pdf-font{
-  font-size: 17pt !important;
+  font-size: 16pt !important;
   margin-top: 10px;
 }
 .cancelpdf{
@@ -526,4 +526,10 @@ button:focus {
 .fc-right{
   float:none !important;
   display: inline-block;
+}
+.fc-day{
+  cursor: pointer;
+}
+.fc-other-month{
+  cursor: none;
 }

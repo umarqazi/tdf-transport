@@ -7,7 +7,7 @@ TDF Driver
 @section('content')
 @include('toast::messages')
 
-    <span class="date_class">{{$date}}</span>
+    <span class="date_class">{{$date}} ({{$time}})</span>
     <div class="row">
         <div class="col-md-12">
 

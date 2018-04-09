@@ -19,7 +19,7 @@ TDF Driver
                               <td class="text-center vertical-middle" width="30%">{{$key}}</td>
                               <td>
                                   @if(!empty($tour['id']))
-                                    <a href="{{url('/tourDeliveryDetail', ['id'=>$tour['delivery_id']])}}" ><ul class="list-unstyled icons">
+                                    <a href="{{url('/tourDeliveryDetail', ['id'=>$tour['delivery_id'], 'time'=>$key])}}" ><ul class="list-unstyled icons">
                                     <li><i class="fa fa-user fa-fw"></i>{{$tour['delivery']['first_name']}} {{$tour['delivery']['last_name']}}</li>
                                     <li>{{$tour['delivery']['address']}} </li>
                                     <li>{{$tour['delivery']['city']}} {{$tour['delivery']['postal_code']}}</li>

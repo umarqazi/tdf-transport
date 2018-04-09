@@ -33,7 +33,8 @@ class VehicleController extends Controller
       $id=$request->id;
       $getDetail=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'products.product_type', 'products.product_family', 'stores.store_name')->find($id);
       $date=Date::now()->format('D d M Y');
-      return view::make('client.driver.delivery_detail')->with(['date'=>$date, 'detail'=>$getDetail]);
+      $time=$request->time;
+      return view::make('client.driver.delivery_detail')->with(['time'=>$time,'date'=>$date, 'detail'=>$getDetail]);
     }
     public function updateDeliveryStatus(Request $request){
       $satisfy=$request->satisfy;
