@@ -58,7 +58,7 @@ class DeliveryController extends Controller
     $products=['0'=>'Multi-produits'];
     if($id)
     {
-      $getDelivery=Delivery::with('products')->where('id',$id)->first();
+      $getDelivery=HomeController::deliveryProducts()->where('deliveries.id',$id)->first();
       $dateTime=date('d/m/Y', strtotime($getDelivery['datetime']));
     }
     else
