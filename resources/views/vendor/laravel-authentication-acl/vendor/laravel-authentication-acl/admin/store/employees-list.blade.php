@@ -32,7 +32,7 @@
                                         {!! Form::select('stores', $stores, $request->get('stores',''), ['class' => 'form-control']) !!}
                                     </div>
                                     <div class="form-group">
-                                        {!! Form::select('type', [''=>"Select Type",'Director'=>'Director', 'Accountant'=>'Accountant', 'TDF Contact'=>'TDF Contact'], $request->get('type',''), ['class' => 'form-control', "Placeholder"=>"Select Type"]) !!}
+                                        {!! Form::select('type', [''=>"Select Fonction",'Director'=>'Director', 'Accountant'=>'Accountant', 'TDF Contact'=>'TDF Contact'], $request->get('type',''), ['class' => 'form-control', "Placeholder"=>"Select Fonction"]) !!}
                                     </div>
                                     <div class="form-group">
                                         {!! Form::text('name', $request->name, ['class' =>'form-control', 'Placeholder'=>'Search by Name']) !!}
@@ -59,7 +59,7 @@
                                             <th>Email</th>
                                             <th>Phone Number</th>
                                             <th class="hidden-xs">Landline</th>
-                                            <th class="hidden-xs">Type</th>
+                                            <th class="hidden-xs">Fonction</th>
                                             <th>Operations</th>
                                         </tr>
                                     </thead>

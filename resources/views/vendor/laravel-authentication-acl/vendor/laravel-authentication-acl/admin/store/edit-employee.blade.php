@@ -56,8 +56,8 @@ Admin area: Create/Edit Employee
                     <span class="text-danger">{!! $errors->first('mobile_number') !!}</span>
                     <!-- address text field -->
                     <div class="form-group">
-                        {!! Form::label('type', 'Type') !!}
-                        {!! Form::select('type', ['Director'=>'Director', 'Accountant'=>'Accountant', 'TDF Contact'=>'TDF Contact'],null, ['class' => 'form-control', 'placeholder' => 'Select Employee Type','autocomplete' => 'off']) !!}
+                        {!! Form::label('type', 'Fonction') !!}
+                        {!! Form::select('type', ['Director'=>'Director', 'Accountant'=>'Accountant', 'TDF Contact'=>'TDF Contact'],null, ['class' => 'form-control', 'placeholder' => 'Select Employee Fonction','autocomplete' => 'off']) !!}
                     </div>
                     <span class="text-danger">{!! $errors->first('type') !!}</span>
                     <!-- city text field -->                   

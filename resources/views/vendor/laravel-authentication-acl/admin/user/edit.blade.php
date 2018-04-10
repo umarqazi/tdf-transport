@@ -45,7 +45,7 @@ Admin area: edit user
                     </div>
                     <span class="text-danger">{!! $errors->first('user_last_name') !!}</span>
                     <div class="form-group">
-                        {!! Form::label("User Type","User Type: ") !!}
+                        {!! Form::label("User Fonction","User Fonction: ") !!}
                         {!! Form::select('type', Config::get('constants.Users'), null, ["class"=> "form-control", "onchange"=>"showStoreName(this)"] ) !!}
                     </div>
                     <div class="form-group" style=display:{{($user->type=="Admin") ? "none":""}} id="storeName">

@@ -16,14 +16,13 @@
         <!-- /.col-lg-12 -->
     </div>
     <div class="row">
-        <div class="col-md-12 frm-title-icon"><a href="#">A Jout Rapide <i class="fa fa-plus-circle fa-fw"></i></a></div>
         <div class="col-md-12">
             <div class="sort">
                 <div class="form-inline">
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                            <input type="text" class="form-control" id="" placeholder="Type de Vehicule">
+                            <input type="text" class="form-control" id="" placeholder="Fonction de Vehicule">
                         </div>
                     </div>
                     <div class="form-group">
@@ -54,8 +53,8 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>Type de vehicule</th>
-                                <th>Numero plaque d'immatriculation</th>
+                                <th>Fonction de vehicule</th>
+                                <th>Immatriculation</th>
                                 <th>Chauffeur</th>
                                 <th class="text-center">Actions</th>
                             </tr>
