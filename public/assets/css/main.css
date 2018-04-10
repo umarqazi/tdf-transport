@@ -19,9 +19,6 @@ body {
   background: url(../images/main-bg.jpg) no-repeat fixed top center/cover;
     height: 100%;
 }
-.main-wrapper{
-  min-height: 100%;
-}
 * {
     margin: 0;
     padding: 0px;
