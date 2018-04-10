@@ -42,7 +42,7 @@
                         <th class="text-center">Telephone</th>
                         <th class="text-center">Villes</th>
                         <th class="text-center">Code Postal</th>
-                        <th class="text-center">Type de Prestation</th>
+                        <th class="text-center">Fonction de Prestation</th>
                         <th class="text-center">Produit(s) commande(s)</th>
                         <th class="text-center">Prix de la livraison</th>
                     </tr>

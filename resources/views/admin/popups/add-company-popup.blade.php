@@ -11,7 +11,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-lg-12">
-            <h1 class="page-header text-center">Ajouter un nouveau vehicule </h1>
+            <h1 class="page-header text-center">Ajouter </h1>
           </div>
           <div class="col-lg-12 calendar-control">
             <div class="content_wrapper clearfix">
@@ -29,7 +29,7 @@
               </div>
               <div class="clearfix popuup_submit">
                 <button type="submit" class="btn btn-success">Ajouter une nouvelle compagnie <i class="fa fa-save"></i></button>
-                <a href="{{url('/admin/company/list')}}" class="btn btn-danger">Annuler Ma Demande <i class="fa fa-undo"></i></a>
+                <a href="{{url('/admin/company/list')}}" class="btn btn-danger">Annuler <i class="fa fa-undo"></i></a>
               </div>
             </div>
           </div>
