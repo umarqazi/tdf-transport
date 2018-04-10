@@ -80,7 +80,7 @@
                   <div class="">
                     <div class="input-group">
                       <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                      {!! Form::text('vehicle_name', null, ['class' => 'form-control', 'placeholder' => 'Type de Vehicule', 'autocomplete' => 'off']) !!}
+                      {!! Form::text('vehicle_name', null, ['class' => 'form-control', 'placeholder' => 'Fonction de Vehicule', 'autocomplete' => 'off']) !!}
                     </div>
                     <span class="text-danger">{!! $errors->first('vehicle_name') !!}</span>
                   </div>
@@ -105,7 +105,7 @@
               </div>
               <div class="clearfix popuup_submit">
                 <button type="submit" class="btn btn-success">Ajouter un nouveau utilisateurs <i class="fa fa-save"></i></button>
-                <a href="{{url('/admin/users/list')}}" class="btn btn-danger">Annuler Ma Demande <i class="fa fa-trash"></i></a>
+                <a href="{{url('/admin/users/list')}}" class="btn btn-danger">Annuler <i class="fa fa-undo"></i></a>
               </div>
             </div>
           </div>

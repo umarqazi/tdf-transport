@@ -36,17 +36,17 @@ Admin area: Create/Edit Product
                     </div>
                     <span class="text-danger">{!! $errors->first('product_family') !!}</span>
                     <div class="form-group">
-                        {!! Form::label('Product Type','Product Type: *') !!}
-                        {!! Form::text('product_type', null, ['class' => 'form-control', 'placeholder' => 'Product Type', 'autocomplete' => 'off']) !!}
+                        {!! Form::label('Product Fonction','Product Fonction: *') !!}
+                        {!! Form::text('product_type', null, ['class' => 'form-control', 'placeholder' => 'Product Fonction', 'autocomplete' => 'off']) !!}
                     </div>
                     <span class="text-danger">{!! $errors->first('product_type') !!}</span>
                     <div class="form-group">
-                        {!! Form::label('Product Type','Delivery Charges: *') !!}
+                        {!! Form::label('Product Fonction','Delivery Charges: *') !!}
                         {!! Form::number('delivery_charges', null, ['class' => 'form-control', 'placeholder' => 'Delivery Charges', 'autocomplete' => 'off']) !!}
                     </div>
                     <span class="text-danger">{!! $errors->first('delivery_charges') !!}</span>
                     <div class="form-group">
-                        {!! Form::label('Product Type','Commission: *') !!}
+                        {!! Form::label('Product Fonction','Commission: *') !!}
                         {!! Form::number('comission', null, ['class' => 'form-control', 'placeholder' => 'Comission', 'autocomplete' => 'off']) !!}
                     </div>
                     <span class="text-danger">{!! $errors->first('comission') !!}</span>

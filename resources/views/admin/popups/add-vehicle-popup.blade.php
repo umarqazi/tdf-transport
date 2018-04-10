@@ -11,7 +11,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-lg-12">
-            <h1 class="page-header text-center">Ajouter un nouveau vehicule </h1>
+            <h1 class="page-header text-center">Ajouter </h1>
           </div>
           <div class="col-lg-12 calendar-control">
             <div class="content_wrapper clearfix">
@@ -20,7 +20,7 @@
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::text('vehicle_name', null, ['class' => 'form-control', 'placeholder' => 'Type de Vehicule', 'autocomplete' => 'off']) !!}
+                    {!! Form::text('vehicle_name', null, ['class' => 'form-control', 'placeholder' => 'Fonction de Vehicule', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('vehicle_name') !!}</span>
                 </div>
@@ -60,22 +60,22 @@
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-id-card fa-fw"></i></div>
-                    {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Adresse e-mail du chauffeur', 'autocomplete' => 'off']) !!}
+                    {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Adresse mail', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('email') !!}</span>
                 </div>
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-phone fa-fw"></i></div>
-                    {!! Form::text('phone_number', null, ['class' => 'form-control', 'placeholder' => 'Numero de telephone chauffeur', 'autocomplete' => 'off']) !!}
+                    {!! Form::text('phone_number', null, ['class' => 'form-control', 'placeholder' => 'Téléphone', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('phone_number') !!}</span>
                   {!! Form::hidden('id') !!}
                 </div>
               </div>
               <div class="clearfix popuup_submit">
-                <button type="submit" class="btn btn-success">Ajouter un nouveau vehicule <i class="fa fa-save"></i></button>
-                <a href="{{url('/admin/users/dashboard')}}" class="btn btn-danger">Annuler Ma Demande <i class="fa fa-trash"></i></a>
+                <button type="submit" class="btn btn-success">Ajouter <i class="fa fa-save"></i></button>
+                <a href="{{url('/admin/users/dashboard')}}" class="btn btn-danger">Annuler <i class="fa fa-undo"></i></a>
               </div>
             </div>
           </div>

@@ -12,7 +12,7 @@
         <span class="text-danger">{!! $errors->first('email') !!}</span>
         <!-- first_name text field -->
         <div class="form-group">
-            {!! Form::label('email','Type: ') !!}
+            {!! Form::label('email','Fonction: ') !!}
             {!! Form::select('type', Config::get('constants.Users'), $request->get('type',''), ["class"=> "form-control"] ) !!}
         </div>
         <div class="form-group">

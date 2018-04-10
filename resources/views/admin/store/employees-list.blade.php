@@ -52,7 +52,7 @@ Admin area: Employees list
           <th>Email</th>
           <th>Numéro de téléphone</th>
           <th>Landline</th>
-          <th>Type</th>
+          <th>Fonction</th>
           <th class="text-center">Actions</th>
         </tr>
       </thead>

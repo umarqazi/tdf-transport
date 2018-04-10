@@ -53,7 +53,7 @@ Admin area: Product List
       <thead>
         <tr>
           <th>Famille de produits</th>
-          <th>Type de Produit</th>
+          <th>Fonction de Produit</th>
           <th>Frais de livraison</th>
           <th>Commission</th>
           <th class="text-center">Actions</th>

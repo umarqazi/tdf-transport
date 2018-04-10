@@ -2,6 +2,8 @@
 
 use Closure;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+
 /*
  * Check that the current user is logged and active and redirect to client login or
  * to custom url if given
@@ -12,11 +14,11 @@ class AdminLogged {
     {
         // $redirect_url = $custom_url ?: '/login';
         // if(!App::make('authenticator')->check()) return redirect($redirect_url);
-        $redirect_url = $custom_url ?: '/admin/login';
-        $admin=App::make('sentry')->getUser();
+        $redirect_url = $custom_url ?: '/';
+        $admin=Auth::user();
         if($admin)
         {
-          $admin=App::make('sentry')->getUser()->type;
+          $admin=Auth::user()->type;
         }
         if($admin!='Admin') return redirect($redirect_url);
         return $next($request);

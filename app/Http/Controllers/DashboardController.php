@@ -62,7 +62,7 @@ class DashboardController extends Controller{
         $addUser->password=Hash::make($request->password);
       }
       $addUser->save();
-      return Redirect::route('dashboard.default')->withMessage('Le véhicule a été ajouté avec succès');
+      return Redirect::route('dashboard.default')->withMessage('Les informations sur le véhicule ont été modifiées.');
     }
     public function checking()
     {

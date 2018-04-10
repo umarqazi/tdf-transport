@@ -21,7 +21,6 @@ Admin area: dashboard
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 frm-title-icon"><a href="#">A Jout Rapide <i class="fa fa-plus-circle fa-fw"></i></a></div>
         <div class="col-md-12">
             <div class="sort">
                 <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addVehicle">Ajounter un vehicule <i class="fa fa-plus-circle fa-fw"></i></button>
@@ -43,8 +42,8 @@ Admin area: dashboard
                         <table class="table table-striped table-bordered" id="users-table">
                             <thead>
                                 <tr>
-                                    <th>Type de vehicule</th>
-                                    <th>Numero plaque d'immatriculation</th>
+                                    <th>Fonction de vehicule</th>
+                                    <th>Immatriculation</th>
                                     <th>Chauffeur</th>
                                     <th>Email</th>
                                     <th class="text-center">Actions</th>

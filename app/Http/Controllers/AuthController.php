@@ -30,6 +30,8 @@ class AuthController extends Controller {
             return redirect('/allDeliveryHistory');
           }elseif(Auth::user()->type==Config::get('constants.Users.Driver')) {
             return redirect('/driverTours');
+          }elseif(Auth::user()->type=='Admin') {
+              return redirect('/admin/users/dashboard');
           }
             return redirect('/dashboard');
         }
@@ -53,7 +55,10 @@ class AuthController extends Controller {
                     return redirect::to('/allDeliveryHistory');
                 }elseif(Auth::user()->type==Config::get('constants.Users.Driver')) {
                   return redirect('/driverTours');
-                }else{
+                }elseif(Auth::user()->type=='Admin') {
+                  return redirect('/admin/users/dashboard');
+                }
+                else{
                     return redirect::to('/dashboard');
                 }
             }
@@ -77,12 +82,6 @@ class AuthController extends Controller {
      *
      * @return string
      */
-    public function getLogout()
-    {
-        $this->authenticator->logout();
-
-        return redirect('/admin/login');
-    }
     public function getClientLogout()
     {
         Auth::logout();

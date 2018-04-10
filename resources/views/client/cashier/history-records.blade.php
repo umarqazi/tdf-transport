@@ -12,7 +12,7 @@
             <th class="text-center">Téléphone</th>
             <th class="text-center">Ville</th>
             <th class="text-center">Code Postal</th>
-            <th class="text-center">Type de prestation</th>
+            <th class="text-center">Fonction de prestation</th>
             <th class="text-center">Produit commandé</th>
             <th class="text-center">Prix de la livraison</th>
             <th class="text-center">Satisfaction client</th>

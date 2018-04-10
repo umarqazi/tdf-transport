@@ -53,7 +53,7 @@
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-lock fa-fw"></i></div>
-                    {!! Form::select('type', ['Director'=>'Director', 'Accountant'=>'Accountant', 'TDF Contact'=>'TDF Contact'],null, ['class' => 'form-control', 'placeholder' => 'Select Employee Type','autocomplete' => 'off']) !!}
+                    {!! Form::select('type', ['Director'=>'Director', 'Accountant'=>'Accountant', 'TDF Contact'=>'TDF Contact'],null, ['class' => 'form-control', 'placeholder' => 'Select Employee Fonction','autocomplete' => 'off']) !!}
                   </div>
                 </div>
                 <div class="form-group">
@@ -70,7 +70,7 @@
 
               <div class="clearfix popuup_submit">
                 <button type="submit" class="btn btn-success">Ajouter un nouveau utilisateurs <i class="fa fa-save"></i></button>
-                <a href="{{url('/admin/store/employee/list/')}}/{{$storeId}}" class="btn btn-danger">Annuler Ma Demande <i class="fa fa-trash"></i></a>
+                <a href="{{url('/admin/store/employee/list/')}}/{{$storeId}}" class="btn btn-danger">Annuler <i class="fa fa-undo"></i></a>
               </div>
             </div>
           </div>

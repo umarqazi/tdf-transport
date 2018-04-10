@@ -52,7 +52,7 @@
                                       <thead>
                                           <tr>
                                               <th>Product Family</th>
-                                              <th>Product Type</th>
+                                              <th>Product Fonction</th>
                                               <th>Delivery Charges</th>
                                               <th>Commission</th>
                                               <th>Operations</th>

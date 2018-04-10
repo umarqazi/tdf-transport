@@ -1,6 +1,7 @@
 <?php namespace LaravelAcl\Authentication\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Sentry, Redirect, App, Config;
 use LaravelAcl\Authentication\Validators\ReminderValidator;
 use LaravelAcl\Library\Exceptions\JacopoExceptionsInterface;
@@ -77,6 +78,7 @@ class AuthController extends Controller {
      */
     public function getLogout()
     {
+        Auth::logout();
         $this->authenticator->logout();
 
         return redirect('/admin/login');
