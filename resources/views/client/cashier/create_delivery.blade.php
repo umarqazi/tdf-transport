@@ -117,18 +117,21 @@ TDF Create Delivery
             <input type="hidden" name="orderDummy" class="form-control" id="OrderdummyFile" placeholder="Numero du bon de livraison">
             <table @if(!$delivery['order_pdf']) style="display: none" @endif id="OrderShowPdftable">
               <tr>
-                <td><i class="fa fa-2x fa-file-pdf-o"></i></td>
+                <td><a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a></td>
                 <td>&nbsp;</td>
-                <td><a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['order_pdf']}}" target="_blank" id="OrderAddPdfLink">{{$delivery['order_pdf']}}</a></td>
+                <td><a onclick="cancelpdf('order')" class="cancelpdf"><i class="fa fa-close"></i></a></td>
               </tr>
             </table>
           </div>
           <div class="form-group">
-            <select name="product_id" class="selectpicker form-control" onchange="getPrice(this)">
+            <select name="product_family" class="selectpicker form-control" onchange="getProduct(this)">
               @foreach($products as $key => $prod)
               <option value="{{$key}}" {{($delivery['product_id']==$key)? 'selected':''}}>{{$prod}}</option>
               @endforeach
             </select>
+            <span class="text-danger">{!! $errors->first('product') !!}</span>
+          </div>
+          <div class="form-group" id="products">
             <span class="text-danger">{!! $errors->first('product') !!}</span>
           </div>
         </div>
@@ -151,14 +154,14 @@ TDF Create Delivery
             <input type="hidden" name="dummy" class="form-control" id="dummyFile" placeholder="Numero du bon de livraison">
             <table @if(!$delivery['delivery_pdf']) style="display: none" @endif id="showPdftable">
               <tr>
-                <td><i class="fa fa-2x fa-file-pdf-o"></i></td>
+                <td><a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a></td>
                 <td>&nbsp;</td>
-                <td><a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink">{{$delivery['delivery_pdf']}}</a></td>
+                <td><a onclick="cancelpdf('delivery')" class="cancelpdf"><i class="fa fa-close"></i></a></td>
               </tr>
             </table>
           </div>
           <div class="form-group">
-            {{ Form::select('service', Config::get('constants.Services'), null, ['class'=>'full-width'])}}
+            {{ Form::select('service', Config::get('constants.Services'), null, ['class'=>'full-width', "onchange"=>"getPrice(this)"])}}
           </div>
           <span class="text-danger">{!! $errors->first('services') !!}</span>
           <div class="form-group">
@@ -189,9 +192,7 @@ TDF Create Delivery
 <div class="row">
   <div class="col-md-12 text-center tbl-btns">
     <button class="button-styling" type="submit">Valider ma demande <i class="fa fa-save"></i></button>
-    <a href="{{url('/')}}" class="btn btn-danger cancel-request">Annuler ma demande <i class="fa fa-trash"></i></a>
-    <!-- <a href="#" class="active green">Valider ma demande<i class="fa fa-save"></i></a>
-    <a href="#" class="red">Annuler ma demande<i class="fa fa-trash-o"></i></a> -->
+    <a href="{{url('/')}}" class="btn btn-danger cancel-request">Annuler ma demande <i class="fa fa-undo"></i></a>
   </div>
 </div>
 {!! Form::hidden('id', null, ['id'=>'recordId']) !!}

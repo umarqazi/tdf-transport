@@ -15,7 +15,7 @@ class Delivery extends Model
     }
     public function products()
     {
-        return $this->belongsToMany('LaravelAcl\Product', 'delivery_products');
+        return $this->belongsToMany('LaravelAcl\SubProduct');
     }
     public function time()
     {

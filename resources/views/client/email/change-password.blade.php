@@ -6,7 +6,7 @@
 <body>
     <Strong>Hi</Strong>
     <br>
-    	<span>Kindly <a href="{{route('change.Password', [$data['token']])}}">Click Here</a> to change your password</span>
+    	<span>Merci de <a href="{{route('change.Password', [$data['token']])}}">cliquez ici</a> pour changer votre mot de passe </span>
     <br>
     <br>
     <span>

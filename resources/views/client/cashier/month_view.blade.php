@@ -6,9 +6,9 @@ TDF Month View
 
 @section('content')
 <div class="col-lg-12">
-  <h1 class="page-header text-center">TABLEAU DE BORD DES LIVRAISONS</h1>
+  <h1 class="page-header text-center">RÉCAPITULATIF DES LIVRAISONS DU MOIS</h1>
 </div>
-<div class="col-lg-12 calendar-control">
+<div class="pull-right selector">
   <select onchange="showView(this)">
     <option value="dashboard">Semaine</option>
     <option value="monthlyRecords" selected="selected">Mois</option>
@@ -16,22 +16,25 @@ TDF Month View
 </div>
 
 <div id='calendar'></div>
-{!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js') !!}
-<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
 <script type="text/javascript">
 $(document).ready(function() {
   // page is now ready, initialize the calendar...
   $('#calendar').fullCalendar({
+    fixedWeekCount: false,
     // put your options and callbacks here
     events : [
       @foreach($deliveries as $task)
       {
-        title : '{{ $task->total  }} livraisons l’ {{$task->day_period}}',
+        title : '{{ $task->total  }} livraison{{($task->total > 1)?"s": ""}} - {{$task->day_period}}',
         start : '{{ $task->task_date }}',
-        color : @if($task->day_period=='Matin') '#999999' @else '#45818e' @endif,
+        color : @if($task->day_period==Config::get('constants.Day Period.matin')) '#999999' @else '#45818e' @endif,
       },
       @endforeach
-    ]
+    ],
+    eventOrder: '-color',
+    dayClick: function(date, jsEvent, view) {
+      window.location = APP_URL+'/dashboard/'+date.format();
+  }
   })
 });
 </script>

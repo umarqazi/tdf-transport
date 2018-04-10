@@ -1,8 +1,14 @@
 $('select').selectpicker();
 $(function () {
-	$('#datetimepicker5').datetimepicker();
-	$('#datetimepicker6').datetimepicker();
-	$('#datetimepicker7').datetimepicker();
+	$('#datetimepicker5').datetimepicker({
+		format: 'D/M/Y'
+	});
+	$('#datetimepicker6').datetimepicker({
+		format: 'D/M/Y'
+	});
+	$('#datetimepicker7').datetimepicker({
+		format: 'D/M/Y'
+	});
 });
 function freeDelivery(check){
 	if($('input[name="free"]').is(':checked'))
@@ -41,15 +47,16 @@ function upload()
 			if(orderPdf=='Yes'){
 				$('#showOrderErrorPdf').html('');
 				$('#OrderShowPdftable').show();
-				$('#OrderAddPdfLink').html(data.name);
+				// $('#OrderAddPdfLink').html(data.name);
 				$('#OrderdummyFile').val(data.name);
 				// $('#orderPdfFile').val('');
 				$('#orderPdfDiv').hide();
+				document.getElementById("OrderAddPdfLink").href=APP_URL+"/assets/images/dummyImages/"+data.name;
 			}
 			else{
 				$('#showErrorPdf').html('');
 				$('#showPdftable').show();
-				$('#addPdfLink').html(data.name);
+				// $('#addPdfLink').html(data.name);
 				$('#dummyFile').val(data.name);
 				// $('#pdfFile').val('');
 				$('#PdfDiv').hide();
@@ -95,7 +102,7 @@ function searchResult()
 	searchResult.append('search_field', $("#search_field").val());
 	searchResult.append('customer_name', $("#customer").val());
 	searchResult.append('order_id', $("#orderId").val());
-	searchResult.append('date', $("#datetime").val());
+	searchResult.append('datetime', $("#datetime").val());
 	var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 	searchResult.append('_token', CSRF_TOKEN);
 	$.ajax({
@@ -108,16 +115,12 @@ function searchResult()
 		processData : false,
 		data: searchResult,
 		success: function(data) {
+			console.log(data);
 			$('#searchResult').html(data);
 			$('#searchModal').modal('show');
 			$('#customer2').val($("#customer").val());
 			$('#orderId2').val($("#orderId").val());
 			$('#dateTime2').val($("#datetime").val());
-			// $('#showPdftable').show();
-			// $('#addPdfLink').html(data.name);
-			// $('#dummyFile').val(data.name);
-			// $('#pdfFile').val('');
-			// document.getElementById("addPdfLink").href=APP_URL+"/assets/images/dummyImages/"+data.name;
 		},
 		error: function(xhr, status, error) {
 			$('#showErrorPdf').html(xhr.responseText);
@@ -142,14 +145,59 @@ jQuery(function() {
 	}, 5000);
 });
 function getPrice(option){
-	var id=option.value;
+	var e = document.getElementById("product_type");
+	var id = e.options[e.selectedIndex].value;
+	var service=option.value;
 	$.ajax({
 		url: APP_URL+"/getDeliveryPrice/",
 		type:"GET",
 		dataType: 'text',
-		data: { id : id},
+		data: { service : service, product_id: id },
 		success: function(data) {
 			$('#delivery_charges').val(data);
 		},
 	});
 }
+function cancelpdf(type){
+	if(type=='delivery'){
+		$('#showPdftable').hide();
+		$('#dummyFile').val('');
+		$('#PdfDiv').show();
+		$('#pdfFile').val('');
+	}else{
+		$('#OrderShowPdftable').hide();
+		$('#OrderdummyFile').val('');
+		$('#orderPdfFile').val('');
+		$('#orderPdfDiv').show();
+	}
+}
+
+$(document).ready(function($) {
+    $(".clickable-row").click(function() {
+			alert();
+        window.location = $(this).data("href");
+    });
+});
+function viewDelivery(url){
+	window.location = url;
+}
+function getProduct(option){
+	var id=option.value;
+	$.ajax({
+		url: APP_URL+"/getProductType",
+		type:"GET",
+		dataType: 'text',
+		data: { id : id},
+		success: function(data) {
+			console.log(data);
+			$('#products').html(data);
+		},
+	});
+}
+$('#checkbox').change(function(){
+	if ($(this).prop("checked")==true) {
+			$('.deliveryCheckbox:enabled').prop('checked',true);
+	}else{
+		$('.deliveryCheckbox:enabled').prop('checked',false);
+	}
+});

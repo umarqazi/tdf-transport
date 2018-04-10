@@ -17,7 +17,7 @@
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">
+            <ul class="nav navbar-top-links navbar-right hide-menu">
                 <li><strong class="capitalize">{{$authUser->user_first_name}} {{$authUser->user_last_name}}</strong></li>
                 <li><a href="{{route('user.logout')}}"><i class="fa fa-sign-out fa-fw"></i> Deconnexion</a></li>
                 <li><a href="#"><i class="fa fa-question-circle fa-fw"></i> Aide</a></li>
@@ -42,6 +42,20 @@
                         </li>
                         <li>
                             <a href="#">Gestion des parametres <i class="fa fa-gear fa-fw"></i></a>
+                        </li>
+                        <li class="toggle-menu">
+                            <a>
+                                <strong class="capitalize">{{$authUser->user_first_name}} {{$authUser->user_last_name}}</strong>
+                            </a>
+                        </li>
+                        <li class="toggle-menu">
+                            <a href="{{route('user.logout')}}"><i class="fa fa-sign-out fa-fw"></i> Deconnexion</a>
+                        </li>
+                        <li class="toggle-menu">
+                            <a href="#"><i class="fa fa-question-circle fa-fw"></i> Aide</a>
+                        </li>
+                        <li class="toggle-menu">
+                            <a href="#"><i class="fa fa-gear fa-fw"></i> Reglages</a>
                         </li>
                     </ul>
                 </div>

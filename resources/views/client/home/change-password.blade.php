@@ -15,7 +15,7 @@ TDF Transport
     <input type="password" name="password" class="fld" placeholder="Password">
     <span class="text-danger">{!! $errors->first('password') !!}</span>
     <input type="password" name="password_confirmation" class="fld" placeholder="Confirm Password">
-    <button type="submit" class="submit-btn">changer le mot de passe<i class="fa fa-arrow-alt-circle-right"></i></button>
+    <button type="submit" class="submit-btn">Valider ma demande<i class="fa fa-arrow-alt-circle-right"></i></button>
     {!! Form::close() !!}
   </div>
 

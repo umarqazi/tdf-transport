@@ -62,11 +62,11 @@
                       }
                       ?>
                       <tr>
-                        <td>{{date('d/M/Y', strtotime($delivery['datetime']))}}</td>
+                        <td>{{date('d/m/Y', strtotime($delivery['datetime']))}}</td>
                         <td>{{$delivery['day_period']}}</td>
                         <td>{{$delivery['first_name']}} {{$delivery['last_name']}}</td>
-                        <td>@if($delivery['order_pdf'])<a href="{{asset('assets/images')}}/{{$delivery['store_name']}}/{{$delivery['order_pdf']}}" target="_blank"><i class="fa fa-2x fa-file-pdf-o"></i></a>@endif {{$delivery['order_id']}}</td>
-                        <td><a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a> {{$delivery['delivery_number']}}</td>
+                        <td>@if($delivery['order_pdf'])<a href="{{asset('assets/images')}}/{{$delivery['store_name']}}/{{$delivery['order_pdf']}}" target="_blank"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['order_id']}}</td>
+                        <td><a href="{{asset('assets/images')}}/{{$delivery['store_name']}}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a> {{$delivery['delivery_number']}}</td>
                         <td>{{$delivery['mobile_number']}}</td>
                         <td>{{$delivery['city']}}</td>
                         <td>{{$delivery['postal_code']}}</td>

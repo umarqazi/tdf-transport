@@ -20,6 +20,7 @@ use Mail;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\App;
+use Jenssegers\Date\Date;
 class HomeController extends Controller
 {
 	protected $hashKey;
@@ -28,6 +29,7 @@ class HomeController extends Controller
 	public $authUser;
 	public function __construct()
 	{
+		Date::setLocale('fr');
 		$this->middleware(function ($request, $next) {
 			$this->authUser=Auth::user();
 			if($this->authUser)
@@ -62,10 +64,10 @@ class HomeController extends Controller
 			$date = Carbon::now();
 			$checkDate = Carbon::now();
 		}
-		$startDate=Carbon::parse($date->startOfWeek())->format('d M y');
-		$endDate=Carbon::parse($date->endOfWeek())->format('d M y');
+		$startDate=Date::parse($date->startOfWeek())->format('F Y');
+		$endDate=Date::parse($date->endOfWeek())->format('F Y');
 		$view='client.cashier.dashboard';
-		$getDeliveries=Delivery::whereBetween('datetime', [$date->startOfWeek()->format('Y-m-d h:i:s'), $date->endOfWeek()->format('Y-m-d h:i:s')]);
+		$getDeliveries=Delivery::whereBetween('datetime', [$date->startOfWeek()->format('Y-m-d'), $date->endOfWeek()->format('Y-m-d')]);
 		$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id);
 		$getDeliveries=$getDeliveries->get();
 		for($i=0; $i<=5; $i++){
@@ -96,13 +98,14 @@ class HomeController extends Controller
 			$drivers[$driver['id']]=$driver['vehicle_name'].', '.$driver['number_plate'];
 		}
 		$nextDay=Carbon::now()->addDay(1)->format('Y-m-d');
-		$date=Carbon::now()->addDay(1)->format('l d M Y');
+		$date=Date::now()->addDay(1)->format('l d F Y');
 		$getDeliveries='';
 		$user_record='';
 		$tours=array();
 		if($user_id){
 			$user_record=User::where('id',$user_id)->select('number_plate', 'vehicle_name', 'user_first_name', 'user_last_name')->first();
-			$getDeliveries=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
+			$getDeliveries=self::deliveryProducts();
+			$getDeliveries=$getDeliveries->where('deliveries.status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay);
 			if($request->type){
 				if($request->type=='city'){
 					$getDeliveries=$getDeliveries->orderBy('city', 'desc');
@@ -122,9 +125,9 @@ class HomeController extends Controller
 		return view::make('client.tdf_manager.create_tour')->with(['date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries, 'modal'=>$addmodal]);
 	}
 	public static function manageTours($user_id, $nextDay, $driver=NULL){
-		$getDeliveries2=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '1')->whereDate('datetime', $nextDay)->select('deliveries.*', 'products.product_family', 'products.product_type')->with(array('time'=>function($query){
+		$getDeliveries2=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '1')->whereDate('datetime', $nextDay)->select('deliveries.*', 'sub_products.product_type')->with(array('time'=>function($query){
 				$query->select('tour_plan.id as tour_id','time_slot_id', 'delivery_id', 'user_id');
-		}))->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->get();
+		}))->leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->get();
 		$getTime=TimeSlot::all();
 		foreach($getTime as $time){
 			$tours[$time['time']]=['id'=>'','delivery'=>'','time_id'=>$time['id']];
@@ -133,7 +136,7 @@ class HomeController extends Controller
 					foreach ($value['time'] as $key => $record) {
 						if($time['id']==$record['time_slot_id'] && $user_id==$record['user_id']){
 							if($driver==NULL){
-								$records=$value['first_name'].' '.$value['last_name'].' '.$value['datetime'].' '.$value['day_period'];
+								$records=$value['first_name'].' '.$value['last_name'].' '.Date::parse($value['datetime'])->format('l d F Y').' '.$value['day_period'];
 							}
 							else{
 								$records=$value;
@@ -153,16 +156,8 @@ class HomeController extends Controller
 	{
 		$startDate=carbon::now()->startofMonth();
 		$endDate=carbon::now()->endofMonth();
-		$getDeliveries=Delivery::select('day_period', DB::raw("DATE(datetime) as 'task_date'"), DB::raw('count(*) as total' ))->groupBy(DB::raw("DATE(datetime)"))->groupBy('day_period')->orderBy(DB::raw("DATE(datetime)"), 'asc');
-		if($this->type==$this->users['Cashier'])
-		{
-			$getDeliveries=$getDeliveries->where('user_id', $this->authUser->id);
-		}
-		else
-		{
-			$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id);
-		}
-		$getDeliveries=$getDeliveries->get();
+		$getDeliveries=Delivery::select('day_period', DB::raw("DATE(datetime) as 'task_date'"), DB::raw('count(*) as total' ))->groupBy(DB::raw("DATE(datetime)"))->groupBy('day_period')->orderBy('id', 'desc');
+		$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id)->get();
 		return view::make('client.cashier.month_view')->with(['deliveries'=>$getDeliveries]);
 	}
 	public function forgetPassword()
@@ -189,7 +184,7 @@ class HomeController extends Controller
 			Toast::error("Aucun e-mail n'est associé à cette adresse e-mail");
 			return redirect::back();
 		}
-		Toast::success("Please check your Email");
+		Toast::success("Votre demande de mot de passe oublié a bien été prise en compte. Merci de vérifier vos mails.");
 		return redirect('/');
 	}
 	public function changePassword(Request $request)
@@ -227,40 +222,34 @@ class HomeController extends Controller
 		$name=$request->customer_name;
 		$order_id=$request->order_id;
 		$date=Carbon::parse($request->datetime)->format('Y-m-d h:i:s');
-
 		$searchResult='';
 		$getDeliveryRecords=self::searchResults($request->all());
 		$getDeliveryRecords=$getDeliveryRecords;
-		if($this->type==$this->users['Cashier'])
-		{
-			$getDeliveryRecords=$getDeliveryRecords->where('user_id', $this->authUser->id);
-		}
-		else
-		{
-			$getDeliveryRecords=$getDeliveryRecords->where('store_id', $this->authUser->store_id);
-		}
+		$getDeliveryRecords=$getDeliveryRecords->where('store_id', $this->authUser->store_id);
 		$getDeliveryRecords=$getDeliveryRecords->orderby('datetime', 'desc')->get();
 		$searchResult='<thead><tr><th class="text-center">Date de la livraison</th><th class="text-center">Client</th><th class="text-center">Numero de commande</th><th class="text-center">Numero du bon de livraison</th><th class="text-center">Telephone</th><th class="text-center">Villes</th><th class="text-center">Code Postal</th><th class="text-center">Type de Prestation</th><th class="text-center">Produit(s) commande(s)</th><th class="text-center">Prix de la livraison</th></tr></thead>';
 		foreach($getDeliveryRecords as $key=>$record){
 			$products='';
 			$getProduct=array();
-			if($record['product_id']==''){
-				$products='Multi';
+			if($record['sub_product_id']==''){
+				$products='Multi-produits';
 			}
 			else{
-				$products=$record['product_family'];
+				$products=$record['product_type'];
 			}
 			if($record['delivery_price']=='Gratuit'){
 				$price= 'Gratuit';
 			}else{
 				$price=$record['delivery_price']." €";
 			}
-			$searchResult.="<tr><td>".Carbon::parse($record['datetime'])->format('Y-m-d')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
+			$url=URL('viewDelivery').'/'.$record['id'];
+			$searchResult.="<tr onclick=viewDelivery('$url') class='clickable'><td>".Date::parse($record['datetime'])->format('d/m/Y')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
 		}
 		return $searchResult;
 	}
 	public static function searchResults($request){
-		$getDeliveryRecords=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type');
+
+		$getDeliveryRecords=self::deliveryProducts();
 		if(!empty($request['search_field'])){
 			$getDeliveryRecords=$getDeliveryRecords->where('order_id', $request['search_field'])->orwhereRaw('concat(first_name," ",last_name) like ?', '%'.$request['search_field'].'%');
 		}
@@ -274,10 +263,14 @@ class HomeController extends Controller
 		}
 		if(array_key_exists('dateCheck', $request))
 		{
-			$date=date('Y-m-d',strtotime($request['date']));
-			$getDeliveryRecords=$getDeliveryRecords->whereDate('datetime','<=', $date);
+			$request['datetime']= str_replace('/', '-', $request['datetime']);
+			$date=date('Y-m-d',strtotime($request['datetime']));
+			$getDeliveryRecords=$getDeliveryRecords->whereDate('datetime','=', $date);
 		}
 		return $getDeliveryRecords;
 	}
-
+	public static function deliveryProducts(){
+		$getDeliveryRecords=Delivery::leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'sub_products.product_type','stores.store_name');
+		return $getDeliveryRecords;
+	}
 }

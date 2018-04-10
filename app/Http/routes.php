@@ -161,6 +161,10 @@ Route::group(['middleware' => ['web']], function ()
       "as"   => "price",
       "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@getDeliveryPrice'
     ]);
+    Route::get('/getProductType', [
+      "as"   => "product.type",
+      "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@getProductType'
+    ]);
     Route::group(['middleware' => ['tdf_manager', 'can_see']], function ()
     {
       Route::get('/planDriverTour', [
@@ -200,7 +204,7 @@ Route::group(['middleware' => ['web']], function ()
       "as"   => "driver.tours",
       "uses" => 'LaravelAcl\Http\Controllers\VehicleController@toursList'
     ]);
-    Route::get('/tourDeliveryDetail/{id}', [
+    Route::get('/tourDeliveryDetail/{id}/{time}', [
       "as"   => "driver.tours.detail",
       "uses" => 'LaravelAcl\Http\Controllers\VehicleController@deliveryDetail'
     ]);

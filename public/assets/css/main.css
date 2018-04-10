@@ -295,6 +295,7 @@ button:focus {
   display: block;
   font-size: 12px;
   text-align: left;
+  text-transform: uppercase;
 }
 .date{
   display: block;
@@ -436,6 +437,11 @@ button:focus {
   border: 1px solid #93c47d !important;
 }
 
+.nav>li.toggle-menu,
+.toggle-menu{
+    display: none;
+}
+
 /* Ahmad styles */
 
 .custom_search {
@@ -506,16 +512,28 @@ button:focus {
   height: 50px;
 }
 .pdf-font{
-  font-size: 17pt !important;
+  font-size: 16pt !important;
   margin-top: 10px;
 }
-.anchor-color{
-  color:white !important;
-  padding:5px;
-  border-radius:5px;
-    background-color: #c76905;
-    display: inline-block;
+.cancelpdf{
+  margin-left: 10px
 }
-.trash{
-  background-color: #c71010 !important;
+.disabled-div{
+  background-color: #EAEAEA !important;
+}
+.table-striped>tbody>tr:nth-of-type(odd){
+  background-color: white !important;
+}
+.clickable{
+  cursor: pointer;
+}
+.fc-right{
+  float:none !important;
+  display: inline-block;
+}
+.fc-day{
+  cursor: pointer;
+}
+.current-day{
+  margin:0px 10px;
 }
