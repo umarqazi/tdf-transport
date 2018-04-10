@@ -192,7 +192,7 @@ TDF Create Delivery
 <div class="row">
   <div class="col-md-12 text-center tbl-btns">
     <button class="button-styling" type="submit">Valider ma demande <i class="fa fa-save"></i></button>
-    <a href="{{url('/')}}" class="btn btn-danger cancel-request">Annuler ma demande <i class="fa fa-undo"></i></a>
+    <a href="{{url('/')}}" class="btn btn-danger cancel-request">Annuler <i class="fa fa-undo"></i></a>
   </div>
 </div>
 {!! Form::hidden('id', null, ['id'=>'recordId']) !!}

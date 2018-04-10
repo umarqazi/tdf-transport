@@ -62,7 +62,7 @@ Route::group(['middleware' => ['web']], function ()
   ]);
   Route::get('/admin/logout', [
     "as"   => "user.logout",
-    "uses" => 'LaravelAcl\Authentication\Controllers\AuthController@getLogout'
+    "uses" => 'LaravelAcl\Http\Controllers\AuthController@getClientLogout'
   ]);
   Route::post('/user/login', [
     "uses" => 'LaravelAcl\Authentication\Controllers\AuthController@postAdminLogin',
@@ -220,7 +220,7 @@ Route::group(['middleware' => ['web']], function ()
   |--------------------------------------------------------------------------
   |
   */
-  Route::group(['middleware' => ['admin_logged', 'can_see']], function ()
+  Route::group(['middleware' => ['admin_logged']], function ()
   {
     Route::get('/admin/users/dashboard', [
       'as'   => 'dashboard.default',
