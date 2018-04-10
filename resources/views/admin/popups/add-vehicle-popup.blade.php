@@ -11,7 +11,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-lg-12">
-            <h1 class="page-header text-center">Ajouter </h1>
+            <h1 class="page-header text-center">Ajouter un véhicule </h1>
           </div>
           <div class="col-lg-12 calendar-control">
             <div class="content_wrapper clearfix">
@@ -20,14 +20,14 @@
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::text('vehicle_name', null, ['class' => 'form-control', 'placeholder' => 'Fonction de Vehicule', 'autocomplete' => 'off']) !!}
+                    {!! Form::text('vehicle_name', null, ['class' => 'form-control', 'placeholder' => 'Type de véhicule', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('vehicle_name') !!}</span>
                 </div>
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::text('number_plate', null, ['class' => 'form-control', 'placeholder' => 'N plaque d`immatriculation', 'autocomplete' => 'off']) !!}
+                    {!! Form::text('number_plate', null, ['class' => 'form-control', 'placeholder' => "Plaque d'immatriculation", 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('number_plate') !!}</span>
 

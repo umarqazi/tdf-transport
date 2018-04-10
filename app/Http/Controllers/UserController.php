@@ -143,6 +143,12 @@ class UserController extends Controller {
 
     public function deleteUser(Request $request)
     {
+      $getUser=User::find($request->id);
+      if($getUser->type='Driver'){
+        $message="Le véhicule a été supprimé.";
+      }else{
+        $message="Le véhicule a été supprimé.";
+      }
         try
         {
             $this->f->delete($request->all());
@@ -152,7 +158,7 @@ class UserController extends Controller {
             return Redirect::route('users.list')->withErrors($errors);
         }
         return Redirect::back()
-                       ->withMessage(Config::get('acl_messages.flash.success.user_delete_success'));
+                       ->withMessage($message);
     }
 
 

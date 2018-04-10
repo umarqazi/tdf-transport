@@ -23,7 +23,7 @@ Admin area: dashboard
     <div class="row">
         <div class="col-md-12">
             <div class="sort">
-                <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addVehicle">Ajounter un vehicule <i class="fa fa-plus-circle fa-fw"></i></button>
+                <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addVehicle">Ajouter un véhicule <i class="fa fa-plus-circle fa-fw"></i></button>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@ Admin area: dashboard
             <div class="clear20"></div>
             <div class="row">
                 <div class="col-md-12">
-                    <strong>Liste des vehicules enregistres</strong>
+                    <strong>Liste des véhicules enregistrés</strong>
                 </div>
             </div>
             <div class="clear20"></div>
@@ -42,7 +42,7 @@ Admin area: dashboard
                         <table class="table table-striped table-bordered" id="users-table">
                             <thead>
                                 <tr>
-                                    <th>Fonction de vehicule</th>
+                                    <th>Type de véhicule</th>
                                     <th>Immatriculation</th>
                                     <th>Chauffeur</th>
                                     <th>Email</th>

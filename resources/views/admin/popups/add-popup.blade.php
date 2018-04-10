@@ -80,14 +80,14 @@
                   <div class="">
                     <div class="input-group">
                       <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                      {!! Form::text('vehicle_name', null, ['class' => 'form-control', 'placeholder' => 'Fonction de Vehicule', 'autocomplete' => 'off']) !!}
+                      {!! Form::text('vehicle_name', null, ['class' => 'form-control', 'placeholder' => 'Type de véhicule', 'autocomplete' => 'off']) !!}
                     </div>
                     <span class="text-danger">{!! $errors->first('vehicle_name') !!}</span>
                   </div>
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                      {!! Form::text('number_plate', null, ['class' => 'form-control', 'placeholder' => 'N plaque d`immatriculation', 'autocomplete' => 'off']) !!}
+                      {!! Form::text('number_plate', null, ['class' => 'form-control', 'placeholder' => "Plaque d'immatriculation", 'autocomplete' => 'off']) !!}
                     </div>
                     <span class="text-danger">{!! $errors->first('number_plate') !!}</span>
                   </div>
