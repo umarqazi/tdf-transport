@@ -5,6 +5,9 @@
 		font-family: 'Lobster', cursive;
 		font-family: 'Quicksand', sans-serif;
 *********/
+html{
+    height: 100%;
+}
 body {
   margin: 0px;
   padding: 0px;
@@ -14,6 +17,7 @@ body {
 }
 .login-background{
   background: url(../images/main-bg.jpg) no-repeat fixed top center/cover;
+    height: 100%;
 }
 .main-wrapper{
   min-height: 100%;
