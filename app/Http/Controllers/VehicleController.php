@@ -31,7 +31,7 @@ class VehicleController extends Controller
     }
     public function deliveryDetail(Request $request){
       $id=$request->id;
-      $getDetail=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'products.product_type', 'products.product_family', 'stores.store_name')->find($id);
+      $getDetail=HomeController::deliveryProducts()->find($id);
       $date=Date::now()->format('l d F Y');
       $time=$request->time;
       return view::make('client.driver.delivery_detail')->with(['time'=>$time,'date'=>$date, 'detail'=>$getDetail]);

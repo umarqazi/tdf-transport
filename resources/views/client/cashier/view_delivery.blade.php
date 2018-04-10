@@ -104,10 +104,10 @@ TDF Create Delivery
             <span class="text-danger">{!! $errors->first('order_id') !!}</span>
           </div>
           <div class="form-group">
-            @if($delivery['product_id']==0)
+            @if($delivery['sub_product_id']=='')
               <?php $type="Multi-produits";?>
             @else
-              <?php $type=$delivery['product_family'];?>
+              <?php $type=$delivery['product_type'];?>
             @endif
             {{Form::text('product_family', $type, ['class'=>'form-control', 'readonly'])}}
           </div>

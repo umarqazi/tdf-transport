@@ -147,6 +147,7 @@ button:focus {
 .login-footer{
     text-align: center;
     padding:10px 0px;
+    bottom:10px;
 }
 .login-footer > .footer-logo img{
     max-width: 350px;
@@ -298,6 +299,7 @@ button:focus {
   display: block;
   font-size: 12px;
   text-align: left;
+  text-transform: uppercase;
 }
 .date{
   display: block;
@@ -305,9 +307,11 @@ button:focus {
 }
 .grey-color{
   background-color: #989898;
+  color:white;
 }
 .blue-color{
-  background-color: #457F8F;
+  background-color: #457F8F !important;
+  color:white;
 }
 .text-style{
   text-align: center;
@@ -519,7 +523,7 @@ button:focus {
   margin-left: 10px
 }
 .disabled-div{
-  background-color: #989898 !important;
+  background-color: #EAEAEA !important;
 }
 .table-striped>tbody>tr:nth-of-type(odd){
   background-color: white !important;
@@ -534,6 +538,6 @@ button:focus {
 .fc-day{
   cursor: pointer;
 }
-.fc-other-month{
-  cursor: none;
+.current-day{
+  margin:0px 10px;
 }

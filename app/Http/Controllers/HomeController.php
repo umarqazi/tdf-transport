@@ -104,7 +104,8 @@ class HomeController extends Controller
 		$tours=array();
 		if($user_id){
 			$user_record=User::where('id',$user_id)->select('number_plate', 'vehicle_name', 'user_first_name', 'user_last_name')->first();
-			$getDeliveries=Delivery::where('deliveries.status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'products.product_type', 'products.product_family', 'stores.store_name');
+			$getDeliveries=self::deliveryProducts();
+			$getDeliveries=$getDeliveries->where('deliveries.status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay);
 			if($request->type){
 				if($request->type=='city'){
 					$getDeliveries=$getDeliveries->orderBy('city', 'desc');
@@ -124,9 +125,9 @@ class HomeController extends Controller
 		return view::make('client.tdf_manager.create_tour')->with(['date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries, 'modal'=>$addmodal]);
 	}
 	public static function manageTours($user_id, $nextDay, $driver=NULL){
-		$getDeliveries2=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '1')->whereDate('datetime', $nextDay)->select('deliveries.*', 'products.product_family', 'products.product_type')->with(array('time'=>function($query){
+		$getDeliveries2=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '1')->whereDate('datetime', $nextDay)->select('deliveries.*', 'sub_products.product_type')->with(array('time'=>function($query){
 				$query->select('tour_plan.id as tour_id','time_slot_id', 'delivery_id', 'user_id');
-		}))->leftJoin('products', 'deliveries.product_id', '=', 'products.id')->get();
+		}))->leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->get();
 		$getTime=TimeSlot::all();
 		foreach($getTime as $time){
 			$tours[$time['time']]=['id'=>'','delivery'=>'','time_id'=>$time['id']];
@@ -230,11 +231,11 @@ class HomeController extends Controller
 		foreach($getDeliveryRecords as $key=>$record){
 			$products='';
 			$getProduct=array();
-			if($record['product_id']==''){
-				$products='Multi';
+			if($record['sub_product_id']==''){
+				$products='Multi-produits';
 			}
 			else{
-				$products=$record['product_family'];
+				$products=$record['product_type'];
 			}
 			if($record['delivery_price']=='Gratuit'){
 				$price= 'Gratuit';
@@ -248,7 +249,7 @@ class HomeController extends Controller
 	}
 	public static function searchResults($request){
 
-		$getDeliveryRecords=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'products.product_family', 'products.product_type','stores.store_name');
+		$getDeliveryRecords=self::deliveryProducts();
 		if(!empty($request['search_field'])){
 			$getDeliveryRecords=$getDeliveryRecords->where('order_id', $request['search_field'])->orwhereRaw('concat(first_name," ",last_name) like ?', '%'.$request['search_field'].'%');
 		}
@@ -262,10 +263,14 @@ class HomeController extends Controller
 		}
 		if(array_key_exists('dateCheck', $request))
 		{
-			$date=date('Y-d-m',strtotime($request['datetime']));
-			$getDeliveryRecords=$getDeliveryRecords->whereDate('datetime','<=', $date);
+			$request['datetime']= str_replace('/', '-', $request['datetime']);
+			$date=date('Y-m-d',strtotime($request['datetime']));
+			$getDeliveryRecords=$getDeliveryRecords->whereDate('datetime','=', $date);
 		}
 		return $getDeliveryRecords;
 	}
-
+	public static function deliveryProducts(){
+		$getDeliveryRecords=Delivery::leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'sub_products.product_type','stores.store_name');
+		return $getDeliveryRecords;
+	}
 }

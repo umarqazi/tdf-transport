@@ -11,6 +11,7 @@ use LaravelAcl\DeliveryProduct;
 use LaravelAcl\Store;
 use LaravelAcl\TourPlan;
 use LaravelAcl\Product;
+use LaravelAcl\SubProduct;
 use view;
 use Validator;
 use Redirect;
@@ -86,12 +87,13 @@ class DeliveryController extends Controller
       'mobile_number'=> 'required',
       'order_id'=> 'required',
       'delivery_number'=> 'required',
-      'product_id'=> 'required',
       'service'=> 'required',
       'address' => 'required',
-      'pdf' => 'mimes:pdf,'.$request->id
+      'pdf' => 'mimes:pdf'.$request->id,
+      'order_pdf' => 'mimes:pdf'.$request->id
 
     ]);
+    $date = str_replace('/', '-', $request->datetime);
     if ($validator->fails()) {
       return redirect::back()
       ->withErrors($validator)
@@ -144,7 +146,7 @@ class DeliveryController extends Controller
       $name=self::storeImage($pdf, $getStoreName, $type);
       $delivery->order_pdf=$name;
     }
-    $delivery->datetime=date('Y-d-m', strtotime($request->datetime));
+    $delivery->datetime=date('Y-m-d', strtotime($date));
     $delivery->day_period=$request->day_period;
     $delivery->first_name=$request->first_name;
     $delivery->last_name=$request->last_name;
@@ -167,7 +169,7 @@ class DeliveryController extends Controller
     }else{
       $product_id=NULL;
     }
-    $delivery->product_id=$product_id;
+    $delivery->sub_product_id=$product_id;
     $delivery->status=Config::get('constants.Status.Pending');
     if(Auth::user()->type==Config::get('constants.Users.Manager')){
       $getManager=User::where('type', 'Manager')->where('store_id', $this->authUser->store_id)->first();
@@ -176,6 +178,7 @@ class DeliveryController extends Controller
         $getManager->notify(new DeliveryNotification($delivery));
       }
     }
+
     $delivery->save();
     Toast::success($message);
     return redirect::to('/dashboard');
@@ -186,7 +189,8 @@ class DeliveryController extends Controller
     $products=array();
     if($id)
     {
-      $getDelivery=Delivery::leftJoin('products', 'deliveries.product_id', '=', 'products.id')->select('deliveries.*', 'products.product_family', 'products.product_type')->find($id);
+      $getDeliveryRecords=HomeController::deliveryProducts();
+      $getDelivery=$getDeliveryRecords->find($id);
     }
     return view::make('client.cashier.view_delivery')->with(['delivery'=> $getDelivery]);
   }
@@ -212,7 +216,7 @@ class DeliveryController extends Controller
     $deleteProduct=DeliveryProduct::where('delivery_id', $id)->delete();
     $delete=Delivery::where('id', $id)->delete();
     Toast::success(Config::get('constants.Delete Delivery'));
-    return redirect::to('/dashboard');
+    return redirect::back();
   }
   public static function storeImage($file, $storeName, $fileType=NULL)
   {
@@ -333,12 +337,28 @@ class DeliveryController extends Controller
     return Redirect::back();
   }
   public function getDeliveryPrice(Request $request){
-    $id=$request->id;
+    $id=$request->product_id;
+    $service=Config::get('constants.Database Fields.'.$request->service);
     $amount='';
-    $price=Product::where('id', $id)->first();
-    if($price){
-      $amount=$price->delivery_charges;
+    if($id!=''){
+      $price=SubProduct::where('id', $id)->select($service)->first();
+      if($price){
+        $amount=$price->$service;
+      }
     }
+
     return $amount;
+  }
+  public function getProductType(Request $request){
+    $id=$request->id;
+    $product=SubProduct::where('product_id', $id)->get();
+    $productDropDown="<select class='form-control' name='product_id' id='product_type'><option value=''>Select Product</option>";
+    if($product){
+      foreach($product as $item){
+        $productDropDown.="<option value='".$item['id']."'>".$item['product_type']."</option>";
+      }
+    }
+    $productDropDown.="</select>";
+    return $productDropDown;
   }
 }

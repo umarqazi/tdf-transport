@@ -75,7 +75,7 @@
               </div>
               <div class="clearfix popuup_submit">
                 <button type="submit" class="btn btn-success">Ajouter un nouveau vehicule <i class="fa fa-save"></i></button>
-                <a href="{{url('/admin/users/dashboard')}}" class="btn btn-danger">Annuler Ma Demande <i class="fa fa-trash"></i></a>
+                <a href="{{url('/admin/users/dashboard')}}" class="btn btn-danger">Annuler Ma Demande <i class="fa fa-undo"></i></a>
               </div>
             </div>
           </div>

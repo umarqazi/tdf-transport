@@ -29,10 +29,10 @@
           }else{
             $price=$delivery['delivery_price']." €";
           }
-          if($delivery['product_id']==0){
+          if($delivery['sub_product_id']==''){
             $type="Multi-produits";
           }else{
-            $type=$delivery['product_family'];
+            $type=$delivery['product_type'];
           }
           if($delivery['status']==1){
             $status="Validé";
@@ -44,7 +44,7 @@
           $total+=$delivery['delivery_price'];
           $url=URL('viewDelivery').'/'.$delivery['id'];
           ?>
-          <tr onclick="viewDelivery('{{$url}}')" class="clickable">
+          <tr @if(auth()->user()->type==Config::get('constants.Users.Manager')) onclick="viewDelivery('{{$url}}')" class="clickable" @endif >
             <td>{{Date::parse($delivery['datetime'])->format('d/m/Y')}}</td>
             <td>{{$delivery['first_name']}} {{$delivery['last_name']}}</td>
             <td>@if($delivery['order_pdf'])<a href="{{asset('assets/images')}}/{{ $delivery['store_name'] }}/{{$delivery['order_pdf']}}" target="_blank"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['order_id']}}</td>

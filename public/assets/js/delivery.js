@@ -1,7 +1,7 @@
 $('select').selectpicker();
 $(function () {
 	$('#datetimepicker5').datetimepicker({
-		format: 'DD/MM/Y'
+		format: 'D/M/Y'
 	});
 	$('#datetimepicker6').datetimepicker({
 		format: 'D/M/Y'
@@ -145,12 +145,14 @@ jQuery(function() {
 	}, 5000);
 });
 function getPrice(option){
-	var id=option.value;
+	var e = document.getElementById("product_type");
+	var id = e.options[e.selectedIndex].value;
+	var service=option.value;
 	$.ajax({
 		url: APP_URL+"/getDeliveryPrice/",
 		type:"GET",
 		dataType: 'text',
-		data: { id : id},
+		data: { service : service, product_id: id },
 		success: function(data) {
 			$('#delivery_charges').val(data);
 		},
@@ -179,3 +181,23 @@ $(document).ready(function($) {
 function viewDelivery(url){
 	window.location = url;
 }
+function getProduct(option){
+	var id=option.value;
+	$.ajax({
+		url: APP_URL+"/getProductType",
+		type:"GET",
+		dataType: 'text',
+		data: { id : id},
+		success: function(data) {
+			console.log(data);
+			$('#products').html(data);
+		},
+	});
+}
+$('#checkbox').change(function(){
+	if ($(this).prop("checked")==true) {
+			$('.deliveryCheckbox:enabled').prop('checked',true);
+	}else{
+		$('.deliveryCheckbox:enabled').prop('checked',false);
+	}
+});

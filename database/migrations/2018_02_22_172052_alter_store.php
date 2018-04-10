@@ -14,7 +14,8 @@ class AlterStore extends Migration
     public function up()
     {
         Schema::table('stores', function($table) {
-            $table->string('company_id');
+          $table->integer('company_id')->unsigned();
+          $table->foreign('company_id')->references('id')->on('companies');
         });
     }
     public function down()
