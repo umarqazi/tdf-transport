@@ -52,26 +52,64 @@ Admin area: Product List
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
+          <th>#</th>
           <th>Famille de produits</th>
-          <th>Type de Produit</th>
-          <th>Frais de livraison</th>
-          <th>Commission</th>
           <th class="text-center">Actions</th>
         </tr>
       </thead>
       <tbody>
         @if(!empty($product))
-        @foreach($product as $store)
+        @foreach($product as $key=>$store)
         <tr>
+          <td>{{$key+1}}</td>
           <td>{!! $store->product_family !!}</td>
-          <td>{!! $store->product_type !!}</td>
-          <td>{!! $store->delivery_charges !!}</td>
-          <td>{!! $store->comission !!}</td>
           <td class="text-center actions">
-            <a href="{{route('product.list', ['id'=>$store->company_id, 'product_id'=>$store->id])}}" class="edit"><i class="fa fa-edit fa-fw"></i></a>
+            <a onclick="addSubProduct('{{$store->product_family}}')" class="edit" ><i class="fa fa-plus fa-fw"></i></a>
             <a href="{!! URL::route('product.delete',['id' => $store->id, '_token' => csrf_token()]) !!}" class="trash delete"><i class="fa fa-trash-o fa-fw"></i></a>
           </td>
         </tr>
+          <?php $number=1; ?>
+        @if(!$store['subProducts']->isEmpty())
+          <tr>
+              <td colspan="3" align="center"><strong>Sub Products With Services</strong></td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <table class="table table-striped table-bordered">
+                <tr>
+                  <th>Product detail</th>
+                  <th>SAV</th>
+                  <th>Livraison</th>
+                  <th>Livraison + montage</th>
+                  <th>Rétrocession</th>
+                  <th>Livraison prestataire</th>
+                  <th>Montage</th>
+                  <th class="text-center">Actions</th>
+                </tr>
+                @foreach($store['subProducts'] as $products)
+                <?php if ($number % 2 == 0) {
+                  $color='blue-color';
+                }else{
+                  $color='grey-color';
+                }?>
+                  <tr class="{{$color}} ">
+                    <td>{!! $products->product_type !!}</td>
+                    <td>{!! $products->sav !!}</td>
+                    <td>{!! $products->livraison !!}</td>
+                    <td>{!! $products->livraison_montage !!}</td>
+                    <td>{!! $products->rétrocession !!}</td>
+                    <td>{!! $products->prestataire !!}</td>
+                    <td>{!! $products->montage !!}</td>
+                    <td>
+                      <a href="{{route('product.list', ['id'=>$store->company_id, 'product_id'=>$products->id])}}" class="edit anchor-color"><i class="fa fa-edit fa-fw"></i></a>
+                      <a href="{!! URL::route('sub.product.delete',['id' => $products->id, '_token' => csrf_token()]) !!}" class="trash delete anchor-color"><i class="fa fa-trash-o fa-fw"></i></a></td>
+                  </tr>
+                  <?php $number++;?>
+                @endforeach
+              </table>
+            </td>
+          </tr>
+        @endif
         @endforeach
         @else
         <tr>
