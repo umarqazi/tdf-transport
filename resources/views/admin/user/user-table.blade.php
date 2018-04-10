@@ -30,7 +30,7 @@
                               <th>Email</th>
                               <th class="hidden-xs">First name</th>
                               <th class="hidden-xs">Last name</th>
-                              <th>Type</th>
+                              <th>Fonction</th>
                               <th>Active</th>
                               <th class="hidden-xs">Last login</th>
                               <th>Operations</th>

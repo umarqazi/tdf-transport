@@ -24,7 +24,6 @@ Admin area: User Management
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12 frm-title-icon"><a href="#">A Jout Rapide <i class="fa fa-plus-circle fa-fw"></i></a></div>
     <div class="col-md-12">
       <div class="sort">
         <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addUser">Ajounter un Utilisateurs <i class="fa fa-plus-circle fa-fw"></i></button>
@@ -47,7 +46,7 @@ Admin area: User Management
               <th>#</th>
               <th>Email</th>
               <th>Prénom</th>
-              <th>Type</th>
+              <th>Fonction</th>
               <th class="text-center">Actions</th>
             </tr>
           </thead>
