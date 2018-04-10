@@ -1,13 +1,13 @@
 $('select').selectpicker();
 $(function () {
 	$('#datetimepicker5').datetimepicker({
-		format: 'D/M/Y'
+		format: 'DD/MM/Y'
 	});
 	$('#datetimepicker6').datetimepicker({
-		format: 'D/M/Y'
+		format: 'DD/MM/Y'
 	});
 	$('#datetimepicker7').datetimepicker({
-		format: 'D/M/Y'
+		format: 'DD/MM/Y'
 	});
 });
 function freeDelivery(check){

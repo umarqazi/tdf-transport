@@ -9,13 +9,13 @@ TDF Create Delivery
   {!! Form::model($delivery, [ 'url' => URL::route('delivery.edit'), "enctype"=>"multipart/form-data"] )  !!}
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header text-center">InformationsN</h1>
+      <h1 class="page-header text-center">Informations <i class="fa fa-info-circle"></i></h1>
     </div>
     <div class="col-lg-12 calendar-control">
       <div class="form-inline">
         <div class="form-group">
           <div class='input-group date' id='datetimepicker5'>
-            {{ Form::text('datetime', $dateTime, ['class'=>'form-control', 'readonly'])}}
+            {{ Form::text('datetime', null, ['class'=>'form-control', 'readonly'])}}
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -104,6 +104,11 @@ TDF Create Delivery
             <span class="text-danger">{!! $errors->first('order_id') !!}</span>
           </div>
           <div class="form-group">
+              @if($delivery['order_pdf'])
+              <a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a>
+              @endif
+          </div>
+          <div class="form-group">
             @if($delivery['sub_product_id']=='')
               <?php $type="Multi-produits";?>
             @else
@@ -113,7 +118,17 @@ TDF Create Delivery
           </div>
         </div>
         <div class="col-md-6">
-
+          <div class="form-group">
+            <div class="input-group">
+              {{Form::text('delivery_number', null, ['class'=>'form-control', 'placeholder'=>'Numero de commande', 'readonly'])}}
+              <div class="input-group-addon"><i class="fa fa-search fa-fw"></i></div>
+            </div>
+          </div>
+          <div class="form-group">
+            @if($delivery['delivery_pdf'])
+            <a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['delivery_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a>
+            @endif
+          </div>
           <div class="form-group">
             {{Form::text('service', null, ['class'=>'form-control', 'placeholder'=>'Prix de la livraison', 'id'=>'delivery_charges', 'readonly'])}}
           </div>
@@ -139,7 +154,7 @@ TDF Create Delivery
   <div class="clear20"></div>
   <div class="row">
     <div class="col-md-12 text-center tbl-btns">
-      <a href="{{route('delivery.history')}}" class="active green">Retour aux résultats</a>
+      <a href="{{route('delivery.history')}}" class="active green">Retour aux résultats <i class="fa fa-arrow-circle-left left-arrow-font"></i></a>
     </div>
   </div>
   {!! Form::hidden('id') !!}

@@ -541,3 +541,7 @@ button:focus {
 .current-day{
   margin:0px 10px;
 }
+.left-arrow-font{
+  float:none !important;
+  margin-left: 5px;
+}
