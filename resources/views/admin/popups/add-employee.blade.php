@@ -70,7 +70,7 @@
 
               <div class="clearfix popuup_submit">
                 <button type="submit" class="btn btn-success">Ajouter un nouveau utilisateurs <i class="fa fa-save"></i></button>
-                <a href="{{url('/admin/store/employee/list/')}}/{{$storeId}}" class="btn btn-danger">Annuler Ma Demande <i class="fa fa-trash"></i></a>
+                <a href="{{url('/admin/store/employee/list/')}}/{{$storeId}}" class="btn btn-danger">Annuler Ma Demande <i class="fa fa-undo"></i></a>
               </div>
             </div>
           </div>
