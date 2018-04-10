@@ -526,7 +526,7 @@ button:focus {
   background-color: #EAEAEA !important;
 }
 .table-striped>tbody>tr:nth-of-type(odd){
-  background-color: white !important;
+  background-color: white;
 }
 .clickable{
   cursor: pointer;
