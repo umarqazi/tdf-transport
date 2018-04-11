@@ -6,7 +6,7 @@ TDF Transport
 
 @section('content')
 <div class="login-wrapper">
-  <h1>Bienvenue sur la web application de la societe TDF Transport</h1>
+  <h1>Bienvenue sur la web application de la société TDF Transport</h1>
   <div class="form-section">
     @include('toast::messages')
     {!! Form::model(null, [ 'url' => URL::route('user.login')] )  !!}
@@ -14,7 +14,7 @@ TDF Transport
     <span class="text-danger">{!! $errors->first('email') !!}</span>
     <input type="password" name="password" class="fld" placeholder="Mot de passe">
     <button type="submit" class="submit-btn">CONNEXION <i class="fa fa-arrow-alt-circle-right"></i></button>
-    <p class="forget-pass"><a data-toggle="modal" data-target="#forgotPassword">Mot de passe oublié?</a></p>
+    <p class="forget-pass"><a data-toggle="modal" data-target="#forgotPassword">Mot de passe oublié ?</a></p>
     {!! Form::close() !!}
   </div>
   <div class="modal" id="forgotPassword" tabindex="-1" role="dialog">
