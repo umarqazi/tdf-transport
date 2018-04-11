@@ -26,7 +26,7 @@ TDF Dashboard
             </div>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="" placeholder="N* plaque d'immatriculation">
+            <input type="text" class="form-control" id="" placeholder="Immatriculation">
           </div>
           <div class="form-group">
             <div class="input-group">

@@ -27,7 +27,7 @@
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::text('number_plate', null, ['class' => 'form-control', 'placeholder' => "Plaque d'immatriculation", 'autocomplete' => 'off']) !!}
+                    {!! Form::text('number_plate', null, ['class' => 'form-control', 'placeholder' => "Immatriculation", 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('number_plate') !!}</span>
 
