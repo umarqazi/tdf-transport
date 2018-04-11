@@ -69,4 +69,9 @@ Admin area: dashboard
             </div>
 
         </div>
+<script>
+$(".delete").click(function(){
+	return confirm("Voulez-vous vraiment supprimer ce véhicule ?");
+});
+</script>
 @stop

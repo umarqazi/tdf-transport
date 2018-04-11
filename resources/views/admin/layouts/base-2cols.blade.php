@@ -37,7 +37,7 @@
                             <a href="{{route('company.list')}}">Magasins <i class="fa fa-clipboard fa-fw"></i></a>
                         </li>
                         <li>
-                            <a href="#">Livraisons <i class="fa fa-cubes fa-fw"></i></a>
+                            <a href="{{route('admin.deliveries')}}">Livraisons <i class="fa fa-cubes fa-fw"></i></a>
                         </li>
                         <li>
                             <a href="#">Paramètres <i class="fa fa-gear fa-fw"></i></a>

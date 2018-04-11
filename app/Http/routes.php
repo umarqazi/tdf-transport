@@ -55,11 +55,6 @@ Route::group(['middleware' => ['web']], function ()
     "uses" => 'LaravelAcl\Http\Controllers\AuthController@postClientLogin',
     "as"   => "user.login"
   ]);
-
-  Route::get('/admin/login', [
-    "as"   => "user.admin.login",
-    "uses" => 'LaravelAcl\Authentication\Controllers\AuthController@getAdminLogin'
-  ]);
   Route::get('/admin/logout', [
     "as"   => "user.logout",
     "uses" => 'LaravelAcl\Http\Controllers\AuthController@getClientLogout'
@@ -84,7 +79,7 @@ Route::group(['middleware' => ['web']], function ()
     "as"   => "change.Password",
     "uses" => 'LaravelAcl\Http\Controllers\HomeController@changePassword'
   ]);
-  Route::post('/changePassword/', [
+  Route::post('/changePassword', [
     "as"   => "post.change.password",
     "uses" => 'LaravelAcl\Http\Controllers\HomeController@pChangePassword'
   ]);
@@ -250,6 +245,10 @@ Route::group(['middleware' => ['web']], function ()
 
     /****TDF Routes***/
     Route::prefix('admin')->group(function () {
+      Route::get('/deliveries', [
+        'as'   => 'admin.deliveries',
+        'uses' => 'LaravelAcl\Http\Controllers\DeliveryController@allDeliveries'
+      ]);
       Route::get('/store/list/{companyId}', [
         'as'   => 'store.list',
         'uses' => 'LaravelAcl\Http\Controllers\StoreController@index'
