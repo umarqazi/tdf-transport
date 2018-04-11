@@ -80,7 +80,7 @@ TDF Dashboard
 @section('footer_scripts')
 <script>
 $(".delete").click(function(){
-  return confirm("Are you sure to delete this item?");
+  return confirm("Voulez-vous vraiment supprimer cette livraison ?");
 });
 </script>
 @stop
