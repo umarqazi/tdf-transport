@@ -21,7 +21,6 @@
                 <li><strong class="capitalize">{{$authUser->user_first_name}} {{$authUser->user_last_name}}</strong></li>
                 <li><a href="{{route('user.logout')}}"><i class="fa fa-sign-out fa-fw"></i> Deconnexion</a></li>
                 <li><a href="#"><i class="fa fa-question-circle fa-fw"></i> Aide</a></li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Reglages</a></li>
             </ul>
             <!-- /.navbar-top-links -->
 
@@ -29,19 +28,19 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="{{route('dashboard.default')}}">Gestion des vehicules <i class="fa fa-truck fa-fw"></i></a>
+                            <a href="{{route('dashboard.default')}}">Véhicules <i class="fa fa-truck fa-fw"></i></a>
                         </li>
                         <li>
-                            <a href="{{route('users.list')}}">Gestion des utilisateurs <i class="fa fa-user fa-fw"></i></a>
+                            <a href="{{route('users.list')}}">Utilisateurs <i class="fa fa-user fa-fw"></i></a>
                         </li>
                         <li>
-                            <a href="{{route('company.list')}}">Gestion des magasins <i class="fa fa-clipboard fa-fw"></i></a>
+                            <a href="{{route('company.list')}}">Magasins <i class="fa fa-clipboard fa-fw"></i></a>
                         </li>
                         <li>
-                            <a href="#">Gestion des livraisons <i class="fa fa-cubes fa-fw"></i></a>
+                            <a href="{{route('admin.deliveries')}}">Livraisons <i class="fa fa-cubes fa-fw"></i></a>
                         </li>
                         <li>
-                            <a href="#">Gestion des parametres <i class="fa fa-gear fa-fw"></i></a>
+                            <a href="#">Paramètres <i class="fa fa-gear fa-fw"></i></a>
                         </li>
                         <li class="toggle-menu">
                             <a>

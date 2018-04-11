@@ -46,9 +46,9 @@
 
 .sort {text-align: center; margin-top: 20px;}
 
-.actions .fa {display: inline-block; color: #fff;}
-.actions .edit {text-align: center; display: inline-block; width: 20px; height: 20px; background-color: #c76905; border-radius: 4px;}
-.actions .trash {text-align: center; display: inline-block; width: 20px; height: 20px; background-color: #c71010; border-radius: 4px;}
+.actions .fa {display: inline-block; color: #fff; font-size: 12pt;}
+.actions .edit {text-align: center; display: inline-block; padding:6px; background-color: #c76905; border-radius: 4px;}
+.actions .trash {text-align: center; display: inline-block; padding:6px; background-color: #c71010; border-radius: 4px;}
 
 .data-sets th, .data-sets td.side-first, .data-sets th.side-first {text-align: center; vertical-align: middle; font-weight: bold;}
 

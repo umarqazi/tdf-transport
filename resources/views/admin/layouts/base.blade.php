@@ -7,7 +7,7 @@
     <meta name="keywords" content="">
     <meta name="author" content="">
 
-    {!! HTML::style('assets/css/main.css') !!}    
+    {!! HTML::style('assets/css/main.css') !!}
     {!! HTML::style('assets/styles/bootstrap.min.css') !!}
     {!! HTML::style('//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css')!!}
     {!! HTML::style('assets/css/bootstrap-datetimepicker.css')!!}
@@ -45,9 +45,8 @@
         {!! HTML::script('assets/scripts/metisMenu.min.js') !!}
         {!! HTML::script('assets/scripts/sb-admin-2.min.js') !!}
         {!! HTML::script('assets/scripts/custom.js') !!}
-        {!! HTML::script('assets/js/delivery.js') !!}
         {!! HTML::script('//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js') !!}
         {!! HTML::script('assets/js/admin.js') !!}
-        
+
     </body>
 </html>

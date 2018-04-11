@@ -4,13 +4,13 @@
     <title>Change Password</title>
 </head>
 <body>
-    <Strong>Hi</Strong>
+    <Strong>Bonjour</Strong>
     <br>
     	<span>Merci de <a href="{{route('change.Password', [$data['token']])}}">cliquez ici</a> pour changer votre mot de passe </span>
     <br>
     <br>
     <span>
-        Regards
+        Bien cordialement
         TDF Transport
 
     </span>

@@ -350,7 +350,7 @@ class DeliveryController extends Controller
   public function getProductType(Request $request){
     $id=$request->id;
     $product=SubProduct::where('product_id', $id)->get();
-    $productDropDown="<select class='form-control' name='product_id' id='product_type'><option value=''>Select Product</option>";
+    $productDropDown="<select class='form-control' name='product_id' id='product_type'><option value=''>Sélectionner un produit</option>";
     if($product){
       foreach($product as $item){
         $productDropDown.="<option value='".$item['id']."'>".$item['product_type']."</option>";
@@ -358,5 +358,9 @@ class DeliveryController extends Controller
     }
     $productDropDown.="</select>";
     return $productDropDown;
+  }
+  public function allDeliveries(){
+    $getDeliveries=HomeController::deliveryProducts()->paginate(10);
+    return view::make('admin.deliveries.index')->with('deliveries', $getDeliveries);
   }
 }

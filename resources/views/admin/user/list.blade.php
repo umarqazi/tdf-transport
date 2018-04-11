@@ -18,7 +18,7 @@ Admin area: User Management
     @endif
     <div class="col-lg-12">
       <div class="text-center page-icon">
-        <div class="icon-wrapper"><i class="fa fa-truck fa-fw"></i></div>
+        <div class="icon-wrapper"><i class="fa fa-users"></i></div>
       </div>
       <h1 class="page-header text-center">Gestion des utilisateurs </h1>
     </div>
@@ -26,7 +26,7 @@ Admin area: User Management
   <div class="row">
     <div class="col-md-12">
       <div class="sort">
-        <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addUser">Ajounter un Utilisateurs <i class="fa fa-plus-circle fa-fw"></i></button>
+        <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addUser">Ajouter un utilisateur <i class="fa fa-plus-circle fa-fw"></i></button>
       </div>
     </div>
   </div>
@@ -43,7 +43,7 @@ Admin area: User Management
         <table class="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>#</th>
+              <th>ID</th>
               <th>Email</th>
               <th>Prénom</th>
               <th>Fonction</th>

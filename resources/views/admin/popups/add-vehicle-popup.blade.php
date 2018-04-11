@@ -59,7 +59,7 @@
                 </div>
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-id-card fa-fw"></i></div>
+                    <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
                     {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Adresse mail', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('email') !!}</span>
