@@ -281,7 +281,7 @@ class DeliveryController extends Controller
       }
       $name=$delivery['first_name'].' '.$delivery['last_name'];
       if($delivery['status']==1){ $status= "Validé";}elseif($delivery['status']==2){$status= "Livre"; }else{ $status="En attente"; };
-      $records[]=[date('d/m/Y', strtotime($delivery['datetime'])), $name,$delivery['order_id'],1,$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, $delivery['customer_feedback']];
+      $records[]=[date('d/m/Y', strtotime($delivery['datetime'])), $name,$delivery['order_id'],$delivery['delivery_number'],$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, $delivery['customer_feedback']];
     }
     Excel::create('Historique des livraisons', function($excel) use ($records) {
       $excel->setTitle('Historique des livraisons');
