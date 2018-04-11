@@ -248,17 +248,19 @@ class DeliveryController extends Controller
   }
   public function exportHistory(Request $request) {
     if(Auth::user()->type==Config::get('constants.Users.TDF Manager')){
-      $deliveries = HomeController::deliveryProducts()->where('flag', '1');
+      $deliveries = HomeController::deliveryProducts()->where('deliveries.status', Config::get('constants.Status.Active'));
     }else{
       $deliveries = HomeController::deliveryProducts()->where('store_id', $this->authUser->store_id);
     }
     if($request->fromDate)
     {
+      $request->fromDate= str_replace('/', '-', $request->fromDate);
       $fromDate=Carbon::parse($request->fromDate)->format('Y-m-d');
       $deliveries= $deliveries->where('datetime', '>=', $fromDate);
     }
     if($request->toDate)
     {
+      $request->toDate= str_replace('/', '-', $request->toDate);
       $toDate=Carbon::parse($request->toDate)->format('Y-m-d');
       $deliveries= $deliveries->where('datetime', '<=', $toDate);
     }
@@ -279,7 +281,7 @@ class DeliveryController extends Controller
       }
       $name=$delivery['first_name'].' '.$delivery['last_name'];
       if($delivery['status']==1){ $status= "Validé";}elseif($delivery['status']==2){$status= "Livre"; }else{ $status="En attente"; };
-      $records[]=[$delivery['datetime'], $name,$delivery['order_id'],1,$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, $delivery['customer_feedback']];
+      $records[]=[date('d/m/Y', strtotime($delivery['datetime'])), $name,$delivery['order_id'],1,$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, $delivery['customer_feedback']];
     }
     Excel::create('Historique des livraisons', function($excel) use ($records) {
       $excel->setTitle('Historique des livraisons');
