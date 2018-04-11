@@ -51,7 +51,7 @@ TDF Dashboard
   <h2 class=" small-heading text-center">ETAPE 2: CREATION DU PLANNING</h2>
   <div class="col-md-12">
     <div class="table-responsive">
-      <table class="table table-striped table-bordered">
+      <table class="table table-striped table-bordered tour_table">
         <thead>
           <tr>
             <th class="text-center"><i class="fa fa-truck fa-fw"></i> @if($vehicle_info)<span class="capitalLetter"> {{$vehicle_info['vehicle_name']}} {{$vehicle_info['number_plate']}}</span> <span class="forname-capitalize">{{$vehicle_info['user_first_name']}} {{$vehicle_info['user_last_name']}}</span> @endif</span></th>
@@ -61,19 +61,31 @@ TDF Dashboard
         <tbody>
           <?php $number=1;?>
           @foreach($toursList as $key=>$tours)
-            <?php if ($number % 2 == 0) {
-                $color='blue-color';
-              }else{
-                $color='grey-color';
-              }?>
+
             <tr>
-              <td class="text-center" width="30%">{{$key}}</td>
-              <td width="66%" class="text-style @if($tours['delivery']!=NULL) {{$color}} @endif" > @if($tours['delivery']!=NULL) {{$tours['delivery']}} @else <button class="btn btn-green" onclick="showDeliveries({{$tours['time_id']}})">Ajouter une livraison <i class="fa fa-plus-circle fa-fw"></i></button> @endif</td>
-              <td class="text-center @if($tours['delivery']!=NULL)delete-column @endif">
-                @if($tours['delivery']!=NULL) <a href="{{URL('/deleteTour', ['id'=>$tours['id']])}}" class="trash"><i class="fa fa-trash-o fa-fw"></i></a> @endif
-              </td>
+              <td class="text-center" width="30%" valign="middle" rowspan="{{count($tours['tours'])+2}}">{{$key}}</td>
             </tr>
-            <?php $number++; ?>
+              @if(!empty($tours['tours']))
+                @foreach($tours['tours'] as $key=>$tour)
+                <?php  if ($number % 2 == 0) {
+                    $color='blue-color';
+                  }else{
+                    $color='grey-color';
+                  }?>
+                  <tr>
+                    <td width="66%" class="text-style @if($tour['delivery']!=NULL) {{$color}} @endif" > @if($tour['delivery']!=NULL) {{$tour['delivery']}} @else  @endif</td>
+                    <td class="text-center @if($tour['delivery']!=NULL)delete-column @endif">
+                    @if($tour['delivery']!=NULL) <a href="{{URL('/deleteTour', ['id'=>$tour['id']])}}" class="trash"><i class="fa fa-trash-o fa-fw"></i></a> @endif
+                  </td>
+                  </tr>
+                  <?php $number++; ?>
+                @endforeach
+              @endif
+            </tr>
+            <tr>
+                <td colspan="3" align="center"><button class="btn btn-green" onclick="showDeliveries({{$tours['time_id']}})">Ajouter une livraison <i class="fa fa-plus-circle fa-fw"></i></button></td>
+            </tr>
+
           @endforeach
         </tbody>
       </table>

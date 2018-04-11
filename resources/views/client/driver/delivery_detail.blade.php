@@ -36,16 +36,16 @@ TDF Driver
                                   <li><strong>Commande N° : </strong></li>
                                   <li>
                                     <div class="col-md-12 pdf-space">
-                                      <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>
-                                      <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['order_pdf']}}" target="_blank" id="OrderAddPdfLink">{{$detail['order_id']}}</a></li>
+                                      @if($detail['order_pdf'])<a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif
+                                      {{$detail['order_id']}}</li>
                                     </div>
                                   <li>
                                   <li>&nbsp;</li>
                                   <li><strong>Bon de livraison : </strong></li>
                                   <li>
                                     <div class="col-md-12 pdf-space">
-                                      <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['delivery_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>
-                                      <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['delivery_pdf']}}" target="_blank" id="OrderAddPdfLink">{{$detail['delivery_number']}}</a></li>
+                                      @if($detail['delivery_pdf'])<a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['delivery_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif
+                                      {{$detail['delivery_number']}}</li>
                                     </div>
                                   <li>
                                   <li>&nbsp;</li>

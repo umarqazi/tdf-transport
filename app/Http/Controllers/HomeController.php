@@ -130,10 +130,10 @@ class HomeController extends Controller
 		}))->leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->get();
 		$getTime=TimeSlot::all();
 		foreach($getTime as $time){
-			$tours[$time['time']]=['id'=>'','delivery'=>'','time_id'=>$time['id']];
+			$tours[$time['time']]=['id'=>'','delivery'=>'','time_id'=>$time['id'], 'tours'=>array()];
 			if($getDeliveries2){
 				foreach ($getDeliveries2 as $key => $value) {
-					foreach ($value['time'] as $key => $record) {
+					foreach ($value['time'] as $key2 => $record) {
 						if($time['id']==$record['time_slot_id'] && $user_id==$record['user_id']){
 							if($driver==NULL){
 								$records=$value['first_name'].' '.$value['last_name'].' '.Date::parse($value['datetime'])->format('l d F Y').' '.$value['day_period'];
@@ -141,10 +141,11 @@ class HomeController extends Controller
 							else{
 								$records=$value;
 							}
-							$tours[$time['time']]=['time_id'=>$time['id'],
+							$tourDetail=['time_id'=>$time['id'],
 							'id'=>$record['tour_id'],
 							'delivery_id'=>$record['pivot']['delivery_id'],
 							'delivery'=>$records];
+							array_push($tours[$time['time']]['tours'], $tourDetail);
 						}
 					}
 				}

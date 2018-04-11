@@ -328,7 +328,8 @@ class DeliveryController extends Controller
   public function sendDriverEmail(Request $request){
     $user=User::find($request->id);
     $email=$user->email;
-    $delivery=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->where('tour_plan.user_id', $request->id)->select('deliveries.*', 'tour_plan.id as tour_id', 'tour_plan.delivery_id')->orderBy('tour_plan.id', 'dsc')->first();
+    $nextDay=Carbon::now()->addDay(1)->format('Y-m-d');
+    $delivery=HomeController::manageTours($request->id, $nextDay, 'driver');
     $mail=Mail::send('client.email.driver_tours', ['data'=>$delivery], function($message) use ($email)
     {
       $message->to($email, 'TDF Transport')->subject('Tour Plan');

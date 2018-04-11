@@ -545,3 +545,11 @@ button:focus {
   float:none !important;
   margin-left: 5px;
 }
+.tour_table td{
+  vertical-align: middle !important;
+}
+.driver-plans{
+  width:50%;
+  float:left;
+  margin:10px 0px;
+}
