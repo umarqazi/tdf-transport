@@ -24,7 +24,9 @@ class Deletecolumnsfromproducts extends Migration
      public function down()
      {
          Schema::table('products', function($t) {
-             $t->dropColumn('delivery_price');
+           $t->string('product_type');
+           $t->integer('delivery_charges');
+           $t->integer('comission');
          });
      }
 }

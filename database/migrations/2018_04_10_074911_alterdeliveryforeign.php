@@ -22,6 +22,8 @@ class Alterdeliveryforeign extends Migration
      public function down()
      {
          Schema::table('deliveries', function($t) {
+           $t->integer('product_id')->unsigned()->nullable();
+           $t->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
          });
      }
 }
