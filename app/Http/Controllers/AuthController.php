@@ -42,10 +42,20 @@ class AuthController extends Controller {
         list($email, $password, $remember) = $this->getLoginInput($request);
         try
         {
-            $credientials=array(
-                "email" => $email,
-                "password" => $password,
-                'activated'=> "1");
+            if (filter_var($email, FILTER_VALIDATE_EMAIL))
+            {
+                $credientials=array(
+                    "email" => $email,
+                    "password" => $password,
+                    'activated'=> "1");
+            }
+            else{
+                $credientials=array(
+                    "number_plate" => $email,
+                    "password" => $password,
+                    'activated'=> "1");
+            }
+
             if(Auth::attempt($credientials))
             {
                 $storeId=Auth::user()->store_id;
