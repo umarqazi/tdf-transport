@@ -66,6 +66,7 @@ function upload()
 			document.getElementById("addPdfLink").href=APP_URL+"/assets/images/dummyImages/"+data.name;
 		},
 		error: function(xhr, status, error) {
+			$('.loader-div2').hide();
 			if(orderPdf=='Yes')
 			{
 				$('#showOrderErrorPdf').html(xhr.responseText);

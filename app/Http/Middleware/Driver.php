@@ -5,7 +5,7 @@ namespace LaravelAcl\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Config;
-class TdfManager
+class Driver
 {
     /**
      * Handle an incoming request.
