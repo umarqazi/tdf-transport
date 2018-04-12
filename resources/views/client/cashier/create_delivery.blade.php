@@ -8,8 +8,9 @@ TDF Create Delivery
 
 {!! Form::model($delivery, [ 'url' => URL::route('delivery.edit'), "enctype"=>"multipart/form-data", 'id'=>'createForm'] )  !!}
 <div class="row">
+  @include('toast::messages')
   <div class="col-lg-12 text-center">
-    <a href="{{url('/dashboard')}}" class="back-button">Retour <i class="fa fa-check-circle"></i></a><h1 class="page-header text-center make-center">CREATION D'UNE LIVRAISON</h1>
+    <a href="{{url('/dashboard')}}" class="back-button">Retour <i class="fa fa-arrow-circle-left"></i></a><h1 class="page-header text-center make-center">CREATION D'UNE LIVRAISON</h1>
   </div>
   <div class="col-lg-12 calendar-control">
     <div class="form-inline">

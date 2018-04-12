@@ -13,9 +13,9 @@
 .navbar-brand{    padding: 5px 15px !important;
     height: 80px !important; width: 180px;}
     .navbar-brand img {
-        width: 100%;
-        height: 75px;
-        display: block;
+      width: 150px;
+      height: auto;
+      display: block;
     }
     #side-menu .fa {float: right; color: #999;}
 

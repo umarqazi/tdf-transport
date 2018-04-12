@@ -89,7 +89,7 @@ TDF Dashboard
         <tr>
           <th class="side-first" width=20%>Tranche horaire</th>
           @for($i=0; $i<=5; $i++)
-          <th width=14% @if(strtotime($currentDate->startOfWeek()->addDay($i)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">{{Date::parse($currentDate->startOfWeek()->addDay($i))->format('l')}}</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay($i)))}}</div> @if((date('Y-m-d', strtotime($nextDate)) == date('Y-m-d', strtotime($currentDate->startOfWeek()->addDay($i))) || date('Y-m-d') == date('Y-m-d', strtotime($currentDate->startOfWeek()->addDay($i)))) && $authUser->type==Config::get('constants.Users.Manager'))<input type="checkbox" id="checkbox"> <span class="checkAll">Cocher tout</span>@endif</th>
+          <th width=14% @if(strtotime($currentDate->startOfWeek()->addDay($i)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">{{Date::parse($currentDate->startOfWeek()->addDay($i))->format('l')}}</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay($i)))}}</div> @if(date('Y-m-d', strtotime($nextDate)) == date('Y-m-d', strtotime($currentDate->startOfWeek()->addDay($i))) && $authUser->type==Config::get('constants.Users.Manager'))<input type="checkbox" id="checkbox"> <span class="checkAll">Cocher tout</span>@endif</th>
 
           @endfor
 

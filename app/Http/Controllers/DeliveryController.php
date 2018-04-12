@@ -89,9 +89,13 @@ class DeliveryController extends Controller
       'address' => 'required',
       'pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id,
       'order_pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id
-
     ]);
     $date = str_replace('/', '-', $request->datetime);
+    if((Auth::user()->type==Config::get('constants.Users.Cashier') && strtotime($date) <= strtotime(date('d-m-Y'))) || (Auth::user()->type==Config::get('constants.Users.Manager') && strtotime($date) < strtotime(date('d-m-Y'))) ){
+      Toast::error('Sélectionnez une date correcte');
+      return redirect::back()
+      ->withInput();
+    }
     if ($validator->fails()) {
       return redirect::back()
       ->withErrors($validator)
