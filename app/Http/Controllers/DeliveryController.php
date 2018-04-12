@@ -87,8 +87,8 @@ class DeliveryController extends Controller
       'order_id'=> 'required',
       'service'=> 'required',
       'address' => 'required',
-      'pdf' => 'mimes:pdf'.$request->id,
-      'order_pdf' => 'mimes:pdf'.$request->id
+      'pdf' => 'mimes:pdf,jpg,png'.$request->id,
+      'order_pdf' => 'mimes:pdf,jpg,png'.$request->id
 
     ]);
     $date = str_replace('/', '-', $request->datetime);
@@ -195,8 +195,8 @@ class DeliveryController extends Controller
   public function uploadPdf(Request $request)
   {
     $validator = Validator::make($request->all(), [
-      'pdf' => 'mimes:pdf',
-      'order_pdf' => 'mimes:pdf'
+      'pdf' => 'mimes:pdf,jpg,png',
+      'order_pdf' => 'mimes:pdf,jpg,png'
 
     ]);
     if ($validator->fails()) {
@@ -329,8 +329,9 @@ class DeliveryController extends Controller
     $user=User::find($request->id);
     $email=$user->email;
     $nextDay=Carbon::now()->addDay(1)->format('Y-m-d');
+    $date=Date::now()->addDay(1)->format('l d F Y');
     $delivery=HomeController::manageTours($request->id, $nextDay, 'driver');
-    $mail=Mail::send('client.email.driver_tours', ['data'=>$delivery], function($message) use ($email)
+    $mail=Mail::send('client.email.driver_tours', ['data'=>$delivery, 'nextDate'=>$date], function($message) use ($email)
     {
       $message->to($email, 'TDF Transport')->subject('Tour Plan');
     });

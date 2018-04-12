@@ -16,9 +16,9 @@
         border-collapse: collapse;
       }
       .icons li {
-    padding:10px 0px;
+    padding:5px 0px;
     position: relative;
-    color: black;
+    color: white;
     }
     .list-unstyled {
     padding-left: 0;
@@ -29,29 +29,76 @@
     float: left;
     margin: 10px 0px;
 }
+.logo{
+  width:30%;
+  float:left;
+}
+.logo img{
+  width:100%;
+  float:left;
+}
+.blue-color{
+  background-color: #4D70C8;
+  color: white;
+}
+.grey-color{
+  background-color: #979797;
+  color: white;
+}
+.heading{
+  color:#4D70C8;
+  text-align: center;
+
+}
+.date{
+  padding:10px 0px;
+  text-transform: capitalize;
+}
     </style>
 </head>
 <body>
-    <Strong>Hi</Strong>
+  <?php $records=0; ?>
+  @foreach($data as $key=>$driver)
+    @foreach($driver['tours'] as $key=>$tour)
+      @if(count($tour) > 1)
+        <?php $records++;?>
+      @endif
+    @endforeach
+  @endforeach
+    <Strong>Bonjour,</Strong>
     <br>
     <br>
-    	<span>You have a new Delivery Request in your Account. Your Delivery Detail are giving below</span>
+    	<span>Vous trouverez ci-joint le planning des livraisons à effectuer demain</span>
     <br>
     <br>
     <div class="table-responsive">
         <table class="table table-striped table-bordered">
             <tbody>
+                <tr>
+                    <td colspan="4" align="center"><strong class="date">{{$nextDate}}</strong></td>
+                </tr>
+                <tr>
+                    <td align="center"><strong class="heading">Horaire</strong></td>
+                    @for($i=1; $i <=$records; $i++)
+                      <td align="center"><strong class="heading">Client {{$i}}</strong></td>
+                    @endfor
+                </tr>
+                <?php $number=1; ?>
                 @foreach($data as $key=>$driver)
-                  <tr>
-                      <td class="text-center vertical-middle" width="30%">{{$key}}</td>
+                <?php if ($number % 2 == 0) {
+                  $color='blue-color';
+                }else{
+                  $color='grey-color';
+                }?>
+                  <tr class="{{$color}}">
+                      <td class="text-center vertical-middle" width="30%"><strong>{{$key}}</strong></td>
+                      @if(!empty($driver['tours']))
+                        @foreach($driver['tours'] as $key=>$tour)
                       <td>
-                        @if(!empty($driver['tours']))
-                          @foreach($driver['tours'] as $key=>$tour)
-
                             <a href="{{url('/tourDeliveryDetail', ['id'=>$tour['delivery_id'], 'time'=>$key])}}" >
                               <ul class="list-unstyled icons driver-plans">
                             <li><strong>Client: </strong>{{$tour['delivery']['first_name']}} {{$tour['delivery']['last_name']}}</li>
-                            <li><strong>Customer Address: </strong>{{$tour['delivery']['address']}} </li>
+                            <li><strong>Numéro et rue: </strong>{{$tour['delivery']['address']}} </li>
                             <li><strong>Ville & Code Postal: </strong>{{$tour['delivery']['city']}} {{$tour['delivery']['postal_code']}}</li>
                             <li><strong>Téléphone mobile: </strong> {{$tour['delivery']['mobile_number']}}</li>
                             <li><strong>Téléphone fixe: </strong> {{$tour['delivery']['landline']}}</li>
@@ -61,10 +108,13 @@
                             @if($tour['delivery']['delivery_number'])<li><strong>Numéro du bon de livraison: </strong> {{$tour['delivery']['delivery_number']}}</li>@endif
                             <li><strong>Fonction de prestation: </strong> {{$tour['delivery']['service']}}</li>
                           </ul></a>
-                          @endforeach
-                          @endif
                       </td>
+                      @endforeach
+                      @else
+                      <td colspan="{{$records}}"></td>
+                      @endif
                   </tr>
+                  <?php $number++; ?>
                 @endforeach
             </tbody>
         </table>
@@ -72,9 +122,18 @@
     <br>
     <br>
     <span>
-        Regards
+        Bien cordialement,
         <br>
-        TDF Transport
+        L'équipe TDF Transport
+        <br>
+        <br>
+        <div class="logo">
+            <img src="http://34.213.180.141/assets/images/logoTDF.png" class="img-responsive">
+            <br>
+            <br>
+            <strong>20 rue de Moreau - 75012 PARIS</strong>
+        </div>
+
 
     </span>
 </body>

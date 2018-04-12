@@ -93,7 +93,7 @@ TDF Dashboard
   </div>
   @if($tour_plan)
     <div class="col-md-12 text-center tbl-btns">
-      <a href="{{url('/sendDriverEmail', ['id'=>$user_id])}}">Envoi du planning<br>aux chauffeurs <i class="fa fa-check-square"></i></a>
+      <a onclick="sendEmail({{$user_id}})">Envoi du planning<br>aux chauffeurs <i class="fa fa-check-square"></i></a>
       <a href="#" class="active">Envoi du sms<br>aux clients <i class="fa fa-check-square"></i></a>
     </div>
   @endif

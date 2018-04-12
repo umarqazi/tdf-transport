@@ -553,3 +553,31 @@ button:focus {
   float:left;
   margin:10px 0px;
 }
+#checkbox{
+  float:right;
+}
+.checkAll{
+  float:right;
+  font-size:9px;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.loader-div2{
+  position:fixed;
+  width:100%;
+  height: 100%;
+  z-index: 9999;
+  top:0;
+  display: none;
+  background: rgba(0,0,0,0.2);
+  text-align: center;
+}
+.loader-div2 img{
+  display: block;
+  margin: auto;
+  position: relative;
+  top:50%;
+  transform: translateY(-50%);
+  transform: -webkit-translateY(-50%);
+}

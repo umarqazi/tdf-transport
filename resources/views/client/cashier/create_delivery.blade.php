@@ -6,7 +6,7 @@ TDF Create Delivery
 
 @section('content')
 
-{!! Form::model($delivery, [ 'url' => URL::route('delivery.edit'), "enctype"=>"multipart/form-data"] )  !!}
+{!! Form::model($delivery, [ 'url' => URL::route('delivery.edit'), "enctype"=>"multipart/form-data", 'id'=>'createForm'] )  !!}
 <div class="row">
   <div class="col-lg-12 text-center">
     <a href="{{url('/dashboard')}}" class="back-button">Retour <i class="fa fa-arrow-circle-left"></i></a><h1 class="page-header text-center make-center">CREATION D'UNE LIVRAISON</h1>
@@ -169,9 +169,11 @@ TDF Create Delivery
               {{Form::text('delivery_price', null, ['class'=>'form-control', 'placeholder'=>'Prix de la livraison', 'id'=>'delivery_charges'])}}
               <div class="input-group-addon"><i class="fa fa-euro fa-fw"></i></div>
             </div>
+            @if(auth()->user()->type==Config::get('constants.Users.Manager'))
             <div class="form-group space">
               Livraison offerte {{Form::checkbox('free', 1, null, ['onclick'=>'freeDelivery(this)', 'id'=>'delivery'])}}
             </div>
+            @endif
           </div>
         </div>
       </div>

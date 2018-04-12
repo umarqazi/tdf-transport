@@ -34,6 +34,7 @@ function upload()
 	uploadPdf.append('pdf', file_data);
 	var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 	uploadPdf.append('_token', CSRF_TOKEN);
+	$('.loader-div2').show();
 	$.ajax({
 		url: APP_URL+"/uploadPdf",
 		type:"POST",
@@ -44,6 +45,7 @@ function upload()
 		processData : false,
 		data: uploadPdf,
 		success: function(data) {
+			$('.loader-div2').hide();
 			if(orderPdf=='Yes'){
 				$('#showOrderErrorPdf').html('');
 				$('#OrderShowPdftable').show();
@@ -201,3 +203,12 @@ $('#checkbox').change(function(){
 		$('.deliveryCheckbox:enabled').prop('checked',false);
 	}
 });
+function sendEmail(user_id){
+	$('.loader-div2').show();
+	window.location.href = "/sendDriverEmail/"+user_id;
+}
+$(document).ready(function() {
+  $("#createForm").submit(function() {
+		$('.loader-div2').show();
+  })
+})
