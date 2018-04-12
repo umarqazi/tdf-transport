@@ -42,6 +42,7 @@
                       <th class="text-center">Numero de commande</th>
                       <th class="text-center">Numero du bon de livraison</th>
                       <th class="text-center">Telephone</th>
+                      <th class="text-center">Adresse</th>
                       <th class="text-center">Villes</th>
                       <th class="text-center">Code Postal</th>
                       <th class="text-center">Fonction de Prestation</th>
@@ -68,6 +69,7 @@
                         <td>@if($delivery['order_pdf'])<a href="{{asset('assets/images')}}/{{$delivery['store_name']}}/{{$delivery['order_pdf']}}" target="_blank"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['order_id']}}</td>
                         <td><a href="{{asset('assets/images')}}/{{$delivery['store_name']}}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a> {{$delivery['delivery_number']}}</td>
                         <td>{{$delivery['mobile_number']}}</td>
+                        <td>{{$delivery['address']}}</td>
                         <td>{{$delivery['city']}}</td>
                         <td>{{$delivery['postal_code']}}</td>
                         <td>{{$delivery['service']}}</td>

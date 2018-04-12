@@ -229,22 +229,26 @@ class HomeController extends Controller
 		$getDeliveryRecords=$getDeliveryRecords->where('store_id', $this->authUser->store_id);
 		$getDeliveryRecords=$getDeliveryRecords->orderby('datetime', 'desc')->get();
 		$searchResult='<thead><tr><th class="text-center">Date de livraison</th><th class="text-center">Client</th><th class="text-center">Numéro de commande</th><th class="text-center">Numéro du bon de livraison</th><th class="text-center">Téléphone</th><th class="text-center">Ville</th><th class="text-center">Code postal</th><th class="text-center">Type de prestation</th><th class="text-center">Produit(s) commandé(s)</th><th class="text-center">Prix de la livraison</th></tr></thead>';
-		foreach($getDeliveryRecords as $key=>$record){
-			$products='';
-			$getProduct=array();
-			if($record['sub_product_id']==''){
-				$products='Multi-produits';
+		if(!$getDeliveryRecords->isEmpty()){
+			foreach($getDeliveryRecords as $key=>$record){
+				$products='';
+				$getProduct=array();
+				if($record['sub_product_id']==''){
+					$products='Multi-produits';
+				}
+				else{
+					$products=$record['product_type'];
+				}
+				if($record['delivery_price']=='Gratuit'){
+					$price= 'Gratuit';
+				}else{
+					$price=$record['delivery_price']." €";
+				}
+				$url=URL('viewDelivery').'/'.$record['id'];
+				$searchResult.="<tr onclick=viewDelivery('$url') class='clickable'><td>".Date::parse($record['datetime'])->format('d/m/Y')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
 			}
-			else{
-				$products=$record['product_type'];
-			}
-			if($record['delivery_price']=='Gratuit'){
-				$price= 'Gratuit';
-			}else{
-				$price=$record['delivery_price']." €";
-			}
-			$url=URL('viewDelivery').'/'.$record['id'];
-			$searchResult.="<tr onclick=viewDelivery('$url') class='clickable'><td>".Date::parse($record['datetime'])->format('d/m/Y')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
+		}else{
+			$searchResult.="<tr><td colspan='10'><strong>Désolé aucun résultat n'a été trouvé.</strong></td></tr>";
 		}
 		return $searchResult;
 	}

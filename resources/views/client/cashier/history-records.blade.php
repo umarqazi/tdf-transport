@@ -10,6 +10,7 @@
             <th class="text-center">Numéro de commande</th>
             <th class="text-center">Numéro du bon de livraison</th>
             <th class="text-center">Téléphone</th>
+            <th class="text-center">Adresse</th>
             <th class="text-center">Ville</th>
             <th class="text-center">Code Postal</th>
             <th class="text-center">Fonction de prestation</th>
@@ -21,6 +22,7 @@
         </thead>
         <tbody>
           <?php $total=0;?>
+          @if(!$allDeliveries->isEmpty())
           @foreach($allDeliveries as $delivery)
           <?php
           $items=array();
@@ -44,12 +46,13 @@
           $total+=$delivery['delivery_price'];
           $url=URL('viewDelivery').'/'.$delivery['id'];
           ?>
-          <tr @if(auth()->user()->type==Config::get('constants.Users.Manager')) onclick="viewDelivery('{{$url}}')" class="clickable" @endif >
+          <tr onclick="viewDelivery('{{$url}}')" class="clickable">
             <td>{{Date::parse($delivery['datetime'])->format('d/m/Y')}}</td>
             <td>{{$delivery['first_name']}} {{$delivery['last_name']}}</td>
             <td>@if($delivery['order_pdf'])<a href="{{asset('assets/images')}}/{{ $delivery['store_name'] }}/{{$delivery['order_pdf']}}" target="_blank"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['order_id']}}</td>
             <td>@if($delivery['delivery_pdf'])<a href="{{asset('assets/images')}}/{{ $delivery['store_name'] }}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['delivery_number']}}</td>
             <td>{{$delivery['mobile_number']}}</td>
+            <td>{{$delivery['address']}}</td>
             <td>{{$delivery['city']}}</td>
             <td>{{$delivery['postal_code']}}</td>
             <td>{{$delivery['service']}}</td>
@@ -59,6 +62,11 @@
             <td>{{$status}}</td>
           </tr>
           @endforeach
+          @else
+            <tr>
+                <td colspan="12"><strong>Désolé aucun résultat n'a été trouvé.</strong></td>
+            </tr>
+          @endif
           <tr>
               <td colspan="9" align=right>Total: </td>
               <td>{{$total}} €</td>

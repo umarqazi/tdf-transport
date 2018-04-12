@@ -9,7 +9,7 @@ TDF Create Delivery
 {!! Form::model($delivery, [ 'url' => URL::route('delivery.edit'), "enctype"=>"multipart/form-data", 'id'=>'createForm'] )  !!}
 <div class="row">
   <div class="col-lg-12 text-center">
-    <a href="{{url('/dashboard')}}" class="back-button">Retour <i class="fa fa-arrow-circle-left"></i></a><h1 class="page-header text-center make-center">CREATION D'UNE LIVRAISON</h1>
+    <a href="{{url('/dashboard')}}" class="back-button">Retour <i class="fa fa-check-circle"></i></a><h1 class="page-header text-center make-center">CREATION D'UNE LIVRAISON</h1>
   </div>
   <div class="col-lg-12 calendar-control">
     <div class="form-inline">
@@ -193,7 +193,7 @@ TDF Create Delivery
 <div class="clear20"></div>
 <div class="row">
   <div class="col-md-12 text-center tbl-btns">
-    <button class="button-styling" type="submit">Valider ma demande <i class="fa fa-save"></i></button>
+    <button class="button-styling" type="submit">Valider <i class="fa fa-save"></i></button>
     <a href="{{url('/')}}" class="btn btn-danger cancel-request">Annuler <i class="fa fa-undo"></i></a>
   </div>
 </div>
