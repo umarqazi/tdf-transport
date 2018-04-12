@@ -169,9 +169,9 @@ class DeliveryController extends Controller
     }
     $delivery->sub_product_id=$product_id;
     $delivery->status=Config::get('constants.Status.Pending');
-    if(Auth::user()->type==Config::get('constants.Users.Manager')){
+    if(Auth::user()->type==Config::get('constants.Users.Cashier')){
       $getManager=User::where('type', 'Manager')->where('store_id', $this->authUser->store_id)->first();
-      if(!empty($getManager))
+      if(!empty($getManager) && !empty($deliveryId))
       {
         $getManager->notify(new DeliveryNotification($delivery));
       }
@@ -333,7 +333,7 @@ class DeliveryController extends Controller
     $delivery=HomeController::manageTours($request->id, $nextDay, 'driver');
     $mail=Mail::send('client.email.driver_tours', ['data'=>$delivery, 'nextDate'=>$date], function($message) use ($email)
     {
-      $message->to($email, 'TDF Transport')->subject('Tour Plan');
+      $message->to($email, 'TDF Transport')->subject('Planning des livraisons');
     });
     Toast::success('Merci, le planning a été envoyé au chauffeur.');
     return Redirect::back();
