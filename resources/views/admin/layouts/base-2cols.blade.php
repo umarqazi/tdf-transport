@@ -20,7 +20,6 @@
             <ul class="nav navbar-top-links navbar-right hide-menu">
                 <li><strong class="capitalize">{{$authUser->user_first_name}} {{$authUser->user_last_name}}</strong></li>
                 <li><a href="{{route('user.logout')}}"><i class="fa fa-sign-out fa-fw"></i> Deconnexion</a></li>
-                <li><a href="#"><i class="fa fa-question-circle fa-fw"></i> Aide</a></li>
             </ul>
             <!-- /.navbar-top-links -->
 
