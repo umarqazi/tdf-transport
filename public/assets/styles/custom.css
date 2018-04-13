@@ -12,9 +12,12 @@
 .add-new-circle .fa {font-size: 50px; z-index: 9999;}
 .navbar-brand{    padding: 5px 15px !important;
     height: 80px !important; width: 180px;}
+    .tdf-logo{
+      height: auto !important;
+    }
     .navbar-brand img {
       width: 150px;
-      height: auto;
+      height: 75px;
       display: block;
     }
     #side-menu .fa {float: right; color: #999;}

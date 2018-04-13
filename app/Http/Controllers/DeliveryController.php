@@ -45,6 +45,7 @@ class DeliveryController extends Controller
   public function index(Request $request)
   {
     $id=$request->id;
+    $subProduct=array();
     if($request->date)
     {
       $dateTime=date('d/m/Y', strtotime($request->date));
@@ -60,6 +61,14 @@ class DeliveryController extends Controller
     {
       $getDelivery=HomeController::deliveryProducts()->where('deliveries.id',$id)->first();
       $dateTime=date('d/m/Y', strtotime($getDelivery['datetime']));
+      $getSubProduct=SubProduct::where('product_id', $getDelivery->product_id)->get();
+      if($getSubProduct)
+      {
+        foreach($getSubProduct as $product)
+        {
+          $subProduct[$product['id']]=$product['product_type'];
+        }
+      }
     }
     else
     {
@@ -75,7 +84,7 @@ class DeliveryController extends Controller
         $products[$product['id']]=$product['product_family'];
       }
     }
-    return view::make('client.cashier.create_delivery')->with(['delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
+    return view::make('client.cashier.create_delivery')->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
   }
   public function create(Request $request)
   {
@@ -166,10 +175,15 @@ class DeliveryController extends Controller
     }else{
       $delivery->delivery_price=$request->delivery_price;
     }
-    if($request->product_id){
-      $product_id=$request->product_id;
+    if($request->sub_product_id){
+      $product_id=$request->sub_product_id;
     }else{
       $product_id=NULL;
+    }
+    if($request->product_id!=0){
+      $delivery->product_id=$request->product_id;
+    }else{
+      $delivery->product_id=NULL;
     }
     $delivery->sub_product_id=$product_id;
     $delivery->status=Config::get('constants.Status.Pending');
@@ -357,7 +371,7 @@ class DeliveryController extends Controller
   public function getProductType(Request $request){
     $id=$request->id;
     $product=SubProduct::where('product_id', $id)->get();
-    $productDropDown="<select class='form-control' name='product_id' id='product_type'><option value=''>Sélectionner un produit</option>";
+    $productDropDown="<select class='form-control' name='sub_product_id' id='product_type'><option value=''>Sélectionner un produit</option>";
     if($product){
       foreach($product as $item){
         $productDropDown.="<option value='".$item['id']."'>".$item['product_type']."</option>";

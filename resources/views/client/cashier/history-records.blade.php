@@ -68,7 +68,7 @@
             </tr>
           @endif
           <tr>
-              <td colspan="9" align=right>Total: </td>
+              <td colspan="10" align=right>Total: </td>
               <td>{{$total}} €</td>
           </tr>
         </tbody>

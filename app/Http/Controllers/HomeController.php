@@ -48,7 +48,6 @@ class HomeController extends Controller
 	}
 	public function dashboard(Request $request)
 	{
-
 		$startDate='';
 		$endDate='';
 		$date='';
@@ -222,6 +221,7 @@ class HomeController extends Controller
 	{
 		$name=$request->customer_name;
 		$order_id=$request->order_id;
+		$request->datetime= str_replace('/', '-', $request->datetime);
 		$date=Carbon::parse($request->datetime)->format('Y-m-d h:i:s');
 		$searchResult='';
 		$getDeliveryRecords=self::searchResults($request->all());
