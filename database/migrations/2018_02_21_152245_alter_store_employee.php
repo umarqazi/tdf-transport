@@ -12,18 +12,18 @@ class AlterStoreEmployee extends Migration
      * @return void
      */
     public function up()
-      {
-          Schema::table('store_employees', function($table) {
-             $table->dropColumn('password');
-             $table->dropColumn('account_status');
-          });
-      }
+    {
+        Schema::table('store_employees', function($table) {
+            $table->dropColumn('password');
+            $table->dropColumn('account_status');
+        });
+    }
 
-      public function down()
-      {
-          Schema::table('store_employees', function($table) {
-             $table->string('password');
-             $table->string('account_status');
-          });
-      }
+    public function down()
+    {
+        Schema::table('store_employees', function($table) {
+            $table->string('password');
+            $table->string('account_status');
+        });
+    }
 }

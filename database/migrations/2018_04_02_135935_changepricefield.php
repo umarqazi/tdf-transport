@@ -11,18 +11,18 @@ class Changepricefield extends Migration
      *
      * @return void
      */
-     public function up()
-     {
-         Schema::table('deliveries', function($t) {
-           $t->integer('delivery_price')->change();
-         });
-     }
+    public function up()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->integer('delivery_price')->change();
+        });
+    }
 
 
-     public function down()
-     {
-         Schema::table('deliveries', function($t) {
-             $t->dropColumn('delivery_price');
-         });
-     }
+    public function down()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->dropColumn('delivery_price');
+        });
+    }
 }

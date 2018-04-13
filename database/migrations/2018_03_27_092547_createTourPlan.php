@@ -11,27 +11,27 @@ class CreateTourPlan extends Migration
      *
      * @return void
      */
-     public function up()
-     {
-         Schema::create('tour_plan', function($t) {
-             $t->increments('id');
-             $t->integer('time_slot_id')->unsigned();
-             $t->foreign('time_slot_id')->references('id')->on('time_slot')->onDelete('cascade');
-             $t->integer('delivery_id')->unsigned();
-             $t->foreign('delivery_id')->references('id')->on('deliveries')->onDelete('cascade');
-             $t->integer('user_id')->unsigned();
-             $t->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-             $t->integer('status')->unsigned();
-         });
-     }
+    public function up()
+    {
+        Schema::create('tour_plan', function($t) {
+            $t->increments('id');
+            $t->integer('time_slot_id')->unsigned();
+            $t->foreign('time_slot_id')->references('id')->on('time_slot')->onDelete('cascade');
+            $t->integer('delivery_id')->unsigned();
+            $t->foreign('delivery_id')->references('id')->on('deliveries')->onDelete('cascade');
+            $t->integer('user_id')->unsigned();
+            $t->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $t->integer('status')->unsigned();
+        });
+    }
 
-     /**
-      * Reverse the migrations.
-      *
-      * @return void
-      */
-     public function down()
-     {
-         Schema::dropIfExists('tour_plan');
-     }
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('tour_plan');
+    }
 }

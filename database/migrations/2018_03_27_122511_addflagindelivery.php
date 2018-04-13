@@ -11,18 +11,18 @@ class Addflagindelivery extends Migration
      *
      * @return void
      */
-     public function up()
-     {
-         Schema::table('deliveries', function($t) {
-             $t->integer('flag');
-         });
-     }
+    public function up()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->integer('flag');
+        });
+    }
 
 
-     public function down()
-     {
-         Schema::table('deliveries', function($t) {
-             $t->dropcolumn('flag');
-         });
-     }
+    public function down()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->dropcolumn('flag');
+        });
+    }
 }
