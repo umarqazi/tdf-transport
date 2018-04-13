@@ -580,18 +580,16 @@ button:focus {
 }
 
 .besoin-block .blue-btn{
-    background: #00b3ee;
+    background: #377bb5;
     color: #fff;
     display: inline-block;
     padding: 8px 30px;
     margin-top: 12px;
     font-weight:500 ;
     letter-spacing: 1px;
+    border-radius:5px;
 }
 
-.besoin-block .blue-btn:hover{
-    background: #761c19;
-}
 .aide-footer{
     float: left;
     width: 100%;
@@ -639,4 +637,9 @@ button:focus {
   border-color:#2e6da4 !important;
   color:white !important;
   text-shadow: none !important;
+}
+.retour-btn{
+  float:none;
+  display: inline-block;
+  font-size: 15pt;
 }
