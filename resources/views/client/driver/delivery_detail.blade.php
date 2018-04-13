@@ -1,71 +1,68 @@
 @extends('client.layouts.tdf-menu')
 
 @section('title')
-TDF Driver
+    TDF Driver
 @stop
 
 @section('content')
-@include('toast::messages')
+    @include('toast::messages')
 
     <span class="date_class">{{$date}} ({{$time}})</span>
     <div class="row">
         <div class="col-md-12">
+            <div class="user-row">
+                <i class="fa fa-user fa-fw"></i> Coordonnées du client
+            </div>
 
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <tbody>
-                          <tr>
-                              <td width=20%><i class="fa fa-user fa-fw"></i> Coordonnées du client</td>
-                              <td>
-                                    <ul class="list-unstyled icons">
-                                    <li><i class="fa fa-user fa-fw"></i>{{$detail['first_name']}} {{$detail['last_name']}}</li>
-                                    <li>&nbsp;</li>
-                                    <li>{{$detail['address']}}</li>
-                                    <li>&nbsp;</li>
-                                    <li>{{$detail['postal_code']}} {{$detail['city']}}</li>
-                                    <li>&nbsp;</li>
-                                    <li><i class="fa fa-phone fa-fw"></i> {{$detail['mobile_number']}}</li>
-                                    <li>&nbsp;</li>
-                                    </ul>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td><i class="fa fa-cubes fa-fw"></i> Informations sur la livraison</td>
-                              <td>
-                                <ul class="list-unstyled icons">
-                                  <li><strong>Commande N° : </strong></li>
-                                  <li>
-                                    <div class="col-md-12 pdf-space">
-                                      @if($detail['order_pdf'])<a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif
-                                      {{$detail['order_id']}}</li>
-                                    </div>
-                                  <li>
-                                  <li>&nbsp;</li>
-                                  <li><strong>Bon de livraison : </strong></li>
-                                  <li>
-                                    <div class="col-md-12 pdf-space">
-                                      @if($detail['delivery_pdf'])<a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['delivery_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif
-                                      {{$detail['delivery_number']}}</li>
-                                    </div>
-                                  <li>
-                                  <li>&nbsp;</li>
-                                  <li><strong>Produit(s): </strong></li>
-                                  <li>- {{($detail['product_type']==NULL)? 'Multi-produits':$detail['product_type']}}</li>
-                                  <li>&nbsp;</li>
-                                  <li><strong>Prestation(s): </strong></li>
-                                  <li>- {{$detail['service']}}</li>
-                                  <li>&nbsp;</li>
-                                  <li><strong>Commentaire: </strong></li>
-                                  <li>{{$detail['comment']}}</li>
-                                </ul>
-                              </td>
-                          </tr>
-                    </tbody>
-                </table>
+            <div class="user-row">
+                <ul class="list-unstyled icons driver-detail">
+                    <li><i class="fa fa-user fa-fw"></i>{{$detail['first_name']}} {{$detail['last_name']}}</li>
+                    <li>&nbsp;</li>
+                    <li>{{$detail['address']}}</li>
+                    <li>&nbsp;</li>
+                    <li>{{$detail['postal_code']}} {{$detail['city']}}</li>
+                    <li>&nbsp;</li>
+                    <li><i class="fa fa-phone fa-fw"></i> {{$detail['mobile_number']}}</li>
+                </ul>
+            </div>
+
+            <div class="user-row">
+                <i class="fa fa-cubes fa-fw"></i> Informations sur la livraison
+            </div>
+
+            <div class="user-row">
+                <ul class="list-unstyled icons driver-detail">
+
+                    <div class="col-xs-6">
+                        <li><strong>Commande N° : </strong></li>
+                        <li>
+                            <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>
+                            <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['order_pdf']}}" target="_blank" id="OrderAddPdfLink">{{$detail['order_id']}}</a>
+                        </li>
+                        <li>&nbsp;</li>
+                        <li><strong>Bon de livraison : Pdf </strong></li>
+                        <li>
+
+                            <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['delivery_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>
+                            <a href="{{asset('assets/images')}}/{{$detail['store_name']}}/{{$detail['delivery_pdf']}}" target="_blank" id="OrderAddPdfLink">{{$detail['delivery_number']}}</a>
+                        </li>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <li><strong>Produit(s): </strong></li>
+                        <li>- {{($detail['product_type']==NULL)? 'Multi-produits':$detail['product_type']}}</li>
+                        <li>&nbsp;</li>
+                        <li><strong>Prestation(s): </strong></li>
+                        <li>- {{$detail['service']}}</li>
+                        <li>&nbsp;</li>
+                        <li><strong>Commentaire: </strong></li>
+                        <li>{{$detail['comment']}}</li>
+                    </div>
+                </ul>
             </div>
         </div>
     </div>
-{!! Form::model(null, [ 'url' => URL::route('update.delivery.status'), "enctype"=>"multipart/form-data"] )  !!}
+    {!! Form::model(null, [ 'url' => URL::route('update.delivery.status'), "enctype"=>"multipart/form-data"] )  !!}
     <div class="clear20"></div>
 
     <div class="text-center">Signaler une anomalie</div>
@@ -89,17 +86,17 @@ TDF Driver
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="form-inline">
-                  <label>Client Satisfait?</label>
-                  <div class="checkbox">
+                <label>Client Satisfait?</label>
+                <div class="checkbox driver-detail-checkbox">
                     <label>
-                      <input type="checkbox" value="1" name="satisfy"> Oui
+                        <input type="checkbox" value="1" name="satisfy"> Oui
                     </label>
-                  </div>
-                  <div class="checkbox">
+                </div>
+                <div class="checkbox driver-detail-checkbox">
                     <label>
-                      <input type="checkbox" value="0" name="satisfy"> Non
+                        <input type="checkbox" value="0" name="satisfy"> Non
                     </label>
-                  </div>
+                </div>
             </div>
         </div>
     </div>
@@ -118,9 +115,9 @@ TDF Driver
 
 @stop
 @section('footer_scripts')
-<script>
-$(".delete").click(function(){
-  return confirm("Are you sure to delete this item?");
-});
-</script>
+    <script>
+        $(".delete").click(function(){
+            return confirm("Are you sure to delete this item?");
+        });
+    </script>
 @stop

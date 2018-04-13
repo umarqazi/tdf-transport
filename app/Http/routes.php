@@ -47,6 +47,9 @@ Route::get('/user/reminder-success', [
 */
 Route::group(['middleware' => ['web']], function ()
 {
+    Route::get('/aide', function(){
+        return view('client/aide');
+    });
   Route::get('/', [
     "as"   => "user.login",
     "uses" => 'LaravelAcl\Http\Controllers\AuthController@getClientLogin'

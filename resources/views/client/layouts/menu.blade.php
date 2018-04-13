@@ -25,7 +25,7 @@
   <ul class="nav navbar-top-links navbar-right hide-menu">
     <li><strong class="capitalize user-name">{{$authUser->user_first_name}} {{$authUser->user_last_name}} ({{$store_info['store_name']}})</strong></li>
     <li><a href="{{URL::to('/logout')}}"><i class="fa fa-sign-out fa-fw"></i> Deconnexion</a></li>
-    <li><a href="#"><i class="fa fa-question-circle fa-fw"></i> Aide</a></li>
+    <li><a href="/aide"><i class="fa fa-question-circle fa-fw"></i> Aide</a></li>
   </ul>
 
   <div class="navbar-default sidebar toggle-menu" role="navigation">
