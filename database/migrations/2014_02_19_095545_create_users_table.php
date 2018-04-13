@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration {
             $table->string('email');
             $table->string('password');
             $table->text('permissions')->nullable();
+            $table->string('remember_token');
             $table->boolean('activated')->default(0);
             $table->boolean('banned')->default(0);
             $table->string('activation_code')->nullable();
@@ -42,7 +43,7 @@ class CreateUsersTable extends Migration {
      */
     public function down()
     {
-        
+
     }
 
 }
