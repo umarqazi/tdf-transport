@@ -12,130 +12,130 @@ use LaravelAcl\Store;
 use Session;
 class AuthController extends Controller {
 
-    protected $authenticator;
-    protected $reminder;
-    protected $reminder_validator;
+  protected $authenticator;
+  protected $reminder;
+  protected $reminder_validator;
 
-    public function __construct(ReminderService $reminder, ReminderValidator $reminder_validator)
-    {
-        $this->authenticator = App::make('authenticator');
-        $this->reminder = $reminder;
-        $this->reminder_validator = $reminder_validator;
+  public function __construct(ReminderService $reminder, ReminderValidator $reminder_validator)
+  {
+    $this->authenticator = App::make('authenticator');
+    $this->reminder = $reminder;
+    $this->reminder_validator = $reminder_validator;
+  }
+
+  public function getClientLogin()
+  {
+    if (Auth::check()) {
+      if(Auth::user()->type==Config::get('constants.Users.TDF Manager')) {
+        return redirect('/allDeliveryHistory');
+      }elseif(Auth::user()->type==Config::get('constants.Users.Driver')) {
+        return redirect('/driverTours');
+      }elseif(Auth::user()->type=='Admin') {
+        return redirect('/admin/users/dashboard');
+      }
+      return redirect('/dashboard');
     }
-
-    public function getClientLogin()
+    return view('client.home.home');
+  }
+  public function postClientLogin(Request $request)
+  {
+    list($email, $password, $remember) = $this->getLoginInput($request);
+    try
     {
-        if (Auth::check()) {
-          if(Auth::user()->type==Config::get('constants.Users.TDF Manager')) {
-            return redirect('/allDeliveryHistory');
-          }elseif(Auth::user()->type==Config::get('constants.Users.Driver')) {
-            return redirect('/driverTours');
-          }elseif(Auth::user()->type=='Admin') {
-              return redirect('/admin/users/dashboard');
-          }
-            return redirect('/dashboard');
+      if (filter_var($email, FILTER_VALIDATE_EMAIL))
+      {
+        $credientials=array(
+          "email" => $email,
+          "password" => $password,
+          'activated'=> "1");
         }
-        return view('client.home.home');
-    }
-    public function postClientLogin(Request $request)
-    {
-        list($email, $password, $remember) = $this->getLoginInput($request);
-        try
-        {
-            if (filter_var($email, FILTER_VALIDATE_EMAIL))
-            {
-                $credientials=array(
-                    "email" => $email,
-                    "password" => $password,
-                    'activated'=> "1");
+        else{
+          $credientials=array(
+            "number_plate" => $email,
+            "password" => $password,
+            'activated'=> "1");
+          }
+
+          if(Auth::attempt($credientials))
+          {
+            $storeId=Auth::user()->store_id;
+            $getStoreName=Store::find($storeId);
+            Session::put('store_name',$getStoreName['store_name']);
+            if(Auth::user()->type=='TDF Manager'){
+              return redirect::to('/allDeliveryHistory');
+            }elseif(Auth::user()->type==Config::get('constants.Users.Driver')) {
+              return redirect('/driverTours');
+            }elseif(Auth::user()->type=='Admin') {
+              return redirect('/admin/users/dashboard');
             }
             else{
-                $credientials=array(
-                    "number_plate" => $email,
-                    "password" => $password,
-                    'activated'=> "1");
+              return redirect::to('/dashboard');
             }
-
-            if(Auth::attempt($credientials))
-            {
-                $storeId=Auth::user()->store_id;
-                $getStoreName=Store::find($storeId);
-                Session::put('store_name',$getStoreName['store_name']);
-                if(Auth::user()->type=='TDF Manager'){
-                    return redirect::to('/allDeliveryHistory');
-                }elseif(Auth::user()->type==Config::get('constants.Users.Driver')) {
-                  return redirect('/driverTours');
-                }elseif(Auth::user()->type=='Admin') {
-                  return redirect('/admin/users/dashboard');
-                }
-                else{
-                    return redirect::to('/dashboard');
-                }
-            }
-            else
-            {
-                Toast::error('Il semble que votre identifiant ou votre mot de passe soient incorrects. Veuillez essayer à nouveau s’il vous plaît.');
-                return redirect::to('/');
-            }
+          }
+          else
+          {
+            Toast::error('Il semble que votre identifiant ou votre mot de passe soient incorrects. Veuillez essayer à nouveau s’il vous plaît.');
+            return redirect::to('/');
+          }
         }
         catch(JacopoExceptionsInterface $e)
         {
-            $errors = $this->authenticator->getErrors();
+          $errors = $this->authenticator->getErrors();
 
-            return redirect()->route("user.login")->withInput()->withErrors($errors);
+          return redirect()->route("user.login")->withInput()->withErrors($errors);
         }
 
-    }
+      }
 
-    /**
-     * Logout utente
-     *
-     * @return string
-     */
-    public function getClientLogout()
-    {
+      /**
+      * Logout utente
+      *
+      * @return string
+      */
+      public function getClientLogout()
+      {
         Auth::logout();
         return redirect('/');
-    }
-    /**
-     * Recupero password
-     */
-    public function getReminder()
-    {
+      }
+      /**
+      * Recupero password
+      */
+      public function getReminder()
+      {
         return view("laravel-authentication-acl::client.auth.reminder");
-    }
+      }
 
-    /**
-     * Invio token per set nuova password via mail
-     *
-     * @return mixed
-     */
-    public function postReminder(Request $request)
-    {
+      /**
+      * Invio token per set nuova password via mail
+      *
+      * @return mixed
+      */
+      public function postReminder(Request $request)
+      {
         $email = $request->get('email');
 
         try
         {
-            $this->reminder->send($email);
-            return redirect()->route("user.reminder-success");
+          $this->reminder->send($email);
+          return redirect()->route("user.reminder-success");
         }
         catch(JacopoExceptionsInterface $e)
         {
-            $errors = $this->reminder->getErrors();
-            return redirect()->route("user.recovery-password")->withErrors($errors);
+          $errors = $this->reminder->getErrors();
+          return redirect()->route("user.recovery-password")->withErrors($errors);
         }
-    }
+      }
 
-    public function getChangePassword(Request $request)
-    {
+      public function getChangePassword(Request $request)
+      {
         $email = $request->get('email');
         $token = $request->get('token');
 
         return view("laravel-authentication-acl::client.auth.changepassword", array("email" => $email, "token" => $token) );
-    }
+      }
 
-    public function postChangePassword(Request $request)
-    {
+      public function postChangePassword(Request $request)
+      {
         $email = $request->get('email');
         $token = $request->get('token');
         $password = $request->get('password');
@@ -147,27 +147,27 @@ class AuthController extends Controller {
 
         try
         {
-            $this->reminder->reset($email, $token, $password);
+          $this->reminder->reset($email, $token, $password);
         }
         catch(JacopoExceptionsInterface $e)
         {
-            $errors = $this->reminder->getErrors();
-            return redirect()->route("user.change-password")->withErrors($errors);
+          $errors = $this->reminder->getErrors();
+          return redirect()->route("user.change-password")->withErrors($errors);
         }
 
         return redirect()->route("user.change-password-success");
 
-    }
+      }
 
-    /**
-     * @return array
-     */
-    private function getLoginInput(Request $request)
-    {
+      /**
+      * @return array
+      */
+      private function getLoginInput(Request $request)
+      {
         $email    = $request->get('email');
         $password = $request->get('password');
         $remember = $request->get('remember');
 
         return array($email, $password, $remember);
+      }
     }
-}

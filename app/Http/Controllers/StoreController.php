@@ -13,12 +13,6 @@ use Hash;
 use File;
 class StoreController extends Controller
 {
-  /**
-  * Display a listing of the resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
-
   public function index(Request $request)
   {
     $name=$request->input('name');
@@ -43,23 +37,6 @@ class StoreController extends Controller
     }
     return view::make('admin.store.list')->with(['modal'=>$modal,'stores'=>$getStores, "request" => $request, "companyId"=>$companyId, 'store'=>$store]);
   }
-
-  /**
-  * Show the form for creating a new resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function create()
-  {
-    //
-  }
-
-  /**
-  * Store a newly created resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @return \Illuminate\Http\Response
-  */
   public function store(Request $request)
   {
     $id=$request->id;
@@ -107,24 +84,6 @@ class StoreController extends Controller
 
     return redirect::to('/admin/store/list/'.$request->company_id)->with('message', $message);
   }
-
-  /**
-  * Display the specified resource.
-  *
-  * @param  \LaravelAcl\Store  $store
-  * @return \Illuminate\Http\Response
-  */
-  public function show(Store $store)
-  {
-    //
-  }
-
-  /**
-  * Show the form for editing the specified resource.
-  *
-  * @param  \LaravelAcl\Store  $store
-  * @return \Illuminate\Http\Response
-  */
   public function edit(Request $request)
   {
     $id=$request->id;
@@ -140,25 +99,6 @@ class StoreController extends Controller
     }
     return view::make('admin.store.edit')->with(['store'=>$storeInfo, "request" => $request, "companyId"=>$companyId]);
   }
-
-  /**
-  * Update the specified resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @param  \LaravelAcl\Store  $store
-  * @return \Illuminate\Http\Response
-  */
-  public function update(Request $request, Store $store)
-  {
-    //
-  }
-
-  /**
-  * Remove the specified resource from storage.
-  *
-  * @param  \LaravelAcl\Store  $store
-  * @return \Illuminate\Http\Response
-  */
   public function destroy(Request $request)
   {
     $id=$request->id;
