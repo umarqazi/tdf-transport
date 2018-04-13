@@ -20,38 +20,38 @@ class VehicleController extends Controller
   {
     Date::setLocale('fr');
   }
-    public function toursList(){
-      if(Auth::user()){
-        $user_id=Auth::user()->id;
-        $nextDay=Carbon::now()->format('Y-m-d');
-        $date=Date::now()->format('l d F Y');
-        $tours=HomeController::manageTours($user_id, $nextDay, 'driver');
-        return view::make('client.driver.index')->with(['tours'=>$tours, 'date'=>$date]);
-      }
-    }
-    public function deliveryDetail(Request $request){
-      $id=$request->id;
-      $getDetail=HomeController::deliveryProducts()->find($id);
+  public function toursList(){
+    if(Auth::user()){
+      $user_id=Auth::user()->id;
+      $nextDay=Carbon::now()->format('Y-m-d');
       $date=Date::now()->format('l d F Y');
-      $time=$request->time;
-      return view::make('client.driver.delivery_detail')->with(['time'=>$time,'date'=>$date, 'detail'=>$getDetail]);
+      $tours=HomeController::manageTours($user_id, $nextDay, 'driver');
+      return view::make('client.driver.index')->with(['tours'=>$tours, 'date'=>$date]);
     }
-    public function updateDeliveryStatus(Request $request){
-      if($request->satisfy==1){
-        $satisfy=1;
-      }else{
-        $satisfy=3;
-      }
-      $delivery_status=$request->delivery_status;
-      $id=$request->id;
-      if($delivery_status=='4'){
-        $updateDelivery=Delivery::where('id', $id)->update(['status'=>Config::get('constants.Status.Delivered'), 'customer_feedback'=>$satisfy]);
-      }
-      else{
-        $updateDelivery=Delivery::where('id', $id)->update(['delivery_problem'=>$delivery_status,'status'=>Config::get('constants.Status.Return'), 'customer_feedback'=>$satisfy]);
-      }
-      Toast::success('Le statut de livraison a été mis à jour');
-      return redirect::to('/driverTours');
+  }
+  public function deliveryDetail(Request $request){
+    $id=$request->id;
+    $getDetail=HomeController::deliveryProducts()->find($id);
+    $date=Date::now()->format('l d F Y');
+    $time=$request->time;
+    return view::make('client.driver.delivery_detail')->with(['time'=>$time,'date'=>$date, 'detail'=>$getDetail]);
+  }
+  public function updateDeliveryStatus(Request $request){
+    if($request->satisfy==1){
+      $satisfy=1;
+    }else{
+      $satisfy=3;
     }
+    $delivery_status=$request->delivery_status;
+    $id=$request->id;
+    if($delivery_status=='4'){
+      $updateDelivery=Delivery::where('id', $id)->update(['status'=>Config::get('constants.Status.Delivered'), 'customer_feedback'=>$satisfy]);
+    }
+    else{
+      $updateDelivery=Delivery::where('id', $id)->update(['delivery_problem'=>$delivery_status,'status'=>Config::get('constants.Status.Return'), 'customer_feedback'=>$satisfy]);
+    }
+    Toast::success('Le statut de livraison a été mis à jour');
+    return redirect::to('/driverTours');
+  }
 
 }

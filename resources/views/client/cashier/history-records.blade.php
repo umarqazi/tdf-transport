@@ -63,13 +63,13 @@
           </tr>
           @endforeach
           @else
-            <tr>
-                <td colspan="12"><strong>Désolé aucun résultat n'a été trouvé.</strong></td>
-            </tr>
+          <tr>
+            <td colspan="12"><strong>Désolé aucun résultat n'a été trouvé.</strong></td>
+          </tr>
           @endif
           <tr>
-              <td colspan="10" align=right>Total: </td>
-              <td>{{$total}} €</td>
+            <td colspan="10" align=right>Total: </td>
+            <td>{{$total}} €</td>
           </tr>
         </tbody>
       </table>
