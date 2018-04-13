@@ -26,6 +26,7 @@ class UpdateCascadedelivery extends Migration
     public function down()
     {
         Schema::table('deliveries', function($t) {
+            $t->dropForeign('deliveries_user_id_foreign');
             $t->dropcolumn('user_id');
         });
     }

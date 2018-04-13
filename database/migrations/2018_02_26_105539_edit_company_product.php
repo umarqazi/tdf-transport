@@ -23,5 +23,6 @@ class EditCompanyProduct extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_products');    }
+        Schema::dropIfExists('company_products');
+    }
 }
