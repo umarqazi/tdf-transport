@@ -125,7 +125,7 @@ TDF Create Delivery
             </table>
           </div>
           <div class="form-group">
-            <select name="product_family" class="selectpicker form-control" onchange="getProduct(this)">
+            <select name="product_id" class="selectpicker form-control" onchange="getProduct(this)">
               @foreach($products as $key => $prod)
               <option value="{{$key}}" {{($delivery['product_id']==$key)? 'selected':''}}>{{$prod}}</option>
               @endforeach
@@ -133,6 +133,9 @@ TDF Create Delivery
             <span class="text-danger">{!! $errors->first('product') !!}</span>
           </div>
           <div class="form-group" id="products">
+            @if($subProduct)
+              {{ Form::select('sub_product_id', $subProduct, null, ['class'=>'full-width', "onchange"=>"getPrice(this)"])}}
+            @endif
             <span class="text-danger">{!! $errors->first('product') !!}</span>
           </div>
         </div>
