@@ -23,6 +23,7 @@ class AlterDeliveryProduct extends Migration
      public function down()
      {
          Schema::table('deliveries', function($t) {
+             $t->dropForeign('deliveries_product_id_foreign');
              $t->dropColumn('product_id');
          });
      }

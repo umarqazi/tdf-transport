@@ -48,7 +48,6 @@ class HomeController extends Controller
 	}
 	public function dashboard(Request $request)
 	{
-
 		$startDate='';
 		$endDate='';
 		$date='';
@@ -130,10 +129,10 @@ class HomeController extends Controller
 		}))->leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->get();
 		$getTime=TimeSlot::all();
 		foreach($getTime as $time){
-			$tours[$time['time']]=['id'=>'','delivery'=>'','time_id'=>$time['id']];
+			$tours[$time['time']]=['id'=>'','delivery'=>'','time_id'=>$time['id'], 'tours'=>array()];
 			if($getDeliveries2){
 				foreach ($getDeliveries2 as $key => $value) {
-					foreach ($value['time'] as $key => $record) {
+					foreach ($value['time'] as $key2 => $record) {
 						if($time['id']==$record['time_slot_id'] && $user_id==$record['user_id']){
 							if($driver==NULL){
 								$records=$value['first_name'].' '.$value['last_name'].' '.Date::parse($value['datetime'])->format('l d F Y').' '.$value['day_period'];
@@ -141,10 +140,11 @@ class HomeController extends Controller
 							else{
 								$records=$value;
 							}
-							$tours[$time['time']]=['time_id'=>$time['id'],
+							$tourDetail=['time_id'=>$time['id'],
 							'id'=>$record['tour_id'],
 							'delivery_id'=>$record['pivot']['delivery_id'],
 							'delivery'=>$records];
+							array_push($tours[$time['time']]['tours'], $tourDetail);
 						}
 					}
 				}
@@ -176,7 +176,7 @@ class HomeController extends Controller
 			$checkEmail->save();
 			$mail=Mail::send('client.email.change-password', ['data'=>$request], function($message) use ($email)
 			{
-				$message->to($email, 'TDF Transport')->subject('Changed Password');
+				$message->to($email, 'TDF Transport')->subject('Réinitialisation de votre mot de passe');
 			});
 		}
 		else
@@ -221,29 +221,34 @@ class HomeController extends Controller
 	{
 		$name=$request->customer_name;
 		$order_id=$request->order_id;
+		$request->datetime= str_replace('/', '-', $request->datetime);
 		$date=Carbon::parse($request->datetime)->format('Y-m-d h:i:s');
 		$searchResult='';
 		$getDeliveryRecords=self::searchResults($request->all());
 		$getDeliveryRecords=$getDeliveryRecords;
 		$getDeliveryRecords=$getDeliveryRecords->where('store_id', $this->authUser->store_id);
 		$getDeliveryRecords=$getDeliveryRecords->orderby('datetime', 'desc')->get();
-		$searchResult='<thead><tr><th class="text-center">Date de la livraison</th><th class="text-center">Client</th><th class="text-center">Numero de commande</th><th class="text-center">Numero du bon de livraison</th><th class="text-center">Telephone</th><th class="text-center">Villes</th><th class="text-center">Code Postal</th><th class="text-center">Fonction de Prestation</th><th class="text-center">Produit(s) commande(s)</th><th class="text-center">Prix de la livraison</th></tr></thead>';
-		foreach($getDeliveryRecords as $key=>$record){
-			$products='';
-			$getProduct=array();
-			if($record['sub_product_id']==''){
-				$products='Multi-produits';
+		$searchResult='<thead><tr><th class="text-center">Date de livraison</th><th class="text-center">Client</th><th class="text-center">Numéro de commande</th><th class="text-center">Numéro du bon de livraison</th><th class="text-center">Téléphone</th><th class="text-center">Ville</th><th class="text-center">Code postal</th><th class="text-center">Type de prestation</th><th class="text-center">Produit(s) commandé(s)</th><th class="text-center">Prix de la livraison</th></tr></thead>';
+		if(!$getDeliveryRecords->isEmpty()){
+			foreach($getDeliveryRecords as $key=>$record){
+				$products='';
+				$getProduct=array();
+				if($record['sub_product_id']==''){
+					$products='Multi-produits';
+				}
+				else{
+					$products=$record['product_type'];
+				}
+				if($record['delivery_price']=='Gratuit'){
+					$price= 'Gratuit';
+				}else{
+					$price=$record['delivery_price']." €";
+				}
+				$url=URL('viewDelivery').'/'.$record['id'];
+				$searchResult.="<tr onclick=viewDelivery('$url') class='clickable'><td>".Date::parse($record['datetime'])->format('d/m/Y')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
 			}
-			else{
-				$products=$record['product_type'];
-			}
-			if($record['delivery_price']=='Gratuit'){
-				$price= 'Gratuit';
-			}else{
-				$price=$record['delivery_price']." €";
-			}
-			$url=URL('viewDelivery').'/'.$record['id'];
-			$searchResult.="<tr onclick=viewDelivery('$url') class='clickable'><td>".Date::parse($record['datetime'])->format('d/m/Y')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
+		}else{
+			$searchResult.="<tr><td colspan='10'><strong>Désolé aucun résultat n'a été trouvé.</strong></td></tr>";
 		}
 		return $searchResult;
 	}

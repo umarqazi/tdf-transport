@@ -1,5 +1,5 @@
-@extends('client.layouts.menu')
 
+@extends((auth()->user()->type != Config::get('constants.Users.TDF Manager'))? 'client.layouts.menu':'client.layouts.tdf-menu')
 @section('title')
 TDF Create Delivery
 @stop

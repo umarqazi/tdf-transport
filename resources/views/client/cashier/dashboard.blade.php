@@ -10,7 +10,7 @@ TDF Dashboard
 <div class="row">
   @include('toast::messages')
   <div class="col-lg-12">
-    <h1 class="page-header text-center">Tranche horaire</h1>
+    <h1 class="page-header text-center">Tableau de bord des livraisons</h1>
   </div>
   <div class="col-lg-12 calendar-control">
     <a href="{{route('user.date.dashboard', ['startDate'=>$checkDate->startOfWeek()->addDay(-7)])}}"><i class="fa fa-arrow-circle-left"></i></a>
@@ -89,7 +89,7 @@ TDF Dashboard
         <tr>
           <th class="side-first" width=20%>Tranche horaire</th>
           @for($i=0; $i<=5; $i++)
-          <th width=14% @if(strtotime($currentDate->startOfWeek()->addDay($i)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">{{Date::parse($currentDate->startOfWeek()->addDay($i))->format('l')}}</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay($i)))}} @if(date('Y-m-d', strtotime($nextDate)) == date('Y-m-d', strtotime($currentDate->startOfWeek()->addDay($i))) && $authUser->type==Config::get('constants.Users.Manager'))<input type="checkbox" id="checkbox"> @endif</div></th>
+          <th width=14% @if(strtotime($currentDate->startOfWeek()->addDay($i)->format('d-m-y')) == strtotime(date('d-m-y'))) class="currentDate-color" @endif><span class="day-name">{{Date::parse($currentDate->startOfWeek()->addDay($i))->format('l')}}</span><div class="date">{{date('d', strtotime($currentDate->startOfWeek()->addDay($i)))}}</div> @if(date('Y-m-d', strtotime($nextDate)) == date('Y-m-d', strtotime($currentDate->startOfWeek()->addDay($i))) && $authUser->type==Config::get('constants.Users.Manager'))<input type="checkbox" id="checkbox"> <span class="checkAll">Cocher tout</span>@endif</th>
 
           @endfor
 
@@ -97,10 +97,13 @@ TDF Dashboard
       </thead>
       <tbody>
         <tr>
-          <td class="side-first">MATIN </td>
+          <td class="side-first">MATIN</td>
           @foreach($deliveries as $key=>$delivery)
           @if(!empty($delivery))
-          <td @if(strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate)))) class="enabled-div" @else class="disabled-div" @endif>
+          <td
+          @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) || strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate))))
+          class="enabled-div" @else class="disabled-div"
+          @endif>
             <?php $number=1;?>
             @foreach($delivery as $dayDelivery)
             @if($dayDelivery['day_period']==Config::get('constants.Day Period.matin'))
@@ -115,7 +118,7 @@ TDF Dashboard
                 <td><a href="{{URL::to('/delivery', ['id'=>$dayDelivery['id']])}}"><i class="fa fa-edit fa-fw"></i></a></td>
                 <td><a href="{{URL::to('/deleteDelivery', ['id'=>$dayDelivery['id']])}}" class="delete"><i class="fa fa-trash-o fa-fw"></i></a></td>
                 @if($authUser->type==Config::get('constants.Users.Manager'))
-                <td><input type="checkbox" class="deliveryCheckbox" name="delivery_id[]" value="{{$dayDelivery['id']}}" {{($dayDelivery['status']=='1')?'checked disabled':''}} class="" @if($key!=date('d-M-Y', strtotime($nextDate))) disabled @endif>
+                <td><input type="checkbox" class="deliveryCheckbox" name="delivery_id[]" value="{{$dayDelivery['id']}}" {{($dayDelivery['status']=='1')?'checked disabled':''}} class="" @if(strtotime($key) != strtotime(date('d-M-Y')) && $key!=date('d-M-Y', strtotime($nextDate))) disabled @endif>
                 </td>
                 @endif
               </tr>
@@ -125,7 +128,7 @@ TDF Dashboard
             @endif
             @endforeach
             <div class="clearfix"></div>
-            @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate)))) <a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.matin')])}}" class="anchor-space"></a> @endif
+            @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) || strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate)))) <a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.matin')])}}" class="anchor-space"></a> @endif
           </td>
           <!-- <div class="clearfix"></div>
           <a href="" class="anchor-space">&nbsp;</a> -->
@@ -145,7 +148,7 @@ TDF Dashboard
           <td class="side-first">APRES - MIDI</td>
           @foreach($deliveries as $key=>$delivery)
           @if(!empty($delivery))
-          <td @if(strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate)))) class="enabled-div" @else class="disabled-div" @endif>
+          <td @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) ||  strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate)))) class="enabled-div" @else class="disabled-div" @endif>
             <?php $number2=1;?>
             @foreach($delivery as $dayDelivery)
             @if($dayDelivery['day_period']==Config::get('constants.Day Period.après-midi'))
@@ -160,7 +163,7 @@ TDF Dashboard
                 <td><a href="{{URL::to('/delivery', ['id'=>$dayDelivery['id']])}}" ><i class="fa fa-edit fa-fw"></i></a></td>
                 <td><a href="{{URL::to('/deleteDelivery', ['id'=>$dayDelivery['id']])}}" class="delete"><i class="fa fa-trash-o fa-fw"></i></a></td>
                 @if($authUser->type==Config::get('constants.Users.Manager'))
-                <td><input type="checkbox" class="deliveryCheckbox" name="delivery_id[]" value="{{$dayDelivery['id']}}" {{($dayDelivery['status']=='1')?'checked disabled':''}} class="" @if($key!=date('d-M-Y', strtotime($nextDate))) disabled @endif>
+                <td><input type="checkbox" class="deliveryCheckbox" name="delivery_id[]" value="{{$dayDelivery['id']}}" {{($dayDelivery['status']=='1')?'checked disabled':''}} class="" @if(strtotime($key) != strtotime(date('d-M-Y')) && $key!=date('d-M-Y', strtotime($nextDate))) disabled @endif>
                 </td>
                 @endif
               </tr>
@@ -170,13 +173,13 @@ TDF Dashboard
             @endif
             @endforeach
             <div class="clearfix"></div>
-            @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.après-midi')])}}" class="anchor-space"></a> @endif
+            @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) ||  strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.après-midi')])}}" class="anchor-space"></a> @endif
           </td>
           @else
           <td @if(strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate)))) class="enabled-div set-heigth" @else class="disabled-div" @endif>
 
             <div class="clearfix"></div>
-            @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.après-midi')])}}" class="anchor-space"></a> @endif
+            @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) ||  strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.après-midi')])}}" class="anchor-space"></a> @endif
           </td>
           @endif
 

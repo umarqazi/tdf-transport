@@ -12,10 +12,10 @@ TDF Transport
     @include('toast::messages')
     {!! Form::model(null, [ 'url' => URL::route('post.change.password')] )  !!}
     <input type="hidden" name="token" class="fld" value="{{$token}}" placeholder="Password">
-    <input type="password" name="password" class="fld" placeholder="Password">
+    <input type="password" name="password" class="fld" placeholder=" Mot de passe">
     <span class="text-danger">{!! $errors->first('password') !!}</span>
-    <input type="password" name="password_confirmation" class="fld" placeholder="Confirm Password">
-    <button type="submit" class="submit-btn">Valider ma demande<i class="fa fa-arrow-alt-circle-right"></i></button>
+    <input type="password" name="password_confirmation" class="fld" placeholder="Confirmez votre mot de passe">
+    <button type="submit" class="submit-btn">Valider<i class="fa fa-arrow-alt-circle-right"></i></button>
     {!! Form::close() !!}
   </div>
 

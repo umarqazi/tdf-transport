@@ -34,6 +34,10 @@
 </head>
 
     <body>
+      <div class="loader-div2">
+          <img src="{{asset('assets/images')}}/loader.gif" class="laoder">
+      </div>
+
         <div id="wrapper">
             <div id="page-wrapper" class="remove-padding">
                 @yield('content')

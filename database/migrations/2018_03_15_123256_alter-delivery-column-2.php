@@ -24,6 +24,7 @@ class AlterDeliveryColumn2 extends Migration
     public function down()
     {
         Schema::table('deliveries', function($t) {
+            $t->dropForeign('deliveries_store_id_foreign');
             $t->dropcolumn('store_id');
         });
     }

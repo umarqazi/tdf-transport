@@ -9,7 +9,7 @@
       <span class="icon-bar"></span>
     </button>
 
-    <a class="navbar-brand" href="{{($authUser->type==Config::get('constants.Users.TDF Manager'))? URL::to('/allDeliveryHistory'):URL::to('/driverTours')}}"><img src="{{asset('assets/images')}}/logoTDF.png" class="img-responsive"></a>
+    <a class="navbar-brand" href="{{($authUser->type==Config::get('constants.Users.TDF Manager'))? URL::to('/allDeliveryHistory'):URL::to('/driverTours')}}"><img src="{{asset('assets/images')}}/logoTDF.png" class="img-responsive tdf-logo"></a>
   </div>
   <!-- /.navbar-header -->
   @if($authUser->type==Config::get('constants.Users.TDF Manager'))

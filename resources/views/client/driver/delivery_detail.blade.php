@@ -10,7 +10,6 @@
     <span class="date_class">{{$date}} ({{$time}})</span>
     <div class="row">
         <div class="col-md-12">
-
             <div class="user-row">
                 <i class="fa fa-user fa-fw"></i> Coordonnées du client
             </div>

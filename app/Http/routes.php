@@ -117,10 +117,7 @@ Route::group(['middleware' => ['web']], function ()
       "as"   => "delivery.edit",
       "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@create'
     ]);
-    Route::get('/viewDelivery/{id}', [
-      "as"   => "view.delivery",
-      "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@viewDeliver'
-    ]);
+
     Route::post('/uploadPdf', [
       "as"   => "upload.pdf",
       "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@uploadPdf'
@@ -198,6 +195,12 @@ Route::group(['middleware' => ['web']], function ()
         "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@sendDriverEmail'
       ]);
     });
+    Route::get('/viewDelivery/{id}', [
+      "as"   => "view.delivery",
+      "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@viewDeliver'
+    ]);
+    Route::group(['middleware' => ['driver', 'can_see']], function ()
+    {
     Route::get('/driverTours', [
       "as"   => "driver.tours",
       "uses" => 'LaravelAcl\Http\Controllers\VehicleController@toursList'
@@ -210,7 +213,7 @@ Route::group(['middleware' => ['web']], function ()
       "as"   => "update.delivery.status",
       "uses" => 'LaravelAcl\Http\Controllers\VehicleController@updateDeliveryStatus'
     ]);
-
+    });
 
   /*
   |--------------------------------------------------------------------------

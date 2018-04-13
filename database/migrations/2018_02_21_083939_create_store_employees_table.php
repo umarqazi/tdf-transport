@@ -23,7 +23,7 @@ class CreateStoreEmployeesTable extends Migration
             $table->string('account_status');
             $table->string('password');
             $table->integer('store_id')->unsigned();
-            $table->foreign('store_id')->references('id')->on('stores');
+            $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
             $table->timestamps();
         });
     }

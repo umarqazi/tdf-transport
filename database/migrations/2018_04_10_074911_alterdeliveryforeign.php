@@ -11,19 +11,18 @@ class Alterdeliveryforeign extends Migration
      *
      * @return void
      */
-     public function up()
-     {
-         Schema::table('deliveries', function($t) {
-           $t->dropColumn('product_id');
-           $t->integer('sub_product_id')->unsigned()->nullable();
-           $t->foreign('sub_product_id')->references('id')->on('sub_products')->onDelete('cascade');
-         });
-     }
-     public function down()
-     {
-         Schema::table('deliveries', function($t) {
-           $t->integer('product_id')->unsigned()->nullable();
-           $t->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-         });
-     }
+    public function up()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->integer('sub_product_id')->unsigned()->nullable();
+            $t->foreign('sub_product_id')->references('id')->on('sub_products')->onDelete('cascade');
+        });
+    }
+    public function down()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->dropForeign('deliveries_sub_product_id_foreign');
+            $t->dropColumn('sub_product_id');
+        });
+    }
 }

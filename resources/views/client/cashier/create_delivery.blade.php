@@ -6,8 +6,9 @@ TDF Create Delivery
 
 @section('content')
 
-{!! Form::model($delivery, [ 'url' => URL::route('delivery.edit'), "enctype"=>"multipart/form-data"] )  !!}
+{!! Form::model($delivery, [ 'url' => URL::route('delivery.edit'), "enctype"=>"multipart/form-data", 'id'=>'createForm'] )  !!}
 <div class="row">
+  @include('toast::messages')
   <div class="col-lg-12 text-center">
     <a href="{{url('/dashboard')}}" class="back-button">Retour <i class="fa fa-arrow-circle-left"></i></a><h1 class="page-header text-center make-center">CREATION D'UNE LIVRAISON</h1>
   </div>
@@ -124,7 +125,7 @@ TDF Create Delivery
             </table>
           </div>
           <div class="form-group">
-            <select name="product_family" class="selectpicker form-control" onchange="getProduct(this)">
+            <select name="product_id" class="selectpicker form-control" onchange="getProduct(this)">
               @foreach($products as $key => $prod)
               <option value="{{$key}}" {{($delivery['product_id']==$key)? 'selected':''}}>{{$prod}}</option>
               @endforeach
@@ -132,6 +133,9 @@ TDF Create Delivery
             <span class="text-danger">{!! $errors->first('product') !!}</span>
           </div>
           <div class="form-group" id="products">
+            @if($subProduct)
+              {{ Form::select('sub_product_id', $subProduct, null, ['class'=>'full-width', "onchange"=>"getPrice(this)"])}}
+            @endif
             <span class="text-danger">{!! $errors->first('product') !!}</span>
           </div>
         </div>
@@ -169,9 +173,11 @@ TDF Create Delivery
               {{Form::text('delivery_price', null, ['class'=>'form-control', 'placeholder'=>'Prix de la livraison', 'id'=>'delivery_charges'])}}
               <div class="input-group-addon"><i class="fa fa-euro fa-fw"></i></div>
             </div>
+            @if(auth()->user()->type==Config::get('constants.Users.Manager'))
             <div class="form-group space">
               Livraison offerte {{Form::checkbox('free', 1, null, ['onclick'=>'freeDelivery(this)', 'id'=>'delivery'])}}
             </div>
+            @endif
           </div>
         </div>
       </div>
@@ -191,7 +197,7 @@ TDF Create Delivery
 <div class="clear20"></div>
 <div class="row">
   <div class="col-md-12 text-center tbl-btns">
-    <button class="button-styling" type="submit">Valider ma demande <i class="fa fa-save"></i></button>
+    <button class="button-styling" type="submit">Valider <i class="fa fa-save"></i></button>
     <a href="{{url('/')}}" class="btn btn-danger cancel-request">Annuler <i class="fa fa-undo"></i></a>
   </div>
 </div>

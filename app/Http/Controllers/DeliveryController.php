@@ -45,6 +45,7 @@ class DeliveryController extends Controller
   public function index(Request $request)
   {
     $id=$request->id;
+    $subProduct=array();
     if($request->date)
     {
       $dateTime=date('d/m/Y', strtotime($request->date));
@@ -60,6 +61,14 @@ class DeliveryController extends Controller
     {
       $getDelivery=HomeController::deliveryProducts()->where('deliveries.id',$id)->first();
       $dateTime=date('d/m/Y', strtotime($getDelivery['datetime']));
+      $getSubProduct=SubProduct::where('product_id', $getDelivery->product_id)->get();
+      if($getSubProduct)
+      {
+        foreach($getSubProduct as $product)
+        {
+          $subProduct[$product['id']]=$product['product_type'];
+        }
+      }
     }
     else
     {
@@ -75,7 +84,7 @@ class DeliveryController extends Controller
         $products[$product['id']]=$product['product_family'];
       }
     }
-    return view::make('client.cashier.create_delivery')->with(['delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
+    return view::make('client.cashier.create_delivery')->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
   }
   public function create(Request $request)
   {
@@ -87,11 +96,15 @@ class DeliveryController extends Controller
       'order_id'=> 'required',
       'service'=> 'required',
       'address' => 'required',
-      'pdf' => 'mimes:pdf'.$request->id,
-      'order_pdf' => 'mimes:pdf'.$request->id
-
+      'pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id,
+      'order_pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id
     ]);
     $date = str_replace('/', '-', $request->datetime);
+    if((Auth::user()->type==Config::get('constants.Users.Cashier') && strtotime($date) <= strtotime(date('d-m-Y'))) || (Auth::user()->type==Config::get('constants.Users.Manager') && strtotime($date) < strtotime(date('d-m-Y'))) ){
+      Toast::error('Sélectionnez une date correcte');
+      return redirect::back()
+      ->withInput();
+    }
     if ($validator->fails()) {
       return redirect::back()
       ->withErrors($validator)
@@ -162,16 +175,21 @@ class DeliveryController extends Controller
     }else{
       $delivery->delivery_price=$request->delivery_price;
     }
-    if($request->product_id){
-      $product_id=$request->product_id;
+    if($request->sub_product_id){
+      $product_id=$request->sub_product_id;
     }else{
       $product_id=NULL;
     }
+    if($request->product_id!=0){
+      $delivery->product_id=$request->product_id;
+    }else{
+      $delivery->product_id=NULL;
+    }
     $delivery->sub_product_id=$product_id;
     $delivery->status=Config::get('constants.Status.Pending');
-    if(Auth::user()->type==Config::get('constants.Users.Manager')){
+    if(Auth::user()->type==Config::get('constants.Users.Cashier')){
       $getManager=User::where('type', 'Manager')->where('store_id', $this->authUser->store_id)->first();
-      if(!empty($getManager))
+      if(!empty($getManager) && !empty($deliveryId))
       {
         $getManager->notify(new DeliveryNotification($delivery));
       }
@@ -195,9 +213,8 @@ class DeliveryController extends Controller
   public function uploadPdf(Request $request)
   {
     $validator = Validator::make($request->all(), [
-      'pdf' => 'mimes:pdf',
-      'order_pdf' => 'mimes:pdf'
-
+      'pdf' => 'mimes:pdf,jpeg,jpg,png',
+      'order_pdf' => 'mimes:pdf,jpeg,jpg,png'
     ]);
     if ($validator->fails()) {
       header('HTTP/1.1 403 '); exit("File type must be pdf");
@@ -328,10 +345,12 @@ class DeliveryController extends Controller
   public function sendDriverEmail(Request $request){
     $user=User::find($request->id);
     $email=$user->email;
-    $delivery=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->where('tour_plan.user_id', $request->id)->select('deliveries.*', 'tour_plan.id as tour_id', 'tour_plan.delivery_id')->orderBy('tour_plan.id', 'dsc')->first();
-    $mail=Mail::send('client.email.driver_tours', ['data'=>$delivery], function($message) use ($email)
+    $nextDay=Carbon::now()->addDay(1)->format('Y-m-d');
+    $date=Date::now()->addDay(1)->format('l d F Y');
+    $delivery=HomeController::manageTours($request->id, $nextDay, 'driver');
+    $mail=Mail::send('client.email.driver_tours', ['data'=>$delivery, 'nextDate'=>$date], function($message) use ($email)
     {
-      $message->to($email, 'TDF Transport')->subject('Tour Plan');
+      $message->to($email, 'TDF Transport')->subject('Planning des livraisons');
     });
     Toast::success('Merci, le planning a été envoyé au chauffeur.');
     return Redirect::back();
@@ -352,7 +371,7 @@ class DeliveryController extends Controller
   public function getProductType(Request $request){
     $id=$request->id;
     $product=SubProduct::where('product_id', $id)->get();
-    $productDropDown="<select class='form-control' name='product_id' id='product_type'><option value=''>Sélectionner un produit</option>";
+    $productDropDown="<select class='form-control' name='sub_product_id' id='product_type'><option value=''>Sélectionner un produit</option>";
     if($product){
       foreach($product as $item){
         $productDropDown.="<option value='".$item['id']."'>".$item['product_type']."</option>";
