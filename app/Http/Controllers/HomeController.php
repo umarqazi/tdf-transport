@@ -125,157 +125,157 @@ class HomeController extends Controller
 	}
 	public static function manageTours($user_id, $nextDay, $driver=NULL){
 		$getDeliveries2=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '1')->whereDate('datetime', $nextDay)->select('deliveries.*', 'sub_products.product_type')->with(array('time'=>function($query){
-				$query->select('tour_plan.id as tour_id','time_slot_id', 'delivery_id', 'user_id');
-		}))->leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->get();
-		$getTime=TimeSlot::all();
-		foreach($getTime as $time){
-			$tours[$time['time']]=['id'=>'','delivery'=>'','time_id'=>$time['id'], 'tours'=>array()];
-			if($getDeliveries2){
-				foreach ($getDeliveries2 as $key => $value) {
-					foreach ($value['time'] as $key2 => $record) {
-						if($time['id']==$record['time_slot_id'] && $user_id==$record['user_id']){
-							if($driver==NULL){
-								$records=$value['first_name'].' '.$value['last_name'].' '.Date::parse($value['datetime'])->format('l d F Y').' '.$value['day_period'];
+			$query->select('tour_plan.id as tour_id','time_slot_id', 'delivery_id', 'user_id');
+			}))->leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->get();
+			$getTime=TimeSlot::all();
+			foreach($getTime as $time){
+				$tours[$time['time']]=['id'=>'','delivery'=>'','time_id'=>$time['id'], 'tours'=>array()];
+				if($getDeliveries2){
+					foreach ($getDeliveries2 as $key => $value) {
+						foreach ($value['time'] as $key2 => $record) {
+							if($time['id']==$record['time_slot_id'] && $user_id==$record['user_id']){
+								if($driver==NULL){
+									$records=$value['first_name'].' '.$value['last_name'].' '.Date::parse($value['datetime'])->format('l d F Y').' '.$value['day_period'];
+								}
+								else{
+									$records=$value;
+								}
+								$tourDetail=['time_id'=>$time['id'],
+								'id'=>$record['tour_id'],
+								'delivery_id'=>$record['pivot']['delivery_id'],
+								'delivery'=>$records];
+								array_push($tours[$time['time']]['tours'], $tourDetail);
 							}
-							else{
-								$records=$value;
-							}
-							$tourDetail=['time_id'=>$time['id'],
-							'id'=>$record['tour_id'],
-							'delivery_id'=>$record['pivot']['delivery_id'],
-							'delivery'=>$records];
-							array_push($tours[$time['time']]['tours'], $tourDetail);
 						}
 					}
 				}
 			}
+			return $tours;
 		}
-		return $tours;
-	}
-	public function monthView()
-	{
-		$startDate=carbon::now()->startofMonth();
-		$endDate=carbon::now()->endofMonth();
-		$getDeliveries=Delivery::select('day_period', DB::raw("DATE(datetime) as 'task_date'"), DB::raw('count(*) as total' ))->groupBy(DB::raw("DATE(datetime)"))->groupBy('day_period')->orderBy('id', 'desc');
-		$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id)->get();
-		return view::make('client.cashier.month_view')->with(['deliveries'=>$getDeliveries]);
-	}
-	public function forgetPassword()
-	{
-		return view::make('client.home.forget-password');
-	}
-	public function pForgetPassword(Request $request)
-	{
-		$email=$request->email;
-		$checkEmail=User::where('email', $email)->first();
-		$token = $this->createNewToken();
-		$request['token']=$token;
-		if($checkEmail)
+		public function monthView()
 		{
-			$checkEmail->reset_password_code=$token;
-			$checkEmail->save();
-			$mail=Mail::send('client.email.change-password', ['data'=>$request], function($message) use ($email)
+			$startDate=carbon::now()->startofMonth();
+			$endDate=carbon::now()->endofMonth();
+			$getDeliveries=Delivery::select('day_period', DB::raw("DATE(datetime) as 'task_date'"), DB::raw('count(*) as total' ))->groupBy(DB::raw("DATE(datetime)"))->groupBy('day_period')->orderBy('id', 'desc');
+			$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id)->get();
+			return view::make('client.cashier.month_view')->with(['deliveries'=>$getDeliveries]);
+		}
+		public function forgetPassword()
+		{
+			return view::make('client.home.forget-password');
+		}
+		public function pForgetPassword(Request $request)
+		{
+			$email=$request->email;
+			$checkEmail=User::where('email', $email)->first();
+			$token = $this->createNewToken();
+			$request['token']=$token;
+			if($checkEmail)
 			{
-				$message->to($email, 'TDF Transport')->subject('Réinitialisation de votre mot de passe');
-			});
-		}
-		else
-		{
-			Toast::error("Aucun e-mail n'est associé à cette adresse e-mail");
-			return redirect::back();
-		}
-		Toast::success("Votre demande de mot de passe oublié a bien été prise en compte. Merci de vérifier vos mails.");
-		return redirect('/');
-	}
-	public function changePassword(Request $request)
-	{
-		$token=$request->token;
-		return view::make('client.home.change-password')->with('token', $token);
-	}
-	public function pChangePassword(Request $request)
-	{
-		$validator = Validator::make($request->all(), [
-			'password' => 'required|confirmed|min:6',
-		]);
-
-		if ($validator->fails()) {
-			return redirect::back()
-			->withErrors($validator)
-			->withInput();
-		}
-		$token=$request->token;
-		$checkEmail=User::where('reset_password_code', $token)->first();
-		if($checkEmail)
-		{
-			$checkEmail->password=Hash::make($request->password);
-			$checkEmail->save();
-		}
-		Toast::success('Your Password has been changed Successfully');
-		return redirect('/');
-	}
-	public function createNewToken()
-	{
-		return hash_hmac('sha256', rand(), $this->hashKey);
-	}
-	public function searchRecords(Request $request)
-	{
-		$name=$request->customer_name;
-		$order_id=$request->order_id;
-		$request->datetime= str_replace('/', '-', $request->datetime);
-		$date=Carbon::parse($request->datetime)->format('Y-m-d h:i:s');
-		$searchResult='';
-		$getDeliveryRecords=self::searchResults($request->all());
-		$getDeliveryRecords=$getDeliveryRecords;
-		$getDeliveryRecords=$getDeliveryRecords->where('store_id', $this->authUser->store_id);
-		$getDeliveryRecords=$getDeliveryRecords->orderby('datetime', 'desc')->get();
-		$searchResult='<thead><tr><th class="text-center">Date de livraison</th><th class="text-center">Client</th><th class="text-center">Numéro de commande</th><th class="text-center">Numéro du bon de livraison</th><th class="text-center">Téléphone</th><th class="text-center">Ville</th><th class="text-center">Code postal</th><th class="text-center">Type de prestation</th><th class="text-center">Produit(s) commandé(s)</th><th class="text-center">Prix de la livraison</th></tr></thead>';
-		if(!$getDeliveryRecords->isEmpty()){
-			foreach($getDeliveryRecords as $key=>$record){
-				$products='';
-				$getProduct=array();
-				if($record['sub_product_id']==''){
-					$products='Multi-produits';
-				}
-				else{
-					$products=$record['product_type'];
-				}
-				if($record['delivery_price']=='Gratuit'){
-					$price= 'Gratuit';
-				}else{
-					$price=$record['delivery_price']." €";
-				}
-				$url=URL('viewDelivery').'/'.$record['id'];
-				$searchResult.="<tr onclick=viewDelivery('$url') class='clickable'><td>".Date::parse($record['datetime'])->format('d/m/Y')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
+				$checkEmail->reset_password_code=$token;
+				$checkEmail->save();
+				$mail=Mail::send('client.email.change-password', ['data'=>$request], function($message) use ($email)
+				{
+					$message->to($email, 'TDF Transport')->subject('Réinitialisation de votre mot de passe');
+				});
 			}
-		}else{
-			$searchResult.="<tr><td colspan='10'><strong>Désolé aucun résultat n'a été trouvé.</strong></td></tr>";
+			else
+			{
+				Toast::error("Aucun e-mail n'est associé à cette adresse e-mail");
+				return redirect::back();
+			}
+			Toast::success("Votre demande de mot de passe oublié a bien été prise en compte. Merci de vérifier vos mails.");
+			return redirect('/');
 		}
-		return $searchResult;
-	}
-	public static function searchResults($request){
+		public function changePassword(Request $request)
+		{
+			$token=$request->token;
+			return view::make('client.home.change-password')->with('token', $token);
+		}
+		public function pChangePassword(Request $request)
+		{
+			$validator = Validator::make($request->all(), [
+				'password' => 'required|confirmed|min:6',
+			]);
 
-		$getDeliveryRecords=self::deliveryProducts();
-		if(!empty($request['search_field'])){
-			$getDeliveryRecords=$getDeliveryRecords->where('order_id', $request['search_field'])->orwhereRaw('concat(first_name," ",last_name) like ?', '%'.$request['search_field'].'%');
+			if ($validator->fails()) {
+				return redirect::back()
+				->withErrors($validator)
+				->withInput();
+			}
+			$token=$request->token;
+			$checkEmail=User::where('reset_password_code', $token)->first();
+			if($checkEmail)
+			{
+				$checkEmail->password=Hash::make($request->password);
+				$checkEmail->save();
+			}
+			Toast::success('Your Password has been changed Successfully');
+			return redirect('/');
 		}
-		if(array_key_exists('customerCheck', $request))
+		public function createNewToken()
 		{
-			$getDeliveryRecords=$getDeliveryRecords->whereRaw('concat(first_name," ",last_name) like ?', '%'.$request['customer_name'].'%');
+			return hash_hmac('sha256', rand(), $this->hashKey);
 		}
-		if(array_key_exists('orderCheck', $request))
+		public function searchRecords(Request $request)
 		{
-			$getDeliveryRecords=$getDeliveryRecords->where('order_id', $request['order_id']);
+			$name=$request->customer_name;
+			$order_id=$request->order_id;
+			$request->datetime= str_replace('/', '-', $request->datetime);
+			$date=Carbon::parse($request->datetime)->format('Y-m-d h:i:s');
+			$searchResult='';
+			$getDeliveryRecords=self::searchResults($request->all());
+			$getDeliveryRecords=$getDeliveryRecords;
+			$getDeliveryRecords=$getDeliveryRecords->where('store_id', $this->authUser->store_id);
+			$getDeliveryRecords=$getDeliveryRecords->orderby('datetime', 'desc')->get();
+			$searchResult='<thead><tr><th class="text-center">Date de livraison</th><th class="text-center">Client</th><th class="text-center">Numéro de commande</th><th class="text-center">Numéro du bon de livraison</th><th class="text-center">Téléphone</th><th class="text-center">Ville</th><th class="text-center">Code postal</th><th class="text-center">Type de prestation</th><th class="text-center">Produit(s) commandé(s)</th><th class="text-center">Prix de la livraison</th></tr></thead>';
+			if(!$getDeliveryRecords->isEmpty()){
+				foreach($getDeliveryRecords as $key=>$record){
+					$products='';
+					$getProduct=array();
+					if($record['sub_product_id']==''){
+						$products='Multi-produits';
+					}
+					else{
+						$products=$record['product_type'];
+					}
+					if($record['delivery_price']=='Gratuit'){
+						$price= 'Gratuit';
+					}else{
+						$price=$record['delivery_price']." €";
+					}
+					$url=URL('viewDelivery').'/'.$record['id'];
+					$searchResult.="<tr onclick=viewDelivery('$url') class='clickable'><td>".Date::parse($record['datetime'])->format('d/m/Y')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
+				}
+			}else{
+				$searchResult.="<tr><td colspan='10'><strong>Désolé aucun résultat n'a été trouvé.</strong></td></tr>";
+			}
+			return $searchResult;
 		}
-		if(array_key_exists('dateCheck', $request))
-		{
-			$request['datetime']= str_replace('/', '-', $request['datetime']);
-			$date=date('Y-m-d',strtotime($request['datetime']));
-			$getDeliveryRecords=$getDeliveryRecords->whereDate('datetime','=', $date);
+		public static function searchResults($request){
+
+			$getDeliveryRecords=self::deliveryProducts();
+			if(!empty($request['search_field'])){
+				$getDeliveryRecords=$getDeliveryRecords->where('order_id', $request['search_field'])->orwhereRaw('concat(first_name," ",last_name) like ?', '%'.$request['search_field'].'%');
+			}
+			if(array_key_exists('customerCheck', $request))
+			{
+				$getDeliveryRecords=$getDeliveryRecords->whereRaw('concat(first_name," ",last_name) like ?', '%'.$request['customer_name'].'%');
+			}
+			if(array_key_exists('orderCheck', $request))
+			{
+				$getDeliveryRecords=$getDeliveryRecords->where('order_id', $request['order_id']);
+			}
+			if(array_key_exists('dateCheck', $request))
+			{
+				$request['datetime']= str_replace('/', '-', $request['datetime']);
+				$date=date('Y-m-d',strtotime($request['datetime']));
+				$getDeliveryRecords=$getDeliveryRecords->whereDate('datetime','=', $date);
+			}
+			return $getDeliveryRecords;
 		}
-		return $getDeliveryRecords;
+		public static function deliveryProducts(){
+			$getDeliveryRecords=Delivery::leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'sub_products.product_type','stores.store_name');
+			return $getDeliveryRecords;
+		}
 	}
-	public static function deliveryProducts(){
-		$getDeliveryRecords=Delivery::leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'sub_products.product_type','stores.store_name');
-		return $getDeliveryRecords;
-	}
-}
