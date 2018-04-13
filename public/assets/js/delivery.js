@@ -77,8 +77,8 @@ function upload()
         }
     });
 }
-$(".delete").click(function(){
-    return confirm("Are you sure to delete this item?");
+$(".delete_delivery").click(function(){
+	return confirm("Voulez-vous vraiment supprimer cette livraison ?");
 });
 function showView(view)
 {

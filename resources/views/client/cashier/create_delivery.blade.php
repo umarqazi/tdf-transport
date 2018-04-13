@@ -91,6 +91,15 @@ TDF Create Delivery
             <span class="text-danger">{!! $errors->first('mobile_number') !!}</span>
           </div>
         </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></div>
+              {{Form::text('customer_email', null, ['class'=>'form-control', 'placeholder'=>'Adresse e-mail'])}}
+            </div>
+            <span class="text-danger">{!! $errors->first('customer_email') !!}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

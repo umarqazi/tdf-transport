@@ -54,10 +54,4 @@
   </div>
 @stop
 @section('footer_scripts')
-  <script>
-      $(".delete").click(function(){
-          return confirm("Are you sure to delete this item?");
-      });
-
-  </script>
 @stop

@@ -263,7 +263,6 @@ class DeliveryController extends Controller
         $getDeliveryHistory=$getDeliveryHistory->where('store_id', $this->authUser->store_id)->orderby('datetime', 'desc')->paginate(10);
         return view::make('client.cashier.delivery_history')->with('allDeliveries', $getDeliveryHistory)->withInput($request->all());
     }
-
     public function search($from, $to){
         $results = HomeController::deliveryProducts();
         $searchedResults = $results->where([
