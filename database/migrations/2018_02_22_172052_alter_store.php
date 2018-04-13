@@ -21,6 +21,7 @@ class AlterStore extends Migration
     public function down()
     {
         Schema::table('stores', function($table) {
+            $table->dropForeign('company_id');
             $table->dropcolumn('company_id');
         });
     }
