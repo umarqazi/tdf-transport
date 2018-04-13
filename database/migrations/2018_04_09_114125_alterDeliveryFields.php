@@ -11,19 +11,20 @@ class AlterDeliveryFields extends Migration
      *
      * @return void
      */
-     public function up()
-     {
-         Schema::table('deliveries', function($t) {
-           $t->string('mobile_number')->nullable()->change();
-           $t->string('landline')->nullable()->change();
-         });
-     }
+    public function up()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->string('mobile_number')->nullable()->change();
+            $t->string('landline')->nullable()->change();
+        });
+    }
 
 
-     public function down()
-     {
-         Schema::table('deliveries', function($t) {
-
-         });
-     }
+    public function down()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->integer('mobile_number')->change();
+            $t->integer('landline')->change();
+        });
+    }
 }

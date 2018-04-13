@@ -11,18 +11,18 @@ class Alterdeliverytablefeedback extends Migration
      *
      * @return void
      */
-     public function up()
-     {
-         Schema::table('deliveries', function($t) {
-             $t->string('customer_feedback');
-         });
-     }
+    public function up()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->string('customer_feedback');
+        });
+    }
 
 
-     public function down()
-     {
-         Schema::table('deliveries', function($t) {
-             $t->dropcolumn('customer_feedback');
-         });
-     }
+    public function down()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->dropcolumn('customer_feedback');
+        });
+    }
 }

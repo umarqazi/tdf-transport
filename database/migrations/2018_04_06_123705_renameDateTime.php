@@ -11,18 +11,19 @@ class RenameDateTime extends Migration
      *
      * @return void
      */
-     public function up()
-     {
-         Schema::table('deliveries', function($t) {
-           $t->date('datetime')->nullable()->change();
-         });
-     }
+    public function up()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->date('datetime')->nullable()->change();
+
+        });
+    }
 
 
-     public function down()
-     {
-         Schema::table('deliveries', function($t) {
-
-         });
-     }
+    public function down()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->dateTime('datetime')->change();
+        });
+    }
 }

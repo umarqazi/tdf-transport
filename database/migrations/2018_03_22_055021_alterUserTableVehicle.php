@@ -13,7 +13,6 @@ class AlterUserTableVehicle extends Migration
      */
     public function up()
     {
-
         Schema::table('users', function($t) {
             $t->string('number_plate');
             $t->string('vehicle_name');

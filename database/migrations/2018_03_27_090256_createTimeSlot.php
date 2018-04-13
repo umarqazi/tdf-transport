@@ -11,21 +11,21 @@ class CreateTimeSlot extends Migration
      *
      * @return void
      */
-     public function up()
-     {
-         Schema::create('time_slot', function($t) {
-             $t->increments('id');
-             $t->string('time');
-         });
-     }
+    public function up()
+    {
+        Schema::create('time_slot', function($t) {
+            $t->increments('id');
+            $t->string('time');
+        });
+    }
 
-     /**
-      * Reverse the migrations.
-      *
-      * @return void
-      */
-     public function down()
-     {
-         Schema::dropIfExists('time_slot');
-     }
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('time_slot');
+    }
 }

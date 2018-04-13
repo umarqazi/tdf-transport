@@ -11,21 +11,22 @@ class Alterdeliverytablecolumn extends Migration
      *
      * @return void
      */
-     public function up()
-     {
-         Schema::table('deliveries', function($t) {
-           $t->string('delivery_number');
-           $t->string('delivery_problem');
-           $t->string('client_satisfaction');
-         });
-     }
+    public function up()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->string('delivery_number');
+            $t->string('delivery_problem');
+            $t->string('client_satisfaction');
+        });
+    }
 
 
-     public function down()
-     {
-         Schema::table('deliveries', function($t) {
-             $t->dropColumn('delivery_number');
-             $t->dropColumn('delivery_problem');
-         });
-     }
+    public function down()
+    {
+        Schema::table('deliveries', function($t) {
+            $t->dropColumn('delivery_number');
+            $t->dropColumn('delivery_problem');
+            $t->dropColumn('client_satisfaction');
+        });
+    }
 }

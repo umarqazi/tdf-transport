@@ -14,15 +14,15 @@ class AlterStore extends Migration
     public function up()
     {
         Schema::table('stores', function($table) {
-          $table->integer('company_id')->unsigned();
-          $table->foreign('company_id')->references('id')->on('companies');
+            $table->integer('company_id')->unsigned();
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
     public function down()
     {
         Schema::table('stores', function($table) {
-            $table->dropForeign('company_id');
-            $table->dropcolumn('company_id');
+            $table->dropForeign('stores_company_id_foreign');
+            $table->dropColumn('company_id');
         });
     }
 }
