@@ -116,7 +116,7 @@ TDF Dashboard
               <tr>
                 <td width="70%" class="{{$color}}">{{$dayDelivery['first_name']}} {{$dayDelivery['last_name']}} {{$dayDelivery['city']}} {{$dayDelivery['postal_code']}}</td>
                 <td><a href="{{URL::to('/delivery', ['id'=>$dayDelivery['id']])}}"><i class="fa fa-edit fa-fw"></i></a></td>
-                <td><a href="{{URL::to('/deleteDelivery', ['id'=>$dayDelivery['id']])}}" class="delete"><i class="fa fa-trash-o fa-fw"></i></a></td>
+                <td><a href="{{URL::to('/deleteDelivery', ['id'=>$dayDelivery['id']])}}" class="delete_delivery"><i class="fa fa-trash-o fa-fw"></i></a></td>
                 @if($authUser->type==Config::get('constants.Users.Manager'))
                 <td><input type="checkbox" class="deliveryCheckbox" name="delivery_id[]" value="{{$dayDelivery['id']}}" {{($dayDelivery['status']=='1')?'checked disabled':''}} class="" @if(strtotime($key) != strtotime(date('d-M-Y')) && $key!=date('d-M-Y', strtotime($nextDate))) disabled @endif>
                 </td>
@@ -201,9 +201,4 @@ TDF Dashboard
 {!! Form::close() !!}
 @stop
 @section('footer_scripts')
-<script>
-$(".delete").click(function(){
-  return confirm("Are you sure to delete this item?");
-});
-</script>
 @stop
