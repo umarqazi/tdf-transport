@@ -2,13 +2,13 @@
 return [
     'Users' => [
     	"" => "Sélectionnez le type d'utilisateur",
-        "Manager" => "Responsable de",
+        "Manager" => "Responsable de magasin",
         "Cashier" => "Hote de caisse",
         "TDF Manager" => "Manager TDF",
         "Driver"  => "Chauffeur-livreur"
     ],
     'User Type'=>[
-      'Responsable de'=>'Responsable de',
+      'Responsable de magasin'=>'Responsable de magasin',
       'Hote de caisse' =>'Hote de caisse',
       "Manager TDF" => "Manager TDF",
       "Chauffeur-livreur"  => "Chauffeur-livreur"
