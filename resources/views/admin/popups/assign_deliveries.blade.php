@@ -31,6 +31,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="table-responsive">
+                <input type="hidden" name="date" value="{{($previousDate!=date('Y-m-d')? $previousDate:'')}}">
                 <input type="hidden" name="time_slot" id="time_slot">
                 {{Form::hidden('user_id', $user_id, [])}}
                 <table class="table table-striped table-bordered text-center heading-font">
@@ -61,6 +62,11 @@
                       }else{
                         $price=$delivery['delivery_price']." €";
                       }
+                      if($delivery['sub_product_id']==''){
+                        $type="Multi-produits";
+                      }else{
+                        $type=$delivery['product_type'];
+                      }
                       ?>
                       <tr>
                         <td>{{date('d/m/Y', strtotime($delivery['datetime']))}}</td>
@@ -73,7 +79,7 @@
                         <td>{{$delivery['city']}}</td>
                         <td>{{$delivery['postal_code']}}</td>
                         <td>{{$delivery['service']}}</td>
-                        <td>{{$delivery['product_type']}}</td>
+                        <td>{{$type}}</td>
                         <td>{{$price}}</td>
                         <td>
                           <div class="checkboxDiv"><input type="checkbox" name="delivery_id" value="{{$delivery['id']}}"></div>

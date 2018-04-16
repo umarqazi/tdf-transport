@@ -194,7 +194,7 @@ Route::group(['middleware' => ['web']], function ()
             "as"   => "delete.tour",
             "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@deleteTour'
         ]);
-        Route::get('/sendDriverEmail/{id}', [
+        Route::get('/sendDriverEmail/{id}/{date}', [
             "as"   => "send.driver.email",
             "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@sendDriverEmail'
         ]);

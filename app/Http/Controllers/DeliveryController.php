@@ -322,6 +322,8 @@ class DeliveryController extends Controller
     }
     public function pTourPlan(Request $request){
         if($request->delivery_id){
+          $getTour=TourPlan::where('delivery_id', $request->delivery_id)->first();
+          if(!$getTour){
             $addTour=new TourPlan;
             $addTour->time_slot_id=$request->time_slot;
             $addTour->delivery_id=$request->delivery_id;
@@ -332,12 +334,14 @@ class DeliveryController extends Controller
             $updateDelivery->flag='1';
             $updateDelivery->save();
             Toast::success('La livraison a été assignée au conducteur');
-            $link='?tourPlan='.$addTour->id;
+          }else{
+            Toast::error('Livraison déjà assignée au conducteur');
+          }
         }else{
             $link='';
             Toast::error("Il n'y a pas de plan de tournée pour le moment");
         }
-        return redirect::to('/planDriverTour/'.$request->user_id.$link);
+        return redirect::back();
     }
     public function allManagerDeliveries(Request $request){
         $getDeliveryHistory=HomeController::searchResults($request->all());
@@ -355,7 +359,7 @@ class DeliveryController extends Controller
     public function sendDriverEmail(Request $request){
         $user=User::find($request->id);
         $email=$user->email;
-        $nextDay=Carbon::now()->addDay(1)->format('Y-m-d');
+        $nextDay=Date::parse($request->date)->format('Y-m-d');
         $date=Date::now()->addDay(1)->format('l d F Y');
         $delivery=HomeController::manageTours($request->id, $nextDay, 'driver');
         $mail=Mail::send('client.email.driver_tours', ['data'=>$delivery, 'nextDate'=>$date], function($message) use ($email)
@@ -396,9 +400,10 @@ class DeliveryController extends Controller
     }
     public function sendCustomerSMS(Request $request){
       $date=Date::parse($request->date)->format('Y-m-d');
-      $customerDetail=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->where('datetime', $date)->where('tour_plan.user_id', $request->id)->get();
+      $customerDetail=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->leftJoin('time_slot', 'tour_plan.time_slot_id', '=', 'time_slot.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->where('datetime', $date)->where('tour_plan.user_id', $request->id)->select('deliveries.datetime','deliveries.mobile_number','tour_plan.user_id','stores.store_name','time_slot.time','stores.phone_number')->get();
       foreach($customerDetail as $customer){
-        $message="You delivery has been assigned to our Delivery";
+        $message="Votre commande sera livrée le ".$customer['datetime']." entre ".$customer['time'].", <br> merci <br>
+        ".$customer['store_name'].'<br>'.$customer['phone_number'];
         $user=$customer['mobile_number'];
         $sendSMS=Ovh::checkSms($user, $message);
       }
