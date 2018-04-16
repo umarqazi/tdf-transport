@@ -643,3 +643,19 @@ button:focus {
   display: inline-block;
   font-size: 15pt;
 }
+
+.user-form-row .form-group, .user-form-row .input-group{
+    width: 100%;
+}
+
+.user-form-row .input-group-addon{
+    width: 20px !important;
+}
+.confirmPasswordText{
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+.driverFields{
+    margin: 0px !important;
+}
