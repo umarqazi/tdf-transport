@@ -402,5 +402,7 @@ class DeliveryController extends Controller
         $user=$customer['mobile_number'];
         $sendSMS=Ovh::checkSms($user, $message);
       }
+      Toast::success(Config::get('constants.Send SMS'));
+      return redirect::back();
     }
 }
