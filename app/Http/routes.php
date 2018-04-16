@@ -198,6 +198,10 @@ Route::group(['middleware' => ['web']], function ()
             "as"   => "send.driver.email",
             "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@sendDriverEmail'
         ]);
+        Route::get('/sendSMS/{id}/{date}', [
+            "as"   => "send.customer.sms",
+            "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@sendCustomerSMS'
+        ]);
     });
     Route::get('/viewDelivery/{id}', [
         "as"   => "view.delivery",

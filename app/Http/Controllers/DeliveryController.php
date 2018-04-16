@@ -25,6 +25,7 @@ use Mail;
 use Illuminate\Support\Facades\App;
 use LaravelAcl\Notifications\DeliveryNotification;
 use Jenssegers\Date\Date;
+use LaravelAcl\Ovh;
 class DeliveryController extends Controller
 {
     public $authUser;
@@ -392,5 +393,14 @@ class DeliveryController extends Controller
     public function allDeliveries(){
         $getDeliveries=HomeController::deliveryProducts()->paginate(10);
         return view::make('admin.deliveries.index')->with('deliveries', $getDeliveries);
+    }
+    public function sendCustomerSMS(Request $request){
+      $date=Date::parse($request->date)->format('Y-m-d');
+      $customerDetail=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->where('datetime', $date)->where('tour_plan.user_id', $request->id)->get();
+      foreach($customerDetail as $customer){
+        $message="You delivery has been assigned to our Delivery";
+        $user=$customer['mobile_number'];
+        $sendSMS=Ovh::checkSms($user, $message);
+      }
     }
 }
