@@ -19,6 +19,8 @@ Admin area: Product List
     @endforeach
     @endif
     <div class="col-lg-12">
+      <a class="btn btn-success back-button" href="{{URL::previous()}}">Retour <i class="fa fa-arrow-circle-left"></i></a>
+
       <div class="text-center page-icon">
         <div class="icon-wrapper"><i class="fa fa-truck fa-fw"></i></div>
       </div>

@@ -13,47 +13,47 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-lg-12">
-            <h1 class="page-header text-center">Ajouter un nouveau utilisateurs </h1>
+            <h1 class="page-header text-center"> Ajouter un utilisateur </h1>
           </div>
           <div class="col-lg-12 calendar-control">
             <div class="content_wrapper clearfix">
               <div class="form-inline">
-                <h3>Informations sur le utilisateurs</h3>
+                <h3>Informations sur l’utilisateur</h3>
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-users fa-fw"></i></div>
-                    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Employee Name', 'autocomplete' => 'off']) !!}
+                    <div class="input-group-addon"><i class="fa fa-user fa-fw"></i></div>
+                    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nom', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('name') !!}</span>
                 </div>
 
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-users fa-fw"></i></div>
-                    {!! Form::text('email_address', null, ['class' => 'form-control', 'placeholder' => 'Employee email', 'autocomplete' => 'off']) !!}
+                    <div class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></div>
+                    {!! Form::text('email_address', null, ['class' => 'form-control', 'placeholder' => 'E-mail', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('email_address') !!}</span>
                 </div>
 
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></div>
-                    {!! Form::text('landline', null,['class' => 'form-control', 'placeholder' => 'Enter Employee Landline','autocomplete' => 'off']) !!}
+                    <div class="input-group-addon"><i class="fa fa-phone fa-fw"></i></div>
+                    {!! Form::text('landline', null,['class' => 'form-control', 'placeholder' => 'Téléphone fixe ','autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('landline') !!}</span>
                 </div>
 
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-lock fa-fw"></i></div>
-                    {!! Form::text('mobile_number', null,['class' => 'form-control', 'placeholder' => 'Enter Employee Mobile Number','autocomplete' => 'off']) !!}
+                    <div class="input-group-addon"><i class="fa fa-mobile-alt fa-fw"></i></div>
+                    {!! Form::text('mobile_number', null,['class' => 'form-control', 'placeholder' => 'Téléphone : mobile ','autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('mobile_number') !!}</span>
                 </div>
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-lock fa-fw"></i></div>
-                    {!! Form::select('type', ['Director'=>'Director', 'Accountant'=>'Accountant', 'TDF Contact'=>'TDF Contact'],null, ['class' => 'form-control', 'placeholder' => 'Select Employee Fonction','autocomplete' => 'off']) !!}
+                    <div class="input-group-addon"><i class="fa fa-briefcase fa-fw"></i></div>
+                    {!! Form::select('type', ['Director'=>'Director', 'Accountant'=>'Accountant', 'TDF Contact'=>'TDF Contact'],null, ['class' => 'form-control', 'placeholder' => 'Choisir la fonction','autocomplete' => 'off']) !!}
                   </div>
                 </div>
                 <div class="form-group">
@@ -69,7 +69,7 @@
               </div>
 
               <div class="clearfix popuup_submit">
-                <button type="submit" class="btn btn-success">Ajouter un nouveau utilisateurs <i class="fa fa-save"></i></button>
+                <button type="submit" class="btn btn-success">Ajouter <i class="fa fa-save"></i></button>
                 <a href="{{url('/admin/store/employee/list/')}}/{{$storeId}}" class="btn btn-danger">Annuler <i class="fa fa-undo"></i></a>
               </div>
             </div>

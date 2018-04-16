@@ -18,17 +18,17 @@
             @endforeach
           @endif
           <div class="col-lg-12">
-            <h1 class="page-header text-center">Ajouter un nouveau utilisateurs </h1>
+            <h1 class="page-header text-center">Ajouter un utilisateur </h1>
           </div>
           <div class="col-lg-12 calendar-control">
             <div class="content_wrapper clearfix">
               <div class="form-inline user-form-row" style="max-width: 600px; margin: 0 auto;">
                 <div class="row">
-                  <h3>Informations sur le utilisateurs</h3>
+                  <h3>Informations sur l’utilisateur</h3>
                   <div class="col-sm-6">
                     <div class="form-group">
                       <div class="input-group">
-                        <div class="input-group-addon"><i class="fa fa-users fa-fw"></i></div>
+                        <div class="input-group-addon"><i class="fa fa-user"></i></div>
                         {!! Form::text('user_first_name', null, ["class"=> "form-control", "placeholder"=>"Prénom"] ) !!}
                       </div>
                       <span class="text-danger">{!! $errors->first('user_first_name') !!}</span>
@@ -38,8 +38,8 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <div class="input-group">
-                        <div class="input-group-addon"><i class="fa fa-users fa-fw"></i></div>
-                        {!! Form::text('user_last_name', null, ["class"=> "form-control", "placeholder"=>"nom de famille"] ) !!}
+                        <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                        {!! Form::text('user_last_name', null, ["class"=> "form-control", "placeholder"=>"Nom"] ) !!}
                       </div>
                       <span class="text-danger">{!! $errors->first('user_last_name') !!}</span>
                     </div>
@@ -62,7 +62,7 @@
                     <div class="form-group">
                       <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-user-md fa-fw"></i></div>
-                        {!! Form::select('type', Config::get('constants.Users'), null, ["class"=> "form-control", "onchange"=>"showStoreName(this)"] ) !!}
+                        {!! Form::select('type', Config::get('constants.User Type'), null, ["class"=> "form-control", "onchange"=>"showStoreName(this)"] ) !!}
                       </div>
                     </div>
                   </div>
@@ -80,7 +80,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="input-group">
-                          <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
+                          <div class="input-group-addon"><i class="fa fa-id-card fa-fw"></i></div>
                           {!! Form::text('vehicle_name', null, ['class' => 'form-control', 'placeholder' => 'Type de véhicule', 'autocomplete' => 'off']) !!}
                         </div>
                         <span class="text-danger">{!! $errors->first('vehicle_name') !!}</span>
@@ -90,7 +90,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="input-group">
-                          <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
+                          <div class="input-group-addon"><i class="fa fa-id-card fa-fw"></i></div>
                           {!! Form::text('number_plate', null, ['class' => 'form-control', 'placeholder' => "Immatriculation", 'autocomplete' => 'off']) !!}
                         </div>
                         <span class="text-danger">{!! $errors->first('number_plate') !!}</span>
@@ -124,13 +124,13 @@
                       <div class="confirmPasswordText">Confirmer de mot de passe</div>
                       <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-lock fa-fw"></i></div>
-                        {!! Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'Mot de passe','autocomplete' => 'off']) !!}
+                        {!! Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'Confirmer le mot de passe','autocomplete' => 'off']) !!}
                       </div>
                     </div>
                   </div>
 
                   <div class="clearfix popuup_submit">
-                    <button type="submit" class="btn btn-success">Enregistrer <i class="fa fa-save"></i></button>
+                    <button type="submit" class="btn btn-success">Modifier <i class="fa fa-save"></i></button>
                     <a href="{{url('/admin/users/list')}}" class="btn btn-danger">Annuler <i class="fa fa-undo"></i></a>
                   </div>
                 </div>

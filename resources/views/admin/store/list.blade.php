@@ -17,8 +17,9 @@ Admin area: users list
     <div class="alert alert-danger">{!! $errors->first('model') !!}</div>
     @endif
     <div class="col-lg-12">
+      <a class="btn btn-success back-button" href="{{URL::previous()}}">Retour <i class="fa fa-arrow-circle-left"></i></a>
       <div class="text-center page-icon">
-        <div class="icon-wrapper"><i class="fa fa-truck fa-fw"></i></div>
+        <div class="icon-wrapper"><i class="fa fa-building fa-fw"></i></div>
       </div>
       <h1 class="page-header text-center">GESTION DES MAGASIN</h1>
     </div>
@@ -26,7 +27,7 @@ Admin area: users list
   <div class="row">
     <div class="col-md-12">
       <div class="sort">
-        <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addStore">Ajounter un magasin <i class="fa fa-plus-circle fa-fw"></i></button>
+        <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addStore">Ajouter un magasin <i class="fa fa-plus-circle fa-fw"></i></button>
       </div>
     </div>
   </div>
@@ -34,6 +35,9 @@ Admin area: users list
   <div class="row">
     <div class="col-md-12">
       <strong>Liste des magasins</strong>
+      <span class="companyName">
+        {{\LaravelAcl\Company::find($companyId)->pluck('company_name')->first()}}
+      </span>
     </div>
   </div>
   <div class="clear20"></div>
@@ -44,14 +48,14 @@ Admin area: users list
         <table class="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Nom du magasin</th>
-              <th>Email</th>
-              <th>Numéro de téléphone</th>
-              <th class="hidden-xs">Address</th>
-              <th class="hidden-xs">City</th>
-              <th>Zip Code</th>
-              <th>Employees</th>
-              <th>Operations</th>
+              <th>Magasin</th>
+              <th>E-mail</th>
+              <th>Téléphone</th>
+              <th class="hidden-xs">Adresse</th>
+              <th class="hidden-xs">Ville</th>
+              <th>Code postal</th>
+              <th>Employés</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -63,7 +67,7 @@ Admin area: users list
               <td class="hidden-xs">{!! $store->address !!}</td>
               <td class="hidden-xs">{!! $store->city !!}</td>
               <td class="hidden-xs">{!! $store->zip_code !!}</td>
-              <td><a class="btn btn-primary" href="{{route('employees', ['storeId'=>$store->id])}}">View Employees</a></td>
+              <td><a class="btn btn-primary" href="{{route('employees', ['storeId'=>$store->id])}}">Voir</a></td>
               <td class="actions">
                 @if(! $store->protected)
                 <a href="{!! URL::route('add.employee', ['storeId' => $store->id]) !!}" title="Add Employee"><i class="fa fa-plus fa-2x"></i></a> &nbsp;

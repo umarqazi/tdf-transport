@@ -36,7 +36,7 @@
         </div>
         <div class="form-group">
           <div class="form-group">
-            <a class="btn btn-primary" id="deliverySearch">Search</a>
+            <a class="btn btn-primary" id="deliverySearch">Rechercher</a>
           </div>
         </div>
       </div>

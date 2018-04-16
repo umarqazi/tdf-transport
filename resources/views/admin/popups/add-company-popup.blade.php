@@ -11,16 +11,16 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-lg-12">
-            <h1 class="page-header text-center">Ajouter </h1>
+            <h1 class="page-header text-center">Ajouter une société </h1>
           </div>
           <div class="col-lg-12 calendar-control">
             <div class="content_wrapper clearfix">
               <div class="form-inline">
-                <h3>Informations sur le vehicule</h3>
+                <h3>Informations sur la société </h3>
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::text('company_name', null, ['class' => 'form-control', 'placeholder' => 'Store Name', 'autocomplete' => 'off']) !!}
+                    <div class="input-group-addon"><i class="fa fa-building fa-fw"></i></div>
+                    {!! Form::text('company_name', null, ['class' => 'form-control', 'placeholder' => 'Nom de la société', 'autocomplete' => 'off']) !!}
                     {!! Form::hidden('id') !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('vehicle_name') !!}</span>
@@ -28,7 +28,7 @@
 
               </div>
               <div class="clearfix popuup_submit">
-                <button type="submit" class="btn btn-success">Ajouter une nouvelle compagnie <i class="fa fa-save"></i></button>
+                <button type="submit" class="btn btn-success">Ajouter<i class="fa fa-save"></i></button>
                 <a href="{{url('/admin/company/list')}}" class="btn btn-danger">Annuler <i class="fa fa-undo"></i></a>
               </div>
             </div>

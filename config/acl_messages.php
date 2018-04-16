@@ -37,7 +37,7 @@ return [
              */
             "success" => [
                 // user
-                "user_edit_success"                    => "User edited with success.",
+                "user_edit_success"                    => "Les informations sur l’utilisateur ont été modifiées.",
                 "user_delete_success"                  => "User deleted with success.",
                 "user_group_add_success"               => "Group added with success.",
                 "user_group_delete_success"            => "Group deleted with success.",

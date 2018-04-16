@@ -13,12 +13,13 @@ Admin area: Employees list
     @if( isset($message) )
     <div class="alert alert-success">{!! $message !!}</div>
     @endif
-
     <div class="col-lg-12">
+      <a class="btn btn-success back-button" href="{{URL::previous()}}">Retour <i class="fa fa-arrow-circle-left"></i></a>
+
       <div class="text-center page-icon">
-        <div class="icon-wrapper"><i class="fa fa-truck fa-fw"></i></div>
+        <div class="icon-wrapper"><i class="fa fa-users fa-fw"></i></div>
       </div>
-      <h1 class="page-header text-center">GESTION DES ENTREPRISE</h1>
+      <h1 class="page-header text-center">GESTION DES EMPLOYÉS</h1>
     </div>
   </div>
   <div class="row">
@@ -31,7 +32,7 @@ Admin area: Employees list
   <div class="clear20"></div>
   <div class="row">
     <div class="col-md-12">
-      <strong>Liste des vehicules enregistres</strong>
+      <strong>Liste des employés</strong>
     </div>
   </div>
   <div class="clear20"></div>
@@ -48,10 +49,10 @@ Admin area: Employees list
       <thead>
         <tr>
           <th>Nom du magasin</th>
-          <th>Nom de l'employé</th>
-          <th>Email</th>
-          <th>Numéro de téléphone</th>
-          <th>Landline</th>
+          <th>Nom</th>
+          <th>E-mail</th>
+          <th> Téléphone : mobile</th>
+          <th>Téléphone fixe</th>
           <th>Fonction</th>
           <th class="text-center">Actions</th>
         </tr>
