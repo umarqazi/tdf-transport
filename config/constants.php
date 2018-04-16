@@ -22,5 +22,6 @@ return [
     'Edit Delivery' =>'Merci votre demande de livraison a été modifiée.',
     'Validate Delivery'=>'Vos demandes de livraisons ont été validées et les informations ont été transmises à la société TDF Transport.',
     'Database Fields' => ['SAV'=>'sav','Livraison'=>'livraison','Livraison + Montage'=>'livraison_montage', 'Retrocession'=>'rétrocession','Livraison Prestataire'=>'prestataire', 'Montage'=>'montage'],
+    "Send SMS"=>"SMS a été envoyé aux clients"
 ];
 ?>
