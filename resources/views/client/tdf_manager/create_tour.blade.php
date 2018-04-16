@@ -16,6 +16,7 @@ TDF Dashboard
     if(isset($modal)) {
         echo '<script>$(document).ready(function () {$("#' . $modal . '").modal(\'show\');});</script>';
     }
+    $sendMessage=0;
 ?>
 <div class="row">
   @include('toast::messages')
@@ -55,7 +56,8 @@ TDF Dashboard
         <thead>
           <tr>
             <th class="text-center"><i class="fa fa-truck fa-fw"></i> @if($vehicle_info)<span class="capitalLetter"> {{$vehicle_info['vehicle_name']}} {{$vehicle_info['number_plate']}}</span> <span class="forname-capitalize">{{$vehicle_info['user_first_name']}} {{$vehicle_info['user_last_name']}}</span> @endif</span></th>
-            <th colspan="2" class="text-center">{{$date}}</th>
+            <th colspan="2" class="text-center">
+              @if($nextDate!=Date::now()->format('Y-m-d'))<a href="{{url('/planDriverTour')}}/{{$user_id}}?date={{$previousDate}}"><i class="fa fa-arrow-circle-left"></i></a>@endif {{$date}}  @if($nextDate==Date::now()->format('Y-m-d'))<a href="{{url('/planDriverTour')}}/{{$user_id}}?date={{$previousDate}}"><i class="fa fa-arrow-circle-right"></i></a>@endif</th>
           </tr>
         </thead>
         <tbody>
@@ -71,7 +73,9 @@ TDF Dashboard
                     $color='blue-color';
                   }else{
                     $color='grey-color';
-                  }?>
+                  }
+                  $sendMessage++;
+                  ?>
                   <tr>
                     <td width="66%" class="text-style @if($tour['delivery']!=NULL) {{$color}} @endif" > @if($tour['delivery']!=NULL) {{$tour['delivery']}} @else  @endif</td>
                     <td class="text-center @if($tour['delivery']!=NULL)delete-column @endif">
@@ -91,9 +95,9 @@ TDF Dashboard
       </table>
     </div>
   </div>
-  @if($tour_plan)
+  @if($sendMessage > 0)
     <div class="col-md-12 text-center tbl-btns">
-      <a onclick="sendEmail({{$user_id}})">Envoi du planning<br>aux chauffeurs <i class="fa fa-check-square"></i></a>
+      <a onclick="sendEmail('{{$user_id}}', '{{$date}}')">Envoi du planning<br>aux chauffeurs <i class="fa fa-check-square"></i></a>
       <a href="{{URL('sendSMS', ['id'=>$user_id, 'date'=>$date])}}" class="active">Envoi du sms<br>aux clients <i class="fa fa-check-square"></i></a>
     </div>
   @endif

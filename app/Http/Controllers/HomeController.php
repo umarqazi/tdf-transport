@@ -88,6 +88,8 @@ class HomeController extends Controller
 	public function tourPlan(Request $request)
 	{
 		$addmodal='';
+		$previousDate='';
+		$currentDate=$request->date;
 		$drivers=[''=>'Choisir un vehicule'];
 		$user_id=$request->id;
 		$tour_plan=$request->tourPlan;
@@ -95,8 +97,20 @@ class HomeController extends Controller
 		foreach($getDrivers as $driver){
 			$drivers[$driver['id']]=$driver['vehicle_name'].', '.$driver['number_plate'];
 		}
-		$nextDay=Carbon::now()->addDay(1)->format('Y-m-d');
-		$date=Date::now()->addDay(1)->format('l d F Y');
+		if($currentDate==''){
+			$nextDay=Carbon::now()->addDay(1)->format('Y-m-d');
+			$date=Date::now()->addDay(1)->format('l d F Y');
+			$previousDate=Carbon::now()->addDay(0)->format('Y-m-d');
+		}else{
+			$nextDay=$currentDate;
+			if($currentDate==date('Y-m-d')){
+				$previousDate=Carbon::now()->addDay(1)->format('Y-m-d');
+				$date=Date::now()->addDay(0)->format('l d F Y');
+			}else{
+				$previousDate=Carbon::now()->addDay(0)->format('Y-m-d');
+				$date=Date::now()->addDay(1)->format('l d F Y');
+			}
+		}
 		$getDeliveries='';
 		$user_record='';
 		$tours=array();
@@ -120,7 +134,7 @@ class HomeController extends Controller
 
 			$tours=self::manageTours($user_id, $nextDay);
 		}
-		return view::make('client.tdf_manager.create_tour')->with(['date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries, 'modal'=>$addmodal]);
+		return view::make('client.tdf_manager.create_tour')->with(['previousDate'=>$previousDate,'nextDate'=>$nextDay,'date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries, 'modal'=>$addmodal]);
 	}
 	public static function manageTours($user_id, $nextDay, $driver=NULL){
 		$getDeliveries2=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '1')->whereDate('datetime', $nextDay)->select('deliveries.*', 'sub_products.product_type')->with(array('time'=>function($query){
