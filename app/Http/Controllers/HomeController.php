@@ -43,7 +43,6 @@ class HomeController extends Controller
 	}
 	public function index()
 	{
-
 		return view::make('client.home.home');
 	}
 	public function dashboard(Request $request)
@@ -92,7 +91,7 @@ class HomeController extends Controller
 		$drivers=[''=>'Choisir un vehicule'];
 		$user_id=$request->id;
 		$tour_plan=$request->tourPlan;
-		$getDrivers=User::where('type', 'Driver')->get();
+		$getDrivers=User::where('type', Config::get('constants.Users.Driver'))->get();
 		foreach($getDrivers as $driver){
 			$drivers[$driver['id']]=$driver['vehicle_name'].', '.$driver['number_plate'];
 		}

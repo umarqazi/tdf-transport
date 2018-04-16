@@ -137,7 +137,7 @@ TDF Dashboard
           <td @if(strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate)))) class="enabled-div set-heigth" @else class="disabled-div" @endif>
 
             <div class="clearfix"></div>
-            @if(strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.matin')])}}" class="anchor-space"></a> @endif
+            @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) || strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.matin')])}}" class="anchor-space"></a> @endif
           </td>
           @endif
 

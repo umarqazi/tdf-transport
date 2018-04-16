@@ -2,14 +2,16 @@
 return [
     'Users' => [
     	"" => "Sélectionnez le type d'utilisateur",
-        "Responsable de" => "Responsable de",
-        "Hote de caisse" => "Hote de caisse",
+        "Manager" => "Responsable de",
+        "Cashier" => "Hote de caisse",
         "TDF Manager" => "Manager TDF",
-        "Chauffeur-livreur"  => "Chauffeur-livreur"
+        "Driver"  => "Chauffeur-livreur"
     ],
     'User Type'=>[
-      'TDF Manager'=>'Manager TDF',
-      'Driver' =>'Chauffeur-Livreur'
+      'Responsable de'=>'Responsable de',
+      'Hote de caisse' =>'Hote de caisse',
+      "Manager TDF" => "Manager TDF",
+      "Chauffeur-livreur"  => "Chauffeur-livreur"
     ],
     'Day Period' => ['matin' => 'matin', 'après-midi'=>'après-midi'],
     'Services' => [''=>'Prestation(s) Choisie(s)','SAV'=>'SAV','Livraison'=>'Livraison','Livraison + Montage'=>'Livraison + Montage', 'Retrocession'=>'Retrocession','Livraison Prestataire'=>'Livraison Prestataire', 'Montage'=>'Montage'],
