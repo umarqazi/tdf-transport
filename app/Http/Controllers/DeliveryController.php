@@ -162,6 +162,7 @@ class DeliveryController extends Controller
         $delivery->day_period=$request->day_period;
         $delivery->first_name=$request->first_name;
         $delivery->last_name=$request->last_name;
+        $delivery->customer_email=$request->customer_email;
         $delivery->landline=$request->landline;
         $delivery->mobile_number=$request->mobile_number;
         $delivery->order_id=$request->order_id;
