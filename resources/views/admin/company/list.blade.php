@@ -18,22 +18,22 @@ Admin area: Company list
     @endif
     <div class="col-lg-12">
       <div class="text-center page-icon">
-        <div class="icon-wrapper"><i class="fa fa-truck fa-fw"></i></div>
+        <div class="icon-wrapper"><i class="fa fa-building fa-fw"></i></div>
       </div>
-      <h1 class="page-header text-center">GESTION DES ENTREPRISE</h1>
+      <h1 class="page-header text-center">GESTION DES MAGASINS</h1>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
       <div class="sort">
-        <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addCompany">Ajounter un entreprise <i class="fa fa-plus-circle fa-fw"></i></button>
+        <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addCompany">Ajouter une société <i class="fa fa-plus-circle fa-fw"></i></button>
       </div>
     </div>
   </div>
   <div class="clear20"></div>
   <div class="row">
     <div class="col-md-12">
-      <strong>Liste des vehicules enregistres</strong>
+      <strong>Liste des sociétés </strong>
     </div>
   </div>
   <div class="clear20"></div>
@@ -62,7 +62,7 @@ Admin area: Company list
               </td>
               <td class="text-center actions">
                 <a href="{{route('company.list', ['id'=>$store->id])}}" class="edit"><i class="fa fa-edit fa-fw"></i></a>
-                <a href="{!! URL::route('company.delete',['id' => $store->id, '_token' => csrf_token()]) !!}" class="trash delete"><i class="fa fa-trash-o fa-fw"></i></a>
+                <a href="{!! URL::route('company.delete',['id' => $store->id, '_token' => csrf_token()]) !!}" class="trash delete delete_company"><i class="fa fa-trash-o fa-fw"></i></a>
               </td>
             </tr>
             @endforeach

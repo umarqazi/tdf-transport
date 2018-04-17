@@ -58,7 +58,7 @@ class StoreController extends Controller
     if($id)
     {
       $addStore=Store::find($id);
-      $message="Store has been updated Successfully";
+      $message="Les informations sur le magasin ont été modifiées.";
     }
     else
     {
@@ -111,7 +111,7 @@ class StoreController extends Controller
     $id=$request->id;
     $getStore=Company::find($id);
     $getStore->delete();
-    return redirect::to('/admin/company/list')->with('message', "Company has been deleted Successfully");
+    return redirect::to('/admin/company/list')->with('message', "La société et les magasins ont été supprimés");
   }
   /**** Store Employees function***/
   public function storeEmployees(Request $request)

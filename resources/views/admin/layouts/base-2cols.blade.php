@@ -33,7 +33,7 @@
                             <a href="{{route('users.list')}}">Utilisateurs <i class="fa fa-user fa-fw"></i></a>
                         </li>
                         <li>
-                            <a href="{{route('company.list')}}">Magasins <i class="fa fa-clipboard fa-fw"></i></a>
+                            <a href="{{route('company.list')}}">Magasins <i class="fa fa-building fa-fw"></i></a>
                         </li>
                         <li>
                             <a href="{{route('admin.deliveries')}}">Livraisons <i class="fa fa-cubes fa-fw"></i></a>
