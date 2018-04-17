@@ -8,6 +8,7 @@ use LaravelAcl\Vehicle;
 use LaravelAcl\User;
 use Hash;
 use Datatables;
+use Config;
 class DashboardController extends Controller{
 
   public function base(Request $request)
@@ -24,7 +25,7 @@ class DashboardController extends Controller{
     if($request->get('modal')){
       $modal=$request->get('modal');
     }
-    $driverList=User::where('type', 'Driver')->orderBy('id', 'desc')->get();
+    $driverList=User::where('type', Config::get('constants.Users.Driver'))->orderBy('id', 'desc')->get();
     return View::make('admin.dashboard.default')->with(['drivers'=>$driverList,'modal'=>$modal,'vehicle'=>$getVehicleInfo]);
   }
   public function pEditVehicle(Request $request)
