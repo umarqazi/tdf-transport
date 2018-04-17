@@ -188,7 +188,9 @@ class DeliveryController extends Controller
             $delivery->product_id=NULL;
         }
         $delivery->sub_product_id=$product_id;
-        $delivery->status=Config::get('constants.Status.Pending');
+        if(!$deliveryId){
+          $delivery->status=Config::get('constants.Status.Pending');
+        }
         if(Auth::user()->type==Config::get('constants.Users.Cashier')){
             $getManager=User::where('type', 'Manager')->where('store_id', $this->authUser->store_id)->first();
             if(!empty($getManager) && !empty($deliveryId))
