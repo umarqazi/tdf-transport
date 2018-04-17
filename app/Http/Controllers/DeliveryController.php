@@ -100,18 +100,21 @@ class DeliveryController extends Controller
             'pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id,
             'order_pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id
         ]);
+        $deliveryId=$request->id;
         $date = str_replace('/', '-', $request->datetime);
-        if((Auth::user()->type==Config::get('constants.Users.Cashier') && strtotime($date) <= strtotime(date('d-m-Y'))) || (Auth::user()->type==Config::get('constants.Users.Manager') && strtotime($date) < strtotime(date('d-m-Y'))) ){
-            Toast::error('Sélectionnez une date correcte');
-            return redirect::back()
-                ->withInput();
+        if(!$deliveryId){
+          if((Auth::user()->type==Config::get('constants.Users.Cashier') && strtotime($date) <= strtotime(date('d-m-Y'))) || (Auth::user()->type==Config::get('constants.Users.Manager') && strtotime($date) < strtotime(date('d-m-Y'))) ){
+              Toast::error('Sélectionnez une date correcte');
+              return redirect::back()
+                  ->withInput();
+          }
         }
         if ($validator->fails()) {
             return redirect::back()
                 ->withErrors($validator)
                 ->withInput();
         }
-        $deliveryId=$request->id;
+
         $getStoreName=$request->session()->get('store_name');
         if($deliveryId)
         {
@@ -406,9 +409,11 @@ class DeliveryController extends Controller
       $customerDetail=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->leftJoin('time_slot', 'tour_plan.time_slot_id', '=', 'time_slot.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->where('datetime', $date)->where('tour_plan.user_id', $request->id)->select('deliveries.datetime','deliveries.mobile_number','tour_plan.user_id','stores.store_name','time_slot.time','stores.phone_number')->get();
       foreach($customerDetail as $customer){
         $message=
-"Cher(e) client(e), Votre commande sera livrée le ".Date::parse($customer['datetime'])->format('D/M/Y')." entre ".$customer['time'].", merci
-".$customer['store_name']."
-".$customer['phone_number'];
+"Cher(e) client(e),
+Votre commande sera livrée le ".Date::parse($customer['datetime'])->format('D/M/Y')." entre ".$customer['time'].".
+Merci,
+
+".$customer['store_name']."/".$customer['phone_number'];
         $user=$customer['mobile_number'];
         $sendSMS=Ovh::checkSms($user, $message);
       }
