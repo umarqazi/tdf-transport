@@ -666,3 +666,7 @@ button:focus {
     margin-left: 15px;
     padding: 10px;
 }
+.deliveryComment{
+    padding: 20px 10px 20px 10px;
+    border: 1px solid #000000;
+}

@@ -47,7 +47,7 @@ Admin area: User Management
               <th>Email</th>
               <th>Prénom</th>
               <th>Fonction</th>
-              <th>Store Name</th>
+              <th>Société</th>
               <th class="text-center">Actions</th>
             </tr>
           </thead>
@@ -59,11 +59,11 @@ Admin area: User Management
               <td>{{$user->email}}</td>
               <td>{{$user->user_first_name}} {{$user->user_last_name}}</td>
               <td>{{$user->type}}</td>
-              <td>
+              <td class="text-center">
                 @if($user->store_id)
-                  {{\LaravelAcl\Store::find($user->store_id)->pluck('store_name')->first()}}
+                  {{$user->store['store_name']}}
                 @else
-                  ---
+                  TDF Transport
                 @endif
               </td>
 

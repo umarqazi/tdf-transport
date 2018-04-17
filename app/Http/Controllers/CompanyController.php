@@ -29,7 +29,7 @@ class CompanyController extends Controller
     {
       $company = new Company;
     }
-    $getCompany=Company::paginate(10);
+    $getCompany=Company::orderBy('company_name', 'asc')->paginate(10);
     return view::make('admin.company.list')->with(['company'=>$company,'stores'=>$getCompany, "request" => $request, 'modal'=>$modal]);
   }
   public function editCompany(Request $request)

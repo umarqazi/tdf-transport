@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="user-row">
-                <i class="fa fa-user fa-fw"></i> Coordonnées du client
+                Coordonnées du client <i class="fa fa-user fa-fw"></i>
             </div>
 
             <div class="user-row">
@@ -22,12 +22,12 @@
                     <li>&nbsp;</li>
                     <li>{{$detail['postal_code']}} {{$detail['city']}}</li>
                     <li>&nbsp;</li>
-                    <li><i class="fa fa-phone fa-fw"></i> {{$detail['mobile_number']}}</li>
+                    <li><i class="fa fa-phone fa-fw"></i><a href="tel:{{$detail['mobile_number']}}">{{$detail['mobile_number']}}</a></li>
                 </ul>
             </div>
 
             <div class="user-row">
-                <i class="fa fa-cubes fa-fw"></i> Informations sur la livraison
+                Informations sur la livraison<i class="fa fa-cubes fa-fw"></i>
             </div>
 
             <div class="user-row">
@@ -55,7 +55,10 @@
                         <li><strong>Prestation(s): </strong></li>
                         <li>- {{$detail['service']}}</li>
                         <li>&nbsp;</li>
-                        <li><strong>Commentaire: </strong></li>
+                    </div>
+
+                    <div class="col-xs-12 deliveryComment">
+                        <strong>Commentaire: </strong>
                         <li>{{$detail['comment']}}</li>
                     </div>
                 </ul>

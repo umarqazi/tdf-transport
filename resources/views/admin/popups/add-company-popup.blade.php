@@ -34,7 +34,14 @@
 
               </div>
               <div class="clearfix popuup_submit">
-                <button type="submit" class="btn btn-success">Ajouter<i class="fa fa-save"></i></button>
+                <button type="submit" class="btn btn-success">
+                  @if(is_null($company['id']))
+                    Ajouter
+                  @else
+                    Modifier
+                  @endif
+                  <i class="fa fa-save"></i>
+                </button>
                 <a href="{{url('/admin/company/list')}}" class="btn btn-danger">Annuler <i class="fa fa-undo"></i></a>
               </div>
             </div>

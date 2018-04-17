@@ -1,14 +1,14 @@
 function showStoreName(type)
 {
     var type=type.value;
-    if(type=='TDF Manager' || type=='Driver')
+    if(type=='Manager TDF' || type=='Chauffeur-livreur')
     {
         $("#storeName").hide();
-        if(type=='Driver')
+        if(type=='Chauffeur-livreur')
         {
           $('#driverRecord').show();
         }
-        if(type=='TDF Manager')
+        if(type=='Manager TDF')
         {
           $("#storeName").hide();
           $('#driverRecord').hide();
