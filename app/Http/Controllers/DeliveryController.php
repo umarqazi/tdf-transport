@@ -410,10 +410,10 @@ class DeliveryController extends Controller
       foreach($customerDetail as $customer){
         $message=
 "Cher(e) client(e),
-Votre commande sera livrée le ".Date::parse($customer['datetime'])->format('D/M/Y')." entre ".$customer['time'].".
+Votre commande sera livrée le ".Date::parse($customer['datetime'])->format('d/m/Y')." entre ".$customer['time'].".
 Merci,
 
-".$customer['store_name']."/".$customer['phone_number'];
+".$customer['store_name']." / ".$customer['phone_number'];
         $user=$customer['mobile_number'];
         $sendSMS=Ovh::checkSms($user, $message);
       }
