@@ -62,7 +62,7 @@ Admin area: Company list
               </td>
               <td class="text-center actions">
                 <a href="{{route('company.list', ['id'=>$store->id])}}" class="edit"><i class="fa fa-edit fa-fw"></i></a>
-                <a href="{!! URL::route('company.delete',['id' => $store->id, '_token' => csrf_token()]) !!}" class="trash delete"><i class="fa fa-trash-o fa-fw"></i></a>
+                <a href="{!! URL::route('company.delete',['id' => $store->id, '_token' => csrf_token()]) !!}" class="trash delete delete_company"><i class="fa fa-trash-o fa-fw"></i></a>
               </td>
             </tr>
             @endforeach

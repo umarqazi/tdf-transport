@@ -67,7 +67,7 @@ Admin area: Product List
           <td>{!! $store->product_family !!}</td>
           <td class="text-center actions">
             <a onclick="addSubProduct('{{$store->product_family}}')" class="edit" ><i class="fa fa-plus fa-fw"></i></a>
-            <a href="{!! URL::route('product.delete',['id' => $store->id, '_token' => csrf_token()]) !!}" class="trash delete"><i class="fa fa-trash-o fa-fw"></i></a>
+            <a href="{!! URL::route('product.delete',['id' => $store->id, '_token' => csrf_token()]) !!}" class="trash delete delete_product"><i class="fa fa-trash-o fa-fw"></i></a>
           </td>
         </tr>
           <?php $number=1; ?>

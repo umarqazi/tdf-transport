@@ -47,6 +47,7 @@ Admin area: User Management
               <th>Email</th>
               <th>Prénom</th>
               <th>Fonction</th>
+              <th>Store Name</th>
               <th class="text-center">Actions</th>
             </tr>
           </thead>
@@ -58,9 +59,17 @@ Admin area: User Management
               <td>{{$user->email}}</td>
               <td>{{$user->user_first_name}} {{$user->user_last_name}}</td>
               <td>{{$user->type}}</td>
+              <td>
+                @if($user->store_id)
+                  {{\LaravelAcl\Store::find($user->store_id)->pluck('store_name')->first()}}
+                @else
+                  ---
+                @endif
+              </td>
+
               <td class="text-center actions">
                 <a href="{{route('users.list', ['id'=>$user->id])}}" class="edit"><i class="fa fa-edit fa-fw"></i></a>
-                <a href="{!! URL::route('users.delete',['id' => $user->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete trash"><i class="fa fa-trash-o fa-fw"></i></a>
+                <a href="{!! URL::route('users.delete',['id' => $user->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete trash delete_user"><i class="fa fa-trash-o fa-fw"></i></a>
               </td>
             </tr>
             @endforeach

@@ -11,7 +11,13 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-lg-12">
-            <h1 class="page-header text-center">Ajouter un véhicule </h1>
+            <h1 class="page-header text-center">
+              @if(is_null($vehicle['id']))
+                Ajouter un véhicule
+              @else
+                Modifier un véhicule
+              @endif
+            </h1>
           </div>
           <div class="col-lg-12 calendar-control">
             <div class="content_wrapper clearfix">

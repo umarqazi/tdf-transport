@@ -11,7 +11,13 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-lg-12">
-            <h1 class="page-header text-center">Ajouter une société </h1>
+            <h1 class="page-header text-center">
+              @if(is_null($company['id']))
+                Ajouter une société
+              @else
+                Modifier une société
+              @endif
+            </h1>
           </div>
           <div class="col-lg-12 calendar-control">
             <div class="content_wrapper clearfix">

@@ -72,7 +72,7 @@ Admin area: users list
                 @if(! $store->protected)
                 <a href="{!! URL::route('add.employee', ['storeId' => $store->id]) !!}" title="Add Employee"><i class="fa fa-plus fa-2x"></i></a> &nbsp;
                 <a href="{!! URL::route('store.list', ['id' => $companyId, 'store_id' => $store->id]) !!}" title="Edit Store" class="edit"><i class="fa fa-edit fa-fw"></i></a>
-                <a href="{!! URL::route('store.delete',['id' => $store->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete trash" title="Delete Store"><i class="fa fa-trash-o fa-fw"></i></a>
+                <a href="{!! URL::route('store.delete',['id' => $store->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete trash delete_store" title="Delete Store"><i class="fa fa-trash-o fa-fw"></i></a>
 
                 @else
                 <i class="fa fa-times fa-2x light-blue"></i>
