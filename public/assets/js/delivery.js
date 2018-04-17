@@ -204,9 +204,9 @@ $('#checkbox').change(function(){
         $('.deliveryCheckbox:enabled').prop('checked',false);
     }
 });
-function sendEmail(user_id){
+function sendEmail(user_id, date){
     $('.loader-div2').show();
-    window.location.href = "/sendDriverEmail/"+user_id;
+    window.location.href = "/sendDriverEmail/"+user_id+"/"+date;
 }
 $(document).ready(function() {
     $("#createForm").submit(function() {
