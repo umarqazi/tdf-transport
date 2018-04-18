@@ -15,7 +15,7 @@ use LaravelAcl\Authentication\Presenters\UserPresenter;
 use LaravelAcl\Authentication\Services\UserProfileService;
 use LaravelAcl\Authentication\Validators\UserProfileAvatarValidator;
 use LaravelAcl\Library\Exceptions\NotFoundException;
-use LaravelAcl\Authentication\Models\User;
+use LaravelAcl\User;
 use LaravelAcl\Authentication\Helpers\FormHelper;
 use LaravelAcl\Authentication\Exceptions\UserNotFoundException;
 use LaravelAcl\Authentication\Validators\UserValidator;
@@ -79,7 +79,7 @@ class UserController extends Controller {
     {
       $allStores[$store->id]=$store->store_name;
     }
-    $users = User::where('type', '!=', 'Admin')->orderBy('id', 'desc')->paginate(15);
+    $users = User::with('store')->where('type', '!=', 'Admin')->orderBy('id', 'desc')->paginate(15);
     $users = $users->setPath('');
     if($request->get('modal'))
     {
@@ -111,7 +111,8 @@ class UserController extends Controller {
   {
     $id = $request->get('id');
     $type=$request->type;
-    if($type=='Manager' || $type=='Cashier')
+
+    if($type==Config::get('constants.Users.Manager') || $type==Config::get('constants.Users.Cashier'))
     {
       if($request->store_id==0){
         return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors("Veuillez sélectionner un magasin");

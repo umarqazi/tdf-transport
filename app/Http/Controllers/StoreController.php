@@ -17,6 +17,7 @@ class StoreController extends Controller
   {
     $name=$request->input('name');
     $companyId=$request->companyId;
+    $company = Company::find($request->companyId);
     $ordering=$request->input('ordering');
     $store_id=$request->store_id;
     $modal="";
@@ -35,7 +36,8 @@ class StoreController extends Controller
     else{
       $store=New Store;
     }
-    return view::make('admin.store.list')->with(['modal'=>$modal,'stores'=>$getStores, "request" => $request, "companyId"=>$companyId, 'store'=>$store]);
+
+    return view::make('admin.store.list')->with(['modal'=>$modal,'stores'=>$getStores, "request" => $request, "companyId"=>$companyId, 'store'=>$store, "company" =>$company]);
   }
   public function store(Request $request)
   {

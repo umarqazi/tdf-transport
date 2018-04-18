@@ -25,7 +25,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @var array
 	 */
-	protected $fillable = ["type","store_id","email", "password", "permissions", "activated", "number_plate", "vehicle_name","activation_code", "activated_at", "last_login", "protected", "banned"];
+	protected $fillable = ["type","store_id","email", "password", "permissions", "activated", "number_plate", "vehicle_name","activation_code", "activated_at", "last_login", "protected", "banned","phone_number","mobile_number"];
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -42,4 +42,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	{
 			return $this->hasOne('LaravelAcl\Delivery', 'tour_plan');
 	}
+	public function store()
+    {
+        return $this->belongsTo('LaravelAcl\Store');
+    }
 }

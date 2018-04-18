@@ -8,6 +8,7 @@ return [
         "Driver"  => "Chauffeur-livreur"
     ],
     'User Type'=>[
+        "" => "Fonction",
       'Responsable de magasin'=>'Responsable de magasin',
       'Hote de caisse' =>'Hote de caisse',
       "Manager TDF" => "Manager TDF",

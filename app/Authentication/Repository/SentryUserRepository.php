@@ -53,7 +53,9 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
                 "activated" => $input["activated"],
                 "vehicle_name"     => $input["vehicle_name"],
                 "number_plate"     => $input["number_plate"],
-                "banned"    => isset($input["banned"]) ? $input["banned"] : 0
+                "banned"    => isset($input["banned"]) ? $input["banned"] : 0,
+                "phone_number"  => $input["phone_number"],
+                "mobile_number"    => $input["mobile_number"]
         );
 
         try
