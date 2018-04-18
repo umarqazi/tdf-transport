@@ -70,10 +70,9 @@
                   <td class="hidden-xs">{!! $store->address !!}</td>
                   <td class="hidden-xs">{!! $store->city !!}</td>
                   <td class="hidden-xs">{!! $store->zip_code !!}</td>
-                  <td><a class="btn btn-primary" href="{{route('employees', ['storeId'=>$store->id])}}">Voir</a></td>
+                  <td align="center"><a class="btn btn-primary" href="{{route('employees', ['storeId'=>$store->id])}}">Voir</a></td>
                   <td class="actions">
                     @if(! $store->protected)
-                      <a href="{!! URL::route('add.employee', ['storeId' => $store->id]) !!}" title="Add Employee"><i class="fa fa-plus fa-2x"></i></a> &nbsp;
                       <a href="{!! URL::route('store.list', ['id' => $companyId, 'store_id' => $store->id]) !!}" title="Edit Store" class="edit"><i class="fa fa-edit fa-fw"></i></a>
                       <a href="{!! URL::route('store.delete',['id' => $store->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete trash delete_store" title="Delete Store"><i class="fa fa-trash-o fa-fw"></i></a>
 

@@ -54,10 +54,10 @@ Admin area: Company list
             @foreach($stores as $store)
             <tr>
               <td>{!! $store->company_name !!}</td>
-              <td>
+              <td align="center">
                 <a href="{!! URL::route('store.list', ['companyId' => $store->id]) !!}" title="Add Employee" class="btn btn-primary">Voir les magasins</a> &nbsp;
               </td>
-              <td>
+              <td align="center">
                 <a href="{!! URL::route('product.list', ['companyId' => $store->id]) !!}" title="Add Employee" class="btn btn-primary">Voir les produits</a> &nbsp;
               </td>
               <td class="text-center actions">
