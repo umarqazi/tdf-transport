@@ -55,7 +55,7 @@ class DashboardController extends Controller{
       $addUser->user_first_name=$request->user_first_name;
       $addUser->user_last_name=$request->user_last_name;
       $addUser->phone_number=$request->phone_number;
-      $addUser->type='Driver';
+      $addUser->type=Config::get('constants.Users.Driver');
       $addUser->vehicle_name=$request->vehicle_name;
       $addUser->number_plate=$request->number_plate;
       if($request->password)
