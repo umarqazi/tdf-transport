@@ -9,7 +9,7 @@
       <span class="icon-bar"></span>
     </button>
     @if($store_info['store_logo'])
-      <a class="navbar-brand" href="{{URL::to('/')}}"><img src="{{asset('assets/images')}}/{{$store_info['store_name']}}/{{$store_info['store_logo']}}" class="img-responsive company-logo"></a>
+      <a class="navbar-brand" href="{{URL::to('/')}}"><img src="{{asset('assets/images')}}/{{$store_info['id']}}/{{$store_info['store_logo']}}" class="img-responsive company-logo"></a>
     @else
       <a class="navbar-brand" href="{{URL::to('/')}}"><img src="{{asset('assets/images')}}/logoTDF.png" class="img-responsive tdf-logo"></a>
     @endif

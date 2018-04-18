@@ -80,7 +80,7 @@ class StoreController extends Controller
       $images=$request->file('store_logo');
       $addStore->save();
       $type='storeLogo'.$addStore->id;
-      $name=DeliveryController::storeImage($images, $request->store_name, $type);
+      $name=DeliveryController::storeImage($images, $addStore->id, $type);
       $addStore->store_logo=$name;
     }
     $addStore->save();
