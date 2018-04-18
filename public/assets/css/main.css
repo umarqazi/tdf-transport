@@ -709,3 +709,13 @@ button:focus {
 .table-bordered a{
   text-align: center;
 }
+.uploadButton{
+    color: #FFFFFF !important;
+    text-align: center;
+}
+.product-detail-icons{
+    text-align: center;
+}
+.product-detail-icons a{
+    color: #FFFFFF;
+}

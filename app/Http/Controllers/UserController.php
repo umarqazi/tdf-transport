@@ -1,10 +1,10 @@
 <?php  namespace LaravelAcl\Http\Controllers;
 
 /**
-* Class UserController
-*
-* @author jacopo beschi jacopo@jacopobeschi.com
-*/
+ * Class UserController
+ *
+ * @author jacopo beschi jacopo@jacopobeschi.com
+ */
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use LaravelAcl\Authentication\Exceptions\PermissionException;
@@ -29,140 +29,140 @@ use LaravelAcl\Store;
 use Session;
 
 class UserController extends Controller {
-  /**
-  * @var \LaravelAcl\Authentication\Repository\SentryUserRepository
-  */
-  protected $user_repository;
-  protected $user_validator;
-  /**
-  * @var \LaravelAcl\Authentication\Helpers\FormHelper
-  */
-  protected $form_helper;
-  protected $profile_repository;
-  protected $profile_validator;
-  /**
-  * @var use LaravelAcl\Authentication\Interfaces\AuthenticateInterface;
-  */
-  protected $auth;
-  protected $register_service;
-  protected $custom_profile_repository;
+    /**
+     * @var \LaravelAcl\Authentication\Repository\SentryUserRepository
+     */
+    protected $user_repository;
+    protected $user_validator;
+    /**
+     * @var \LaravelAcl\Authentication\Helpers\FormHelper
+     */
+    protected $form_helper;
+    protected $profile_repository;
+    protected $profile_validator;
+    /**
+     * @var use LaravelAcl\Authentication\Interfaces\AuthenticateInterface;
+     */
+    protected $auth;
+    protected $register_service;
+    protected $custom_profile_repository;
 
-  public function __construct(UserValidator $v, FormHelper $fh, UserProfileValidator $vp, AuthenticateInterface $auth)
-  {
-    $this->user_repository = App::make('user_repository');
-    $this->user_validator = $v;
-    //@todo use IOC correctly with a factory and passing the correct parameters
-    $this->f = new FormModel($this->user_validator, $this->user_repository);
-    $this->form_helper = $fh;
-    $this->profile_validator = $vp;
-    $this->profile_repository = App::make('profile_repository');
-    $this->auth = $auth;
-    $this->register_service = App::make('register_service');
-    $this->custom_profile_repository = App::make('custom_profile_repository');
-  }
-
-  public function getList(Request $request)
-  {
-    $modal="";
-    try
+    public function __construct(UserValidator $v, FormHelper $fh, UserProfileValidator $vp, AuthenticateInterface $auth)
     {
-      $user = $this->user_repository->find($request->get('id'));
-      $modal="addUser";
-    } catch(JacopoExceptionsInterface $e)
-    {
-      $user = new User;
-    }
-    $presenter = new UserPresenter($user);
-    $storeList= Store::all();
-    $allStores[0]='Choisir un magasin';
-    foreach($storeList as $store)
-    {
-      $allStores[$store->id]=$store->store_name;
-    }
-    $users = User::with('store')->where('type', '!=', 'Admin')->orderBy('id', 'desc')->paginate(15);
-    $users = $users->setPath('');
-    if($request->get('modal'))
-    {
-      $modal=$request->get('modal');
-    }
-    return View::make('admin.user.list')->with(["users" => $users, "request" => $request, "user" => $user, "presenter" => $presenter, "stores" => $allStores, 'modal'=>$modal]);
-  }
-
-  public function editUser(Request $request)
-  {
-    try
-    {
-      $user = $this->user_repository->find($request->get('id'));
-    } catch(JacopoExceptionsInterface $e)
-    {
-      $user = new User;
-    }
-    $presenter = new UserPresenter($user);
-    $storeList= Store::all();
-    $allStores[0]='Select Store';
-    foreach($storeList as $store)
-    {
-      $allStores[$store->id]=$store->store_name;
-    }
-    return View::make('laravel-authentication-acl::admin.user.edit')->with(["user" => $user, "presenter" => $presenter, "stores" => $allStores]);
-  }
-
-  public function postEditUser(Request $request)
-  {
-    $id = $request->get('id');
-    $type=$request->type;
-
-    if($type==Config::get('constants.Users.Manager') || $type==Config::get('constants.Users.Cashier'))
-    {
-      if($request->store_id==0){
-        return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors("Veuillez sélectionner un magasin");
-      }
-      $checkUser=User::where('type', $type)->where('store_id', $request->store_id);
-      if($id){
-        $checkUser=$checkUser->where('id', '!=', $id);
-      }
-      $checkUser=$checkUser->first();
-      if((!empty($checkUser) && $checkUser->activated=='1') && $checkUser)
-      {
-        return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors("Il y a déjà un ".$type." dans ce magasin.");
-      }
-    }
-    DbHelper::startTransaction();
-    try
-    {
-      $user = $this->f->process($request->all());
-      $this->profile_repository->attachEmptyProfile($user);
-    } catch(JacopoExceptionsInterface $e)
-    {
-      DbHelper::rollback();
-      $errors = $this->f->getErrors();
-      // passing the id incase fails editing an already existing item
-      return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors($errors);
+        $this->user_repository = App::make('user_repository');
+        $this->user_validator = $v;
+        //@todo use IOC correctly with a factory and passing the correct parameters
+        $this->f = new FormModel($this->user_validator, $this->user_repository);
+        $this->form_helper = $fh;
+        $this->profile_validator = $vp;
+        $this->profile_repository = App::make('profile_repository');
+        $this->auth = $auth;
+        $this->register_service = App::make('register_service');
+        $this->custom_profile_repository = App::make('custom_profile_repository');
     }
 
-    DbHelper::commit();
-
-    return Redirect::route('users.list')
-    ->withMessage(Config::get('acl_messages.flash.success.user_edit_success'));
-  }
-
-  public function deleteUser(Request $request)
-  {
-    $getUser=User::find($request->id);
-    if($getUser->type='Driver'){
-      $message="Le véhicule a été supprimé.";
-    }else{
-      $message="Le véhicule a été supprimé.";
-    }
-    try
+    public function getList(Request $request)
     {
-      $this->f->delete($request->all());
-    } catch(JacopoExceptionsInterface $e)
-    {
-      $errors = $this->f->getErrors();
-      return Redirect::route('users.list')->withErrors($errors);
+        $modal="";
+        try
+        {
+            $user = $this->user_repository->find($request->get('id'));
+            $modal="addUser";
+        } catch(JacopoExceptionsInterface $e)
+        {
+            $user = new User;
+        }
+        $presenter = new UserPresenter($user);
+        $storeList= Store::all();
+        $allStores[0]='Choisir un magasin';
+        foreach($storeList as $store)
+        {
+            $allStores[$store->id]=$store->store_name;
+        }
+        $users = User::with('store')->where('type', '!=', 'Admin')->orderBy('id', 'desc')->paginate(15);
+        $users = $users->setPath('');
+        if($request->get('modal'))
+        {
+            $modal=$request->get('modal');
+        }
+        return View::make('admin.user.list')->with(["users" => $users, "request" => $request, "user" => $user, "presenter" => $presenter, "stores" => $allStores, 'modal'=>$modal]);
     }
-    return Redirect::back()
-    ->withMessage($message);
-  }
+
+    public function editUser(Request $request)
+    {
+        try
+        {
+            $user = $this->user_repository->find($request->get('id'));
+        } catch(JacopoExceptionsInterface $e)
+        {
+            $user = new User;
+        }
+        $presenter = new UserPresenter($user);
+        $storeList= Store::all();
+        $allStores[0]='Select Store';
+        foreach($storeList as $store)
+        {
+            $allStores[$store->id]=$store->store_name;
+        }
+        return View::make('laravel-authentication-acl::admin.user.edit')->with(["user" => $user, "presenter" => $presenter, "stores" => $allStores]);
+    }
+
+    public function postEditUser(Request $request)
+    {
+        $id = $request->get('id');
+        $type=$request->type;
+
+        if($type==Config::get('constants.Users.Manager') || $type==Config::get('constants.Users.Cashier'))
+        {
+            if($request->store_id==0){
+                return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors("Veuillez sélectionner un magasin");
+            }
+            $checkUser=User::where('type', $type)->where('store_id', $request->store_id);
+            if($id){
+                $checkUser=$checkUser->where('id', '!=', $id);
+            }
+            $checkUser=$checkUser->first();
+            if((!empty($checkUser) && $checkUser->activated=='1') && $checkUser)
+            {
+                return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors("Il y a déjà un ".$type." dans ce magasin.");
+            }
+        }
+        DbHelper::startTransaction();
+        try
+        {
+            $user = $this->f->process($request->all());
+            $this->profile_repository->attachEmptyProfile($user);
+        } catch(JacopoExceptionsInterface $e)
+        {
+            DbHelper::rollback();
+            $errors = $this->f->getErrors();
+            // passing the id incase fails editing an already existing item
+            return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors($errors);
+        }
+
+        DbHelper::commit();
+
+        return Redirect::route('users.list')
+            ->withMessage(Config::get('acl_messages.flash.success.user_edit_success'));
+    }
+
+    public function deleteUser(Request $request)
+    {
+        $getUser=User::find($request->id);
+        if($getUser->type==Config::get('constants.Users.Driver')){
+            $message="Le véhicule a été supprimé.";
+        }else{
+            $message="L'utilisateur a été supprimé.";
+        }
+        try
+        {
+            $this->f->delete($request->all());
+        } catch(JacopoExceptionsInterface $e)
+        {
+            $errors = $this->f->getErrors();
+            return Redirect::route('users.list')->withErrors($errors);
+        }
+        return Redirect::back()
+            ->withMessage($message);
+    }
 }
