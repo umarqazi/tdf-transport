@@ -72,9 +72,9 @@
                   </div>
 
                   <div class="col-sm-12">
-                    <div class="form-group" id="storeName" style=display:{{($user->type== Config::get('constants.Users.TDF Manager') || $user->type== Config::get('constants.Users.Driver')) ? "none":""}}>
+                    <div class="form-group" id="storeName" style=display:{{(($user->type== Config::get('constants.Users.TDF Manager') || $user->type== Config::get('constants.Users.Driver')) || $user->type==NULL) ? "none":""}}>
                       <div class="input-group">
-                        <div class="input-group-addon"><i class="fa fa-building fa-fw"></i></div>
+                        <div class="input-group-addon"><i class="fa fa-building"></i></div>
                         {!! Form::select('store_id', $stores, null, ["class"=> "form-control"] ) !!}
                       </div>
                     </div>

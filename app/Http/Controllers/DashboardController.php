@@ -8,6 +8,7 @@ use LaravelAcl\Vehicle;
 use LaravelAcl\User;
 use Hash;
 use Datatables;
+use Config;
 class DashboardController extends Controller{
 
   public function base(Request $request)
@@ -24,7 +25,7 @@ class DashboardController extends Controller{
     if($request->get('modal')){
       $modal=$request->get('modal');
     }
-    $driverList=User::where('type', 'Driver')->orderBy('id', 'desc')->get();
+    $driverList=User::where('type', Config::get('constants.Users.Driver'))->orderBy('id', 'desc')->get();
     return View::make('admin.dashboard.default')->with(['drivers'=>$driverList,'modal'=>$modal,'vehicle'=>$getVehicleInfo]);
   }
   public function pEditVehicle(Request $request)
@@ -34,7 +35,7 @@ class DashboardController extends Controller{
       'user_first_name' => 'required',
       'user_last_name' => 'required',
       'email' => 'required|unique:users,email,'.$request->id,
-      'number_plate' => 'required',
+      'number_plate' => 'required|unique:users,number_plate,'.$request->id,
       'phone_number' => 'required',
     ]);
 
@@ -54,9 +55,10 @@ class DashboardController extends Controller{
       $addUser->user_first_name=$request->user_first_name;
       $addUser->user_last_name=$request->user_last_name;
       $addUser->phone_number=$request->phone_number;
-      $addUser->type='Driver';
+      $addUser->type=Config::get('constants.Users.Driver');
       $addUser->vehicle_name=$request->vehicle_name;
       $addUser->number_plate=$request->number_plate;
+      $addUser->activated=$request->activated;
       if($request->password)
       {
         $addUser->password=Hash::make($request->password);

@@ -78,6 +78,12 @@
                   <span class="text-danger">{!! $errors->first('phone_number') !!}</span>
                   {!! Form::hidden('id') !!}
                 </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    {!! Form::select('activated', [""=>"statut","1" => "Actif", "0" => "Inactif"], (isset($vehicle->activated) && $vehicle->activated) ? $vehicle->activated : "", ["class"=> "form-control"] ) !!}
+
+                  </div>
+                </div>
               </div>
               <div class="clearfix popuup_submit">
                 <button type="submit" class="btn btn-success">

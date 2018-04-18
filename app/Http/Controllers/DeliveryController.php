@@ -100,18 +100,21 @@ class DeliveryController extends Controller
             'pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id,
             'order_pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id
         ]);
+        $deliveryId=$request->id;
         $date = str_replace('/', '-', $request->datetime);
-        if((Auth::user()->type==Config::get('constants.Users.Cashier') && strtotime($date) <= strtotime(date('d-m-Y'))) || (Auth::user()->type==Config::get('constants.Users.Manager') && strtotime($date) < strtotime(date('d-m-Y'))) ){
-            Toast::error('Sélectionnez une date correcte');
-            return redirect::back()
-                ->withInput();
+        if(!$deliveryId){
+          if((Auth::user()->type==Config::get('constants.Users.Cashier') && strtotime($date) <= strtotime(date('d-m-Y'))) || (Auth::user()->type==Config::get('constants.Users.Manager') && strtotime($date) < strtotime(date('d-m-Y'))) ){
+              Toast::error('Sélectionnez une date correcte');
+              return redirect::back()
+                  ->withInput();
+          }
         }
         if ($validator->fails()) {
             return redirect::back()
                 ->withErrors($validator)
                 ->withInput();
         }
-        $deliveryId=$request->id;
+
         $getStoreName=$request->session()->get('store_name');
         if($deliveryId)
         {
@@ -162,6 +165,7 @@ class DeliveryController extends Controller
         $delivery->day_period=$request->day_period;
         $delivery->first_name=$request->first_name;
         $delivery->last_name=$request->last_name;
+        $delivery->customer_email=$request->customer_email;
         $delivery->landline=$request->landline;
         $delivery->mobile_number=$request->mobile_number;
         $delivery->order_id=$request->order_id;
@@ -187,7 +191,9 @@ class DeliveryController extends Controller
             $delivery->product_id=NULL;
         }
         $delivery->sub_product_id=$product_id;
-        $delivery->status=Config::get('constants.Status.Pending');
+        if(!$deliveryId){
+          $delivery->status=Config::get('constants.Status.Pending');
+        }
         if(Auth::user()->type==Config::get('constants.Users.Cashier')){
             $getManager=User::where('type', 'Manager')->where('store_id', $this->authUser->store_id)->first();
             if(!empty($getManager) && !empty($deliveryId))
@@ -267,8 +273,8 @@ class DeliveryController extends Controller
     public function search($from, $to){
         $results = HomeController::deliveryProducts();
         $searchedResults = $results->where([
-            ['datetime','>=' ,date('Y-m-d', strtotime($from))],
-            ['datetime','<=' ,date('Y-m-d', strtotime($to))]])
+            ['datetime','>' ,date('Y-m-d', strtotime($from))],
+            ['datetime','<=' ,date('Y-m-d', strtotime($to))]])->orderBy('datetime', 'desc')
             ->paginate();
 
         return view::make('client.cashier.delivery_history')->with(['allDeliveries' => $searchedResults, 'from' => str_replace('-','/',$from), 'to'=> str_replace('-','/', $to)]);
@@ -402,12 +408,12 @@ class DeliveryController extends Controller
       $date=Date::parse($request->date)->format('Y-m-d');
       $customerDetail=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->leftJoin('time_slot', 'tour_plan.time_slot_id', '=', 'time_slot.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->where('datetime', $date)->where('tour_plan.user_id', $request->id)->select('deliveries.datetime','deliveries.mobile_number','tour_plan.user_id','stores.store_name','time_slot.time','stores.phone_number')->get();
       foreach($customerDetail as $customer){
-        $message="Cher(e) client(e)
+        $message=
+"Cher(e) client(e),
+Votre commande sera livrée le ".Date::parse($customer['datetime'])->format('d/m/Y')." entre ".$customer['time'].".
+Merci,
 
-        Votre commande sera livrée le ".$customer['datetime']." entre ".$customer['time'].", merci
-
-        ".$customer['store_name']."
-        ".$customer['phone_number'];
+".$customer['store_name']." / ".$customer['phone_number'];
         $user=$customer['mobile_number'];
         $sendSMS=Ovh::checkSms($user, $message);
       }

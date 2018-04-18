@@ -706,3 +706,6 @@ button:focus {
 .delivery-detail-address{
     margin-left: 23px;
 }
+.table-bordered a{
+  text-align: center;
+}
