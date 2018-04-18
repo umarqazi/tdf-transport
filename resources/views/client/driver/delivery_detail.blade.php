@@ -10,8 +10,8 @@
     <span class="date_class">{{$date}} ({{$time}})</span>
     <div class="row">
         <div class="col-md-12">
-            <div class="user-row">
-                Coordonnées du client <i class="fa fa-user fa-fw"></i>
+            <div class="user-row deliveryDetailHeader">
+                Coordonnées du client<i class="fa fa-user fa-fw"></i>
             </div>
 
             <div class="user-row">
@@ -26,8 +26,8 @@
                 </ul>
             </div>
 
-            <div class="user-row">
-                Informations sur la livraison<i class="fa fa-cubes fa-fw"></i>
+            <div class="user-row deliveryDetailHeader">
+                Informations sur la livraison <i class="fa fa-cubes fa-fw"></i>
             </div>
 
             <div class="user-row">
@@ -68,19 +68,23 @@
     {!! Form::model(null, [ 'url' => URL::route('update.delivery.status'), "enctype"=>"multipart/form-data"] )  !!}
     <div class="clear20"></div>
 
-    <div class="text-center">Signaler une anomalie</div>
+    <div class="text-center deliveryDetailHeader">Signaler une anomalie</div>
 
     <div class="clear20"></div>
 
-    <div class="text-center">
-        <div class="form-inline">
-            <select class="form-control" name="delivery_status">
-                <option value="">Faire un choix</option>
-                <option value="1">1. Client absent</option>
-                <option value="2">2. Produit casse lors du transport / montage</option>
-                <option value="3">3. Produit manquant / Livraison partielle</option>
-                <option value="4">4. Rien a signaler</option>
-            </select>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="text-center">
+                <div class="form-inline">
+                    <select class="form-control" name="delivery_status">
+                        <option value="">Faire un choix</option>
+                        <option value="1">1. Client absent</option>
+                        <option value="2">2. Produit casse lors du transport / montage</option>
+                        <option value="3">3. Produit manquant / Livraison partielle</option>
+                        <option value="4">4. Rien a signaler</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -108,8 +112,8 @@
 
     <div class="row">
         <div class="col-md-12 text-center tbl-btns tbl-btns-2">
-            <button type="submit" class="active button-styling">Envoyer les informations <i class="fa fa-check-square"></i></button>
-            <a href="{{url('/driverTours')}}" class="btn btn-primary cancel-request">Retour <i class="fa fa-arrow-left"></i></a>
+            <button type="submit" class="active button-styling deliveryDetailButtons">Envoyer les informations <i class="fa fa-check-square"></i></button>
+            <a href="{{url('/driverTours')}}" class="btn btn-primary cancel-request deliveryDetailButtons">Retour <i class="fa fa-arrow-left"></i></a>
         </div>
     </div>
     {!! Form::hidden('id', $detail['id'], []) !!}
