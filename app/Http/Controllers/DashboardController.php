@@ -35,7 +35,7 @@ class DashboardController extends Controller{
       'user_first_name' => 'required',
       'user_last_name' => 'required',
       'email' => 'required|unique:users,email,'.$request->id,
-      'number_plate' => 'required',
+      'number_plate' => 'required|unique:users,number_plate,'.$request->id,
       'phone_number' => 'required',
     ]);
 
@@ -58,7 +58,7 @@ class DashboardController extends Controller{
       $addUser->type=Config::get('constants.Users.Driver');
       $addUser->vehicle_name=$request->vehicle_name;
       $addUser->number_plate=$request->number_plate;
-      $addUser->activated='1';
+      $addUser->activated=$request->activated;
       if($request->password)
       {
         $addUser->password=Hash::make($request->password);
