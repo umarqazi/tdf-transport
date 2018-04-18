@@ -667,6 +667,42 @@ button:focus {
     padding: 10px;
 }
 .deliveryComment{
-    padding: 20px 10px 20px 10px;
-    border: 1px solid #000000;
+    margin-top:20px;
+    padding: 10px 3px !important;
+    border: 2px solid #000000;
+}
+.deliveryDetailHeader{
+    font-size: 16px;
+    font-weight: bold;
+}
+.deliveryDetailButtons{
+    width: 260px;
+}
+.odd-record{
+    padding:15px;
+    background-color: darkgray !important;
+    color: #FFFFFF;
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.odd-record a, .even-record a{
+    color: #fff;
+}
+
+.even-record{
+    padding:15px;
+    background-color: #457F8F !important;
+    color: #FFFFFF;
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.delivery-detail-record{
+    width: 100%;
+    margin: 0;
+}
+.delivery-detail-address{
+    margin-left: 23px;
 }

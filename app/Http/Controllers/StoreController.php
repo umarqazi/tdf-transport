@@ -53,9 +53,10 @@ class StoreController extends Controller
     ]);
 
     if ($validator->fails()) {
-      return redirect::back()
+      return redirect::route('store.list')
       ->withErrors($validator)
-      ->withInput();
+      ->withInput()
+      ->with('modal','addStore');
     }
     if($id)
     {
