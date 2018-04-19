@@ -115,7 +115,6 @@ class DeliveryController extends Controller
                 ->withInput();
         }
 
-        $getStoreName=$request->session()->get('store_name');
         if($deliveryId)
         {
             $delivery=Delivery::find($deliveryId);
@@ -129,6 +128,7 @@ class DeliveryController extends Controller
             $message=Config::get('constants.Create Delivery');
         }
         $delivery->save();
+        $getStoreName=Auth::user()->store_id;
         $fileName='DeliveryNote'.$delivery->id;
         $orderFileName='OrderNote'.$delivery->id;
         if($request->dummy!=NULL)

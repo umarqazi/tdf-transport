@@ -127,7 +127,7 @@
               <input type="hidden" name="orderDummy" class="form-control" id="OrderdummyFile" placeholder="Numero du bon de livraison">
               <table @if(!$delivery['order_pdf']) style="display: none" @endif id="OrderShowPdftable">
                 <tr>
-                  <td><a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a></td>
+                  <td><a href="{{asset('assets/images')}}/{{ $delivery['stores_id'] }}/{{$delivery['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a></td>
                   <td>&nbsp;</td>
                   <td><a onclick="cancelpdf('order')" class="cancelpdf"><i class="fa fa-close"></i></a></td>
                 </tr>
@@ -167,7 +167,7 @@
               <input type="hidden" name="dummy" class="form-control" id="dummyFile" placeholder="Numero du bon de livraison">
               <table @if(!$delivery['delivery_pdf']) style="display: none" @endif id="showPdftable">
                 <tr>
-                  <td><a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a></td>
+                  <td><a href="{{asset('assets/images')}}/{{ $delivery['stores_id']  }}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a></td>
                   <td>&nbsp;</td>
                   <td><a onclick="cancelpdf('delivery')" class="cancelpdf"><i class="fa fa-close"></i></a></td>
                 </tr>

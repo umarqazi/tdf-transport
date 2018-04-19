@@ -105,7 +105,7 @@ TDF Create Delivery
           </div>
           <div class="form-group">
               @if($delivery['order_pdf'])
-              <a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a>
+              <a href="{{asset('assets/images')}}/{{ $delivery['stores_id']}}/{{$delivery['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a>
               @endif
           </div>
           <div class="form-group">
@@ -126,7 +126,7 @@ TDF Create Delivery
           </div>
           <div class="form-group">
             @if($delivery['delivery_pdf'])
-            <a href="{{asset('assets/images')}}/{{ Session::get('store_name') }}/{{$delivery['delivery_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a>
+            <a href="{{asset('assets/images')}}/{{ $delivery['stores_id'] }}/{{$delivery['delivery_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a>
             @endif
           </div>
           <div class="form-group">
