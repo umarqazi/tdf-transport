@@ -68,7 +68,7 @@ class DashboardController extends Controller{
     }
     public function checking()
     {
-      $driverList=User::where('type', 'Driver')->select('id', 'user_first_name', 'vehicle_name', 'number_plate', 'type', 'email')->orderBy('id', 'desc')->get();
+      $driverList=User::where('type', Config::get('constants.Users.Driver'))->select('id', 'user_first_name', 'vehicle_name', 'number_plate', 'type', 'email')->orderBy('id', 'desc')->get();
       $driverArray=array();
       foreach($driverList as $key=>$driver){
         $action='<a href="/admin/users/dashboard?id='.$driver->id.'" class="edit"><i class="fa fa-edit fa-fw"></i></a><a href="/admin/users/delete?id='.$driver->id.'" class="trash delete"><i class="fa fa-trash-o fa-fw"></i></a>';

@@ -13,7 +13,7 @@
           <div class="col-lg-12">
             <h1 class="page-header text-center">
               @if(is_null($newProduct['id']))
-                Ajouter un produit
+                Ajouter des produits
               @else
                 Modifier un produit
               @endif
@@ -22,11 +22,10 @@
           <div class="col-lg-12 calendar-control">
             <div class="content_wrapper clearfix">
               <div class="form-inline">
-                <h3>Informations sur le vehicule</h3>
+                <h3>Informations sur les produits</h3>
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::text('product_family', null, ['class' => 'form-control', 'placeholder' => 'Product Family', 'id'=>'product_family' ,'autocomplete' => 'off']) !!}
+                    {!! Form::text('product_family', null, ['class' => 'form-control', 'placeholder' => 'Famille de produit', 'id'=>'product_family' ,'autocomplete' => 'off']) !!}
                     {!! Form::hidden('id') !!}
                     {!! Form::hidden('company_id', $companyId) !!}
                   </div>
@@ -34,62 +33,58 @@
                 </div>
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></div>
-                    {!! Form::text('product_type', null, ['class' => 'form-control', 'placeholder' => 'Product Fonction', 'autocomplete' => 'off']) !!}
+                    {!! Form::text('product_type', null, ['class' => 'form-control', 'placeholder' => 'Produit', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('email') !!}</span>
                 </div>
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::number('sav', null, ['class' => 'form-control', 'placeholder' => 'SAV Service Charges', 'autocomplete' => 'off']) !!}
+                    {!! Form::number('sav', null, ['class' => 'form-control', 'placeholder' => 'Prix SAV', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('sav') !!}</span>
                 </div>
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::number('livraison', null, ['class' => 'form-control', 'placeholder' => 'Livraison Service Charges', 'autocomplete' => 'off']) !!}
+                    {!! Form::number('livraison', null, ['class' => 'form-control', 'placeholder' => 'Prix livraison', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('livraison') !!}</span>
                 </div>
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::number('livraison_montage', null, ['class' => 'form-control', 'placeholder' => 'Livraison Montage Service Charges', 'autocomplete' => 'off']) !!}
+                    {!! Form::number('livraison_montage', null, ['class' => 'form-control', 'placeholder' => 'Prix livraison + montage', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('livraison_montage') !!}</span>
                 </div>
+
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::number('rétrocession', null, ['class' => 'form-control', 'placeholder' => 'Rétrocession Montage Service Charges', 'autocomplete' => 'off']) !!}
+                    {!! Form::number('montage', null, ['class' => 'form-control', 'placeholder' => 'Prix Montage', 'autocomplete' => 'off']) !!}
+                  </div>
+                  <span class="text-danger">{!! $errors->first('montage') !!}</span>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    {!! Form::number('rétrocession', null, ['class' => 'form-control', 'placeholder' => 'Prix Rétrocession', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('rétrocession') !!}</span>
                 </div>
+
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::number('prestataire', null, ['class' => 'form-control', 'placeholder' => 'Prestataire Montage Service Charges', 'autocomplete' => 'off']) !!}
+                    {!! Form::number('prestataire', null, ['class' => 'form-control', 'placeholder' => 'Prix Livraison prestataire', 'autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('prestataire') !!}</span>
-                </div>
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-truck fa-fw"></i></div>
-                    {!! Form::number('montage', null, ['class' => 'form-control', 'placeholder' => 'Montage Montage Service Charges', 'autocomplete' => 'off']) !!}
-                  </div>
-                  <span class="text-danger">{!! $errors->first('montage') !!}</span>
                 </div>
               </div>
               <div class="clearfix popuup_submit">
                 <button type="submit" class="btn btn-success">
-                    @if(is_null($newProduct['id']))
-                        Ajouter
-                    @else
-                        Modifier
-                    @endif
-                    <i class="fa fa-save"></i>
+                  @if(is_null($newProduct['id']))
+                    Ajouter
+                  @else
+                    Modifier
+                  @endif
+                  <i class="fa fa-save"></i>
                 </button>
                 <a href="{{url('/admin/company/list')}}" class="btn btn-danger">Annuler <i class="fa fa-undo"></i></a>
               </div>

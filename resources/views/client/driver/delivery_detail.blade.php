@@ -25,6 +25,12 @@ TDF Driver
     <div class="user-row deliveryDetailHeader">
       Informations sur la livraison <i class="fa fa-cubes fa-fw"></i>
     </div>
+    <div class="clear20"></div>
+
+    <div class="row">
+        <div class="col-md-12 text-center tbl-btns tbl-btns-2">
+            <button type="submit" class="active button-styling deliveryDetailButtons">Envoyer les informations <i class="fa fa-check-square"></i></button>
+            <a href="{{url('/driverTours')}}" class="btn btn-primary cancel-request deliveryDetailButtons"><i class="fa fa-arrow-circle-left"></i> Retour</a>
     <div class="user-row">
       <ul class="list-unstyled icons driver-detail">
         <div class="col-xs-6">
