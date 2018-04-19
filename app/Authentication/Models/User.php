@@ -45,4 +45,8 @@ class User extends CartaUser
     {
         return $this->hasMany('LaravelAcl\Authentication\Models\UserProfile');
     }
+    public function store()
+    {
+        return $this->belongsTo('LaravelAcl\Store');
+    }
 }

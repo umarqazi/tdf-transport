@@ -80,7 +80,7 @@ class StoreController extends Controller
             $images=$request->file('store_logo');
             $addStore->save();
             $type='storeLogo'.$addStore->id;
-            $name=DeliveryController::storeImage($images, $request->store_name, $type);
+            $name=DeliveryController::storeImage($images, $addStore->id, $type);
             $addStore->store_logo=$name;
         }
         $addStore->save();
@@ -124,6 +124,7 @@ class StoreController extends Controller
         $type=$request->input('type');
         $email=$request->input('email');
         $storeId=$request->storeId;
+        $storee = Store::find($request->storeId);
         $ordering=$request->input('ordering');
         $id=$request->product_id;
         $modal=$request->modal;
@@ -160,7 +161,7 @@ class StoreController extends Controller
         {
             $employeeInfo = new StoreEmployees;
         }
-        return view::make('admin.store.employees-list')->with([ 'modal'=>$modal,'store'=>$employeeInfo,'employees'=>$getEmployees, "request" => $request, 'stores'=>$allStores, 'storeId'=>$storeId]);
+        return view::make('admin.store.employees-list')->with([ 'modal'=>$modal,'store'=>$employeeInfo,'employees'=>$getEmployees, "request" => $request, 'stores'=>$allStores, 'storeId'=>$storeId, 'companyId' => $storee->company_id]);
     }
     public function addEmployee(Request $request)
     {

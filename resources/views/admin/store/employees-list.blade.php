@@ -14,7 +14,7 @@
         <div class="alert alert-success">{!! $message !!}</div>
       @endif
       <div class="col-lg-12">
-        <a class="btn btn-success back-button" href="{{URL::previous()}}"><i class="fa fa-arrow-circle-left"></i> Retour</a>
+        <a class="btn btn-success back-button" href="{{route('store.list', ['companyId' => $companyId])}}"><i class="fa fa-arrow-circle-left"></i> Retour</a>
 
         <div class="text-center page-icon">
           <div class="icon-wrapper"><i class="fa fa-users fa-fw"></i></div>

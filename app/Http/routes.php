@@ -239,6 +239,10 @@ Route::group(['middleware' => ['web']], function ()
             'as'   => 'users.list',
             'uses' => 'LaravelAcl\Http\Controllers\UserController@getList'
         ]);
+        Route::get('/getCompanyStores', [
+            "as"   => "company.store",
+            "uses" => 'LaravelAcl\Http\Controllers\CompanyController@getStores'
+        ]);
         Route::get('/admin/users/edit', [
             'as'   => 'users.edit',
             'uses' => 'LaravelAcl\Authentication\Controllers\UserController@editUser'

@@ -4,6 +4,7 @@ function showStoreName(type)
     if(type=='Manager TDF' || type=='Chauffeur-livreur')
     {
         $("#storeName").hide();
+        $("#companyName").hide();
         if(type=='Chauffeur-livreur')
         {
           $('#driverRecord').show();
@@ -11,12 +12,14 @@ function showStoreName(type)
         if(type=='Manager TDF')
         {
           $("#storeName").hide();
+          $("#companyName").hide();
           $('#driverRecord').hide();
         }
     }
     else
     {
         $("#storeName").show();
+        $("#companyName").show();
         $('#driverRecord').hide();
     }
 }
@@ -62,4 +65,20 @@ function removeParam(key) {
         rtn = rtn + "" + params_arr.join("&");
     }
     return rtn;
+}
+
+function getStores(option){
+
+    var id=option.value;
+
+    $.ajax({
+        url: APP_URL+"/getCompanyStores",
+        type:"GET",
+        dataType: 'text',
+        data: { id : id},
+        success: function(data) {
+            $('#store_dropdown').children('option').remove();
+            $('#store_dropdown').append(data);
+        },
+    });
 }
