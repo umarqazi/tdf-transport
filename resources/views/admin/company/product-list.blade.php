@@ -19,7 +19,7 @@
         @endforeach
       @endif
       <div class="col-lg-12">
-        <a class="btn btn-success back-button" href="{{URL::previous()}}"><i class="fa fa-arrow-circle-left"></i> Retour</a>
+        <a class="btn btn-success back-button" href="{{route('company.list')}}"><i class="fa fa-arrow-circle-left"></i> Retour</a>
       </div>
 
       <div class="col-lg-12">

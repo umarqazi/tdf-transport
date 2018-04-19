@@ -14,6 +14,7 @@ use LaravelAcl\Authentication\Models\UserProfile;
 use LaravelAcl\Authentication\Presenters\UserPresenter;
 use LaravelAcl\Authentication\Services\UserProfileService;
 use LaravelAcl\Authentication\Validators\UserProfileAvatarValidator;
+use LaravelAcl\Company;
 use LaravelAcl\Library\Exceptions\NotFoundException;
 use LaravelAcl\User;
 use LaravelAcl\Authentication\Helpers\FormHelper;
@@ -73,11 +74,23 @@ class UserController extends Controller {
             $user = new User;
         }
         $presenter = new UserPresenter($user);
-        $storeList= Store::all();
+        if (!is_null($user['id'])) {
+            $storeList = Store::where('company_id',$user->store->company_id)->get();
+        }
+        else {
+            $storeList = Store::all();
+        }
+        $companyList = Company::all();
         $allStores[0]='Choisir un magasin';
+        $companies[0]='Choisissez une entreprise';
         foreach($storeList as $store)
         {
             $allStores[$store->id]=$store->store_name;
+        }
+
+        foreach ($companyList as $company)
+        {
+            $companies[$company->id] = $company->company_name;
         }
         $users = User::with('store')->where('type', '!=', 'Admin')->orderBy('id', 'desc')->paginate(15);
         $users = $users->setPath('');
@@ -85,7 +98,7 @@ class UserController extends Controller {
         {
             $modal=$request->get('modal');
         }
-        return View::make('admin.user.list')->with(["users" => $users, "request" => $request, "user" => $user, "presenter" => $presenter, "stores" => $allStores, 'modal'=>$modal]);
+        return View::make('admin.user.list')->with(["users" => $users, "request" => $request, "user" => $user, "presenter" => $presenter, "stores" => $allStores, 'modal'=>$modal, 'companies' => $companies]);
     }
 
     public function editUser(Request $request)

@@ -78,7 +78,7 @@ function upload()
     });
 }
 $(".delete_delivery").click(function(){
-	return confirm("Voulez-vous vraiment supprimer cette livraison ?");
+    return confirm("Voulez-vous vraiment supprimer cette livraison ?");
 });
 function showView(view)
 {
@@ -192,7 +192,6 @@ function getProduct(option){
         dataType: 'text',
         data: { id : id},
         success: function(data) {
-            console.log(data);
             $('#products').html(data);
         },
     });
