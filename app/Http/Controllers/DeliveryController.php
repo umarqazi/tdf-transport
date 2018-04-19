@@ -131,6 +131,10 @@ class DeliveryController extends Controller
         $getStoreName=Auth::user()->store_id;
         $fileName='DeliveryNote'.$delivery->id;
         $orderFileName='OrderNote'.$delivery->id;
+        $destinationPath = public_path('/assets/images/'.$getStoreName);
+        if(!File::exists($destinationPath)) {
+            $result = File::makeDirectory($destinationPath, 0777, true, true);
+        }
         if($request->dummy!=NULL)
         {
             $new_path =  public_path().'/assets/images/'. $getStoreName.'/'.$fileName.'.pdf';
