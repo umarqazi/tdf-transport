@@ -17,14 +17,14 @@
         <div class="alert alert-danger">{!! $errors->first('model') !!}</div>
       @endif
       <div class="col-lg-12">
-        <a class="btn btn-success back-button" href="{{URL::previous()}}">Retour <i class="fa fa-arrow-circle-left"></i></a>
+        <a class="btn btn-success back-button" href="{{URL::previous()}}"><i class="fa fa-arrow-circle-left"></i> Retour</a>
       </div>
 
       <div class="col-lg-12">
         <div class="text-center page-icon">
           <div class="icon-wrapper"><i class="fa fa-building fa-fw"></i></div>
         </div>
-        <h1 class="page-header text-center">GESTION DES MAGASIN</h1>
+        <h1 class="page-header text-center">GESTION DES MAGASINS</h1>
       </div>
     </div>
     <div class="row">
@@ -89,7 +89,7 @@
               {!! $stores->links() !!}
             </div>
           @else
-            <span class="text-warning"><h5>No results found.</h5></span>
+            <span class="text-warning"><h5>Désolé aucun magasin n'a été trouvé.</h5></span>
           @endif
         </div>
       </div>
