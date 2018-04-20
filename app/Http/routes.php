@@ -143,11 +143,12 @@ Route::group(['middleware' => ['web']], function ()
             "as"   => "post.delivery.history",
             "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@history'
         ]);
-        Route::get('/search/{from}/{to}', [
-            "as"   => "delivery.search",
-            "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@search'
-        ]);
     });
+
+    Route::get('/search/{from}/{to}', [
+        "as"   => "delivery.search",
+        "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@search'
+    ]);
     Route::post('/searchRecords', [
         "as"   => "search.records",
         "uses" => 'LaravelAcl\Http\Controllers\HomeController@searchRecords'

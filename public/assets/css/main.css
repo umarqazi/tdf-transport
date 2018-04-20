@@ -719,3 +719,12 @@ button:focus {
 .product-detail-icons a{
     color: #FFFFFF;
 }
+.storeLogo{
+    width: 104px;
+    height: 104px;
+    border: 2px solid black;
+    margin: 10px auto 0px auto;
+}
+#storeLogoInput{
+    margin-left: 174px !important;
+}

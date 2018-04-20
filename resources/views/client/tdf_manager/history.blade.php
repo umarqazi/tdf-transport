@@ -16,7 +16,7 @@ TDF History
         <label>Du</label>
         <div class="form-group">
           <div class='input-group date' id='datetimepicker5'>
-            {{ Form::text('fromDate', Input::get('fromDate'), ['class'=>'form-control'])}}
+            {{ Form::text('fromDate', isset($from) ? $from : '', ['class'=>'form-control from'])}}
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -28,7 +28,7 @@ TDF History
         <label>Au</label>
         <div class="form-group">
           <div class='input-group date' id='datetimepicker6'>
-            {{ Form::text('toDate', Input::get('toDate'), ['class'=>'form-control'])}}
+            {{ Form::text('toDate',  isset($to) ? $to : '', ['class'=>'form-control to'])}}
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -38,7 +38,7 @@ TDF History
       </div>
       <div class="form-group">
         <div class="form-group">
-
+          <a class="btn btn-primary" id="deliverySearch">Rechercher</a>
         </div>
       </div>
     </div>
