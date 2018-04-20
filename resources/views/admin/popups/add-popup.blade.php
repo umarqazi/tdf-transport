@@ -72,7 +72,7 @@
                                     </div>
 
                                     <div class="col-sm-6">
-                                        <div class="form-group" id="companyName" style=display:{{(($user->type== Config::get('constants.Users.TDF Manager') || $user->type== Config::get('constants.Users.Driver')) || $user->type==NULL) ? "none":""}}>
+                                        <div class="form-group" id="companyName" style=display:{{(($user->type== Config::get('constants.Users.TDF Manager') || $user->type== Config::get('constants.Users.Driver')) || $user->type==NULL) && Input::old('company_id') == '' ? "none":""}}>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-building"></i></div>
                                                 {!! Form::select('company_id', $companies, isset($user->store->company_id) ? $user->store->company_id : null, ["class"=> "form-control", 'onchange' =>'getStores(this)']) !!}
@@ -81,7 +81,7 @@
                                     </div>
 
                                     <div class="col-sm-6">
-                                        <div class="form-group" id="storeName" style=display:{{(($user->type== Config::get('constants.Users.TDF Manager') || $user->type== Config::get('constants.Users.Driver')) || $user->type==NULL) ? "none":""}}>
+                                        <div class="form-group" id="storeName" style=display:{{(($user->type== Config::get('constants.Users.TDF Manager') || $user->type== Config::get('constants.Users.Driver')) || $user->type==NULL)  && Input::old('store_id') == '' ? "none":""}}>
                                             <div class="input-group" id="CompanyStores">
                                                 <div class="input-group-addon"><i class="fa fa-building"></i></div>
                                                 {!! Form::select('store_id', $stores, null, ["class"=> "form-control", "id" =>"store_dropdown"] ) !!}
