@@ -33,11 +33,20 @@
       <div class="col-md-12">
         <div class="sort">
           <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addProduct">Ajouter un produit <i class="fa fa-plus-circle fa-fw"></i></button>
-          <button type="file" name="" class="active btn-primary button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#contactUsModal">Transfert groupé <i class="fa fa-upload fa-fw"></i></button>
+          <button type="file" name="" class="active btn-primary button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#contactUsModal">Importer <i class="fa fa-upload fa-fw"></i></button>
         </div>
       </div>
     </div>
     <div class="clear20"></div>
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{route('dashboard.default')}}">Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="{{route('company.list')}}">Company</a></li>
+          <li class="breadcrumb-item active">{{$company->company_name}}</li>
+        </ol>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-12">
         <strong>Listes des produits enregistrés</strong>
@@ -115,7 +124,7 @@
               @endforeach
             @else
               <tr>
-                <td colspan="4">Records not found</td>
+                <td colspan="4">Désolé, aucun produit n'a été trouvé.</td>
               </tr>
             @endif
             </tbody>
@@ -146,7 +155,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <input type="submit" value="Importer" class="btn btn-primary uploadButton">
+          <button type="submit" value="Importer" class="btn btn-primary uploadButton"><i class="fa fa-upload"></i> Importer</button>
         </div>
         {!! Form::close() !!}
       </div>

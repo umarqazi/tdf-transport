@@ -38,9 +38,6 @@
                         <li>
                             <a href="{{route('admin.deliveries')}}">Livraisons <i class="fa fa-cubes fa-fw"></i></a>
                         </li>
-                        <li>
-                            <a href="#">Paramètres <i class="fa fa-gear fa-fw"></i></a>
-                        </li>
                         <li class="toggle-menu">
                             <a>
                                 <strong class="capitalize">{{$authUser->user_first_name}} {{$authUser->user_last_name}}</strong>

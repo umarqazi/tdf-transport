@@ -51,7 +51,7 @@
 
                 <div class="form-group">
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-mobile-alt fa-fw"></i></div>
+                    <div class="input-group-addon"><i class="fa fa-mobile fa-fw"></i></div>
                     {!! Form::text('mobile_number', null,['class' => 'form-control', 'placeholder' => 'Téléphone : mobile ','autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('mobile_number') !!}</span>

@@ -161,7 +161,7 @@ class StoreController extends Controller
         {
             $employeeInfo = new StoreEmployees;
         }
-        return view::make('admin.store.employees-list')->with([ 'modal'=>$modal,'store'=>$employeeInfo,'employees'=>$getEmployees, "request" => $request, 'stores'=>$allStores, 'storeId'=>$storeId, 'companyId' => $storee->company_id]);
+        return view::make('admin.store.employees-list')->with([ 'modal'=>$modal,'store'=>$employeeInfo,'employees'=>$getEmployees, "request" => $request, 'stores'=>$allStores, 'storeId'=>$storeId, 'storee' => $storee]);
     }
     public function addEmployee(Request $request)
     {
