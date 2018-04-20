@@ -68,7 +68,7 @@ class HomeController extends Controller
 		$getDeliveries=Delivery::whereBetween('datetime', [$date->startOfWeek()->format('Y-m-d'), $date->endOfWeek()->format('Y-m-d')]);
 		$getDeliveries=$getDeliveries->where('store_id', $this->authUser->store_id);
 		$getDeliveries=$getDeliveries->get();
-		for($i=0; $i<=5; $i++){
+		for($i=0; $i<=6; $i++){
 			$deliveries[$date->startOfWeek()->addday($i)->format('d-M-Y')]=array();
 		}
 		foreach($getDeliveries as $key=>$delivery){
