@@ -281,7 +281,6 @@ Route::group(['middleware' => ['web']], function ()
         'as'   => 'post.store.edit',
         'uses' => 'LaravelAcl\Http\Controllers\StoreController@store'
       ]);
-
       Route::get('/store/delete/{id}', [
         'as'   => 'store.delete',
         'uses' => 'LaravelAcl\Http\Controllers\StoreController@destroy'
@@ -346,38 +345,35 @@ Route::group(['middleware' => ['web']], function ()
       Route::post('importExport', [
         'as'   => 'import',
         'uses'=>'LaravelAcl\Http\Controllers\ProductController@importExport']);
-      Route::get('/setting', [
-          'as'   => 'setting',
-          'uses' => 'LaravelAcl\Http\Controllers\HomeController@setting'
-        ]);
-        /****TDF Routes***/
+      Route::get('/getCompanyStores', [
+          "as"   => "company.store",
+          "uses" => 'LaravelAcl\Http\Controllers\CompanyController@getStores']);
+        });
+        Route::get('getData', ['as'=>'datatables.data', 'uses'=>'LaravelAcl\Http\Controllers\DashboardController@checking']);
       });
-      Route::get('getData', ['as'=>'datatables.data', 'uses'=>'LaravelAcl\Http\Controllers\DashboardController@checking']);
-
     });
-  });
-  //////////////////// Automatic error handling //////////////////////////
+    //////////////////// Automatic error handling //////////////////////////
 
-  if(Config::get('acl_base.handle_errors'))
-  {
-    App::error(function (RuntimeException $exception, $code)
+    if(Config::get('acl_base.handle_errors'))
     {
-      switch($code)
+      App::error(function (RuntimeException $exception, $code)
       {
-        case '404':
-        return view('laravel-authentication-acl::client.exceptions.404');
-        break;
-        case '401':
-        return view('laravel-authentication-acl::client.exceptions.401');
-        break;
-        case '500':
-        return view('laravel-authentication-acl::client.exceptions.500');
-        break;
-      }
-    });
+        switch($code)
+        {
+          case '404':
+          return view('laravel-authentication-acl::client.exceptions.404');
+          break;
+          case '401':
+          return view('laravel-authentication-acl::client.exceptions.401');
+          break;
+          case '500':
+          return view('laravel-authentication-acl::client.exceptions.500');
+          break;
+        }
+      });
 
-    App::error(function (TokenMismatchException $exception)
-    {
-      return view('laravel-authentication-acl::client.exceptions.500');
-    });
-  }
+      App::error(function (TokenMismatchException $exception)
+      {
+        return view('laravel-authentication-acl::client.exceptions.500');
+      });
+    }

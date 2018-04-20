@@ -10,4 +10,9 @@ class Company extends Model
     {
         return $this->hasMany('LaravelAcl\Product');
     }
+
+    public function store()
+    {
+        return $this->hasMany('LaravelAcl\Store');
+    }
 }

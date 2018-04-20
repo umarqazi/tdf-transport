@@ -16,4 +16,9 @@ class Store extends Model
     {
         return $this->hasMany('LaravelAcl\User');
     }
+
+    public function company()
+    {
+        return $this->belongsTo('LaravelAcl\Company');
+    }
 }
