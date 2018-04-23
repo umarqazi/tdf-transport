@@ -21,11 +21,11 @@
                                     @foreach($driver['tours'] as $key=>$tour)
                                         <div class="{{($key+1)%2 == 0 ? 'even-record': 'odd-record'}}">
                                           @if($tour['delivery']['status']==Config::get('constants.Status.Delivered'))
-                                            <?php $left=10?>
-                                              @for($i=1; $i <= 15; $i++)
-                                                <?php $left=$left+50?>
+                                            <?php $left=20?>
+                                              @for($i=1; $i <= 17; $i++)
                                                 <div class="horizontal-line" style="left:{{$left}}px">
                                                 </div>
+                                                <?php $left=$left+50?>
                                               @endfor
                                           @endif
                                             <a @if($tour['delivery']['status']==Config::get('constants.Status.Active')) href="{{url('/tourDeliveryDetail', ['id'=>$tour['delivery_id'], 'time'=>$key1])}}" @endif>
