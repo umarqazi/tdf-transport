@@ -67,8 +67,13 @@
                   </div>
                   <span class="text-danger">{!! $errors->first('zip_code') !!}</span>
                 </div>
+                @if(!is_null($store['store_logo']))
+                  <div class="text-center storeLogo">
+                    <img src="{{URL::to('/assets/images/'.$store->id.'/'.$store->store_logo)}}" width="100px" height="100px">
+                  </div>
+                @endif
                 <div class="form-group text-center">
-                  <div class="input-group">
+                  <div class="input-group" id="storeLogoInput">
                     {!! Form::file('store_logo', null, ['class' => 'form-control', 'placeholder' => 'Enter Zip Code','autocomplete' => 'off']) !!}
                   </div>
                   <span class="text-danger">{!! $errors->first('store_logo') !!}</span>

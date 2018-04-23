@@ -74,7 +74,7 @@ class UserController extends Controller {
             $user = new User;
         }
         $presenter = new UserPresenter($user);
-        if (!is_null($user['id'])) {
+        if (!is_null($user['id']) && !is_null($user->store)) {
             $storeList = Store::where('company_id',$user->store->company_id)->get();
         }
         else {

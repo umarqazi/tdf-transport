@@ -137,7 +137,13 @@ class HomeController extends Controller
 		return view::make('client.tdf_manager.create_tour')->with(['previousDate'=>$previousDate,'nextDate'=>$nextDay,'date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries, 'modal'=>$addmodal]);
 	}
 	public static function manageTours($user_id, $nextDay, $driver=NULL){
-		$getDeliveries2=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '1')->whereDate('datetime', $nextDay)->select('deliveries.*', 'sub_products.product_type')->with(array('time'=>function($query){
+
+		if($driver=='driver'){
+			$status=[Config::get('constants.Status.Active'), Config::get('constants.Status.Delivered')];
+		}else{
+			$status=[Config::get('constants.Status.Active')];
+		}
+		$getDeliveries2=Delivery::whereIn('status', $status)->where('flag', '1')->whereDate('datetime', $nextDay)->select('deliveries.*', 'sub_products.product_type')->with(array('time'=>function($query){
 			$query->select('tour_plan.id as tour_id','time_slot_id', 'delivery_id', 'user_id');
 			}))->leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->get();
 			$getTime=TimeSlot::all();

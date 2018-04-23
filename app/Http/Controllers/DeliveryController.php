@@ -281,7 +281,12 @@ class DeliveryController extends Controller
             ['datetime','<=' ,date('Y-m-d', strtotime($to))]])->orderBy('datetime', 'desc')
             ->paginate();
 
-        return view::make('client.cashier.delivery_history')->with(['allDeliveries' => $searchedResults, 'from' => str_replace('-','/',$from), 'to'=> str_replace('-','/', $to)]);
+        if (Auth::user()->type == 'Manager TDF') {
+            return view::make('client.tdf_manager.history')->with(['allDeliveries' => $searchedResults, 'from' => str_replace('-','/',$from), 'to'=> str_replace('-','/', $to)]);
+        }
+        else{
+            return view::make('client.cashier.delivery_history')->with(['allDeliveries' => $searchedResults, 'from' => str_replace('-','/',$from), 'to'=> str_replace('-','/', $to)]);
+        }
     }
     public function exportHistory(Request $request) {
         if(Auth::user()->type==Config::get('constants.Users.TDF Manager')){
