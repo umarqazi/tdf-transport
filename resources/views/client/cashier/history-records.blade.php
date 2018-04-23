@@ -45,7 +45,7 @@
             $status="En attente";
           }
           $total+=$delivery['delivery_price'];
-          $url=URL('viewDelivery').'/'.$delivery['id'];
+          $url=URL('delivery').'/'.$delivery['id'];
           ?>
           <tr onclick="viewDelivery('{{$url}}')" class="clickable">
             <td>{{Date::parse($delivery['datetime'])->format('d/m/Y')}}</td>

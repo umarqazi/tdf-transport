@@ -257,7 +257,7 @@ class HomeController extends Controller
 					}else{
 						$price=$record['delivery_price']." €";
 					}
-					$url=URL('viewDelivery').'/'.$record['id'];
+					$url=URL('delivery').'/'.$record['id'];
 					$searchResult.="<tr onclick=viewDelivery('$url') class='clickable'><td>".Date::parse($record['datetime'])->format('d/m/Y')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['customer_email']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
 				}
 			}else{
