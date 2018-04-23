@@ -685,6 +685,8 @@ button:focus {
     float: left;
     width: 100%;
     margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
 }
 
 .odd-record a, .even-record a{
@@ -727,4 +729,15 @@ button:focus {
 }
 #storeLogoInput{
     margin-left: 174px !important;
+}
+.horizontal-line{
+  position: absolute;
+  border-right: #000 solid 1px;
+  width: 20px;
+  height: 120%;
+  top: 0;
+  left: 2px;
+  transform: -webkit-rotate(-20deg);
+  transform: rotate(-20deg);
+  float:left;
 }

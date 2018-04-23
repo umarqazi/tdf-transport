@@ -116,7 +116,7 @@
                         <td><a href="{{URL::to('/delivery', ['id'=>$dayDelivery['id']])}}"><i class="fa fa-edit fa-fw"></i></a></td>
                         <td><a href="{{URL::to('/deleteDelivery', ['id'=>$dayDelivery['id']])}}" class="delete_delivery"><i class="fa fa-trash-o fa-fw"></i></a></td>
                         @if($authUser->type==Config::get('constants.Users.Manager'))
-                          <td><input type="checkbox" @if(strtotime($key)!=strtotime(date('d-M-Y'))) class="deliveryCheckbox" @endif name="delivery_id[]" value="{{$dayDelivery['id']}}" {{($dayDelivery['status']=='1')?'checked disabled':''}} class="" @if(strtotime($key) != strtotime(date('d-M-Y')) && $key!=date('d-M-Y', strtotime($nextDate))) disabled @endif>
+                          <td><input type="checkbox" @if(strtotime($key)!=strtotime(date('d-M-Y'))) class="deliveryCheckbox" @endif name="delivery_id[]" value="{{$dayDelivery['id']}}" {{($dayDelivery['status']==Config::get('constants.Status.Active') || $dayDelivery['status']==Config::get('constants.Status.Delivered'))?'checked disabled':''}} class="" @if(strtotime($key) != strtotime(date('d-M-Y')) && $key!=date('d-M-Y', strtotime($nextDate))) disabled @endif>
                           </td>
                         @endif
                       </tr>
@@ -161,7 +161,7 @@
                         <td><a href="{{URL::to('/delivery', ['id'=>$dayDelivery['id']])}}" ><i class="fa fa-edit fa-fw"></i></a></td>
                         <td><a href="{{URL::to('/deleteDelivery', ['id'=>$dayDelivery['id']])}}" class="delete"><i class="fa fa-trash-o fa-fw"></i></a></td>
                         @if($authUser->type==Config::get('constants.Users.Manager'))
-                          <td><input type="checkbox" @if(strtotime($key)!=strtotime(date('d-M-Y'))) class="deliveryCheckbox" @endif name="delivery_id[]" value="{{$dayDelivery['id']}}" {{($dayDelivery['status']=='1')?'checked disabled':''}} class="" @if(strtotime($key) != strtotime(date('d-M-Y')) && $key!=date('d-M-Y', strtotime($nextDate))) disabled @endif>
+                          <td><input type="checkbox" @if(strtotime($key)!=strtotime(date('d-M-Y'))) class="deliveryCheckbox" @endif name="delivery_id[]" value="{{$dayDelivery['id']}}" {{($dayDelivery['status']==Config::get('constants.Status.Active') || $dayDelivery['status']==Config::get('constants.Status.Delivered'))?'checked disabled':''}} class="" @if(strtotime($key) != strtotime(date('d-M-Y')) && $key!=date('d-M-Y', strtotime($nextDate))) disabled @endif>
                           </td>
                         @endif
                       </tr>

@@ -20,7 +20,15 @@
                                 @if(!empty($driver['tours']))
                                     @foreach($driver['tours'] as $key=>$tour)
                                         <div class="{{($key+1)%2 == 0 ? 'even-record': 'odd-record'}}">
-                                            <a href="{{url('/tourDeliveryDetail', ['id'=>$tour['delivery_id'], 'time'=>$key1])}}" >
+                                          @if($tour['delivery']['status']==Config::get('constants.Status.Delivered'))
+                                            <?php $left=10?>
+                                              @for($i=1; $i <= 15; $i++)
+                                                <?php $left=$left+50?>
+                                                <div class="horizontal-line" style="left:{{$left}}px">
+                                                </div>
+                                              @endfor
+                                          @endif
+                                            <a @if($tour['delivery']['status']==Config::get('constants.Status.Active')) href="{{url('/tourDeliveryDetail', ['id'=>$tour['delivery_id'], 'time'=>$key1])}}" @endif>
                                                 <ul class="list-unstyled icons driver-plans delivery-detail-record">
                                                     <li><i class="fa fa-user fa-fw"></i> {{$tour['delivery']['first_name']}} {{$tour['delivery']['last_name']}}</li>
                                                     <li class="delivery-detail-address"> {{$tour['delivery']['address']}}</li>
