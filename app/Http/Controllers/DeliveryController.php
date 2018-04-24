@@ -228,7 +228,7 @@ class DeliveryController extends Controller
             'order_pdf' => 'mimes:pdf,jpeg,jpg,png'
         ]);
         if ($validator->fails()) {
-            header('HTTP/1.1 403 '); exit("File type must be pdf");
+            header('HTTP/1.1 403 '); exit("Le type de fichier doit être pdf, jpeg, jpg, png");
         }
         $pdf=$request->file('pdf');
         $type=date('Y-m-d h:i:s');
@@ -277,7 +277,7 @@ class DeliveryController extends Controller
     public function search($from, $to){
         $results = HomeController::deliveryProducts();
         $searchedResults = $results->where([
-            ['datetime','>' ,date('Y-m-d', strtotime($from))],
+            ['datetime','>=' ,date('Y-m-d', strtotime($from))],
             ['datetime','<=' ,date('Y-m-d', strtotime($to))]])->orderBy('datetime', 'desc')
             ->paginate();
 

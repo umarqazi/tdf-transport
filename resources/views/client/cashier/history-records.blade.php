@@ -5,20 +5,20 @@
       <table class="table table-striped table-bordered text-center">
         <thead>
           <tr>
-            <th class="text-center">Date de la livraison</th>
-            <th class="text-center">Client</th>
-            <th class="text-center">Client email</th>
-            <th class="text-center">Numéro de commande</th>
-            <th class="text-center">Numéro du bon de livraison</th>
-            <th class="text-center">Téléphone</th>
-            <th class="text-center">Adresse</th>
-            <th class="text-center">Ville</th>
-            <th class="text-center">Code Postal</th>
-            <th class="text-center">Fonction de prestation</th>
-            <th class="text-center">Produit commandé</th>
-            <th class="text-center">Prix de la livraison</th>
-            <th class="text-center">Satisfaction client</th>
-            <th class="text-center">Statut</th>
+            <th class="text-center vertical-middle">Date de la livraison</th>
+            <th class="text-center vertical-middle">Client</th>
+            <th class="text-center vertical-middle">Client email</th>
+            <th class="text-center vertical-middle">Numéro de commande</th>
+            <th class="text-center vertical-middle">Numéro du bon de livraison</th>
+            <th class="text-center vertical-middle">Téléphone</th>
+            <th class="text-center vertical-middle">Adresse</th>
+            <th class="text-center vertical-middle">Ville</th>
+            <th class="text-center vertical-middle">Code Postal</th>
+            <th class="text-center vertical-middle">Fonction de prestation</th>
+            <th class="text-center vertical-middle">Produit commandé</th>
+            <th class="text-center vertical-middle">Prix de la livraison</th>
+            <th class="text-center vertical-middle">Satisfaction client</th>
+            <th class="text-center vertical-middle">Statut</th>
           </tr>
         </thead>
         <tbody>
@@ -70,7 +70,7 @@
           </tr>
           @endif
           <tr>
-            <td colspan="10" align=right>Total: </td>
+            <td colspan="11" align=right>Total: </td>
             <td>{{$total}} €</td>
           </tr>
         </tbody>

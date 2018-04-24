@@ -745,3 +745,6 @@ button:focus {
     border-radius: 15px;
     color: #fff !important;
 }
+.cashier-search-button{
+    z-index: 111;
+}
