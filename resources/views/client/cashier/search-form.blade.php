@@ -4,8 +4,8 @@
 
 <div class="custom_search">
   <input type="text" value="{{Input::get('search_field')}}" class="form-control search_dropdown" name="search_field" placeholder="Rechercher un client, une commande..">
-  <a href="#" class="dropdown_btn"><i class="fa fa-chevron-down"></i></a>
-  <button type="submit" class="btn btn_search"><i class="fa fa-search"></i></button>
+  <a href="#" class="dropdown_btn cashier-search-button"><i class="fa fa-chevron-down"></i></a>
+  <button type="submit" class="btn btn_search cashier-search-button"><i class="fa fa-search"></i></button>
   <div class="toggle_div">
     <span>Rechercher par</span>
     <div class="form-group">

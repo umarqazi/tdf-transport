@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -67,9 +67,9 @@
                   </div>
                   <span class="text-danger">{!! $errors->first('zip_code') !!}</span>
                 </div>
-                @if(!is_null($store['store_logo']))
+                @if(!empty($store['store_logo']))
                   <div class="text-center storeLogo">
-                    <img src="{{URL::to('/assets/images/'.$store->id.'/'.$store->store_logo)}}" width="100px" height="100px">
+                    <img src="{{URL::to('/assets/images/'.$store->id.'/'.$store->store_logo)}}" width="150px" height="75px">
                   </div>
                 @endif
                 <div class="form-group text-center">
