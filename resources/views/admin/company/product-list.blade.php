@@ -41,8 +41,8 @@
     <div class="row">
       <div class="col-md-12">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{route('dashboard.default')}}">Dashboard</a></li>
-          <li class="breadcrumb-item"><a href="{{route('company.list')}}">Company</a></li>
+          <li class="breadcrumb-item"><a href="{{route('dashboard.default')}}">Tableau de bord</a></li>
+          <li class="breadcrumb-item"><a href="{{route('company.list')}}">Compagnie</a></li>
           <li class="breadcrumb-item active">{{$company->company_name}}</li>
         </ol>
       </div>
