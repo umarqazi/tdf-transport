@@ -139,7 +139,7 @@ class ProductController extends Controller
                 }
             }
         }
-        return redirect::back()->with('message', 'Le produit a été téléchargé avec succès');
+        return redirect::back()->with('message', 'La liste de produit a bien été importée.');
     }
     public function destroySubProduct(Request $request)
     {
