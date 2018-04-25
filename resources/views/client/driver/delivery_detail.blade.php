@@ -67,13 +67,7 @@
       <div class="col-md-6 col-md-offset-3">
         <div class="text-center">
           <div class="form-inline">
-            <select class="form-control" name="delivery_status">
-              <option value="">Faire un choix</option>
-              <option value="1">1. Client absent</option>
-              <option value="2">2. Produit casse lors du transport / montage</option>
-              <option value="3">3. Produit manquant / Livraison partielle</option>
-              <option value="4">4. Rien a signaler</option>
-            </select>
+            {!! Form::select('delivery_status', Config::get('constants.Driver Feedback'), null, ['class'=>'form-control'])!!}
           </div>
         </div>
       </div>

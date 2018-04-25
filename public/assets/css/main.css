@@ -700,6 +700,8 @@ button:focus {
     float: left;
     width: 100%;
     margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
 }
 .delivery-detail-record{
     width: 100%;
@@ -741,10 +743,11 @@ button:focus {
     color: #fff;
 }
 .modal-header .modal-close{
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     background-color: #000;
-    border-radius: 15px;
+    border-radius: 50%;
+    opacity: 1;
     color: #fff !important;
 }
 .cashier-search-button{
@@ -760,4 +763,16 @@ button:focus {
   transform: -webkit-rotate(-20deg);
   transform: rotate(-20deg);
   float:left;
+}
+.aid-company{
+  width:100%;
+  float:left;
+  margin: 10px 0px;
+}
+.aid-company li{
+  list-style: none;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0px 15px 0px 0px;
+  color:#000;
 }

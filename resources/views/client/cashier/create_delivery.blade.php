@@ -175,13 +175,14 @@
             </div>
             <div class="form-group">
               {{ Form::select('service', Config::get('constants.Services'), null, ['class'=>'full-width', "onchange"=>"getPrice(this)"])}}
+              <span class="text-danger">{!! $errors->first('service') !!}</span>
             </div>
-            <span class="text-danger">{!! $errors->first('services') !!}</span>
             <div class="form-group">
               <div class="input-group">
                 {{Form::text('delivery_price', null, ['class'=>'form-control', 'placeholder'=>'Prix de la livraison', 'id'=>'delivery_charges'])}}
                 <div class="input-group-addon"><i class="fa fa-euro fa-fw"></i></div>
               </div>
+              <span class="text-danger">{!! $errors->first('delivery_price') !!}</span>
               @if(auth()->user()->type==Config::get('constants.Users.Manager'))
                 <div class="form-group space">
                   Livraison offerte {{Form::checkbox('free', 1, null, ['onclick'=>'freeDelivery(this)', 'id'=>'delivery'])}}
