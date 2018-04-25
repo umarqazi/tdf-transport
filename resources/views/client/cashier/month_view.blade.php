@@ -28,6 +28,7 @@ $(document).ready(function() {
         title : '{{ $task->total  }} livraison{{($task->total > 1)?"s": ""}} - {{$task->day_period}}',
         start : '{{ $task->task_date }}',
         color : @if($task->day_period==Config::get('constants.Day Period.matin')) '#999999' @else '#45818e' @endif,
+        url:    APP_URL+'/dashboard/'+'{{ $task->task_date }}'
       },
       @endforeach
     ],

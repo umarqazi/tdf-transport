@@ -20,7 +20,7 @@
                                 @if(!empty($driver['tours']))
                                     @foreach($driver['tours'] as $key=>$tour)
                                         <div class="{{($key+1)%2 == 0 ? 'even-record': 'odd-record'}}">
-                                          @if($tour['delivery']['status']==Config::get('constants.Status.Delivered'))
+                                          @if($tour['delivery']['status']==Config::get('constants.Status.Delivered') || $tour['delivery']['status']==Config::get('constants.Status.Return'))
                                             <?php $left=20?>
                                               @for($i=1; $i <= 17; $i++)
                                                 <div class="horizontal-line" style="left:{{$left}}px">
