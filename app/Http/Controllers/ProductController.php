@@ -130,10 +130,12 @@ class ProductController extends Controller
             })->get();
             if(!empty($data) && $data->count()){
                 foreach ($data as $key => $value) {
+                  if($value->famille_de_produits){
                     $product = ['product_family' => $value->famille_de_produits, 'company_id'=>$company_id];
                     $addProduct=self::insertProduct($product);
                     $sub_product = ['id'=>$addProduct->id,'product_type' => $value->produits,'sav' => $value->sav,'livraison' => $value->livraison,'livraison_montage' => $value->livraison_montage,'rétrocession' => $value->retrocession,'prestataire' => $value->livraison_prestataire,'montage' => $value->montage];
                     $addProduct=self::insertSubProduct($sub_product);
+                  }
                 }
             }
         }
