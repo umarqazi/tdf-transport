@@ -139,7 +139,7 @@ class HomeController extends Controller
 	public static function manageTours($user_id, $nextDay, $driver=NULL){
 
 		if($driver=='driver'){
-			$status=[Config::get('constants.Status.Active'), Config::get('constants.Status.Delivered')];
+			$status=[Config::get('constants.Status.Active'), Config::get('constants.Status.Delivered'), Config::get('constants.Status.Return')];
 		}else{
 			$status=[Config::get('constants.Status.Active')];
 		}

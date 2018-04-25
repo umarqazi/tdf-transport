@@ -98,7 +98,8 @@ class DeliveryController extends Controller
             'service'=> 'required',
             'address' => 'required',
             'pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id,
-            'order_pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id
+            'order_pdf' => 'required'.$request->id.'|mimes:pdf,jpeg,jpg,png'.$request->id,
+            'delivery_price' =>'required'
         ]);
         $deliveryId=$request->id;
         $date = str_replace('/', '-', $request->datetime);
@@ -276,17 +277,18 @@ class DeliveryController extends Controller
     }
     public function search($from, $to){
         $results = HomeController::deliveryProducts();
+        if(Auth::user()->type!=Config::get('constants.User Type.Manager TDF')){
+          $results=$results->where('store_id', Auth::user()->store_id);
+          $view='client.cashier.delivery_history';
+        }else{
+          $results=$results->whereIn('deliveries.status', [Config::get('constants.Status.Active'), Config::get('constants.Status.Return'), Config::get('constants.Status.Delivered')]);
+          $view='client.tdf_manager.history';
+        }
         $searchedResults = $results->where([
             ['datetime','>=' ,date('Y-m-d', strtotime($from))],
             ['datetime','<=' ,date('Y-m-d', strtotime($to))]])->orderBy('datetime', 'desc')
             ->paginate();
-
-        if (Auth::user()->type == 'Manager TDF') {
-            return view::make('client.tdf_manager.history')->with(['allDeliveries' => $searchedResults, 'from' => str_replace('-','/',$from), 'to'=> str_replace('-','/', $to)]);
-        }
-        else{
-            return view::make('client.cashier.delivery_history')->with(['allDeliveries' => $searchedResults, 'from' => str_replace('-','/',$from), 'to'=> str_replace('-','/', $to)]);
-        }
+        return view::make($view)->with(['allDeliveries' => $searchedResults, 'from' => str_replace('-','/',$from), 'to'=> str_replace('-','/', $to)]);
     }
     public function exportHistory(Request $request) {
         if(Auth::user()->type==Config::get('constants.Users.TDF Manager')){
@@ -337,21 +339,23 @@ class DeliveryController extends Controller
     }
     public function pTourPlan(Request $request){
         if($request->delivery_id){
-          $getTour=TourPlan::where('delivery_id', $request->delivery_id)->first();
-          if(!$getTour){
-            $addTour=new TourPlan;
-            $addTour->time_slot_id=$request->time_slot;
-            $addTour->delivery_id=$request->delivery_id;
-            $addTour->user_id=$request->user_id;
-            $addTour->status='0';
-            $addTour->save();
-            $updateDelivery=Delivery::find($request->delivery_id);
-            $updateDelivery->flag='1';
-            $updateDelivery->save();
-            Toast::success('La livraison a été assignée au conducteur');
-          }else{
-            Toast::error('Livraison déjà assignée au conducteur');
+          foreach($request->delivery_id as $delivery){
+            $getTour=TourPlan::where('delivery_id', $delivery)->first();
+            if(!$getTour){
+              $addTour=new TourPlan;
+              $addTour->time_slot_id=$request->time_slot;
+              $addTour->delivery_id=$delivery;
+              $addTour->user_id=$request->user_id;
+              $addTour->status='0';
+              $addTour->save();
+              $updateDelivery=Delivery::find($delivery);
+              $updateDelivery->flag='1';
+              $updateDelivery->save();
+            }else{
+              Toast::error('Livraison déjà assignée au conducteur');
+            }
           }
+          Toast::success('La livraison a été assignée au conducteur');
         }else{
             $link='';
             Toast::error("Il n'y a pas de plan de tournée pour le moment");
@@ -360,7 +364,7 @@ class DeliveryController extends Controller
     }
     public function allManagerDeliveries(Request $request){
         $getDeliveryHistory=HomeController::searchResults($request->all());
-        $getDeliveryHistory=$getDeliveryHistory->where('deliveries.status', Config::get('constants.Status.Active'))->orwhere('deliveries.status', Config::get('constants.Status.Delivered'))->orderby('datetime', 'desc')->paginate(10);
+        $getDeliveryHistory=$getDeliveryHistory->whereIn('deliveries.status', [Config::get('constants.Status.Active'), Config::get('constants.Status.Delivered'),Config::get('constants.Status.Return')])->orderby('datetime', 'desc')->paginate(10);
         return view::make('client.tdf_manager.history')->with('allDeliveries', $getDeliveryHistory)->withInput($request->all());
     }
     public function deleteTour(Request $request){
