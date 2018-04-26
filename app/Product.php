@@ -12,7 +12,7 @@ class Product extends Model
 	}
 	public function deliveries()
 	{
-	    return $this->belongsToMany('LaravelAcl\Delivery', 'delivery_products');
+	    return $this->hasMany('LaravelAcl\Delivery');
 	}
   public function subProducts()
 	{

@@ -13,7 +13,7 @@ class Delivery extends Model
     {
     	return Carbon::parse($datetime)->format("d-M");
     }
-    public function products()
+    public function subProduct()
     {
         return $this->belongsToMany('LaravelAcl\SubProduct');
     }
@@ -23,6 +23,15 @@ class Delivery extends Model
     }
     public function user()
   	{
-  			return $this->belongsTo('LaravelAcl\User', 'tour_plan');
+        return $this->belongsTo('LaravelAcl\User', 'tour_plan');
   	}
+  	public function product()
+    {
+        return $this->belongsTo('LaravelAcl\Product', 'product_id');
+    }
+    public function store()
+    {
+        return $this->belongsTo('LaravelAcl\Store');
+    }
+
 }
