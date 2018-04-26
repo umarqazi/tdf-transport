@@ -97,7 +97,7 @@ class DeliveryController extends Controller
             'order_id'=> 'required',
             'service'=> 'required',
             'address' => 'required',
-            'pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id,
+            'pdf' => 'required|mimes:pdf,jpeg,jpg,png'.$request->id,
             'order_pdf' => 'required'.$request->id.'|mimes:pdf,jpeg,jpg,png'.$request->id,
             'delivery_price' =>'required'
         ]);
