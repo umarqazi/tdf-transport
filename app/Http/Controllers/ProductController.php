@@ -116,13 +116,23 @@ class ProductController extends Controller
     }
     public function importExport(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'bulk_upload' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect::back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $file=$request->bulk_upload;
         $company_id=$request->company_id;
         $extension=$file->getClientOriginalExtension();
         if(!in_array($extension, ['xlsx']))
         {
             return redirect::back()
-                ->withErrors('The bulk upload must be a file of type:  xlsx.');
+                ->withErrors('Le transfert groupé doit être un fichier de type: xlsx.');
         }
         if($file){
             $path = $request->file('bulk_upload')->getRealPath();

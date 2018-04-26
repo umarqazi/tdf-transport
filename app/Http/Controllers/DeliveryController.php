@@ -57,7 +57,7 @@ class DeliveryController extends Controller
         }
 
         $dayPeriod=$request->period;
-        $products=['0'=>'Multi-produits'];
+        $products=[''=>'Multi-produits'];
         if($id)
         {
             $getDelivery=HomeController::deliveryProducts()->where('deliveries.id',$id)->first();
@@ -97,9 +97,10 @@ class DeliveryController extends Controller
             'order_id'=> 'required',
             'service'=> 'required',
             'address' => 'required',
-            'pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id,
-            'order_pdf' => 'required'.$request->id.'|mimes:pdf,jpeg,jpg,png'.$request->id,
-            'delivery_price' =>'required'
+            'pdf' => 'required|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
+            'order_pdf' => 'required'.$request->id.'|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
+            'delivery_price' =>'required',
+            'product_id'    => 'required'
         ]);
         $deliveryId=$request->id;
         $date = str_replace('/', '-', $request->datetime);
@@ -225,11 +226,11 @@ class DeliveryController extends Controller
     public function uploadPdf(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pdf' => 'mimes:pdf,jpeg,jpg,png',
-            'order_pdf' => 'mimes:pdf,jpeg,jpg,png'
+            'pdf' => 'mimes:pdf,jpeg,jpg,png,doc,docx',
+            'order_pdf' => 'mimes:pdf,jpeg,jpg,png,doc,docx'
         ]);
         if ($validator->fails()) {
-            header('HTTP/1.1 403 '); exit("Le type de fichier doit être pdf, jpeg, jpg, png");
+            header('HTTP/1.1 403 '); exit("Le type de fichier doit être pdf, jpeg, jpg, png, doc, docx, zip");
         }
         $pdf=$request->file('pdf');
         $type=date('Y-m-d h:i:s');

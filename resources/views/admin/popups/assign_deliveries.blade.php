@@ -134,7 +134,7 @@
                                                     <td>{{$type}}</td>
                                                     <td>{{$price}}</td>
                                                     <td>
-                                                        <div class="checkboxDiv"><input type="checkbox" name="delivery_id" value="{{$delivery['id']}}"></div>
+                                                        <div class="checkboxDiv"><input type="checkbox" name="delivery_id[]" value="{{$delivery['id']}}"></div>
                                                     </td>
                                                 </tr>
                                             @endforeach
