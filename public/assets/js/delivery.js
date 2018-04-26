@@ -138,6 +138,9 @@ $(document).ready(function () {
     $(".dropdown_btn").click(function(){
         $(".toggle_div").slideToggle();
     });
+    $(".delivery_dropdown_btn").click(function(){
+        $(".delivery_toggle_div").slideToggle();
+    });
 });
 jQuery(function() {
     // setTimeout() function will be fired after page is loaded

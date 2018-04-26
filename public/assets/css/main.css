@@ -767,6 +767,48 @@ button:focus {
   transform: rotate(-20deg);
   float:left;
 }
+.deliveryFilters{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.product-family-search{
+    width: calc(100% - 42px) !important;
+    margin:-5px 3px -13px 0px;
+    float: left;
+    position: relative;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 111;
+}
+.product-family-search .product-family-search-input{
+    width: calc(100% - 35px) !important;
+}
+#product-family-search-heading{
+    text-align: center;
+}
+.delivery_search{
+    right: 15px;
+    top: -10px;
+    height: 40px;
+    margin-bottom: 12px !important;
+    margin-top: -5px;
+}
+.delivery_dropdown_btn {
+    right: 50px;
+    top: 9px;
+    color: #333;
+    background-color: #ddd;
+    height: 26px;
+    padding: 6px 10px;
+    margin-right: -44px;
+}
+.delivery_toggle_div{
+    display: none;
+}
+.delivery_toggle_div span{
+    text-align: center !important;
+}
 .aid-company{
   width:100%;
   float:left;

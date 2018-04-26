@@ -21,4 +21,9 @@ class Store extends Model
     {
         return $this->belongsTo('LaravelAcl\Company');
     }
+
+    public function deliveries()
+    {
+        return $this->hasMany('LaravelAcl\Delivery');
+    }
 }
