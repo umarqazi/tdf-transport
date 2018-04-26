@@ -87,7 +87,6 @@ class HomeController extends Controller
 	}
 	public function tourPlan(Request $request)
 	{
-//	    dd($request->all());
 		$addmodal='';
 		$previousDate='';
 		$currentDate=$request->date;
