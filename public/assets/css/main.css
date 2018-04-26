@@ -821,3 +821,8 @@ button:focus {
   padding: 0px 15px 0px 0px;
   color:#000;
 }
+.tdf-form label{
+    display: block;
+    margin: 3px;
+    text-align: left;
+}
