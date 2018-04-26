@@ -23,6 +23,7 @@ return [
     'Edit Delivery' =>'Merci votre demande de livraison a été modifiée.',
     'Validate Delivery'=>'Vos demandes de livraisons ont été validées et les informations ont été transmises à la société TDF Transport.',
     'Database Fields' => ['SAV'=>'sav','Livraison'=>'livraison','Livraison + Montage'=>'livraison_montage', 'Retrocession'=>'rétrocession','Livraison Prestataire'=>'prestataire', 'Montage'=>'montage'],
-    "Send SMS"=>"Les sms ont été envoyés aux clients"
+    "Send SMS"=>"Les sms ont été envoyés aux clients",
+    'Driver Feedback' => [''=>'Faire un choix','1'=>'Client absent','2'=>'Produit casse lors du transport / montage','3'=>'Produit manquant / Livraison partielle', '4'=>'Rien a signaler']
 ];
 ?>

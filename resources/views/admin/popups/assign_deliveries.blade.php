@@ -12,12 +12,11 @@
                     <div class="col-lg-12">
                         <h1 class="page-header text-center">Choix de la livraison</h1>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                         <span class="delivery-heading">Liste des livraisons du jour <i class="fa fa-cubes fa-fw"></i></span>
                     </div>
 
-
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <form action="{{ URL::route('tour.plan.filter',['id' => $user_id]) }}" method="post" class="pull-right">
                             <span><i class="fa fa-filter"></i></span>
                             <div class="form-inline deliveryFilters">
@@ -151,7 +150,6 @@
                         </div>
                         {!! Form::close() !!}
                     </div>
-
                 </div>
             </div>
         </div>

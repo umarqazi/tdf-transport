@@ -700,6 +700,8 @@ button:focus {
     float: left;
     width: 100%;
     margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
 }
 .delivery-detail-record{
     width: 100%;
@@ -734,18 +736,22 @@ button:focus {
     margin-top: 10px;
 }
 .modal-header a .modal-close{
-    width: 30px;
-    height: 30px;
-    background-color: #000;
+    width: 35px;
+    height: 35px;
+    background-color: lightgrey;
     border-radius: 15px;
-    color: #fff;
+    color: #000;
 }
 .modal-header .modal-close{
-    width: 30px;
-    height: 30px;
-    background-color: #000;
-    border-radius: 15px;
-    color: #fff !important;
+    width: 35px;
+    height: 35px;
+    background-color: lightgrey;
+    border-radius: 50%;
+    opacity: 1;
+    color: #000 !important;
+}
+.close:hover{
+    opacity: 1 !important;
 }
 .cashier-search-button{
     z-index: 111;
@@ -802,4 +808,16 @@ button:focus {
 }
 .delivery_toggle_div span{
     text-align: center !important;
+}
+.aid-company{
+  width:100%;
+  float:left;
+  margin: 10px 0px;
+}
+.aid-company li{
+  list-style: none;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0px 15px 0px 0px;
+  color:#000;
 }
