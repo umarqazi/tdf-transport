@@ -86,8 +86,8 @@ return [
 	*/
 
 	'custom' => [
-		'attribute-name' => [
-			'rule-name' => 'custom-message',
+		'order_pdf' => [
+			'required' => "Aucun fichier n'a été sélectionné",
 		],
 	],
 

@@ -117,7 +117,7 @@
               <div class="input-group">
                 <div class="input-group" id="orderPdfDiv">
                   <meta name="csrf-token" content="{{ csrf_token() }}" />
-                  <input type="file" name="order_pdf" class="form-control" id="orderPdfFile" placeholder="Numero du bon de livraison">
+                  <input type="file" name="order_pdf" class="form-control" id="orderPdfFile" placeholder="Numero du bon de livraison" value="{{Input::old('order_pdf')}}">
                   <div class="input-group-addon cursor-pointer" onclick="upload()"><i class="fa fa-upload fa-fw"></i></div>
                 </div>
               </div>
@@ -139,7 +139,7 @@
                   <option value="{{$key}}" {{($delivery['product_id']==$key)? 'selected':''}}>{{$prod}}</option>
                 @endforeach
               </select>
-              <span class="text-danger">{!! $errors->first('product') !!}</span>
+              <span class="text-danger">{!! $errors->first('product_id') !!}</span>
             </div>
             <div class="form-group" id="products">
               @if($subProduct)
