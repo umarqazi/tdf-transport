@@ -772,18 +772,17 @@ button:focus {
     margin-bottom: 10px;
 }
 .product-family-search{
-    width: 287px;
-    margin:-15px 0px -13px 0px;
-    float: none;
-    clear: both;
+    width: calc(100% - 42px) !important;
+    margin:-5px 3px -13px 0px;
+    float: left;
     position: relative;
-    padding: 5px;
+    padding: 2px;
     border: 1px solid #ccc;
     border-radius: 5px;
     z-index: 111;
 }
 .product-family-search .product-family-search-input{
-    width: 230px !important;
+    width: calc(100% - 35px) !important;
 }
 #product-family-search-heading{
     text-align: center;
@@ -793,6 +792,7 @@ button:focus {
     top: -10px;
     height: 40px;
     margin-bottom: 12px !important;
+    margin-top: -5px;
 }
 .delivery_dropdown_btn {
     right: 50px;

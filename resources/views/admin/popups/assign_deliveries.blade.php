@@ -10,69 +10,72 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header text-center">Choix de la livraison</h1>
-                    </div>
-                    <div class="col-md-12">
-                        <span class="delivery-heading">Liste des livraisons du jour <i class="fa fa-cubes fa-fw"></i></span>
+                        <h1 class="page-header text-center">Choix de la livraison <i class="fa fa-cubes fa-fw"></i></h1>
                     </div>
 
-                    <div class="col-md-12">
-                        <form action="{{ URL::route('tour.plan.filter',['id' => $user_id]) }}" method="post" class="pull-right">
-                            <span><i class="fa fa-filter"></i></span>
-                            <div class="form-inline deliveryFilters">
-                                <div class="form-group">
-                                    <select class="form-control" name="filterCity">
-                                        <option value="default">VILLE</option>
-                                        @if(!empty($deliveryCities))
-                                            @foreach($deliveryCities as $deliveryCity)
-                                                <option value="{{$deliveryCity}}" @if(!empty($oldValues['filterCity']) && $oldValues['filterCity'] == $deliveryCity) selected @endif>
-                                                    {{$deliveryCity}}
-                                                </option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <?php $services = Config::get('constants.Services') ?>
-                                    <select class="form-control selectpicker" name="filterServices">
-                                        @foreach($services as $key =>$service)
-                                            <option value="{{empty($key)? 'default': $key}}" @if(!empty($oldValues['filterServices']) && $oldValues['filterServices'] == $service) selected @endif>{{$service}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control selectpicker" name="filterStores">
-                                        <option value="default">Sélectionnez un magasin</option>
-                                        @if(!empty($deliveryStores))
-                                            @foreach($deliveryStores as $deliveryStore)
-                                                <option value="{{$deliveryStore['id']}}" @if(!empty($oldValues['filterStores']) && $oldValues['filterStores'] == $deliveryStore['id']) selected @endif>{{$deliveryStore['store_name']}}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                                <div class="product-family-search form-group">
-                                    <input type="text" class="form-control product-family-search-input" placeholder="Choisissez une famille de produits" disabled>
-                                    <a href="#" class="delivery_dropdown_btn"><i class="fa fa-chevron-down"></i></a>
-                                    <div class="delivery_toggle_div">
-                                        <span class="text-center" id="product-family-search-heading">Rechercher par</span>
-                                        @if(!empty($deliveryFamilies))
-                                            @foreach($deliveryFamilies as $deliveryFamily)
-                                                <div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" id="customerCheck" name="filterProducts[]" value="{{$deliveryFamily->product->id }}" @if(!empty($oldValues['filterProducts']) && in_array($deliveryFamily->product->id,$oldValues['filterProducts'])) checked @endif> {{$deliveryFamily->product->product_family }}
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        @endif
+                    <div class="col-lg-10 col-lg-offset-1">
+                        <div class="row">
+                            <form action="{{ URL::route('tour.plan.filter',['id' => $user_id]) }}" method="post">
+                                <span><i class="fa fa-filter"></i></span>
+                                <div class="form-inline">
+
+                                    <div class="form-group col-lg-3">
+                                        <select class="form-control" name="filterCity">
+                                            <option value="default">VILLE</option>
+                                            @if(!empty($deliveryCities))
+                                                @foreach($deliveryCities as $deliveryCity)
+                                                    <option value="{{$deliveryCity}}" @if(!empty($oldValues['filterCity']) && $oldValues['filterCity'] == $deliveryCity) selected @endif>
+                                                        {{$deliveryCity}}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
+                                    <div class="form-group col-lg-3">
+                                        <?php $services = Config::get('constants.Services') ?>
+                                        <select class="form-control selectpicker" name="filterServices">
+                                            @foreach($services as $key =>$service)
+                                                <option value="{{empty($key)? 'default': $key}}" @if(!empty($oldValues['filterServices']) && $oldValues['filterServices'] == $service) selected @endif>{{$service}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-3">
+                                        <select class="form-control selectpicker" name="filterStores">
+                                            <option value="default">Sélectionnez un magasin</option>
+                                            @if(!empty($deliveryStores))
+                                                @foreach($deliveryStores as $deliveryStore)
+                                                    <option value="{{$deliveryStore['id']}}" @if(!empty($oldValues['filterStores']) && $oldValues['filterStores'] == $deliveryStore['id']) selected @endif>{{$deliveryStore['store_name']}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-3">
+                                        <div class="product-family-search">
+                                            <input type="text" class="form-control product-family-search-input" placeholder="Choisissez une famille de produits" disabled>
+                                            <a href="#" class="delivery_dropdown_btn"><i class="fa fa-chevron-down"></i></a>
+                                            <div class="delivery_toggle_div">
+                                                <span class="text-center" id="product-family-search-heading">Rechercher par</span>
+                                                @if(!empty($deliveryFamilies))
+                                                    @foreach($deliveryFamilies as $deliveryFamily)
+                                                        <div>
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" id="customerCheck" name="filterProducts[]" value="{{$deliveryFamily->product->id }}" @if(!empty($oldValues['filterProducts']) && in_array($deliveryFamily->product->id,$oldValues['filterProducts'])) checked @endif> {{$deliveryFamily->product->product_family }}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn delivery_search"><i class="fa fa-search"></i></button>
+                                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                        <input type="hidden" name="user_id" value="{{$user_id}}">
+                                    </div>
+
                                 </div>
-                                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                <input type="hidden" name="user_id" value="{{$user_id}}">
-                                <button type="submit" class="btn delivery_search"><i class="fa fa-search"></i></button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
 
                     <div class="col-md-12">
