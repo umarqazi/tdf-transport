@@ -36,7 +36,7 @@
                                     <?php $services = Config::get('constants.Services') ?>
                                     <select class="form-control selectpicker" name="filterServices">
                                         @foreach($services as $key =>$service)
-                                            <option value="{{$key}}" @if(!empty($oldValues['filterServices']) && $oldValues['filterServices'] == $service) selected @endif>{{$service}}</option>
+                                            <option value="{{empty($key)? 'default': $key}}" @if(!empty($oldValues['filterServices']) && $oldValues['filterServices'] == $service) selected @endif>{{$service}}</option>
                                         @endforeach
                                     </select>
                                 </div>
