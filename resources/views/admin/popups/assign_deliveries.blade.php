@@ -55,13 +55,13 @@
                                     <input type="text" class="form-control product-family-search-input" placeholder="Choisissez une famille de produits" disabled>
                                     <a href="#" class="delivery_dropdown_btn"><i class="fa fa-chevron-down"></i></a>
                                     <div class="delivery_toggle_div">
-                                        <span id="product-family-search-heading">Rechercher par</span>
+                                        <span class="text-center" id="product-family-search-heading">Rechercher par</span>
                                         @if(!empty($deliveryFamilies))
                                             @foreach($deliveryFamilies as $deliveryFamily)
                                                 <div>
                                                     <div class="checkbox">
                                                         <label>
-                                                            <input type="checkbox" id="customerCheck" name="customerCheck[]" value="{{$deliveryFamily->product->id }}" @if(!empty($oldValues['customerCheck']) && in_array($deliveryFamily->product->id,$oldValues['customerCheck'])) checked @endif> {{$deliveryFamily->product->product_family }}
+                                                            <input type="checkbox" id="customerCheck" name="filterProducts[]" value="{{$deliveryFamily->product->id }}" @if(!empty($oldValues['filterProducts']) && in_array($deliveryFamily->product->id,$oldValues['filterProducts'])) checked @endif> {{$deliveryFamily->product->product_family }}
                                                         </label>
                                                     </div>
                                                 </div>

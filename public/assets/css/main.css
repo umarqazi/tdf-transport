@@ -767,7 +767,7 @@ button:focus {
 }
 .product-family-search{
     width: 287px;
-    margin:-15px 7px -13px 0px;
+    margin:-15px 0px -13px 0px;
     float: none;
     clear: both;
     position: relative;
@@ -777,7 +777,7 @@ button:focus {
     z-index: 111;
 }
 .product-family-search .product-family-search-input{
-    width: 239px !important;
+    width: 230px !important;
 }
 #product-family-search-heading{
     text-align: center;
@@ -799,4 +799,7 @@ button:focus {
 }
 .delivery_toggle_div{
     display: none;
+}
+.delivery_toggle_div span{
+    text-align: center !important;
 }
