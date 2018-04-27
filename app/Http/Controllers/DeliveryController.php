@@ -167,6 +167,10 @@ class DeliveryController extends Controller
             $name=self::storeImage($pdf, $getStoreName, $type);
             $delivery->order_pdf=$name;
         }
+        $result = substr($request->mobile_number, 0, 3);
+        if($result!='+33'){
+          $request->mobile_number = preg_replace('/^0/','+33',$request->mobile_number);
+        }
         $delivery->datetime=date('Y-m-d', strtotime($date));
         $delivery->day_period=$request->day_period;
         $delivery->first_name=$request->first_name;

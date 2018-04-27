@@ -826,3 +826,9 @@ button:focus {
     margin: 3px;
     text-align: left;
 }
+.thankyou_heading{
+  padding:0px !important;
+  margin-top: 30% !important;
+  display: inline-block;
+  font-size: 30pt !important;
+}
