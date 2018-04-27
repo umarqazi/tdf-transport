@@ -223,7 +223,10 @@ Route::group(['middleware' => ['web']], function ()
             "uses" => 'LaravelAcl\Http\Controllers\VehicleController@updateDeliveryStatus'
         ]);
     });
-
+    Route::post('/clientFeedback', [
+        "as"   => "client.feedback",
+        "uses" => 'LaravelAcl\Http\Controllers\VehicleController@pClientFeedback'
+    ]);
     /*
     |--------------------------------------------------------------------------
     | Admin side (auth required)

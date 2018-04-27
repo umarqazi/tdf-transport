@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use view;
 use Toast;
 use Config;
+use Mail;
 use Jenssegers\Date\Date;
 class VehicleController extends Controller
 {
@@ -37,6 +38,8 @@ class VehicleController extends Controller
     return view::make('client.driver.delivery_detail')->with(['time'=>$time,'date'=>$date, 'detail'=>$getDetail]);
   }
   public function updateDeliveryStatus(Request $request){
+    $updateDelivery=Delivery::find($request->id);
+    $email=$updateDelivery->customer_email;
     if($request->satisfy==1){
       $satisfy=1;
     }else{
@@ -45,14 +48,33 @@ class VehicleController extends Controller
     $delivery_status=$request->delivery_status;
     $id=$request->id;
     if($delivery_status=='4'){
-      $records=['status'=>Config::get('constants.Status.Delivered'), 'driver_feedback'=>$satisfy, 'delivery_problem'=>$delivery_status,];
+      $mail=Mail::send('client.email.client_feedback', ['data'=>$updateDelivery], function($message) use ($email)
+      {
+          $message->to($email, 'TDF Transport')->subject('Commentaires de livraison');
+      });
+      $updateDelivery->status=Config::get('constants.Status.Delivered');
     }
     else{
-      $records=['delivery_problem'=>$delivery_status,'status'=>Config::get('constants.Status.Return'), 'driver_feedback'=>$satisfy];
+      $updateDelivery->status=Config::get('constants.Status.Return');
     }
-    $updateDelivery=Delivery::where('id', $id)->update($records);
+    $updateDelivery->driver_feedback=$satisfy;
+    $updateDelivery->delivery_problem=$delivery_status;
+    $updateDelivery->save();
     Toast::success('Le statut de livraison a été mis à jour');
     return redirect::to('/driverTours');
   }
-
+  public function pClientFeedback(Request $request){
+    if($request->id){
+      $getDelivery=Delivery::find($request->id);
+      if(empty($getDelivery->customer_feedback)){
+        $getDelivery->customer_feedback=$request->feedback;
+        if($request->satisfy){
+          $getDelivery->client_satisfaction=$request->satisfy;
+        }
+        $getDelivery->save();
+      }
+    }
+    Toast::success('Merci pour votre retour');
+    return view('client.email.thankyou');
+  }
 }
