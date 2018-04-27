@@ -23,13 +23,16 @@
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
   <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
   <![endif]-->
+  <script type="text/javascript">
+      var APP_URL = {!! json_encode(url('/')) !!}
+  </script>
 </head>
 
 <body>
     <div class="login-container">
       @yield('content')
       <footer class="login-footer">
-        <a href="" class="footer-logo"><img src="{{asset('assets/images')}}/logoTDF.png"></a>
+        <a class="footer-logo"><img src="{{asset('assets/images')}}/logoTDF.png"></a>
         <ul class="footer-links">
           <li><i class="fa fa-map-marker"></i> 20 rue de Moreau - 75012 PARIS</li>
           <li><i class="fa fa-phone"></i> 09 80 57 19 92</li>

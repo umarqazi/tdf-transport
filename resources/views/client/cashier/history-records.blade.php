@@ -61,7 +61,7 @@
             <td>{{$delivery['service']}}</td>
             <td>{{$type}}</td>
             <td>{{$price}}</td>
-            <td>@if($delivery['customer_feedback']==1) <i class="fa fa-circle green-circle"></i> @elseif($delivery['customer_feedback']==2) <i class="fa fa-circle yellow-circle"></i> @elseif($delivery['customer_feedback']==3) <i class="fa fa-circle red-circle"></i> @endif</td>
+            <td>@if($delivery['client_satisfaction']==1) <i class="fa fa-circle green-circle"></i> @elseif($delivery['client_satisfaction']==2) <i class="fa fa-circle yellow-circle"></i> @elseif($delivery['client_satisfaction']==3) <i class="fa fa-circle red-circle"></i> @endif</td>
             <td>{{($delivery["delivery_problem"]!=0)? Config::get('constants.Driver Feedback.'.$delivery["delivery_problem"]): ""}}</td>
             <td>{{$status}}</td>
           </tr>
