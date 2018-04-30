@@ -13,44 +13,52 @@
                         <h1 class="page-header text-center">Choix de la livraison <i class="fa fa-cubes fa-fw"></i></h1>
                     </div>
 
-                    <div class="col-lg-10 col-lg-offset-1">
+                    <div class="col-lg-12">
                         <div class="row">
                             <form action="{{ URL::route('tour.plan.filter',['id' => $user_id]) }}" method="post">
-                                <span><i class="fa fa-filter"></i></span>
+
                                 <div class="form-inline">
 
-                                    <div class="form-group col-lg-3">
-                                        <select class="form-control" name="filterCity">
-                                            <option value="default">VILLE</option>
-                                            @if(!empty($deliveryCities))
-                                                @foreach($deliveryCities as $deliveryCity)
-                                                    <option value="{{$deliveryCity}}" @if(!empty($oldValues['filterCity']) && $oldValues['filterCity'] == $deliveryCity) selected @endif>
-                                                        {{$deliveryCity}}
-                                                    </option>
+                                    <div class="col-md-3">
+                                        <div class="city-filter">
+                                            <i class="fa fa-filter"></i>
+                                            <select class="form-control" name="filterCity">
+                                                <option value="default">VILLE</option>
+                                                @if(!empty($deliveryCities))
+                                                    @foreach($deliveryCities as $deliveryCity)
+                                                        <option value="{{$deliveryCity}}" @if(!empty($oldValues['filterCity']) && $oldValues['filterCity'] == $deliveryCity) selected @endif>
+                                                            {{$deliveryCity}}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="">
+                                            <?php $services = Config::get('constants.Services') ?>
+                                            <select class="form-control selectpicker" name="filterServices">
+                                                @foreach($services as $key =>$service)
+                                                    <option value="{{empty($key)? 'default': $key}}" @if(!empty($oldValues['filterServices']) && $oldValues['filterServices'] == $service) selected @endif>{{$service}}</option>
                                                 @endforeach
-                                            @endif
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-lg-3">
-                                        <?php $services = Config::get('constants.Services') ?>
-                                        <select class="form-control selectpicker" name="filterServices">
-                                            @foreach($services as $key =>$service)
-                                                <option value="{{empty($key)? 'default': $key}}" @if(!empty($oldValues['filterServices']) && $oldValues['filterServices'] == $service) selected @endif>{{$service}}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-md-3">
+                                        <div class="">
+                                            <select class="form-control selectpicker" name="filterStores">
+                                                <option value="default">Sélectionnez un magasin</option>
+                                                @if(!empty($deliveryStores))
+                                                    @foreach($deliveryStores as $deliveryStore)
+                                                        <option value="{{$deliveryStore['id']}}" @if(!empty($oldValues['filterStores']) && $oldValues['filterStores'] == $deliveryStore['id']) selected @endif>{{$deliveryStore['store_name']}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-lg-3">
-                                        <select class="form-control selectpicker" name="filterStores">
-                                            <option value="default">Sélectionnez un magasin</option>
-                                            @if(!empty($deliveryStores))
-                                                @foreach($deliveryStores as $deliveryStore)
-                                                    <option value="{{$deliveryStore['id']}}" @if(!empty($oldValues['filterStores']) && $oldValues['filterStores'] == $deliveryStore['id']) selected @endif>{{$deliveryStore['store_name']}}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-lg-3">
-                                        <div class="product-family-search">
+                                    <div class="col-md-3">
+
+                                        <div class=" product-family-search">
                                             <input type="text" class="form-control product-family-search-input" placeholder="Choisissez une famille de produits" disabled>
                                             <a href="#" class="delivery_dropdown_btn"><i class="fa fa-chevron-down"></i></a>
                                             <div class="delivery_toggle_div">
@@ -72,7 +80,6 @@
                                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         <input type="hidden" name="user_id" value="{{$user_id}}">
                                     </div>
-
                                 </div>
                             </form>
                         </div>
@@ -91,6 +98,7 @@
                                         <tr>
                                             <th class="text-center">Date de la livraison</th>
                                             <th class="text-center">Tranche horaire</th>
+                                            <th class="text-center">Store Name</th>
                                             <th class="text-center">Client</th>
                                             <th class="text-center">Numero de commande</th>
                                             <th class="text-center">Numero du bon de livraison</th>
@@ -123,6 +131,7 @@
                                                 <tr>
                                                     <td>{{date('d/m/Y', strtotime($delivery['datetime']))}}</td>
                                                     <td>{{$delivery['day_period']}}</td>
+                                                    <td>{{$delivery->store->store_name}}</td>
                                                     <td>{{$delivery['first_name']}} {{$delivery['last_name']}}</td>
                                                     <td>@if($delivery['order_pdf'])<a href="{{asset('assets/images')}}/{{$delivery['stores_id']}}/{{$delivery['order_pdf']}}" target="_blank"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['order_id']}}</td>
                                                     <td>@if($delivery['delivery_pdf'])<a href="{{asset('assets/images')}}/{{$delivery['stores_id']}}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['delivery_number']}}</td>
@@ -139,7 +148,7 @@
                                                 </tr>
                                             @endforeach
                                         @else
-                                            <tr><td colspan="11">Records not found</td></tr>
+                                            <tr><td colspan="11">Enregistrements non trouvés.</td></tr>
                                         @endif
                                         </tbody>
                                     </table>
