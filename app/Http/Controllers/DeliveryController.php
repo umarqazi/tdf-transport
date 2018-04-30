@@ -77,9 +77,11 @@ class DeliveryController extends Controller
         }
 
         if ($this->authUser->type == 'Admin'){
+            $view = 'admin.deliveries.edit';
             $storeId=$getDelivery->store_id;
         }
         else{
+            $view = 'client.cashier.create_delivery';
             $storeId=$this->authUser->store_id;
         }
         $storeInfo=Store::find($storeId);
@@ -93,15 +95,14 @@ class DeliveryController extends Controller
         }
 
         if (Auth::user()->type == 'Admin') {
-            return view::make('admin.deliveries.edit')->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
+            return view::make($view)->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
         }
         else{
-            return view::make('client.cashier.create_delivery')->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
+            return view::make($view)->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
         }
     }
     public function create(Request $request)
     {
-//        dd($request);
         $validator = Validator::make($request->all(), [
             'datetime' => 'required',
             'first_name'=> 'required',
@@ -144,9 +145,11 @@ class DeliveryController extends Controller
         }
         $delivery->save();
         if(Auth::user()->type == 'Admin'){
+            $view = '/admin/deliveries';
             $getStoreName=$delivery->store_id;
         }
         else{
+            $view = '/dashboard';
             $getStoreName=Auth::user()->store_id;
         }
         $fileName='DeliveryNote'.$delivery->id;
@@ -233,10 +236,10 @@ class DeliveryController extends Controller
         $delivery->save();
         Toast::success($message);
         if (Auth::user()->type == 'Admin'){
-            return redirect::to('/admin/deliveries');
+            return redirect::to($view);
         }
         else{
-            return redirect::to('/dashboard');
+            return redirect::to($view);
         }
     }
     public function viewDeliver(Request $request)
