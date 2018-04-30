@@ -22,6 +22,6 @@ function getTours(option){
 }
 function showDeliveries(time){
   var user_id = $('#selUser option:selected').val();
-  $("#time_slot").val(time);
+  $(".time_slot").val(time);
   $("#deliveries").modal("show");
 }
