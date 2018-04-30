@@ -94,12 +94,7 @@ class DeliveryController extends Controller
             }
         }
 
-        if (Auth::user()->type == 'Admin') {
-            return view::make($view)->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
-        }
-        else{
-            return view::make($view)->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
-        }
+        return view::make($view)->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
     }
     public function create(Request $request)
     {
@@ -235,12 +230,7 @@ class DeliveryController extends Controller
 
         $delivery->save();
         Toast::success($message);
-        if (Auth::user()->type == 'Admin'){
-            return redirect::to($view);
-        }
-        else{
-            return redirect::to($view);
-        }
+        return redirect::to($view);
     }
     public function viewDeliver(Request $request)
     {
