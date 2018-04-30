@@ -42,6 +42,11 @@ $(document).ready(function () {
     $(".delete_user").click(function(){
         return confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur?");
     });
+    $('#file-upload').change(function() {
+        var i = $(this).prev('label').clone();
+        var file = $('#file-upload')[0].files[0].name;
+        $('#fileName').text(file);
+    });
 });
 $('.close').on('click', function () {
   var currentLocation = window.location;
@@ -79,6 +84,28 @@ function getStores(option){
         success: function(data) {
             $('#store_dropdown').children('option').remove();
             $('#store_dropdown').append(data);
+        },
+    });
+}
+function viewDelivery(url){
+    window.location = url;
+}
+
+$('select').selectpicker();
+$(function () {
+    $('#datetimepicker4').datetimepicker({
+        format: 'DD/MM/Y'
+    });
+});
+function getProduct(option){
+    var id=option.value;
+    $.ajax({
+        url: APP_URL+"/getProductType",
+        type:"GET",
+        dataType: 'text',
+        data: { id : id},
+        success: function(data) {
+            $('#products').html(data);
         },
     });
 }

@@ -311,11 +311,11 @@ class HomeController extends Controller
 			return $getDeliveryRecords;
 		}
 		public static function deliveryProducts(){
-			$getDeliveryRecords=Delivery::leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'sub_products.product_type','stores.store_name', 'stores.id as stores_id');
+			$getDeliveryRecords=Delivery::leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'sub_products.product_type','stores.store_name', 'stores.id as stores_id')->orderBy('deliveries.datetime','desc');
 			return $getDeliveryRecords;
 		}
 		public static function deliveriesWithProducts(){
-			$getDeliveryRecords=Delivery::with('product','store')->leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'sub_products.product_type','stores.store_name', 'stores.id as stores_id');
+			$getDeliveryRecords=Delivery::with('product','store')->leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'sub_products.product_type','stores.store_name', 'stores.id as stores_id')->orderBy('deliveries.datetime','desc');
 			return $getDeliveryRecords;
 		}
 	}

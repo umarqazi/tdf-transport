@@ -795,16 +795,21 @@ button:focus {
     margin-top: -5px;
 }
 .delivery_dropdown_btn {
-    right: 50px;
-    top: 9px;
+    right: 0;
     color: #333;
     background-color: #ddd;
-    height: 26px;
-    padding: 6px 10px;
-    margin-right: -44px;
+    padding: 12px 10px;
+    position: absolute;
+    top: 0;
 }
 .delivery_toggle_div{
     display: none;
+    background: #fff;
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    border: #ccc solid 1px;
+    padding: 10px;
 }
 .delivery_toggle_div span{
     text-align: center !important;
@@ -825,6 +830,11 @@ button:focus {
     display: block;
     margin: 3px;
     text-align: left;
+}
+
+.city-filter .btn-group.bootstrap-select.form-control{
+    width: calc(100% - 25px);
+    margin-left: 10px;
 }
 .thankyou_heading{
   padding:0px !important;

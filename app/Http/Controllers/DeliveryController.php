@@ -75,7 +75,15 @@ class DeliveryController extends Controller
         {
             $getDelivery=new Delivery;
         }
-        $storeId=$this->authUser->store_id;
+
+        if ($this->authUser->type == 'Admin'){
+            $view = 'admin.deliveries.edit';
+            $storeId=$getDelivery->store_id;
+        }
+        else{
+            $view = 'client.cashier.create_delivery';
+            $storeId=$this->authUser->store_id;
+        }
         $storeInfo=Store::find($storeId);
         $getCompanyProduct=Company::with('products')->where('id', $storeInfo['company_id'])->first();
         if($getCompanyProduct['products'])
@@ -85,7 +93,8 @@ class DeliveryController extends Controller
                 $products[$product['id']]=$product['product_family'];
             }
         }
-        return view::make('client.cashier.create_delivery')->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
+
+        return view::make($view)->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
     }
     public function create(Request $request)
     {
@@ -97,8 +106,8 @@ class DeliveryController extends Controller
             'order_id'=> 'required',
             'service'=> 'required',
             'address' => 'required',
-            'pdf' => 'required|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
-            'order_pdf' => 'required'.$request->id.'|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
+            'pdf' => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
+            'order_pdf' => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
             'delivery_price' =>'required',
             'product_id'    => 'required'
         ]);
@@ -130,7 +139,14 @@ class DeliveryController extends Controller
             $message=Config::get('constants.Create Delivery');
         }
         $delivery->save();
-        $getStoreName=Auth::user()->store_id;
+        if(Auth::user()->type == 'Admin'){
+            $view = '/admin/deliveries';
+            $getStoreName=$delivery->store_id;
+        }
+        else{
+            $view = '/dashboard';
+            $getStoreName=Auth::user()->store_id;
+        }
         $fileName='DeliveryNote'.$delivery->id;
         $orderFileName='OrderNote'.$delivery->id;
         $destinationPath = public_path('/assets/images/'.$getStoreName);
@@ -139,21 +155,22 @@ class DeliveryController extends Controller
         }
         if($request->dummy!=NULL)
         {
-            $new_path =  public_path().'/assets/images/'. $getStoreName.'/'.$fileName.'.pdf';
+            $dummyExtension = $request->dummy->getClientOriginalExtension();
+            $new_path =  public_path().'/assets/images/'. $getStoreName.'/'.$fileName.'.'.$dummyExtension;
             $old_path =  public_path().'/assets/images/dummyImages/'. $request->dummy;
             $move = File::move($old_path, $new_path);
-            $delivery->delivery_pdf=$fileName.'.pdf';
+            $delivery->delivery_pdf=$fileName.'.'.$dummyExtension;
         }
         if($request->orderDummy!=NULL)
         {
-            $new_path =  public_path().'/assets/images/'. $getStoreName.'/'.$orderFileName.'.pdf';
+            $orderExtension = $request->orderDummy->getClientOriginalExtension();
+            $new_path =  public_path().'/assets/images/'. $getStoreName.'/'.$orderFileName.'.'.$orderExtension;
             $old_path =  public_path().'/assets/images/dummyImages/'. $request->orderDummy;
             $move = File::move($old_path, $new_path);
-            $delivery->order_pdf=$orderFileName.'.pdf';
+            $delivery->order_pdf=$orderFileName.'.'.$orderExtension;
         }
         if(!empty($request->pdf))
         {
-
             $pdf=$request->file('pdf');
             $type=$fileName;
             $name=self::storeImage($pdf, $getStoreName, $type);
@@ -161,7 +178,6 @@ class DeliveryController extends Controller
         }
         if(!empty($request->order_pdf))
         {
-
             $pdf=$request->file('order_pdf');
             $type=$orderFileName;
             $name=self::storeImage($pdf, $getStoreName, $type);
@@ -214,7 +230,7 @@ class DeliveryController extends Controller
 
         $delivery->save();
         Toast::success($message);
-        return redirect::to('/dashboard');
+        return redirect::to($view);
     }
     public function viewDeliver(Request $request)
     {

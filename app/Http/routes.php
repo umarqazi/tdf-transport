@@ -267,6 +267,15 @@ Route::group(['middleware' => ['web']], function ()
 
         /****TDF Routes***/
         Route::prefix('admin')->group(function () {
+
+            Route::get('/delivery/edit/{id}', [
+                'as'   => 'admin.edit.delivery',
+                'uses' => 'LaravelAcl\Http\Controllers\DeliveryController@index'
+            ]);
+            Route::post('/delivery', [
+                'as'   => 'admin.update.delivery',
+                'uses' => 'LaravelAcl\Http\Controllers\DeliveryController@create'
+            ]);
             Route::get('/deliveries', [
                 'as'   => 'admin.deliveries',
                 'uses' => 'LaravelAcl\Http\Controllers\DeliveryController@allDeliveries'

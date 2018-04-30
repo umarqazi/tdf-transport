@@ -7,6 +7,7 @@
 @section('content')
     <div id="page-wrapper">
         <div class="row">
+            @include('toast::messages')
             {{-- successful message --}}
             <?php $message = Session::get('message'); ?>
             @if( isset($message) )
@@ -69,9 +70,9 @@
                                 $status="En attente";
                             }
                             $total+=$delivery['delivery_price'];
-                            $url=URL('viewDelivery').'/'.$delivery['id'];
+                            $url=URL('/admin/delivery/edit').'/'.$delivery['id'];
                             ?>
-                            <tr >
+                            <tr onclick="viewDelivery('{{$url}}')" class="clickable">
                                 <td>{{Date::parse($delivery['datetime'])->format('d/m/Y')}}</td>
                                 <td>{{$delivery['first_name']}} {{$delivery['last_name']}}</td>
                                 <td>{{$delivery['customer_email']}}</td>
