@@ -129,7 +129,7 @@ class ProductController extends Controller
         $file=$request->bulk_upload;
         $company_id=$request->company_id;
         $extension=$file->getClientOriginalExtension();
-        if(!in_array($extension, ['xlsx']))
+        if(!in_array($extension, ['xlsx','xls']))
         {
             return redirect::back()
                 ->withErrors('Le transfert groupé doit être un fichier de type: xlsx.');
