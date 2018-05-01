@@ -114,11 +114,11 @@ class DeliveryController extends Controller
         $deliveryId=$request->id;
         $date = str_replace('/', '-', $request->datetime);
         if(!$deliveryId){
-          if((Auth::user()->type==Config::get('constants.Users.Cashier') && strtotime($date) <= strtotime(date('d-m-Y'))) || (Auth::user()->type==Config::get('constants.Users.Manager') && strtotime($date) < strtotime(date('d-m-Y'))) ){
-              Toast::error('Sélectionnez une date correcte');
-              return redirect::back()
-                  ->withInput();
-          }
+            if((Auth::user()->type==Config::get('constants.Users.Cashier') && strtotime($date) <= strtotime(date('d-m-Y'))) || (Auth::user()->type==Config::get('constants.Users.Manager') && strtotime($date) < strtotime(date('d-m-Y'))) ){
+                Toast::error('Sélectionnez une date correcte');
+                return redirect::back()
+                    ->withInput();
+            }
         }
         if ($validator->fails()) {
             return redirect::back()
@@ -185,7 +185,7 @@ class DeliveryController extends Controller
         }
         $result = substr($request->mobile_number, 0, 3);
         if($result!='+33'){
-          $request->mobile_number = preg_replace('/^0/','+33',$request->mobile_number);
+            $request->mobile_number = preg_replace('/^0/','+33',$request->mobile_number);
         }
         $delivery->datetime=date('Y-m-d', strtotime($date));
         $delivery->day_period=$request->day_period;
@@ -218,7 +218,7 @@ class DeliveryController extends Controller
         }
         $delivery->sub_product_id=$product_id;
         if(!$deliveryId){
-          $delivery->status=Config::get('constants.Status.Pending');
+            $delivery->status=Config::get('constants.Status.Pending');
         }
         if(Auth::user()->type==Config::get('constants.Users.Cashier')){
             $getManager=User::where('type', 'Manager')->where('store_id', $this->authUser->store_id)->first();
@@ -299,11 +299,11 @@ class DeliveryController extends Controller
     public function search($from, $to){
         $results = HomeController::deliveryProducts();
         if(Auth::user()->type!=Config::get('constants.User Type.Manager TDF')){
-          $results=$results->where('store_id', Auth::user()->store_id);
-          $view='client.cashier.delivery_history';
+            $results=$results->where('store_id', Auth::user()->store_id);
+            $view='client.cashier.delivery_history';
         }else{
-          $results=$results->whereIn('deliveries.status', [Config::get('constants.Status.Active'), Config::get('constants.Status.Return'), Config::get('constants.Status.Delivered')]);
-          $view='client.tdf_manager.history';
+            $results=$results->whereIn('deliveries.status', [Config::get('constants.Status.Active'), Config::get('constants.Status.Return'), Config::get('constants.Status.Delivered')]);
+            $view='client.tdf_manager.history';
         }
         $searchedResults = $results->where([
             ['datetime','>=' ,date('Y-m-d', strtotime($from))],
@@ -360,28 +360,28 @@ class DeliveryController extends Controller
     }
     public function pTourPlan(Request $request){
         if($request->delivery_id){
-          foreach($request->delivery_id as $delivery){
-            $getTour=TourPlan::where('delivery_id', $delivery)->first();
-            if(!$getTour){
-              $addTour=new TourPlan;
-              $addTour->time_slot_id=$request->time_slot;
-              $addTour->delivery_id=$delivery;
-              $addTour->user_id=$request->user_id;
-              $addTour->status='0';
-              $addTour->save();
-              $updateDelivery=Delivery::find($delivery);
-              $updateDelivery->flag='1';
-              $updateDelivery->save();
-            }else{
-              Toast::error('Livraison déjà assignée au conducteur');
+            foreach($request->delivery_id as $delivery){
+                $getTour=TourPlan::where('delivery_id', $delivery)->first();
+                if(!$getTour){
+                    $addTour=new TourPlan;
+                    $addTour->time_slot_id=$request->time_slot;
+                    $addTour->delivery_id=$delivery;
+                    $addTour->user_id=$request->user_id;
+                    $addTour->status='0';
+                    $addTour->save();
+                    $updateDelivery=Delivery::find($delivery);
+                    $updateDelivery->flag='1';
+                    $updateDelivery->save();
+                }else{
+                    Toast::error('Livraison déjà assignée au conducteur');
+                }
             }
-          }
-          Toast::success('La livraison a été assignée au conducteur');
+            Toast::success('La livraison a été assignée au conducteur');
         }else{
             $link='';
             Toast::error("Il n'y a pas de plan de tournée pour le moment");
         }
-        return redirect::back();
+        return redirect::route('tour.plan',['id' => $request->user_id]);
     }
     public function allManagerDeliveries(Request $request){
         $getDeliveryHistory=HomeController::searchResults($request->all());
@@ -439,19 +439,19 @@ class DeliveryController extends Controller
         return view::make('admin.deliveries.index')->with('deliveries', $getDeliveries);
     }
     public function sendCustomerSMS(Request $request){
-      $date=Date::parse($request->date)->format('Y-m-d');
-      $customerDetail=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->leftJoin('time_slot', 'tour_plan.time_slot_id', '=', 'time_slot.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->where('datetime', $date)->where('tour_plan.user_id', $request->id)->select('deliveries.datetime','deliveries.mobile_number','tour_plan.user_id','stores.store_name','time_slot.time','stores.phone_number')->get();
-      foreach($customerDetail as $customer){
-        $message=
-"Cher(e) client(e),
+        $date=Date::parse($request->date)->format('Y-m-d');
+        $customerDetail=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->leftJoin('time_slot', 'tour_plan.time_slot_id', '=', 'time_slot.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->where('datetime', $date)->where('tour_plan.user_id', $request->id)->select('deliveries.datetime','deliveries.mobile_number','tour_plan.user_id','stores.store_name','time_slot.time','stores.phone_number')->get();
+        foreach($customerDetail as $customer){
+            $message=
+                "Cher(e) client(e),
 Votre commande sera livrée le ".Date::parse($customer['datetime'])->format('d/m/Y')." entre ".$customer['time'].".
 Merci,
 
 ".$customer['store_name']." / ".$customer['phone_number'];
-        $user=$customer['mobile_number'];
-        $sendSMS=Ovh::checkSms($user, $message);
-      }
-      Toast::success(Config::get('constants.Send SMS'));
-      return redirect::back();
+            $user=$customer['mobile_number'];
+            $sendSMS=Ovh::checkSms($user, $message);
+        }
+        Toast::success(Config::get('constants.Send SMS'));
+        return redirect::back();
     }
 }

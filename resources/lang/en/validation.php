@@ -89,6 +89,12 @@ return [
 		'order_pdf' => [
 			'required' => "Aucun fichier n'a été sélectionné",
 		],
+        'password' => [
+			'confirmed' => "La confirmation du mot de passe ne correspond pas.",
+		],
+        'email' => [
+			'unique' => "Attention, cet email existe déjà",
+		],
 	],
 
 	/*

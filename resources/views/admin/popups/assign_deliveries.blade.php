@@ -3,9 +3,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <a href="{{ URL::route('tour.plan',['id' => $user_id]) }}">
+                    <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </a>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -16,9 +18,7 @@
                     <div class="col-lg-12">
                         <div class="row">
                             <form action="{{ URL::route('tour.plan.filter',['id' => $user_id]) }}" method="post">
-
                                 <div class="form-inline">
-
                                     <div class="col-md-3">
                                         <div class="city-filter">
                                             <i class="fa fa-filter"></i>
@@ -57,7 +57,6 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-
                                         <div class=" product-family-search">
                                             <input type="text" class="form-control product-family-search-input" placeholder="Choisissez une famille de produits" disabled>
                                             <a href="#" class="delivery_dropdown_btn"><i class="fa fa-chevron-down"></i></a>
@@ -76,9 +75,11 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn delivery_search"><i class="fa fa-search"></i></button>
                                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         <input type="hidden" name="user_id" value="{{$user_id}}">
+                                        <input type="hidden" name="date" value="{{($previousDate!=date('Y-m-d')? $previousDate:'')}}">
+                                        <input type="hidden" name="filter_time_slot" class="time_slot" value="{{empty($oldValues['filter_time_slot']) ? '': $oldValues['filter_time_slot']}}">
+                                        <button type="submit" class="btn delivery_search"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                             </form>
@@ -91,7 +92,7 @@
                             <div class="col-md-12">
                                 <div class="table-responsive">
                                     <input type="hidden" name="date" value="{{($previousDate!=date('Y-m-d')? $previousDate:'')}}">
-                                    <input type="hidden" name="time_slot" id="time_slot">
+                                    <input type="hidden" name="time_slot" class="time_slot" value="{{empty($oldValues['filter_time_slot']) ? '': $oldValues['filter_time_slot']}}">
                                     {{Form::hidden('user_id', $user_id, [])}}
                                     <table class="table table-striped table-bordered text-center heading-font">
                                         <thead>
