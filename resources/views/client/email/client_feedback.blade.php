@@ -22,7 +22,7 @@
         <div style="width:100%; text-align:center;">
             <div style="display: inline-block; margin:0 auto; width:600px; text-align:left; padding:20px; font-family: Verdana,Geneva,sans-serif; ">
                 <div>
-                    <p>Cher(e) {{$data['first_name']}},</p>
+                    <p>Cher(e) {{$data['first_name']}} {{$data['last_name']}},</p>
                     <p>Vous avez été livrés récemment par nos équipes et nous espérons que cette expérience a été à la hauteur de vos espérances.</p>
                     <p>Pour nous aider à mieux répondre à vos attentes et à améliorer notre service, nous souhaiterions connaitre votre avis sur cette expérience. Votre participation est précieuse!</p>
                     <p>Avez vous été satisfait de votre livraison?</p>
@@ -43,7 +43,7 @@
                   </label>
                 </div>
                 <div style="text-align:center">
-                    <textarea name="feedback" style="width:100%; resize:none; border:2px solid #000; padding:20px" placeholder="Commentaire">Commentaire</textarea>
+                    <textarea name="feedback" style="width:100%; resize:none; border:2px solid #000; padding:20px" placeholder="Commentaire"></textarea>
                     <input type="submit" style="cursor: point; background-color: #337ab7;display:inline-block; border:none; border-radius:5px; color: white; padding:10px 10px" value="Soumettre des commentaires">
                 </div>
                 {!! Form::hidden('id', $data['id'], ['id'=>'recordId']) !!}
