@@ -62,7 +62,6 @@ function removeParam(key) {
     if (queryString !== "") {
         params_arr = queryString.split("&");
         for (var i = params_arr.length - 1; i >= 0; i -= 1) {
-          alert();
             param = params_arr[i].split("=")[0];
             if (param === key) {
                 params_arr.splice(i, 1);
