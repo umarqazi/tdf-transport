@@ -158,4 +158,24 @@ class ProductController extends Controller
         $getStore->delete();
         return redirect::back()->with('message', "Le détail du produit a été supprimé avec succès");
     }
+
+    public function exportProducts($id){
+        $company = Company::find($id);
+        $products = Product::with('subProducts')->where('company_id',$id)->get()->toArray();
+        $allProduct=array();
+        foreach ($products as $key=>$product){
+            foreach ($product['sub_products'] as $key2=>$subProduct){
+                $allProduct[]=['Product Family'=>$product['product_family'], 'Type'=>$subProduct['product_type'], 'SAV'=>$subProduct['sav'], 'livraison'=>$subProduct['livraison'],'livraison_montage'=>$subProduct['livraison_montage'],'rétrocession'=>$subProduct['rétrocession'],'prestataire'=>$subProduct['prestataire'],'montage'=>$subProduct['montage']];
+            }
+        }
+        return \Excel::create($company->company_name, function($excel) use ($allProduct , $company) {
+
+            $excel->sheet($company->company_name, function($sheet) use ($allProduct)
+            {
+                $sheet->fromArray($allProduct);
+
+            });
+
+        })->download('xlsx');
+    }
 }

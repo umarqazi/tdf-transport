@@ -842,3 +842,7 @@ button:focus {
   display: inline-block;
   font-size: 30pt !important;
 }
+.userCompanyDetails{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}

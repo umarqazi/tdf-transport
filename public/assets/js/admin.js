@@ -73,7 +73,6 @@ function removeParam(key) {
 }
 
 function getStores(option){
-
     var id=option.value;
 
     $.ajax({
@@ -84,6 +83,7 @@ function getStores(option){
         success: function(data) {
             $('#store_dropdown').children('option').remove();
             $('#store_dropdown').append(data);
+            $('#store_dropdown').selectpicker('refresh');
         },
     });
 }
