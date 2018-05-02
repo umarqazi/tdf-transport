@@ -69,7 +69,6 @@ function removeParam(key) {
         }
         rtn = rtn;
     }
-    alert(rtn);
     return rtn;
 }
 
