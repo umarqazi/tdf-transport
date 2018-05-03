@@ -67,7 +67,7 @@
                                                         <div>
                                                             <div class="checkbox">
                                                                 <label>
-                                                                    <input type="checkbox" id="customerCheck" name="filterProducts[]" value="{{$deliveryFamily->product->id }}" @if(!empty($oldValues['filterProducts']) && in_array($deliveryFamily->product->id,$oldValues['filterProducts'])) checked @endif> {{$deliveryFamily->product->product_family }}
+                                                                    <input type="checkbox" id="customerCheck" name="filterProducts[]" value="{{$deliveryFamily['id']}}" @if(!empty($oldValues['filterProducts']) && in_array($deliveryFamily['id'],$oldValues['filterProducts'])) checked @endif> {{$deliveryFamily['product_family']}}
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -77,7 +77,7 @@
                                         </div>
                                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         <input type="hidden" name="user_id" value="{{$user_id}}">
-                                        <input type="hidden" name="date" value="{{($previousDate!=date('Y-m-d')? $previousDate:'')}}">
+                                        <input type="hidden" name="date" value="{{$nextDate}}">
                                         <input type="hidden" name="filter_time_slot" class="time_slot" value="{{empty($oldValues['filter_time_slot']) ? '': $oldValues['filter_time_slot']}}">
                                         <button type="submit" class="btn delivery_search"><i class="fa fa-search"></i></button>
                                     </div>
@@ -91,7 +91,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <input type="hidden" name="date" value="{{($previousDate!=date('Y-m-d')? $previousDate:'')}}">
+                                    <input type="hidden" name="date" value="{{$nextDate}}">
                                     <input type="hidden" name="time_slot" class="time_slot" value="{{empty($oldValues['filter_time_slot']) ? '': $oldValues['filter_time_slot']}}">
                                     {{Form::hidden('user_id', $user_id, [])}}
                                     <table class="table table-striped table-bordered text-center heading-font">
@@ -99,7 +99,7 @@
                                         <tr>
                                             <th class="text-center">Date de la livraison</th>
                                             <th class="text-center">Tranche horaire</th>
-                                            <th class="text-center">Store Name</th>
+                                            <th class="text-center">Nom du magasin</th>
                                             <th class="text-center">Client</th>
                                             <th class="text-center">Numero de commande</th>
                                             <th class="text-center">Numero du bon de livraison</th>

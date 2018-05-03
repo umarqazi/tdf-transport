@@ -381,7 +381,7 @@ class DeliveryController extends Controller
             $link='';
             Toast::error("Il n'y a pas de plan de tournée pour le moment");
         }
-        return redirect::route('tour.plan',['id' => $request->user_id]);
+        return redirect::back();
     }
     public function allManagerDeliveries(Request $request){
         $getDeliveryHistory=HomeController::searchResults($request->all());

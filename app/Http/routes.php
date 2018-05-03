@@ -365,6 +365,9 @@ Route::group(['middleware' => ['web']], function ()
             Route::post('importExport', [
                 'as'   => 'import',
                 'uses'=>'LaravelAcl\Http\Controllers\ProductController@importExport']);
+            Route::get('/export-products/{id}', [
+                'as'   => 'export.products',
+                'uses'=>'LaravelAcl\Http\Controllers\ProductController@exportProducts']);
             /****TDF Routes***/
         });
         Route::get('getData', ['as'=>'datatables.data', 'uses'=>'LaravelAcl\Http\Controllers\DashboardController@checking']);
