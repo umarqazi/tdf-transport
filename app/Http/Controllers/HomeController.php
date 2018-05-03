@@ -125,6 +125,8 @@ class HomeController extends Controller
             $getDeliveryCities      = $getDeliveries->pluck('city');
             $getDeliveryFamilies    = $getDeliveries;
             $getDeliveryFamilies    = $getDeliveryFamilies->get();
+            $getDeliveryFamilies    = $getDeliveryFamilies->pluck('product');
+            $getDeliveryFamilies    = array_map("unserialize", array_unique(array_map("serialize", $getDeliveryFamilies->toArray())));
             $getDeliveryStores      = $getDeliveries;
             $getDeliveryStores      = $getDeliveryStores->get();
             $getDeliveryStores      = $getDeliveryStores->pluck('store');

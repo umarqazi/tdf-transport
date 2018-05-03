@@ -34,6 +34,7 @@
                 <div class="sort">
                     <button type="button" name="" class="active green button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#addProduct">Ajouter un produit <i class="fa fa-plus-circle fa-fw"></i></button>
                     <button type="file" name="" class="active btn-primary button-styling" value='Ajouter une demande' data-toggle="modal" data-target="#contactUsModal">Importer <i class="fa fa-upload fa-fw"></i></button>
+                    <a href="{{route('export.products',['id' => $company->id])}}"><button type="file" name="" class="active btn-success button-styling" id="downloadProduct">Export<i class="fa fa-download fa-fw"></i></button></a>
                 </div>
             </div>
         </div>

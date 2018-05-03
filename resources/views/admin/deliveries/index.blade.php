@@ -17,7 +17,7 @@
                 <div class="text-center page-icon">
                     <div class="icon-wrapper"><i class="fa fa-truck fa-fw"></i></div>
                 </div>
-                <h1 class="page-header text-center">GESTION DES LIVRAISON</h1>
+                <h1 class="page-header text-center">GESTION DES LIVRAISONS</h1>
             </div>
         </div>
 
