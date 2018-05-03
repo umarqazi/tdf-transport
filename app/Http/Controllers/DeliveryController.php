@@ -80,6 +80,10 @@ class DeliveryController extends Controller
             $view = 'admin.deliveries.edit';
             $storeId=$getDelivery->store_id;
         }
+        elseif ($this->authUser->type== Config::get('constants.Users.TDF Manager')){
+            $view = 'client.cashier.create_delivery';
+            $storeId=$getDelivery->store_id;
+        }
         else{
             $view = 'client.cashier.create_delivery';
             $storeId=$this->authUser->store_id;
@@ -99,17 +103,17 @@ class DeliveryController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'datetime' => 'required',
-            'first_name'=> 'required',
-            'last_name'=> 'required',
-            'mobile_number'=> 'required',
-            'order_id'=> 'required',
-            'service'=> 'required',
-            'address' => 'required',
-            'pdf' => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
-            'order_pdf' => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
-            'delivery_price' =>'required',
-            'product_id'    => 'required'
+            'datetime'          => 'required',
+            'first_name'        => 'required',
+            'last_name'         => 'required',
+            'mobile_number'     => 'required',
+            'order_id'          => 'required',
+            'service'           => 'required',
+            'address'           => 'required',
+            'pdf'               => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
+            'order_pdf'         => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
+            'delivery_price'    =>'required',
+            'product_id'        => 'required'
         ]);
         $deliveryId=$request->id;
         $date = str_replace('/', '-', $request->datetime);
@@ -126,8 +130,7 @@ class DeliveryController extends Controller
                 ->withInput();
         }
 
-        if($deliveryId)
-        {
+        if($deliveryId) {
             $delivery=Delivery::find($deliveryId);
             $message=Config::get('constants.Edit Delivery');
         }
@@ -141,6 +144,10 @@ class DeliveryController extends Controller
         $delivery->save();
         if(Auth::user()->type == 'Admin'){
             $view = '/admin/deliveries';
+            $getStoreName=$delivery->store_id;
+        }
+        elseif(Auth::user()->type == Config::get('constants.Users.TDF Manager')){
+            $view = '/allDeliveryHistory';
             $getStoreName=$delivery->store_id;
         }
         else{
@@ -313,7 +320,7 @@ class DeliveryController extends Controller
     }
     public function exportHistory(Request $request) {
         if(Auth::user()->type==Config::get('constants.Users.TDF Manager')){
-            $deliveries = HomeController::deliveryProducts()->where('deliveries.status', Config::get('constants.Status.Active'));
+            $deliveries = HomeController::deliveryProducts()->whereIn('deliveries.status', [Config::get('constants.Status.Active'),Config::get('constants.Status.Delivered'),Config::get('constants.Status.Return')]);
         }else{
             $deliveries = HomeController::deliveryProducts()->where('store_id', $this->authUser->store_id);
         }
