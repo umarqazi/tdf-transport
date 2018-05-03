@@ -6,6 +6,7 @@
 
 @section('content')
   <div class="row">
+    @include('toast::messages')
     <div class="">
       <h1 class="page-header text-center">HISTORIQUE DES LIVRAISONS</h1>
     </div>

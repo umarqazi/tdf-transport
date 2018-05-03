@@ -80,6 +80,10 @@ class DeliveryController extends Controller
             $view = 'admin.deliveries.edit';
             $storeId=$getDelivery->store_id;
         }
+        elseif ($this->authUser->type== Config::get('constants.Users.TDF Manager')){
+            $view = 'client.cashier.create_delivery';
+            $storeId=$getDelivery->store_id;
+        }
         else{
             $view = 'client.cashier.create_delivery';
             $storeId=$this->authUser->store_id;
@@ -99,17 +103,17 @@ class DeliveryController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'datetime' => 'required',
-            'first_name'=> 'required',
-            'last_name'=> 'required',
-            'mobile_number'=> 'required',
-            'order_id'=> 'required',
-            'service'=> 'required',
-            'address' => 'required',
-            'pdf' => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
-            'order_pdf' => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
-            'delivery_price' =>'required',
-            'product_id'    => 'required'
+            'datetime'          => 'required',
+            'first_name'        => 'required',
+            'last_name'         => 'required',
+            'mobile_number'     => 'required',
+            'order_id'          => 'required',
+            'service'           => 'required',
+            'address'           => 'required',
+            'pdf'               => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
+            'order_pdf'         => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
+            'delivery_price'    =>'required',
+            'product_id'        => 'required'
         ]);
         $deliveryId=$request->id;
         $date = str_replace('/', '-', $request->datetime);
@@ -126,8 +130,7 @@ class DeliveryController extends Controller
                 ->withInput();
         }
 
-        if($deliveryId)
-        {
+        if($deliveryId) {
             $delivery=Delivery::find($deliveryId);
             $message=Config::get('constants.Edit Delivery');
         }
@@ -141,6 +144,10 @@ class DeliveryController extends Controller
         $delivery->save();
         if(Auth::user()->type == 'Admin'){
             $view = '/admin/deliveries';
+            $getStoreName=$delivery->store_id;
+        }
+        elseif(Auth::user()->type == Config::get('constants.Users.TDF Manager')){
+            $view = '/allDeliveryHistory';
             $getStoreName=$delivery->store_id;
         }
         else{
@@ -313,7 +320,7 @@ class DeliveryController extends Controller
     }
     public function exportHistory(Request $request) {
         if(Auth::user()->type==Config::get('constants.Users.TDF Manager')){
-            $deliveries = HomeController::deliveryProducts()->where('deliveries.status', Config::get('constants.Status.Active'));
+            $deliveries = HomeController::deliveryProducts()->whereIn('deliveries.status', [Config::get('constants.Status.Active'),Config::get('constants.Status.Delivered'),Config::get('constants.Status.Return')]);
         }else{
             $deliveries = HomeController::deliveryProducts()->where('store_id', $this->authUser->store_id);
         }
@@ -331,7 +338,7 @@ class DeliveryController extends Controller
         }
         $deliveries=$deliveries->get();
         $records = [];
-        $records[] = ['Date de la livraison', 'Client','Numéro de commande','Numéro du bon de livraison','Téléphone', 'Ville', 'Code Postal', 'Type de prestation', 'Produit commandé', 'Prix de la livraison', 'Statut', 'Satisfaction client'];
+        $records[] = ['Date de la livraison', 'Client','Numéro de commande','Numéro du bon de livraison','Téléphone', 'Ville', 'Code Postal', 'Type de prestation', 'Produit commandé', 'Prix de la livraison', 'Statut', 'Satisfaction client', 'Informations sur la livraison (chauffeur)'];
         foreach($deliveries as $key=>$delivery){
             $items=array();
             if($delivery['delivery_price']=='Gratuit'){
@@ -344,9 +351,15 @@ class DeliveryController extends Controller
             }else{
                 $items=$delivery['product_family'];
             }
+            if($delivery['delivery_problem'] !=0){
+                $driver_feedback = Config::get('constants.Driver Feedback.'.$delivery["delivery_problem"]);
+            }
+            else{
+                $driver_feedback = '';
+            }
             $name=$delivery['first_name'].' '.$delivery['last_name'];
             if($delivery['status']==1){ $status= "Validé";}elseif($delivery['status']==2){$status= "Livre"; }else{ $status="En attente"; };
-            $records[]=[date('d/m/Y', strtotime($delivery['datetime'])), $name,$delivery['order_id'],$delivery['delivery_number'],$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, $delivery['customer_feedback']];
+            $records[]=[date('d/m/Y', strtotime($delivery['datetime'])), $name,$delivery['order_id'],$delivery['delivery_number'],$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, $delivery['customer_feedback'], $driver_feedback];
         }
         Excel::create('Historique des livraisons', function($excel) use ($records) {
             $excel->setTitle('Historique des livraisons');

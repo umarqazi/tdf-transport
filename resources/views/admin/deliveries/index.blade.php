@@ -44,6 +44,7 @@
                             <th class="text-center vertical-middle">Produit commandé</th>
                             <th class="text-center vertical-middle">Prix de la livraison</th>
                             <th class="text-center vertical-middle">Satisfaction client</th>
+                            <th class="text-center vertical-middle">Informations sur la livraison (chauffeur)</th>
                             <th class="text-center vertical-middle">Statut</th>
                         </tr>
                         </thead>
@@ -85,6 +86,7 @@
                                 <td>{{$type}}</td>
                                 <td>{{$price}}</td>
                                 <td>@if($delivery['customer_feedback']==1) <i class="fa fa-circle green-circle"></i> @elseif($delivery['customer_feedback']==2) <i class="fa fa-circle yellow-circle"></i> @elseif($delivery['customer_feedback']==3) <i class="fa fa-circle red-circle"></i> @endif</td>
+                                <td>{{($delivery["delivery_problem"]!=0)? Config::get('constants.Driver Feedback.'.$delivery["delivery_problem"]): ""}}</td>
                                 <td>{{$status}}</td>
                             </tr>
                         @endforeach
