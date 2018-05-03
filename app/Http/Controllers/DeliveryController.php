@@ -285,7 +285,6 @@ class DeliveryController extends Controller
     }
     public function deliveryValidate(Request $request)
     {
-        dd($request);
         $deliveryId=$request->delivery_id;
         $status=Config::get('constants.Status');
         if($deliveryId){
