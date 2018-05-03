@@ -285,6 +285,7 @@ class DeliveryController extends Controller
     }
     public function deliveryValidate(Request $request)
     {
+        dd($request);
         $deliveryId=$request->delivery_id;
         $status=Config::get('constants.Status');
         if($deliveryId){
@@ -394,7 +395,7 @@ class DeliveryController extends Controller
             $link='';
             Toast::error("Il n'y a pas de plan de tournée pour le moment");
         }
-        return redirect::back();
+        return redirect('/planDriverTour/'.$request->user_id.'?date='.$request->date);
     }
     public function allManagerDeliveries(Request $request){
         $getDeliveryHistory=HomeController::searchResults($request->all());
