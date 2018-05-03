@@ -154,7 +154,7 @@ TDF Create Delivery
   <div class="clear20"></div>
   <div class="row">
     <div class="col-md-12 text-center tbl-btns">
-      <a href="{{route('delivery.history')}}" class="active green">Retour aux résultats <i class="fa fa-arrow-circle-left left-arrow-font"></i></a>
+      <a href="{{route('delivery.history')}}" class="active green"><i class="fa fa-arrow-circle-left left-arrow-font"></i> Retour aux résultats</a>
     </div>
   </div>
   {!! Form::hidden('id') !!}

@@ -10,7 +10,7 @@
         <div class="row">
             @include('toast::messages')
             <div class="col-lg-12 text-center">
-                <a href="{{url('/dashboard')}}" class="back-button"><i class="fa fa-arrow-left"></i> Retour</a><h1 class="page-header text-center make-center">CREATION D'UNE LIVRAISON</h1>
+                <a href="{{url('/dashboard')}}" class="back-button"><i class="fa fa-arrow-left"></i> Retour</a><h1 class="page-header text-center make-center">Modification d'une livraison</h1>
             </div>
             <div class="col-lg-12 calendar-control">
                 <div class="form-inline">

@@ -46,6 +46,7 @@
                             <th class="text-center vertical-middle">Satisfaction client</th>
                             <th class="text-center vertical-middle">Informations sur la livraison (chauffeur)</th>
                             <th class="text-center vertical-middle">Statut</th>
+                            <th class="text-center vertical-middle">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -73,7 +74,7 @@
                             $total+=$delivery['delivery_price'];
                             $url=URL('/admin/delivery/edit').'/'.$delivery['id'];
                             ?>
-                            <tr onclick="viewDelivery('{{$url}}')" class="clickable">
+                            <tr>
                                 <td>{{Date::parse($delivery['datetime'])->format('d/m/Y')}}</td>
                                 <td>{{$delivery['first_name']}} {{$delivery['last_name']}}</td>
                                 <td>{{$delivery['customer_email']}}</td>
@@ -88,6 +89,7 @@
                                 <td>@if($delivery['customer_feedback']==1) <i class="fa fa-circle green-circle"></i> @elseif($delivery['customer_feedback']==2) <i class="fa fa-circle yellow-circle"></i> @elseif($delivery['customer_feedback']==3) <i class="fa fa-circle red-circle"></i> @endif</td>
                                 <td>{{($delivery["delivery_problem"]!=0)? Config::get('constants.Driver Feedback.'.$delivery["delivery_problem"]): ""}}</td>
                                 <td>{{$status}}</td>
+                                <td><a class="btn btn-warning" href="{{$url}}"><i class="fa fa-pencil-square-o"></i></a></td>
                             </tr>
                         @endforeach
                         </tbody>
