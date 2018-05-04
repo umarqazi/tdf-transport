@@ -359,7 +359,7 @@ class DeliveryController extends Controller
             }
             $name=$delivery['first_name'].' '.$delivery['last_name'];
             if($delivery['status']==1){ $status= "Validé";}elseif($delivery['status']==2){$status= "Livre"; }else{ $status="En attente"; };
-            $records[]=[date('d/m/Y', strtotime($delivery['datetime'])), $name,$delivery['order_id'],$delivery['delivery_number'],$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, $delivery['customer_feedback'], $driver_feedback];
+            $records[]=[date('d/m/Y', strtotime($delivery['datetime'])), $name,$delivery['order_id'],$delivery['delivery_number'],$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, (int)$delivery['client_satisfaction'], $driver_feedback];
         }
         Excel::create('Historique des livraisons', function($excel) use ($records) {
             $excel->setTitle('Historique des livraisons');
@@ -367,8 +367,32 @@ class DeliveryController extends Controller
             $excel->setDescription('Historique des livraisons');
             $excel->sheet('sheet1', function($sheet) use ($records) {
                 $sheet->fromArray($records, null, 'A1', false, false);
+                $number=2;
+                for($i=1; $i<=count($records); $i++)
+                {
+                    if (!empty($records[$i][11])){
+                        if ($records[$i][11] == 1){
+                            $sheet->cell('L'.$number, function($cell){
+                                $cell->setBackground('#006400');
+                                $cell->setValue('');
+                            });
+                        }
+                        elseif ($records[$i][11] == 2){
+                            $sheet->cell('L'.$number, function($cell){
+                                $cell->setBackground('#FFFF00');
+                                $cell->setValue('');
+                            });
+                        }
+                        elseif ($records[$i][11] == 3){
+                            $sheet->cell('L'.$number, function($cell){
+                                $cell->setBackground('#FF0000');
+                                $cell->setValue('');
+                            });
+                        }
+                    }
+                    $number++;
+                }
             });
-
         })->download('xlsx');
     }
     public function pTourPlan(Request $request){
