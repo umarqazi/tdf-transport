@@ -93,7 +93,7 @@
                                                 {!! Form::label('store_id', 'choisissez un magasin') !!}
                                                 <div class="input-group" id="CompanyStores">
                                                     <div class="input-group-addon"><i class="fa fa-building"></i></div>
-                                                    {!! Form::select('store_id', is_null($user['id'])? []: $stores, null, ["class"=> "form-control", "id" =>"store_dropdown"] ) !!}
+                                                    {!! Form::select('store_id', is_null($user['id'])? [''=>'Sélectionnez un magasin']: $stores, isset($user->store_id) ? $user->store_id : null, ["class"=> "form-control", "id" =>"store_dropdown"] ) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -156,6 +156,19 @@
                                             <span class="text-danger">{!! $errors->first('email') !!}</span>
                                         </div>
                                     </div>
+
+                                    @if(!is_null($user['id'])|| Input::old('id'))
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            {!! Form::label('old_password', 'Ancien mot de passe') !!}
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-lock fa-fw"></i></div>
+                                                {!! Form::password('old_password', ['class' => 'form-control','autocomplete' => 'off', "placeholder"=>"Ancien mot de passe"]) !!}
+                                            </div>
+                                            <span class="text-danger">{!! $errors->first('old_password') !!}</span>
+                                        </div>
+                                    </div>
+                                    @endif
 
                                     <div class="col-sm-12">
                                         <div class="form-group">
