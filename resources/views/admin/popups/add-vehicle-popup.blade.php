@@ -20,6 +20,13 @@
                                 Modifier un véhicule
                             @endif
                         </h1>
+                        @if ($errors->any())
+                            <ul class="alert alert-danger list-unstyled">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </div>
                     <div class="col-lg-12 calendar-control">
                         <div class="content_wrapper clearfix">
@@ -40,8 +47,17 @@
                                         {!! Form::text('number_plate', null, ['class' => 'form-control', 'placeholder' => "Immatriculation", 'autocomplete' => 'off']) !!}
                                     </div>
                                     <span class="text-danger">{!! $errors->first('number_plate') !!}</span>
-
                                 </div>
+                                @if(!empty($vehicle['id']))
+                                <div class="form-group">
+                                    {!! Form::label('old_password', 'Ancien mot de passe') !!}
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-lock fa-fw"></i></div>
+                                        {!! Form::password('old_password', ['class' => 'form-control', 'placeholder' => 'Ancien mot de passe', 'autocomplete' => 'off']) !!}
+                                    </div>
+                                    <span class="text-danger">{!! $errors->first('old_password') !!}</span>
+                                </div>
+                                @endif
                                 <div class="form-group">
                                     {!! Form::label('password', 'Mot de Passe') !!}
                                     <div class="input-group">

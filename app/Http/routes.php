@@ -223,7 +223,7 @@ Route::group(['middleware' => ['web']], function ()
             "uses" => 'LaravelAcl\Http\Controllers\VehicleController@updateDeliveryStatus'
         ]);
     });
-    Route::post('/clientFeedback', [
+    Route::get('/clientFeedback/{id}/{value}', [
         "as"   => "client.feedback",
         "uses" => 'LaravelAcl\Http\Controllers\VehicleController@pClientFeedback'
     ]);

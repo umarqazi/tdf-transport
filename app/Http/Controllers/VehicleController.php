@@ -63,16 +63,13 @@ class VehicleController extends Controller
         Toast::success('Le statut de livraison a été mis à jour');
         return redirect::to('/driverTours');
     }
-    public function pClientFeedback(Request $request){
-        if($request->id){
-            $getDelivery=Delivery::find($request->id);
-            if(empty($getDelivery->customer_feedback)){
-                $getDelivery->customer_feedback=$request->feedback;
-                if($request->satisfy){
-                    $getDelivery->client_satisfaction=$request->satisfy;
-                }
-                $getDelivery->save();
+    public function pClientFeedback($id,$value){
+        if($id){
+            $getDelivery=Delivery::find($id);
+            if($value){
+                $getDelivery->client_satisfaction=$value;
             }
+            $getDelivery->save();
         }
         Toast::success('Merci pour votre retour');
         return view('client.email.thankyou');
