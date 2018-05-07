@@ -20,12 +20,10 @@
                                 Modifier un véhicule
                             @endif
                         </h1>
-                        @if ($errors->any())
-                            <ul class="alert alert-danger list-unstyled">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                        @if (session('message'))
+                            <div class="alert alert-danger">
+                                {{ session('message') }}
+                            </div>
                         @endif
                     </div>
                     <div class="col-lg-12 calendar-control">

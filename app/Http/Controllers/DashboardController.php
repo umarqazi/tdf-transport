@@ -52,7 +52,7 @@ class DashboardController extends Controller{
             $oldPassword = $request->old_password;
             if (!Hash::check($oldPassword, $userProfile->password)){
                 return Redirect::route('dashboard.default', ['id'=>$request->id,'modal'=>'addVehicle'])
-                    ->withErrors("Votre ancien mot de passe est incorrect")
+                    ->with('message','Votre ancien mot de passe est incorrect')
                     ->withInput();
             }
         }

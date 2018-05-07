@@ -29,7 +29,7 @@
         </div>
         <div style="text-align:center; padding:20px 0;">
             <label for="test1">
-                <a href="{{route('client.feedback',['id' =>$data['id'] ,'value' => 1])}}"><img src="{{asset('http://34.213.180.141/public/assets/images')}}/smile-green.png" /></a>
+                <a href="{{route('client.feedback',['id' =>$data['id'] ,'value' => 1])}}"><img src="{{asset('assets/images')}}/smile-green.png" /></a>
                 <input class="select_control" id="test1" type="radio" name="satisfy" value="1" style="display:none"/>
             </label>
             <label for="test2">
