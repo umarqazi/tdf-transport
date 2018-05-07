@@ -46,8 +46,20 @@ class DashboardController extends Controller{
                 ->withInput();
         }
         $id=$request->id;
+        if ($id && !empty($request->old_password))
+        {
+            $userProfile = User::find($id);
+            $oldPassword = $request->old_password;
+            if (!Hash::check($oldPassword, $userProfile->password)){
+                return Redirect::route('dashboard.default', ['id'=>$request->id,'modal'=>'addVehicle'])
+                    ->withErrors("Votre ancien mot de passe est incorrect")
+                    ->withInput();
+            }
+        }
+
         if($id){
-            $addUser=User::find($id);        }
+            $addUser=User::find($id);
+        }
         else{
             $addUser=new User;
         }
