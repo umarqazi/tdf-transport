@@ -12,6 +12,11 @@
             {!! Form::model($vehicle, [ 'url' => URL::route('vehicle.edit')] )  !!}
             <div class="modal-body">
                 <div class="row">
+                    @if (session('error_msg'))
+                        <div class="alert alert-danger">
+                            {{ session('error_msg') }}
+                        </div>
+                    @endif
                     <div class="col-lg-12">
                         <h1 class="page-header text-center">
                             @if(is_null($vehicle['id']))
@@ -20,11 +25,6 @@
                                 Modifier un véhicule
                             @endif
                         </h1>
-                        @if (session('message'))
-                            <div class="alert alert-danger">
-                                {{ session('message') }}
-                            </div>
-                        @endif
                     </div>
                     <div class="col-lg-12 calendar-control">
                         <div class="content_wrapper clearfix">
