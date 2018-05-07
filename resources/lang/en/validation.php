@@ -95,6 +95,12 @@ return [
         'email' => [
 			'unique' => "Attention, cet email existe déjà",
 		],
+        'order_pdf' => [
+			'required_without' => "Merci d'ajouter le document de commande",
+		],
+        'pdf' => [
+			'required_without' => "Merci d'ajouter le document de livraison",
+		],
 	],
 
 	/*
