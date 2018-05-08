@@ -142,7 +142,7 @@ class UserController extends Controller {
             }
         }
 
-        if ($id && !empty($request->old_password))
+        if ($id && !empty($request->password))
         {
             $userProfile = User::find($id);
             $oldPassword = $request->old_password;

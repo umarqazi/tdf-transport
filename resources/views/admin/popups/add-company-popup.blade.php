@@ -32,7 +32,7 @@
                                         {!! Form::text('company_name', null, ['class' => 'form-control', 'placeholder' => 'Nom de la société', 'autocomplete' => 'off']) !!}
                                         {!! Form::hidden('id') !!}
                                     </div>
-                                    <span class="text-danger">{!! $errors->first('vehicle_name') !!}</span>
+                                    <span class="text-danger">{!! $errors->first('company_name') !!}</span>
                                 </div>
                             </div>
                             <div class="col-lg-12 clearfix popuup_submit">
