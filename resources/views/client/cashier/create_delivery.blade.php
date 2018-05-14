@@ -125,7 +125,7 @@
                                 <div class="input-group" id="orderPdfDiv">
                                     <meta name="csrf-token" content="{{ csrf_token() }}" />
                                     <input type="file" name="order_pdf" class="form-control" id="orderPdfFile" placeholder="Numero du bon de livraison" value="{{empty($delivery['order_pdf']) ? '':$delivery['order_pdf']}}">
-                                    <div class="input-group-addon cursor-pointer" onclick="upload()"><i class="fa fa-upload fa-fw"></i></div>
+                                    <div class="input-group-addon cursor-pointer" onclick="upload('orderPdfFile')"><i class="fa fa-upload fa-fw"></i></div>
                                 </div>
                             </div>
                             <span class="text-danger" id="showOrderErrorPdf">{!! $errors->first('order_pdf') !!}</span>
@@ -165,7 +165,7 @@
                                 <div class="input-group" id="PdfDiv">
                                     <meta name="csrf-token" content="{{ csrf_token() }}" />
                                     <input type="file" name="pdf" class="form-control" id="pdfFile" placeholder="Numero du bon de livraison" value="{{empty($delivery['pdf']) ? '':$delivery['pdf']}}">
-                                    <div class="input-group-addon cursor-pointer" onclick="upload()"><i class="fa fa-upload fa-fw"></i></div>
+                                    <div class="input-group-addon cursor-pointer" onclick="upload('pdfFile')"><i class="fa fa-upload fa-fw"></i></div>
                                 </div>
                             </div>
                             <span class="text-danger" id="showErrorPdf">{!! $errors->first('pdf') !!}</span>
