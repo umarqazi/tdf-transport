@@ -110,7 +110,7 @@ class DeliveryController extends Controller
             'order_id'          => 'required',
             'service'           => 'required',
             'address'           => 'required',
-            'pdf'               => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
+            'pdf'               => 'mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
             'order_pdf'         => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
             'delivery_price'    =>'required',
             'product_id'        => 'required'
@@ -162,7 +162,7 @@ class DeliveryController extends Controller
         }
         if($request->dummy!=NULL)
         {
-            $dummyExtension = $request->dummy->getClientOriginalExtension();
+            $dummyExtension = pathinfo($request->dummy, PATHINFO_EXTENSION);
             $new_path =  public_path().'/assets/images/'. $getStoreName.'/'.$fileName.'.'.$dummyExtension;
             $old_path =  public_path().'/assets/images/dummyImages/'. $request->dummy;
             $move = File::move($old_path, $new_path);
@@ -170,7 +170,7 @@ class DeliveryController extends Controller
         }
         if($request->orderDummy!=NULL)
         {
-            $orderExtension = $request->orderDummy->getClientOriginalExtension();
+            $orderExtension = pathinfo($request->orderDummy, PATHINFO_EXTENSION);
             $new_path =  public_path().'/assets/images/'. $getStoreName.'/'.$orderFileName.'.'.$orderExtension;
             $old_path =  public_path().'/assets/images/dummyImages/'. $request->orderDummy;
             $move = File::move($old_path, $new_path);

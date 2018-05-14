@@ -21,15 +21,18 @@ function freeDelivery(check){
     }
 
 };
-function upload()
+function upload(id)
 {
     var orderPdf='';
-    var file_data = $('#pdfFile').prop('files')[0];
-    if(!file_data)
-    {
+    if (id == 'orderPdfFile'){
         var file_data = $('#orderPdfFile').prop('files')[0];
         orderPdf='Yes';
     }
+    else{
+        var file_data = $('#pdfFile').prop('files')[0];
+        orderPdf= 'No';
+    }
+
     var uploadPdf = new FormData();
     uploadPdf.append('pdf', file_data);
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
