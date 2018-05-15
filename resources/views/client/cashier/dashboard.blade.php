@@ -99,7 +99,7 @@
           @foreach($deliveries as $key=>$delivery)
             @if(!empty($delivery))
               <td
-                      @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) || strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate))))
+                      @if(strtotime($key)==strtotime(date('d-M-Y')) || strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate))))
                       class="enabled-div" @else class="disabled-div"
                       @endif>
                   <?php $number=1;?>
@@ -126,16 +126,16 @@
                   @endif
                 @endforeach
                 <div class="clearfix"></div>
-                @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) || strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate)))) <a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.matin')])}}" class="anchor-space"></a> @endif
+                @if(strtotime($key)==strtotime(date('d-M-Y')) || strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate)))) <a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.matin')])}}" class="anchor-space"></a> @endif
               </td>
               <!-- <div class="clearfix"></div>
               <a href="" class="anchor-space">&nbsp;</a> -->
 
             @else
-              <td @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) || strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate)))) class="enabled-div set-heigth" @else class="disabled-div" @endif>
+              <td @if(strtotime($key)==strtotime(date('d-M-Y')) || strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate)))) class="enabled-div set-heigth" @else class="disabled-div" @endif>
 
                 <div class="clearfix"></div>
-                @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) || strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.matin')])}}" class="anchor-space"></a> @endif
+                @if(strtotime($key)==strtotime(date('d-M-Y')) || strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.matin')])}}" class="anchor-space"></a> @endif
               </td>
             @endif
 
@@ -146,7 +146,7 @@
           <td class="side-first">APRES - MIDI</td>
           @foreach($deliveries as $key=>$delivery)
             @if(!empty($delivery))
-              <td @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) ||  strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate)))) class="enabled-div" @else class="disabled-div" @endif>
+              <td @if(strtotime($key)==strtotime(date('d-M-Y')) ||  strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate)))) class="enabled-div" @else class="disabled-div" @endif>
                   <?php $number2=1;?>
                 @foreach($delivery as $dayDelivery)
                   @if($dayDelivery['day_period']==Config::get('constants.Day Period.après-midi'))
@@ -171,13 +171,13 @@
                   @endif
                 @endforeach
                 <div class="clearfix"></div>
-                @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) ||  strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.après-midi')])}}" class="anchor-space"></a> @endif
+                @if(strtotime($key)==strtotime(date('d-M-Y')) ||  strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.après-midi')])}}" class="anchor-space"></a> @endif
               </td>
             @else
-              <td @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) || strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate)))) class="enabled-div set-heigth" @else class="disabled-div" @endif>
+              <td @if(strtotime($key)==strtotime(date('d-M-Y')) || strtotime($key) >= strtotime(date('d-M-Y', strtotime($nextDate)))) class="enabled-div set-heigth" @else class="disabled-div" @endif>
 
                 <div class="clearfix"></div>
-                @if((strtotime($key)==strtotime(date('d-M-Y')) && $authUser->type==Config::get('constants.Users.Manager')) ||  strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.après-midi')])}}" class="anchor-space"></a> @endif
+                @if(strtotime($key)==strtotime(date('d-M-Y')) ||  strtotime(date('d-M-Y', strtotime($key))) >= strtotime(date('d-M-Y', strtotime($nextDate))))<a href="{{route('create.delivery.period', ['id'=>$key, 'day_period'=>Config::get('constants.Day Period.après-midi')])}}" class="anchor-space"></a> @endif
               </td>
             @endif
 

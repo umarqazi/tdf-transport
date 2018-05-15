@@ -118,7 +118,7 @@ class DeliveryController extends Controller
         $deliveryId=$request->id;
         $date = str_replace('/', '-', $request->datetime);
         if(!$deliveryId){
-            if((Auth::user()->type==Config::get('constants.Users.Cashier') && strtotime($date) <= strtotime(date('d-m-Y'))) || (Auth::user()->type==Config::get('constants.Users.Manager') && strtotime($date) < strtotime(date('d-m-Y'))) ){
+            if(strtotime($date) < strtotime(date('d-m-Y'))){
                 Toast::error('Sélectionnez une date correcte');
                 return redirect::back()
                     ->withInput();
