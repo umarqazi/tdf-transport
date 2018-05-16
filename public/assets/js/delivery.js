@@ -186,6 +186,13 @@ $(document).ready(function($) {
         alert();
         window.location = $(this).data("href");
     });
+
+    //Replace if country code is attached with mobile number
+    var mobile_number = $('#mobile_number').val();
+    if (mobile_number.substring(0,3) === '+33'){
+     mobile_number = mobile_number.replace('+33','0');
+     $('#mobile_number').val(mobile_number);
+    }
 });
 function viewDelivery(url){
     window.location = url;
