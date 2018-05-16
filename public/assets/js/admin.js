@@ -47,6 +47,13 @@ $(document).ready(function () {
         var file = $('#file-upload')[0].files[0].name;
         $('#fileName').text(file);
     });
+
+    //Replace if country code is attached with mobile number
+    var mobile_number = $('#mobile_number').val();
+    if (mobile_number.substring(0,3) === '+33'){
+        mobile_number = mobile_number.replace('+33','0');
+        $('#mobile_number').val(mobile_number);
+    }
 });
 $('.close').on('click', function () {
   var currentLocation = window.location;
