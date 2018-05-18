@@ -248,7 +248,7 @@ class HomeController extends Controller
 				$checkEmail->password=Hash::make($request->password);
 				$checkEmail->save();
 			}
-			Toast::success('Your Password has been changed Successfully');
+			Toast::success('Merci votre mot de passe a bien été changé.');
 			return redirect('/');
 		}
 		public function createNewToken()
