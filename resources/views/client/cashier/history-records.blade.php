@@ -30,6 +30,7 @@
                 <?php $total=0;?>
                 @if(!$allDeliveries->isEmpty())
                     @foreach($allDeliveries as $delivery)
+                      @if($delivery['store_name']!='')
                         <?php
                         $items=array();
                         if($delivery['delivery_price']=='0'){
@@ -73,6 +74,7 @@
                             <td>{{$status}}</td>
                             <td><a class="btn btn-warning" href="{{$url}}"><i class="fa fa-pencil-square-o"></i></a></td>
                         </tr>
+                        @endif
                     @endforeach
                 @else
                     <tr>
