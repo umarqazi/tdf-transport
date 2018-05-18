@@ -231,3 +231,7 @@ $(document).ready(function() {
         window.location.href = '/search/'+from+'/'+to;
     });
 })
+function mobileNumber(number){
+  var mobile=number.value;
+   number.value =  number.value.replace(/[^\dA-Z]/g, '').replace(/(.{2})/g, '$1 ').trim();
+}
