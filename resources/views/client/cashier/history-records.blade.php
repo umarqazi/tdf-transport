@@ -6,6 +6,9 @@
                 <thead>
                 <tr>
                     <th class="text-center vertical-middle">Date de la livraison</th>
+                    @if(auth()->user()->type==Config::get('constants.Users.TDF Manager'))
+                    <th class="text-center vertical-middle">Magasin</th>
+                    @endif
                     <th class="text-center vertical-middle">Client</th>
                     <th class="text-center vertical-middle">Client email</th>
                     <th class="text-center vertical-middle">Numéro de commande</th>
@@ -51,6 +54,9 @@
                         ?>
                         <tr>
                             <td>{{Date::parse($delivery['datetime'])->format('d/m/Y')}}</td>
+                            @if(auth()->user()->type==Config::get('constants.Users.TDF Manager'))
+                            <td>{{$delivery['store_name']}}</td>
+                            @endif
                             <td>{{$delivery['first_name']}} {{$delivery['last_name']}}</td>
                             <td>{{$delivery['customer_email']}}</td>
                             <td>@if($delivery['order_pdf'])<a href="{{asset('assets/images')}}/{{ $delivery['stores_id'] }}/{{$delivery['order_pdf']}}" target="_blank"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['order_id']}}</td>
@@ -74,7 +80,7 @@
                     </tr>
                 @endif
                 <tr>
-                    <td colspan="11" align=right>Total: </td>
+                    <td colspan="{{(auth()->user()->type==Config::get('constants.Users.TDF Manager')? '12':'11')}}" align=right>Total: </td>
                     <td>{{$total}} €</td>
                 </tr>
                 </tbody>

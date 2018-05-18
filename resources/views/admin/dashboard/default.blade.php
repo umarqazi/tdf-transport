@@ -46,6 +46,7 @@ Admin area: dashboard
                                     <th>Immatriculation</th>
                                     <th>Chauffeur</th>
                                     <th>Email</th>
+                                    <th>Statut</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -56,6 +57,7 @@ Admin area: dashboard
                                     <td>{{$driver['number_plate']}}</td>
                                     <td>{{$driver['user_first_name']}} {{$driver['user_last_name']}}</td>
                                     <td>{{$driver['email']}}</td>
+                                    <td>@if($driver['activated']==1) <i class="fa fa-circle green-color2"></i> @else <i class="fa fa-circle red-color2"></i> @endif</td>
                                     <td class="text-center actions">
                                         <a href="{{route('dashboard.default', ['id'=>$driver->id])}}" class="edit"><i class="fa fa-edit fa-fw"></i></a>
                                         <a href="{!! URL::route('users.delete',['id' => $driver->id, '_token' => csrf_token()]) !!}" class="trash delete"><i class="fa fa-trash-o fa-fw"></i></a>

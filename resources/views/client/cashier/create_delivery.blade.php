@@ -93,7 +93,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-mobile fa-fw"></i></div>
-                                {{Form::text('mobile_number', null, ['class'=>'form-control', 'id'=>'mobile_number', 'placeholder'=>'Téléphone mobile'])}}
+                                {{Form::text('mobile_number', null, ['maxlength'=>'10','class'=>'form-control', 'id'=>'mobile_number', 'placeholder'=>'Téléphone mobile'])}}
                             </div>
                             <span class="text-danger">{!! $errors->first('mobile_number') !!}</span>
                         </div>
