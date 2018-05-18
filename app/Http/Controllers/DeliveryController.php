@@ -113,8 +113,7 @@ class DeliveryController extends Controller
             'address'           => 'required',
             'pdf'               => 'mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
             'order_pdf'         => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
-            'delivery_price'    =>'required',
-            'product_id'        => 'required'
+            'delivery_price'    =>'required'
         ]);
         $deliveryId=$request->id;
         $date = str_replace('/', '-', $request->datetime);
