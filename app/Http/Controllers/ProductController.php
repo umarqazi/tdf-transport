@@ -69,7 +69,7 @@ class ProductController extends Controller
         }
         else
         {
-            $addStore=Product::where('product_family', $product['product_family'])->first();
+            $addStore=Product::where('product_family', $product['product_family'])->where('company_id', $product['company_id'])->first();
             if(empty($addStore)){
                 $addStore=new Product;
             }
