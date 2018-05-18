@@ -56,7 +56,7 @@
                                     <span class="text-danger">{!! $errors->first('livraison') !!}</span>
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::label('livraison_montage', 'Prix livraison and montage') !!}
+                                    {!! Form::label('livraison_montage', 'Livraison + montage') !!}
                                     <div class="input-group">
                                         {!! Form::number('livraison_montage', null, ['class' => 'form-control', 'placeholder' => 'Prix livraison + montage', 'autocomplete' => 'off']) !!}
                                     </div>

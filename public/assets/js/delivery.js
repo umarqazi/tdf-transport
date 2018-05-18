@@ -183,7 +183,6 @@ function cancelpdf(type){
 
 $(document).ready(function($) {
     $(".clickable-row").click(function() {
-        alert();
         window.location = $(this).data("href");
     });
 
@@ -191,6 +190,7 @@ $(document).ready(function($) {
     var mobile_number = $('#mobile_number').val();
     if (mobile_number.substring(0,3) === '+33'){
      mobile_number = mobile_number.replace('+33','0');
+     mobile_number=mobile_number.replace(/\B(?=(\d{2})+(?!\d))/g, " ");
      $('#mobile_number').val(mobile_number);
     }
 });

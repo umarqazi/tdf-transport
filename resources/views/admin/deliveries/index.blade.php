@@ -33,6 +33,7 @@
                         <thead>
                         <tr>
                             <th class="text-center vertical-middle">Date de la livraison</th>
+                            <th class="text-center vertical-middle">Magasin</th>
                             <th class="text-center vertical-middle">Client</th>
                             <th class="text-center vertical-middle">E-mail</th>
                             <th class="text-center vertical-middle">Numéro de commande</th>
@@ -76,6 +77,7 @@
                             ?>
                             <tr>
                                 <td>{{Date::parse($delivery['datetime'])->format('d/m/Y')}}</td>
+                                <td>{{$delivery['store_name']}}</td>
                                 <td>{{$delivery['first_name']}} {{$delivery['last_name']}}</td>
                                 <td>{{$delivery['customer_email']}}</td>
                                 <td>@if($delivery['order_pdf'])<a href="{{asset('assets/images')}}/{{ $delivery['store_id'] }}/{{$delivery['order_pdf']}}" target="_blank"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['order_id']}}</td>
