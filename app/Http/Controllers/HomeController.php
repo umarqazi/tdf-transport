@@ -112,47 +112,47 @@ class HomeController extends Controller
 			}
 		}
 		$getDeliveries='';
-        $getDeliveryCities= '';
-        $getDeliveryFamilies= '';
-        $getDeliveryStores= '';
+		$getDeliveryCities= '';
+		$getDeliveryFamilies= '';
+		$getDeliveryStores= '';
 		$user_record='';
 		$tours=array();
 		if($user_id){
 			$user_record=User::where('id',$user_id)->select('number_plate', 'vehicle_name', 'user_first_name', 'user_last_name')->first();
 			$getDeliveries=self::deliveriesWithProducts();
-			$getDeliveries=$getDeliveries->where('deliveries.status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay);
+			$getDeliveries=$getDeliveries->where('deliveries.status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->orderBy('deliveries.day_period', 'desc');
 
-            $getDeliveryCities      = $getDeliveries->pluck('city');
-            $getDeliveryFamilies    = $getDeliveries;
-            $getDeliveryFamilies    = $getDeliveryFamilies->get();
-            $getDeliveryFamilies    = $getDeliveryFamilies->pluck('product');
-            $getDeliveryFamilies    = array_map("unserialize", array_unique(array_map("serialize", $getDeliveryFamilies->toArray())));
-            $getDeliveryStores      = $getDeliveries;
-            $getDeliveryStores      = $getDeliveryStores->get();
-            $getDeliveryStores      = $getDeliveryStores->pluck('store');
-            $getDeliveryStores      = array_map("unserialize", array_unique(array_map("serialize", $getDeliveryStores->toArray())));
+			$getDeliveryCities      = $getDeliveries->pluck('city');
+			$getDeliveryFamilies    = $getDeliveries;
+			$getDeliveryFamilies    = $getDeliveryFamilies->get();
+			$getDeliveryFamilies    = $getDeliveryFamilies->pluck('product');
+			$getDeliveryFamilies    = array_map("unserialize", array_unique(array_map("serialize", $getDeliveryFamilies->toArray())));
+			$getDeliveryStores      = $getDeliveries;
+			$getDeliveryStores      = $getDeliveryStores->get();
+			$getDeliveryStores      = $getDeliveryStores->pluck('store');
+			$getDeliveryStores      = array_map("unserialize", array_unique(array_map("serialize", $getDeliveryStores->toArray())));
 
-            if($request->filterCity || $request->filterServices || $request->filterStores || $request->filterProducts){
-                if (!empty($request->filterCity && $request->filterCity != 'default')){
-                    $getDeliveries = $getDeliveries->where('deliveries.city',$request->filterCity);
-                }
+			if($request->filterCity || $request->filterServices || $request->filterStores || $request->filterProducts){
+				if (!empty($request->filterCity && $request->filterCity != 'default')){
+					$getDeliveries = $getDeliveries->where('deliveries.city',$request->filterCity);
+				}
 
-                if (!empty($request->filterServices) && $request->filterServices != 'default'){
-                    $getDeliveries = $getDeliveries->where('deliveries.service', $request->filterServices);
-                }
+				if (!empty($request->filterServices) && $request->filterServices != 'default'){
+					$getDeliveries = $getDeliveries->where('deliveries.service', $request->filterServices);
+				}
 
-                if (!empty($request->filterStores) && $request->filterStores != 'default'){
-                    $getDeliveries = $getDeliveries->where('deliveries.store_id', $request->filterStores);
-                }
+				if (!empty($request->filterStores) && $request->filterStores != 'default'){
+					$getDeliveries = $getDeliveries->where('deliveries.store_id', $request->filterStores);
+				}
 
-                if (!empty($request->filterProducts)){
-                    $getDeliveries = $getDeliveries->whereIn('deliveries.product_id', $request->filterProducts);
-                }
+				if (!empty($request->filterProducts)){
+					$getDeliveries = $getDeliveries->whereIn('deliveries.product_id', $request->filterProducts);
+				}
 				$addmodal="deliveries";
 			}
-            $getDeliveries      = $getDeliveries->get();
-            $tours=self::manageTours($user_id, $nextDay);
-        }
+			$getDeliveries      = $getDeliveries->get();
+			$tours=self::manageTours($user_id, $nextDay);
+		}
 		return view::make('client.tdf_manager.create_tour')->with(['previousDate'=>$previousDate,'nextDate'=>$nextDay,'date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries, 'deliveryCities' => $getDeliveryCities, 'deliveryFamilies' => $getDeliveryFamilies, 'deliveryStores'=>$getDeliveryStores, 'oldValues' => $request->all() , 'modal'=>$addmodal]);
 	}
 	public static function manageTours($user_id, $nextDay, $driver=NULL){
