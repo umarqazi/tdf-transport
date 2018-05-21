@@ -37,6 +37,15 @@
     <div class="clear20"></div>
     <div class="row">
       <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{route('dashboard.default')}}">Tableau de bord</a></li>
+          <li class="breadcrumb-item"><a href="{{route('company.list')}}">Compagnie</a></li>
+          <li class="breadcrumb-item active">{{$company->company_name}}</li>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
         <strong>Liste des magasins</strong>
         <span class="companyName">
         {{$company->company_name}}
@@ -71,7 +80,7 @@
                   <td class="hidden-xs">{!! $store->city !!}</td>
                   <td class="hidden-xs">{!! $store->zip_code !!}</td>
                   <td align="center"><a class="btn btn-primary" href="{{route('employees', ['storeId'=>$store->id])}}">Voir</a></td>
-                  <td class="actions">
+                  <td class="actions" align="center">
                     @if(! $store->protected)
                       <a href="{!! URL::route('store.list', ['id' => $companyId, 'store_id' => $store->id]) !!}" title="Edit Store" class="edit"><i class="fa fa-edit fa-fw"></i></a>
                       <a href="{!! URL::route('store.delete',['id' => $store->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete trash delete_store" title="Delete Store"><i class="fa fa-trash-o fa-fw"></i></a>
@@ -82,8 +91,8 @@
                     @endif
                   </td>
                 </tr>
-              </tbody>
               @endforeach
+              </tbody>
             </table>
             <div class="paginator">
               {!! $stores->links() !!}

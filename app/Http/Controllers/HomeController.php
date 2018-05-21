@@ -112,32 +112,57 @@ class HomeController extends Controller
 			}
 		}
 		$getDeliveries='';
+		$getDeliveryCities= '';
+		$getDeliveryFamilies= '';
+		$getDeliveryStores= '';
 		$user_record='';
 		$tours=array();
 		if($user_id){
 			$user_record=User::where('id',$user_id)->select('number_plate', 'vehicle_name', 'user_first_name', 'user_last_name')->first();
-			$getDeliveries=self::deliveryProducts();
-			$getDeliveries=$getDeliveries->where('deliveries.status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay);
-			if($request->type){
-				if($request->type=='city'){
-					$getDeliveries=$getDeliveries->orderBy('city', 'desc');
+			$getDeliveries=self::deliveriesWithProducts();
+			$getDeliveries=$getDeliveries->where('deliveries.status', Config::get('constants.Status.Active'))->where('flag', '0')->whereDate('datetime', $nextDay)->orderBy('deliveries.day_period', 'desc');
+
+			$getDeliveryCities      = $getDeliveries->pluck('city');
+			$getDeliveryFamilies    = $getDeliveries;
+			$getDeliveryFamilies    = $getDeliveryFamilies->get();
+			$getDeliveryFamilies    = $getDeliveryFamilies->pluck('product');
+			$getDeliveryFamilies    = array_map("unserialize", array_unique(array_map("serialize", $getDeliveryFamilies->toArray())));
+			$getDeliveryStores      = $getDeliveries;
+			$getDeliveryStores      = $getDeliveryStores->get();
+			$getDeliveryStores      = $getDeliveryStores->pluck('store');
+			$getDeliveryStores      = array_map("unserialize", array_unique(array_map("serialize", $getDeliveryStores->toArray())));
+
+			if($request->filterCity || $request->filterServices || $request->filterStores || $request->filterProducts){
+				if (!empty($request->filterCity && $request->filterCity != 'default')){
+					$getDeliveries = $getDeliveries->where('deliveries.city',$request->filterCity);
 				}
-				if($request->type=='service'){
-					$getDeliveries=$getDeliveries->orderBy('service', 'desc');
+
+				if (!empty($request->filterServices) && $request->filterServices != 'default'){
+					$getDeliveries = $getDeliveries->where('deliveries.service', $request->filterServices);
 				}
-				if($request->type=='product'){
-					$getDeliveries=$getDeliveries->orderBy('product_type', 'desc');
+
+				if (!empty($request->filterStores) && $request->filterStores != 'default'){
+					$getDeliveries = $getDeliveries->where('deliveries.store_id', $request->filterStores);
+				}
+
+				if (!empty($request->filterProducts)){
+					$getDeliveries = $getDeliveries->whereIn('deliveries.product_id', $request->filterProducts);
 				}
 				$addmodal="deliveries";
 			}
-			$getDeliveries=$getDeliveries->get();
-
+			$getDeliveries      = $getDeliveries->get();
 			$tours=self::manageTours($user_id, $nextDay);
 		}
-		return view::make('client.tdf_manager.create_tour')->with(['previousDate'=>$previousDate,'nextDate'=>$nextDay,'date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries, 'modal'=>$addmodal]);
+		return view::make('client.tdf_manager.create_tour')->with(['previousDate'=>$previousDate,'nextDate'=>$nextDay,'date'=>$date,'vehicle_info'=>$user_record,'tour_plan'=>$tour_plan,'user_id'=>$user_id,'toursList'=>$tours,'drivers'=>$drivers, 'deliveries'=>$getDeliveries, 'deliveryCities' => $getDeliveryCities, 'deliveryFamilies' => $getDeliveryFamilies, 'deliveryStores'=>$getDeliveryStores, 'oldValues' => $request->all() , 'modal'=>$addmodal]);
 	}
 	public static function manageTours($user_id, $nextDay, $driver=NULL){
-		$getDeliveries2=Delivery::where('status', Config::get('constants.Status.Active'))->where('flag', '1')->whereDate('datetime', $nextDay)->select('deliveries.*', 'sub_products.product_type')->with(array('time'=>function($query){
+
+		if($driver=='driver'){
+			$status=[Config::get('constants.Status.Active'), Config::get('constants.Status.Delivered'), Config::get('constants.Status.Return')];
+		}else{
+			$status=[Config::get('constants.Status.Active')];
+		}
+		$getDeliveries2=Delivery::whereIn('status', $status)->where('flag', '1')->whereDate('datetime', $nextDay)->select('deliveries.*', 'sub_products.product_type')->with(array('time'=>function($query){
 			$query->select('tour_plan.id as tour_id','time_slot_id', 'delivery_id', 'user_id');
 			}))->leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->get();
 			$getTime=TimeSlot::all();
@@ -223,7 +248,7 @@ class HomeController extends Controller
 				$checkEmail->password=Hash::make($request->password);
 				$checkEmail->save();
 			}
-			Toast::success('Your Password has been changed Successfully');
+			Toast::success('Merci votre mot de passe a bien été changé.');
 			return redirect('/');
 		}
 		public function createNewToken()
@@ -257,7 +282,7 @@ class HomeController extends Controller
 					}else{
 						$price=$record['delivery_price']." €";
 					}
-					$url=URL('viewDelivery').'/'.$record['id'];
+					$url=URL('delivery').'/'.$record['id'];
 					$searchResult.="<tr onclick=viewDelivery('$url') class='clickable'><td>".Date::parse($record['datetime'])->format('d/m/Y')."</td><td>".$record['first_name'].' '.$record['last_name']."</td><td>".$record['customer_email']."</td><td>".$record['order_id']."</td><td>".$record['delivery_number']."</td><td>".$record['mobile_number']."</td><td>".$record['city']."</td><td>".$record['postal_code']."</td><td>".$record['service']."</td><td>".$products."</td><td>".$price." </td></tr>";
 				}
 			}else{
@@ -288,7 +313,11 @@ class HomeController extends Controller
 			return $getDeliveryRecords;
 		}
 		public static function deliveryProducts(){
-			$getDeliveryRecords=Delivery::leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'sub_products.product_type','stores.store_name', 'stores.id as stores_id');
+			$getDeliveryRecords=Delivery::leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'sub_products.product_type','stores.store_name', 'stores.id as stores_id')->orderBy('deliveries.datetime','desc');
+			return $getDeliveryRecords;
+		}
+		public static function deliveriesWithProducts(){
+			$getDeliveryRecords=Delivery::with('product','store')->leftJoin('sub_products', 'deliveries.sub_product_id', '=', 'sub_products.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->select('deliveries.*', 'sub_products.product_type','stores.store_name', 'stores.id as stores_id')->orderBy('deliveries.datetime','desc');
 			return $getDeliveryRecords;
 		}
 	}

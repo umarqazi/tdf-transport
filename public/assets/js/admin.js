@@ -42,6 +42,18 @@ $(document).ready(function () {
     $(".delete_user").click(function(){
         return confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur?");
     });
+    $('#file-upload').change(function() {
+        var i = $(this).prev('label').clone();
+        var file = $('#file-upload')[0].files[0].name;
+        $('#fileName').text(file);
+    });
+
+    //Replace if country code is attached with mobile number
+    var mobile_number = $('#mobile_number').val();
+    if (mobile_number.substring(0,3) === '+33'){
+        mobile_number = mobile_number.replace('+33','0');
+        $('#mobile_number').val(mobile_number);
+    }
 });
 $('.close').on('click', function () {
   var currentLocation = window.location;
@@ -62,13 +74,12 @@ function removeParam(key) {
                 params_arr.splice(i, 1);
             }
         }
-        rtn = rtn + "" + params_arr.join("&");
+        rtn = rtn;
     }
     return rtn;
 }
 
 function getStores(option){
-
     var id=option.value;
 
     $.ajax({
@@ -79,6 +90,29 @@ function getStores(option){
         success: function(data) {
             $('#store_dropdown').children('option').remove();
             $('#store_dropdown').append(data);
+            $('#store_dropdown').selectpicker('refresh');
+        },
+    });
+}
+function viewDelivery(url){
+    window.location = url;
+}
+
+$('select').selectpicker();
+$(function () {
+    $('#datetimepicker4').datetimepicker({
+        format: 'DD/MM/Y'
+    });
+});
+function getProduct(option){
+    var id=option.value;
+    $.ajax({
+        url: APP_URL+"/getProductType",
+        type:"GET",
+        dataType: 'text',
+        data: { id : id},
+        success: function(data) {
+            $('#products').html(data);
         },
     });
 }

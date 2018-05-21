@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => env('EMAIL_FROM_ADDRESS','muhammad.adeel@gems.techverx.com'), 'name' => env('EMAIL_FROM_NAME','TDF Transport')],
+	'from' => ['address' => env('EMAIL_FROM_ADDRESS','test.annei.68@gmail.com'), 'name' => env('EMAIL_FROM_NAME','TDF Transport')],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
 	|
 	*/
 
-	'username' => env('EMAIL_USERNAME','muhammad.adeel@gems.techverx.com'),
+	'username' => env('EMAIL_USERNAME','test.annei.68@gmail.com'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
 	|
 	*/
 
-	'password' => env('EMAIL_PASSWORD','kammalik3256789'),
+	'password' => env('EMAIL_PASSWORD','123testannei123'),
 
 	/*
 	|--------------------------------------------------------------------------

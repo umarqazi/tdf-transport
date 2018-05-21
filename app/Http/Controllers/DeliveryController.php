@@ -57,7 +57,7 @@ class DeliveryController extends Controller
         }
 
         $dayPeriod=$request->period;
-        $products=['0'=>'Multi-produits'];
+        $products=[''=>'Multi-produits'];
         if($id)
         {
             $getDelivery=HomeController::deliveryProducts()->where('deliveries.id',$id)->first();
@@ -75,7 +75,19 @@ class DeliveryController extends Controller
         {
             $getDelivery=new Delivery;
         }
-        $storeId=$this->authUser->store_id;
+
+        if ($this->authUser->type == 'Admin'){
+            $view = 'admin.deliveries.edit';
+            $storeId=$getDelivery->store_id;
+        }
+        elseif ($this->authUser->type== Config::get('constants.Users.TDF Manager')){
+            $view = 'client.cashier.create_delivery';
+            $storeId=$getDelivery->store_id;
+        }
+        else{
+            $view = 'client.cashier.create_delivery';
+            $storeId=$this->authUser->store_id;
+        }
         $storeInfo=Store::find($storeId);
         $getCompanyProduct=Company::with('products')->where('id', $storeInfo['company_id'])->first();
         if($getCompanyProduct['products'])
@@ -85,29 +97,32 @@ class DeliveryController extends Controller
                 $products[$product['id']]=$product['product_family'];
             }
         }
-        return view::make('client.cashier.create_delivery')->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
+
+        return view::make($view)->with(['subProduct'=>$subProduct,'delivery'=> $getDelivery, 'products'=>$products, 'period'=>$dayPeriod, 'dateTime'=>$dateTime]);
     }
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'datetime' => 'required',
-            'first_name'=> 'required',
-            'last_name'=> 'required',
-            'mobile_number'=> 'required',
-            'order_id'=> 'required',
-            'service'=> 'required',
-            'address' => 'required',
-            'pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id,
-            'order_pdf' => 'mimes:pdf,jpeg,jpg,png'.$request->id
+            'datetime'          => 'required',
+            'first_name'        => 'required',
+            'last_name'         => 'required',
+            'mobile_number'     => 'required_without_all:landline',
+            'landline'          => 'required_without_all:mobile_number',
+            'order_id'          => 'required',
+            'service'           => 'required',
+            'address'           => 'required',
+            'pdf'               => 'mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
+            'order_pdf'         => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
+            'delivery_price'    =>'required'
         ]);
         $deliveryId=$request->id;
         $date = str_replace('/', '-', $request->datetime);
         if(!$deliveryId){
-          if((Auth::user()->type==Config::get('constants.Users.Cashier') && strtotime($date) <= strtotime(date('d-m-Y'))) || (Auth::user()->type==Config::get('constants.Users.Manager') && strtotime($date) < strtotime(date('d-m-Y'))) ){
-              Toast::error('Sélectionnez une date correcte');
-              return redirect::back()
-                  ->withInput();
-          }
+            if(strtotime($date) < strtotime(date('d-m-Y'))){
+                Toast::error('Sélectionnez une date correcte');
+                return redirect::back()
+                    ->withInput();
+            }
         }
         if ($validator->fails()) {
             return redirect::back()
@@ -115,8 +130,7 @@ class DeliveryController extends Controller
                 ->withInput();
         }
 
-        if($deliveryId)
-        {
+        if($deliveryId) {
             $delivery=Delivery::find($deliveryId);
             $message=Config::get('constants.Edit Delivery');
         }
@@ -128,7 +142,18 @@ class DeliveryController extends Controller
             $message=Config::get('constants.Create Delivery');
         }
         $delivery->save();
-        $getStoreName=Auth::user()->store_id;
+        if(Auth::user()->type == 'Admin'){
+            $view = '/admin/deliveries';
+            $getStoreName=$delivery->store_id;
+        }
+        elseif(Auth::user()->type == Config::get('constants.Users.TDF Manager')){
+            $view = '/allDeliveryHistory';
+            $getStoreName=$delivery->store_id;
+        }
+        else{
+            $view = '/dashboard';
+            $getStoreName=Auth::user()->store_id;
+        }
         $fileName='DeliveryNote'.$delivery->id;
         $orderFileName='OrderNote'.$delivery->id;
         $destinationPath = public_path('/assets/images/'.$getStoreName);
@@ -137,21 +162,22 @@ class DeliveryController extends Controller
         }
         if($request->dummy!=NULL)
         {
-            $new_path =  public_path().'/assets/images/'. $getStoreName.'/'.$fileName.'.pdf';
+            $dummyExtension = pathinfo($request->dummy, PATHINFO_EXTENSION);
+            $new_path =  public_path().'/assets/images/'. $getStoreName.'/'.$fileName.'.'.$dummyExtension;
             $old_path =  public_path().'/assets/images/dummyImages/'. $request->dummy;
             $move = File::move($old_path, $new_path);
-            $delivery->delivery_pdf=$fileName.'.pdf';
+            $delivery->delivery_pdf=$fileName.'.'.$dummyExtension;
         }
         if($request->orderDummy!=NULL)
         {
-            $new_path =  public_path().'/assets/images/'. $getStoreName.'/'.$orderFileName.'.pdf';
+            $orderExtension = pathinfo($request->orderDummy, PATHINFO_EXTENSION);
+            $new_path =  public_path().'/assets/images/'. $getStoreName.'/'.$orderFileName.'.'.$orderExtension;
             $old_path =  public_path().'/assets/images/dummyImages/'. $request->orderDummy;
             $move = File::move($old_path, $new_path);
-            $delivery->order_pdf=$orderFileName.'.pdf';
+            $delivery->order_pdf=$orderFileName.'.'.$orderExtension;
         }
         if(!empty($request->pdf))
         {
-
             $pdf=$request->file('pdf');
             $type=$fileName;
             $name=self::storeImage($pdf, $getStoreName, $type);
@@ -159,11 +185,14 @@ class DeliveryController extends Controller
         }
         if(!empty($request->order_pdf))
         {
-
             $pdf=$request->file('order_pdf');
             $type=$orderFileName;
             $name=self::storeImage($pdf, $getStoreName, $type);
             $delivery->order_pdf=$name;
+        }
+        $result = substr($request->mobile_number, 0, 3);
+        if($result!='+33'){
+            $request->mobile_number = str_replace(' ', '', preg_replace('/^0/','+33',$request->mobile_number));
         }
         $delivery->datetime=date('Y-m-d', strtotime($date));
         $delivery->day_period=$request->day_period;
@@ -196,7 +225,7 @@ class DeliveryController extends Controller
         }
         $delivery->sub_product_id=$product_id;
         if(!$deliveryId){
-          $delivery->status=Config::get('constants.Status.Pending');
+            $delivery->status=Config::get('constants.Status.Pending');
         }
         if(Auth::user()->type==Config::get('constants.Users.Cashier')){
             $getManager=User::where('type', 'Manager')->where('store_id', $this->authUser->store_id)->first();
@@ -208,7 +237,7 @@ class DeliveryController extends Controller
 
         $delivery->save();
         Toast::success($message);
-        return redirect::to('/dashboard');
+        return redirect::to($view);
     }
     public function viewDeliver(Request $request)
     {
@@ -224,11 +253,11 @@ class DeliveryController extends Controller
     public function uploadPdf(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pdf' => 'mimes:pdf,jpeg,jpg,png',
-            'order_pdf' => 'mimes:pdf,jpeg,jpg,png'
+            'pdf' => 'mimes:pdf,jpeg,jpg,png,doc,docx',
+            'order_pdf' => 'mimes:pdf,jpeg,jpg,png,doc,docx'
         ]);
         if ($validator->fails()) {
-            header('HTTP/1.1 403 '); exit("File type must be pdf");
+            header('HTTP/1.1 403 '); exit("Le type de fichier doit être pdf, jpeg, jpg, png, doc, docx, zip");
         }
         $pdf=$request->file('pdf');
         $type=date('Y-m-d h:i:s');
@@ -276,16 +305,22 @@ class DeliveryController extends Controller
     }
     public function search($from, $to){
         $results = HomeController::deliveryProducts();
+        if(Auth::user()->type!=Config::get('constants.User Type.Manager TDF')){
+            $results=$results->where('store_id', Auth::user()->store_id);
+            $view='client.cashier.delivery_history';
+        }else{
+            $results=$results->whereIn('deliveries.status', [Config::get('constants.Status.Active'), Config::get('constants.Status.Return'), Config::get('constants.Status.Delivered')]);
+            $view='client.tdf_manager.history';
+        }
         $searchedResults = $results->where([
-            ['datetime','>' ,date('Y-m-d', strtotime($from))],
+            ['datetime','>=' ,date('Y-m-d', strtotime($from))],
             ['datetime','<=' ,date('Y-m-d', strtotime($to))]])->orderBy('datetime', 'desc')
             ->paginate();
-
-        return view::make('client.cashier.delivery_history')->with(['allDeliveries' => $searchedResults, 'from' => str_replace('-','/',$from), 'to'=> str_replace('-','/', $to)]);
+        return view::make($view)->with(['allDeliveries' => $searchedResults, 'from' => str_replace('-','/',$from), 'to'=> str_replace('-','/', $to)]);
     }
     public function exportHistory(Request $request) {
         if(Auth::user()->type==Config::get('constants.Users.TDF Manager')){
-            $deliveries = HomeController::deliveryProducts()->where('deliveries.status', Config::get('constants.Status.Active'));
+            $deliveries = HomeController::deliveryProducts()->whereIn('deliveries.status', [Config::get('constants.Status.Active'),Config::get('constants.Status.Delivered'),Config::get('constants.Status.Return')]);
         }else{
             $deliveries = HomeController::deliveryProducts()->where('store_id', $this->authUser->store_id);
         }
@@ -303,7 +338,7 @@ class DeliveryController extends Controller
         }
         $deliveries=$deliveries->get();
         $records = [];
-        $records[] = ['Date de la livraison', 'Client','Numéro de commande','Numéro du bon de livraison','Téléphone', 'Ville', 'Code Postal', 'Type de prestation', 'Produit commandé', 'Prix de la livraison', 'Statut', 'Satisfaction client'];
+        $records[] = ['Date de la livraison', 'Client','Numéro de commande','Numéro du bon de livraison','Téléphone', 'Ville', 'Code Postal', 'Type de prestation', 'Produit commandé', 'Prix de la livraison', 'Statut', 'Satisfaction client', 'Informations sur la livraison (chauffeur)'];
         foreach($deliveries as $key=>$delivery){
             $items=array();
             if($delivery['delivery_price']=='Gratuit'){
@@ -314,11 +349,17 @@ class DeliveryController extends Controller
             if($delivery['product_id']==0){
                 $items="Multi-produits";
             }else{
-                $items=$delivery['product_family'];
+                $items=$delivery['product_type'];
+            }
+            if($delivery['delivery_problem'] !=0){
+                $driver_feedback = Config::get('constants.Driver Feedback.'.$delivery["delivery_problem"]);
+            }
+            else{
+                $driver_feedback = '';
             }
             $name=$delivery['first_name'].' '.$delivery['last_name'];
             if($delivery['status']==1){ $status= "Validé";}elseif($delivery['status']==2){$status= "Livre"; }else{ $status="En attente"; };
-            $records[]=[date('d/m/Y', strtotime($delivery['datetime'])), $name,$delivery['order_id'],$delivery['delivery_number'],$delivery['mobile_number'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, $delivery['customer_feedback']];
+            $records[]=[date('d/m/Y', strtotime($delivery['datetime'])), $name,$delivery['order_id'],$delivery['delivery_number'],str_replace("+33","0",$delivery['mobile_number']),$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, (int)$delivery['client_satisfaction'], $driver_feedback];
         }
         Excel::create('Historique des livraisons', function($excel) use ($records) {
             $excel->setTitle('Historique des livraisons');
@@ -326,36 +367,67 @@ class DeliveryController extends Controller
             $excel->setDescription('Historique des livraisons');
             $excel->sheet('sheet1', function($sheet) use ($records) {
                 $sheet->fromArray($records, null, 'A1', false, false);
-            });
 
+                $sheet->row(1, function($row) {
+                    $row->setFontWeight('bold');
+                });
+
+                $number=2;
+                for($i=1; $i<=count($records); $i++)
+                {
+                    if (!empty($records[$i][11])){
+                        if ($records[$i][11] == 1){
+                            $sheet->cell('L'.$number, function($cell){
+                                $cell->setBackground('#006400');
+                                $cell->setValue('');
+                            });
+                        }
+                        elseif ($records[$i][11] == 2){
+                            $sheet->cell('L'.$number, function($cell){
+                                $cell->setBackground('#FFFF00');
+                                $cell->setValue('');
+                            });
+                        }
+                        elseif ($records[$i][11] == 3){
+                            $sheet->cell('L'.$number, function($cell){
+                                $cell->setBackground('#FF0000');
+                                $cell->setValue('');
+                            });
+                        }
+                    }
+                    $number++;
+                }
+            });
         })->download('xlsx');
     }
     public function pTourPlan(Request $request){
         if($request->delivery_id){
-          $getTour=TourPlan::where('delivery_id', $request->delivery_id)->first();
-          if(!$getTour){
-            $addTour=new TourPlan;
-            $addTour->time_slot_id=$request->time_slot;
-            $addTour->delivery_id=$request->delivery_id;
-            $addTour->user_id=$request->user_id;
-            $addTour->status='0';
-            $addTour->save();
-            $updateDelivery=Delivery::find($request->delivery_id);
-            $updateDelivery->flag='1';
-            $updateDelivery->save();
+            foreach($request->delivery_id as $delivery){
+                $getTour=TourPlan::where('delivery_id', $delivery)->first();
+                if(!$getTour){
+                    $addTour=new TourPlan;
+                    $addTour->time_slot_id=$request->time_slot;
+                    $addTour->delivery_id=$delivery;
+                    $addTour->user_id=$request->user_id;
+                    $addTour->status='0';
+                    $addTour->save();
+                    $updateDelivery=Delivery::find($delivery);
+                    $updateDelivery->flag='1';
+                    $updateDelivery->save();
+                }else{
+                    Toast::error('Livraison déjà assignée au conducteur');
+                }
+            }
             Toast::success('La livraison a été assignée au conducteur');
-          }else{
-            Toast::error('Livraison déjà assignée au conducteur');
-          }
         }else{
             $link='';
             Toast::error("Il n'y a pas de plan de tournée pour le moment");
         }
-        return redirect::back();
+        return redirect('/planDriverTour/'.$request->user_id.'?date='.$request->date);
     }
     public function allManagerDeliveries(Request $request){
         $getDeliveryHistory=HomeController::searchResults($request->all());
-        $getDeliveryHistory=$getDeliveryHistory->where('deliveries.status', Config::get('constants.Status.Active'))->orwhere('deliveries.status', Config::get('constants.Status.Delivered'))->orderby('datetime', 'desc')->paginate(10);
+        $getDeliveryHistory=$getDeliveryHistory->whereIn('deliveries.status', [Config::get('constants.Status.Active'), Config::get('constants.Status.Delivered'),Config::get('constants.Status.Return')])->orderby('datetime', 'desc')->paginate(10);
         return view::make('client.tdf_manager.history')->with('allDeliveries', $getDeliveryHistory)->withInput($request->all());
     }
     public function deleteTour(Request $request){
@@ -409,19 +481,19 @@ class DeliveryController extends Controller
         return view::make('admin.deliveries.index')->with('deliveries', $getDeliveries);
     }
     public function sendCustomerSMS(Request $request){
-      $date=Date::parse($request->date)->format('Y-m-d');
-      $customerDetail=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->leftJoin('time_slot', 'tour_plan.time_slot_id', '=', 'time_slot.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->where('datetime', $date)->where('tour_plan.user_id', $request->id)->select('deliveries.datetime','deliveries.mobile_number','tour_plan.user_id','stores.store_name','time_slot.time','stores.phone_number')->get();
-      foreach($customerDetail as $customer){
-        $message=
-"Cher(e) client(e),
+        $date=Date::parse($request->date)->format('Y-m-d');
+        $customerDetail=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->leftJoin('time_slot', 'tour_plan.time_slot_id', '=', 'time_slot.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->where('datetime', $date)->where('tour_plan.user_id', $request->id)->select('deliveries.datetime','deliveries.mobile_number','tour_plan.user_id','stores.store_name','time_slot.time','stores.phone_number')->get();
+        foreach($customerDetail as $customer){
+            $message=
+                "Cher(e) client(e),
 Votre commande sera livrée le ".Date::parse($customer['datetime'])->format('d/m/Y')." entre ".$customer['time'].".
 Merci,
 
 ".$customer['store_name']." / ".$customer['phone_number'];
-        $user=$customer['mobile_number'];
-        $sendSMS=Ovh::checkSms($user, $message);
-      }
-      Toast::success(Config::get('constants.Send SMS'));
-      return redirect::back();
+            $user=$customer['mobile_number'];
+            $sendSMS=Ovh::checkSms($user, $message);
+        }
+        Toast::success(Config::get('constants.Send SMS'));
+        return redirect::back();
     }
 }

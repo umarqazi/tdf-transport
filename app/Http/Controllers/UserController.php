@@ -6,6 +6,7 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\MessageBag;
 use LaravelAcl\Authentication\Exceptions\PermissionException;
 use LaravelAcl\Authentication\Exceptions\ProfileNotFoundException;
@@ -74,7 +75,7 @@ class UserController extends Controller {
             $user = new User;
         }
         $presenter = new UserPresenter($user);
-        if (!is_null($user['id'])) {
+        if (!is_null($user['id']) && !is_null($user->store)) {
             $storeList = Store::where('company_id',$user->store->company_id)->get();
         }
         else {
@@ -140,6 +141,16 @@ class UserController extends Controller {
                 return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors("Il y a déjà un ".$type." dans ce magasin.");
             }
         }
+
+        if ($id && !empty($request->password))
+        {
+            $userProfile = User::find($id);
+            $oldPassword = $request->old_password;
+            if (!Hash::check($oldPassword, $userProfile->password)){
+                return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors("Votre ancien mot de passe est incorrect");
+            }
+        }
+
         DbHelper::startTransaction();
         try
         {

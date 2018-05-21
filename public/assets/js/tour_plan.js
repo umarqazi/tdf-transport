@@ -20,16 +20,8 @@ function getTours(option){
     $("#showTour").hide();
   }
 }
-$('.checkboxDiv input:checkbox').click(function(){
-    var $inputs = $('.checkboxDiv input:checkbox');
-    if($(this).is(':checked')){  // <-- check if clicked box is currently checked
-       $inputs.not(this).prop('disabled',true); // <-- disable all but checked checkbox
-    }else{  //<-- if checkbox was unchecked
-       $inputs.prop('disabled',false); // <-- enable all checkboxes
-    }
-});
 function showDeliveries(time){
   var user_id = $('#selUser option:selected').val();
-  $("#time_slot").val(time);
+  $(".time_slot").val(time);
   $("#deliveries").modal("show");
 }

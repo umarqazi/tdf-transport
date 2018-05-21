@@ -19,7 +19,7 @@ class CompanyController extends Controller
     public function companyList(Request $request)
     {
         $id=$request->id;
-        $modal="";
+        $modal=$request->modal;
         if($id)
         {
             $company=Company::find($id);
@@ -53,7 +53,7 @@ class CompanyController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect::back()
+            return redirect::route('company.list',['modal' => 'addCompany'])
                 ->withErrors($validator)
                 ->withInput();
         }

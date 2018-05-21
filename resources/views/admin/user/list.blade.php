@@ -48,6 +48,7 @@ Admin area: User Management
               <th>Prénom</th>
               <th>Fonction</th>
               <th>Société</th>
+              <th>Statut</th>
               <th class="text-center">Actions</th>
             </tr>
           </thead>
@@ -66,7 +67,7 @@ Admin area: User Management
                   TDF Transport
                 @endif
               </td>
-
+              <td align="center">@if($user->type=="Chauffeur-livreur") @if($user->activated==1) <i class="fa fa-circle green-color2"></i> @else <i class="fa fa-circle red-color2"></i> @endif @endif</td>
               <td class="text-center actions">
                 <a href="{{route('users.list', ['id'=>$user->id])}}" class="edit"><i class="fa fa-edit fa-fw"></i></a>
                 <a href="{!! URL::route('users.delete',['id' => $user->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete trash delete_user"><i class="fa fa-trash-o fa-fw"></i></a>

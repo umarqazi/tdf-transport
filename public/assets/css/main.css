@@ -685,6 +685,8 @@ button:focus {
     float: left;
     width: 100%;
     margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
 }
 
 .odd-record a, .even-record a{
@@ -698,6 +700,8 @@ button:focus {
     float: left;
     width: 100%;
     margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
 }
 .delivery-detail-record{
     width: 100%;
@@ -718,4 +722,133 @@ button:focus {
 }
 .product-detail-icons a{
     color: #FFFFFF;
+}
+.storeLogo{
+    width: 154px;
+    height: 79px;
+    border: 2px solid black;
+    margin: 10px auto 0px auto;
+}
+#storeLogoInput{
+    margin-left: 174px !important;
+}
+.delete_store{
+    margin-top: 10px;
+}
+.modal-header a .modal-close{
+    width: 35px;
+    height: 35px;
+    background-color: lightgrey;
+    border-radius: 15px;
+    color: #000;
+}
+.modal-header .modal-close{
+    width: 35px;
+    height: 35px;
+    background-color: lightgrey;
+    border-radius: 50%;
+    opacity: 1;
+    color: #000 !important;
+}
+.close:hover{
+    opacity: 1 !important;
+}
+.cashier-search-button{
+    z-index: 111;
+}
+.horizontal-line{
+  position: absolute;
+  border-right: #000 solid 1px;
+  width: 20px;
+  height: 120%;
+  top: 0;
+  left: 2px;
+  transform: -webkit-rotate(-20deg);
+  transform: rotate(-20deg);
+  float:left;
+}
+.deliveryFilters{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.product-family-search{
+    width: calc(100% - 42px) !important;
+    margin:-5px 3px -13px 0px;
+    float: left;
+    position: relative;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 111;
+}
+.product-family-search .product-family-search-input{
+    width: calc(100% - 35px) !important;
+}
+#product-family-search-heading{
+    text-align: center;
+}
+.delivery_search{
+    right: 15px;
+    top: -10px;
+    height: 40px;
+    margin-bottom: 12px !important;
+    margin-top: -5px;
+}
+.delivery_dropdown_btn {
+    right: 0;
+    color: #333;
+    background-color: #ddd;
+    padding: 12px 10px;
+    position: absolute;
+    top: 0;
+}
+.delivery_toggle_div{
+    display: none;
+    background: #fff;
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    border: #ccc solid 1px;
+    padding: 10px;
+}
+.delivery_toggle_div span{
+    text-align: center !important;
+}
+.aid-company{
+  width:100%;
+  float:left;
+  margin: 10px 0px;
+}
+.aid-company li{
+  list-style: none;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0px 15px 0px 0px;
+  color:#000;
+}
+.tdf-form label{
+    display: block;
+    margin: 3px;
+    text-align: left;
+}
+
+.city-filter .btn-group.bootstrap-select.form-control{
+    width: calc(100% - 25px);
+    margin-left: 10px;
+}
+.thankyou_heading{
+  padding:0px !important;
+  margin-top: 30% !important;
+  display: inline-block;
+  font-size: 30pt !important;
+}
+.userCompanyDetails{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.green-color2{
+  color: green;
+}
+.red-color2{
+  color: red;
 }

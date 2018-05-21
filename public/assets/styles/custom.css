@@ -10,15 +10,20 @@
 #page-wrapper {position: relative;}
 .add-new-circle {position: fixed; bottom: 20px; right: 20px;}
 .add-new-circle .fa {font-size: 50px; z-index: 9999;}
-.navbar-brand{    padding: 5px 15px !important;
-    height: 80px !important; width: 180px;}
+.navbar-brand{
+	padding: 5px 15px !important;
+	height: 80px !important;
+	width: 180px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
     .tdf-logo{
       height: auto !important;
     }
     .navbar-brand img {
-      width: 150px;
-      height: 75px;
-      display: block;
+		display: block;
+		max-width: 100%;
     }
     #side-menu .fa {float: right; color: #999;}
 

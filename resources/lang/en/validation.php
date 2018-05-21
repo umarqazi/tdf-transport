@@ -47,7 +47,7 @@ return [
 		"string"  => "The :attribute may not be greater than :max characters.",
 		"array"   => "The :attribute may not have more than :max items.",
 	],
-	"mimes"                => "The :attribute must be a file of type: :values.",
+	"mimes"                => "la :attribute doit être un fichier de type: :values.",
 	"min"                  => [
 		"numeric" => "The :attribute must be at least :min.",
 		"file"    => "The :attribute must be at least :min kilobytes.",
@@ -62,7 +62,7 @@ return [
 	"required_with"        => "The :attribute field is required when :values is present.",
 	"required_with_all"    => "The :attribute field is required when :values is present.",
 	"required_without"     => "The :attribute field is required when :values is not present.",
-	"required_without_all" => "The :attribute field is required when none of :values are present.",
+	"required_without_all" => "Au moins un numéro de téléphone est obligatoire",
 	"same"                 => "The :attribute and :other must match.",
 	"size"                 => [
 		"numeric" => "The :attribute must be :size.",
@@ -86,8 +86,20 @@ return [
 	*/
 
 	'custom' => [
-		'attribute-name' => [
-			'rule-name' => 'custom-message',
+		'order_pdf' => [
+			'required' => "Aucun fichier n'a été sélectionné",
+		],
+        'password' => [
+			'confirmed' => "La confirmation du mot de passe ne correspond pas.",
+		],
+        'email' => [
+			'unique' => "Attention, cet email existe déjà",
+		],
+        'order_pdf' => [
+			'required_without' => "Merci d'ajouter le document de commande",
+		],
+        'pdf' => [
+			'required_without' => "Merci d'ajouter le document de livraison",
 		],
 	],
 

@@ -6,6 +6,7 @@ use LaravelAcl\Company;
 use LaravelAcl\Product;
 use LaravelAcl\SubProduct;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Classes\PHPExcel;
 use view;
 use Validator;
 use Redirect;
@@ -68,7 +69,7 @@ class ProductController extends Controller
         }
         else
         {
-            $addStore=Product::where('product_family', $product['product_family'])->first();
+            $addStore=Product::where('product_family', $product['product_family'])->where('company_id', $product['company_id'])->first();
             if(empty($addStore)){
                 $addStore=new Product;
             }
@@ -116,13 +117,23 @@ class ProductController extends Controller
     }
     public function importExport(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'bulk_upload' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect::back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $file=$request->bulk_upload;
         $company_id=$request->company_id;
         $extension=$file->getClientOriginalExtension();
-        if(!in_array($extension, ['xlsx']))
+        if(!in_array($extension, ['xlsx','xls']))
         {
             return redirect::back()
-                ->withErrors('The bulk upload must be a file of type:  xlsx.');
+                ->withErrors('Le transfert groupé doit être un fichier de type: xlsx.');
         }
         if($file){
             $path = $request->file('bulk_upload')->getRealPath();
@@ -130,14 +141,16 @@ class ProductController extends Controller
             })->get();
             if(!empty($data) && $data->count()){
                 foreach ($data as $key => $value) {
-                    $product = ['product_family' => $value->product_family, 'company_id'=>$company_id];
+                  if($value->famille_de_produits){
+                    $product = ['product_family' => $value->famille_de_produits, 'company_id'=>$company_id];
                     $addProduct=self::insertProduct($product);
-                    $sub_product = ['id'=>$addProduct->id,'product_type' => $value->product_detail,'sav' => $value->sav,'livraison' => $value->livraison,'livraison_montage' => $value->livraison_montage,'rétrocession' => $value->retrocession,'prestataire' => $value->livraison_prestataire,'montage' => $value->montage];
+                    $sub_product = ['id'=>$addProduct->id,'product_type' => $value->produits,'sav' => $value->sav,'livraison' => $value->livraison,'livraison_montage' => $value->livraison_montage,'rétrocession' => $value->retrocession,'prestataire' => $value->livraison_prestataire,'montage' => $value->montage];
                     $addProduct=self::insertSubProduct($sub_product);
+                  }
                 }
             }
         }
-        return redirect::back()->with('message', 'Le produit a été téléchargé avec succès');
+        return redirect::back()->with('message', 'La liste de produit a bien été importée.');
     }
     public function destroySubProduct(Request $request)
     {
@@ -145,5 +158,28 @@ class ProductController extends Controller
         $getStore=SubProduct::find($id);
         $getStore->delete();
         return redirect::back()->with('message', "Le détail du produit a été supprimé avec succès");
+    }
+
+    public function exportProducts($id){
+        $company = Company::find($id);
+        $products = Product::with('subProducts')->where('company_id',$id)->get()->toArray();
+        $allProduct=array();
+        foreach ($products as $key=>$product){
+            foreach ($product['sub_products'] as $key2=>$subProduct){
+                $allProduct[]=['famille_de_produits'=>$product['product_family'], 'produits'=>$subProduct['product_type'], 'sav'=>$subProduct['sav'], 'livraison'=>$subProduct['livraison'],'livraison_montage'=>$subProduct['livraison_montage'],'rétrocession'=>$subProduct['rétrocession'],'livraison prestataire'=>$subProduct['prestataire'],'montage'=>$subProduct['montage']];
+            }
+        }
+        return \Excel::create($company->company_name, function($excel) use ($allProduct , $company) {
+
+            $excel->sheet($company->company_name, function($sheet) use ($allProduct)
+            {
+                $sheet->cells('A1:H1', function($cells) {
+                    $cells->setFontWeight('bold');
+                });
+                $sheet->fromArray($allProduct);
+
+            });
+
+        })->download('xlsx');
     }
 }

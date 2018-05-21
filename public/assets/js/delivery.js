@@ -21,15 +21,18 @@ function freeDelivery(check){
     }
 
 };
-function upload()
+function upload(id)
 {
     var orderPdf='';
-    var file_data = $('#pdfFile').prop('files')[0];
-    if(!file_data)
-    {
+    if (id == 'orderPdfFile'){
         var file_data = $('#orderPdfFile').prop('files')[0];
         orderPdf='Yes';
     }
+    else{
+        var file_data = $('#pdfFile').prop('files')[0];
+        orderPdf= 'No';
+    }
+
     var uploadPdf = new FormData();
     uploadPdf.append('pdf', file_data);
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -138,6 +141,9 @@ $(document).ready(function () {
     $(".dropdown_btn").click(function(){
         $(".toggle_div").slideToggle();
     });
+    $(".delivery_dropdown_btn").click(function(){
+        $(".delivery_toggle_div").slideToggle();
+    });
 });
 jQuery(function() {
     // setTimeout() function will be fired after page is loaded
@@ -177,9 +183,16 @@ function cancelpdf(type){
 
 $(document).ready(function($) {
     $(".clickable-row").click(function() {
-        alert();
         window.location = $(this).data("href");
     });
+
+    //Replace if country code is attached with mobile number
+    var mobile_number = $('#mobile_number').val();
+    if (mobile_number.substring(0,3) === '+33'){
+     mobile_number = mobile_number.replace('+33','0');
+     mobile_number=mobile_number.replace(/\B(?=(\d{2})+(?!\d))/g, " ");
+     $('#mobile_number').val(mobile_number);
+    }
 });
 function viewDelivery(url){
     window.location = url;
@@ -218,3 +231,7 @@ $(document).ready(function() {
         window.location.href = '/search/'+from+'/'+to;
     });
 })
+function mobileNumber(number){
+  var mobile=number.value;
+   number.value =  number.value.replace(/[^\dA-Z]/g, '').replace(/(.{2})/g, '$1 ').trim();
+}

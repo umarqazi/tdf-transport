@@ -4,9 +4,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <a href="{{url('/admin/users/list')}}">
+                    <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </a>
             </div>
 
             {!! Form::model($user, [ 'url' => URL::route('users.edit')] )  !!}
@@ -28,11 +30,12 @@
                     </div>
                     <div class="col-lg-12 calendar-control">
                         <div class="content_wrapper clearfix">
-                            <div class="form-inline user-form-row" style="max-width: 600px; margin: 0 auto;">
+                            <div class="form-inline tdf-form user-form-row" style="max-width: 600px; margin: 0 auto;">
                                 <div class="row">
                                     <h3>Informations sur l’utilisateur</h3>
                                     <div class="col-sm-6">
                                         <div class="form-group">
+                                            {!! Form::label('user_first_name', 'Prénom') !!}
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-user"></i></div>
                                                 {!! Form::text('user_first_name', null, ["class"=> "form-control", "placeholder"=>"Prénom"] ) !!}
@@ -43,6 +46,7 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group">
+                                            {!! Form::label('user_last_name', 'Nom') !!}
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-user"></i></div>
                                                 {!! Form::text('user_last_name', null, ["class"=> "form-control", "placeholder"=>"Nom"] ) !!}
@@ -53,6 +57,7 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group">
+                                            {!! Form::label('activated', 'statut') !!}
                                             <div class="input-group">
                                                 {!! Form::select('activated', [""=>"statut","1" => "Actif", "0" => "Inactif"], (isset($user->activated) && $user->activated) ? $user->activated : "", ["class"=> "form-control"] ) !!}
 
@@ -65,32 +70,39 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group">
+                                            {!! Form::label('type', 'Choisir la fonction') !!}
                                             <div class="input-group">
                                                 {!! Form::select('type', Config::get('constants.User Type'), null, ["class"=> "form-control", "onchange"=>"showStoreName(this)"] ) !!}
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6">
-                                        <div class="form-group" id="companyName" style=display:{{(($user->type== Config::get('constants.Users.TDF Manager') || $user->type== Config::get('constants.Users.Driver')) || $user->type==NULL) && Input::old('company_id') == '' ? "none":""}}>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa fa-building"></i></div>
-                                                {!! Form::select('company_id', $companies, isset($user->store->company_id) ? $user->store->company_id : null, ["class"=> "form-control", 'onchange' =>'getStores(this)']) !!}
+                                    <div class="col-sm-12 userCompanyDetails">
+                                        <div class="col-sm-6">
+                                            <div class="form-group" id="companyName" style=display:{{(($user->type== Config::get('constants.Users.TDF Manager') || $user->type== Config::get('constants.Users.Driver')) || $user->type==NULL) && Input::old('company_id') == '' ? "none":""}}>
+                                                {!! Form::label('company_id', 'choisissez une entreprise') !!}
+                                                <div class="input-group">
+                                                    <div class="input-group-addon"><i class="fa fa-building"></i></div>
+                                                    {!! Form::select('company_id', $companies, isset($user->store->company_id) ? $user->store->company_id : null, ["class"=> "form-control", 'onchange' =>'getStores(this)']) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group" id="storeName" style=display:{{(($user->type== Config::get('constants.Users.TDF Manager') || $user->type== Config::get('constants.Users.Driver')) || $user->type==NULL)  && Input::old('company_id') == '' ? "none":""}}>
+                                                {!! Form::label('store_id', 'choisissez un magasin') !!}
+                                                <div class="input-group" id="CompanyStores">
+                                                    <div class="input-group-addon"><i class="fa fa-building"></i></div>
+                                                    {!! Form::select('store_id', is_null($user['id'])? [''=>'Sélectionnez un magasin']: $stores, isset($user->store_id) ? $user->store_id : null, ["class"=> "form-control", "id" =>"store_dropdown"] ) !!}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6">
-                                        <div class="form-group" id="storeName" style=display:{{(($user->type== Config::get('constants.Users.TDF Manager') || $user->type== Config::get('constants.Users.Driver')) || $user->type==NULL)  && Input::old('store_id') == '' ? "none":""}}>
-                                            <div class="input-group" id="CompanyStores">
-                                                <div class="input-group-addon"><i class="fa fa-building"></i></div>
-                                                {!! Form::select('store_id', $stores, null, ["class"=> "form-control", "id" =>"store_dropdown"] ) !!}
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <div class="col-sm-6">
                                         <div class="form-group">
+                                            {!! Form::label('phone_number', 'Téléphone') !!}
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-phone-square"></i></div>
                                                 {!! Form::text('phone_number', null, ["class"=> "form-control", "placeholder"=>"Téléphone"] ) !!}
@@ -101,6 +113,7 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group">
+                                            {!! Form::label('mobile_number', 'Mobile') !!}
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-mobile"></i></div>
                                                 {!! Form::text('mobile_number', null, ["class"=> "form-control", "placeholder"=>"Mobile"] ) !!}
@@ -112,6 +125,7 @@
                                     <div class="form-group driverFields" id="driverRecord" style=display:{{($user->type==Config::get('constants.Users.Driver')) ? "":"none"}}>
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                {!! Form::label('vehicle_name', 'Type de véhicule') !!}
                                                 <div class="input-group">
                                                     <div class="input-group-addon"><i class="fa fa-id-card fa-fw"></i></div>
                                                     {!! Form::text('vehicle_name', null, ['class' => 'form-control', 'placeholder' => 'Type de véhicule', 'autocomplete' => 'off']) !!}
@@ -122,6 +136,7 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                {!! Form::label('number_plate', 'Immatriculation') !!}
                                                 <div class="input-group">
                                                     <div class="input-group-addon"><i class="fa fa-id-card fa-fw"></i></div>
                                                     {!! Form::text('number_plate', null, ['class' => 'form-control', 'placeholder' => "Immatriculation", 'autocomplete' => 'off']) !!}
@@ -133,6 +148,7 @@
 
                                     <div class="col-sm-12">
                                         <div class="form-group">
+                                            {!! Form::label('email', 'Adresse mail') !!}
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></div>
                                                 {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Adresse mail', 'autocomplete' => 'off']) !!}
@@ -141,8 +157,22 @@
                                         </div>
                                     </div>
 
+                                    @if(!is_null($user['id'])|| Input::old('id'))
                                     <div class="col-sm-12">
                                         <div class="form-group">
+                                            {!! Form::label('old_password', 'Ancien mot de passe') !!}
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-lock fa-fw"></i></div>
+                                                {!! Form::password('old_password', ['class' => 'form-control','autocomplete' => 'off', "placeholder"=>"Ancien mot de passe"]) !!}
+                                            </div>
+                                            <span class="text-danger">{!! $errors->first('old_password') !!}</span>
+                                        </div>
+                                    </div>
+                                    @endif
+
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            {!! Form::label('password', 'Mot de passe') !!}
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-lock fa-fw"></i></div>
                                                 {!! Form::password('password', ['class' => 'form-control','autocomplete' => 'off', "placeholder"=>"Mot de passe"]) !!}
