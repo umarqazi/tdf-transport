@@ -84,7 +84,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-phone fa-fw"></i></div>
-                                {{Form::text('landline', null, ['class'=>'form-control', 'placeholder'=>'Téléphone fixe'])}}
+                                {{Form::text('landline', null, ['onkeyup'=>'return mobileNumber(this)','maxlength'=>'14','class'=>'form-control', 'placeholder'=>'Téléphone fixe'])}}
                             </div>
                             <span class="text-danger">{!! $errors->first('landline') !!}</span>
                         </div>

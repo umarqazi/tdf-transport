@@ -10,14 +10,14 @@
                     <th class="text-center vertical-middle">Magasin</th>
                     @endif
                     <th class="text-center vertical-middle">Client</th>
-                    <th class="text-center vertical-middle">Client email</th>
+                    <th class="text-center vertical-middle">Adresse e-mail</th>
                     <th class="text-center vertical-middle">Numéro de commande</th>
                     <th class="text-center vertical-middle">Numéro du bon de livraison</th>
                     <th class="text-center vertical-middle">Téléphone</th>
                     <th class="text-center vertical-middle">Adresse</th>
                     <th class="text-center vertical-middle">Ville</th>
                     <th class="text-center vertical-middle">Code Postal</th>
-                    <th class="text-center vertical-middle">Fonction de prestation</th>
+                    <th class="text-center vertical-middle">Type de prestation</th>
                     <th class="text-center vertical-middle">Produit commandé</th>
                     <th class="text-center vertical-middle">Prix de la livraison</th>
                     <th class="text-center vertical-middle">Satisfaction client</th>
