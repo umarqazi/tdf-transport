@@ -482,7 +482,7 @@ class DeliveryController extends Controller
     }
     public function sendCustomerSMS(Request $request){
         $date=Date::parse($request->date)->format('Y-m-d');
-        $customerDetail=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->leftJoin('time_slot', 'tour_plan.time_slot_id', '=', 'time_slot.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->where('datetime', $date)->where('tour_plan.user_id', $request->id)->select('deliveries.datetime','deliveries.mobile_number','tour_plan.user_id','stores.store_name','time_slot.time','stores.phone_number')->get();
+        $customerDetail=TourPlan::leftJoin('deliveries', 'tour_plan.delivery_id', '=', 'deliveries.id')->leftJoin('time_slot', 'tour_plan.time_slot_id', '=', 'time_slot.id')->leftJoin('stores', 'deliveries.store_id', '=', 'stores.id')->where('datetime', $date)->where('tour_plan.user_id', $request->id)->where('deliveries.send_sms', 0)->select('deliveries.send_sms','deliveries.id as deliveryId','deliveries.datetime','deliveries.mobile_number','tour_plan.user_id','stores.store_name','time_slot.time','stores.phone_number')->get();
         foreach($customerDetail as $customer){
             $message=
                 "Cher(e) client(e),
@@ -492,6 +492,7 @@ Merci,
 ".$customer['store_name']." / ".$customer['phone_number'];
             $user=$customer['mobile_number'];
             $sendSMS=Ovh::checkSms($user, $message);
+            $updateDelivery=Delivery::where('id', $customer['deliveryId'])->update(['send_sms'=>1]);
         }
         Toast::success(Config::get('constants.Send SMS'));
         return redirect::back();
