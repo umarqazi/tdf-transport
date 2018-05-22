@@ -15,7 +15,7 @@ class DashboardController extends Controller{
     {
         $id=$request->id;
         $modal="";
-        $getNonActiveDriver=array();
+        $getNonActiveDriver=[''=>'Sélectionner un chauffeur'];
         if($id){
             $getVehicleInfo=User::find($id);
             $modal="addVehicle";
