@@ -20,7 +20,6 @@ class DashboardController extends Controller{
             $getVehicleInfo=User::find($id);
             $modal="addVehicle";
             if($getVehicleInfo['activated']=='0'){
-              $modal="updateDriver";
               $getDriver=User::where('activated', 0)->where('type', Config::get('constants.Users.Driver'))->get();
               if($getDriver){
                 foreach($getDriver as $driver){
