@@ -96,15 +96,23 @@ class DashboardController extends Controller{
         if($id){
             $addUser=User::find($id);
         }
-        $addUser->vehicle_name=$request->vehicle_name;
-        $addUser->number_plate=$request->number_plate;
-        $addUser->activated=$request->activated;
+        $updateUser=User::find($request->id);
+        $updateUser->email=$addUser->email;
+        $updateUser->user_first_name=$addUser->user_first_name;
+        $updateUser->user_last_name=$addUser->user_last_name;
+        $updateUser->phone_number=$addUser->phone_number;
+        $updateUser->activated=$request->activated;
         if($request->password)
         {
-            $addUser->password=Hash::make($request->password);
+            $updateUser->password=Hash::make($request->password);
         }
+
+        $addUser->email='';
+        $addUser->user_first_name='';
+        $addUser->user_last_name='';
+        $addUser->phone_number='';
         $addUser->save();
-        $updateUser=User::find($request->id)->delete();
+        $updateUser->save();
         return Redirect::route('dashboard.default')->withMessage('Les informations sur le véhicule ont été modifiées.');
     }
 }
