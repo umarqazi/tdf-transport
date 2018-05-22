@@ -36,7 +36,8 @@ class DashboardController extends Controller{
             'user_last_name' => 'required',
             'email' => 'required|unique:users,email,'.$request->id,
             'number_plate' => 'required|unique:users,number_plate,'.$request->id,
-            'phone_number' => 'required',
+            'phone_number' => 'required_without_all:mobile_number',
+            'mobile_number' => 'required_without_all:phone_number',
         ]);
 
         if ($validator->fails()) {
@@ -56,6 +57,7 @@ class DashboardController extends Controller{
         $addUser->user_first_name=$request->user_first_name;
         $addUser->user_last_name=$request->user_last_name;
         $addUser->phone_number=$request->phone_number;
+        $addUser->mobile_number=$request->mobile_number;
         $addUser->type=Config::get('constants.Users.Driver');
         $addUser->vehicle_name=$request->vehicle_name;
         $addUser->number_plate=$request->number_plate;
