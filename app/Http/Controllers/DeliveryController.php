@@ -338,7 +338,7 @@ class DeliveryController extends Controller
         }
         $deliveries=$deliveries->get();
         $records = [];
-        $records[] = ['Date de la livraison', 'Client','Numéro de commande','Numéro du bon de livraison','Téléphone', 'Ville', 'Code Postal', 'Type de prestation', 'Produit commandé', 'Prix de la livraison', 'Statut', 'Satisfaction client', 'Informations sur la livraison (chauffeur)'];
+        $records[] = ['Date de la livraison', 'Client','Numéro de commande','Numéro du bon de livraison','Téléphone', 'Adresse' ,'Ville', 'Code Postal', 'Type de prestation', 'Produit commandé', 'Prix de la livraison', 'Statut', 'Satisfaction client', 'Informations sur la livraison (chauffeur)'];
         foreach($deliveries as $key=>$delivery){
             $items=array();
             if($delivery['delivery_price']=='Gratuit'){
@@ -359,7 +359,7 @@ class DeliveryController extends Controller
             }
             $name=$delivery['first_name'].' '.$delivery['last_name'];
             if($delivery['status']==1){ $status= "Validé";}elseif($delivery['status']==2){$status= "Livre"; }else{ $status="En attente"; };
-            $records[]=[date('d/m/Y', strtotime($delivery['datetime'])), $name,$delivery['order_id'],$delivery['delivery_number'],str_replace("+33","0",$delivery['mobile_number']),$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, (int)$delivery['client_satisfaction'], $driver_feedback];
+            $records[]=[date('d/m/Y', strtotime($delivery['datetime'])), $name,$delivery['order_id'],$delivery['delivery_number'],str_replace("+33","0",$delivery['mobile_number']),$delivery['address'],$delivery['city'],$delivery['postal_code'],$delivery['service'],$items,$price, $status, (int)$delivery['client_satisfaction'], $driver_feedback];
         }
         Excel::create('Historique des livraisons', function($excel) use ($records) {
             $excel->setTitle('Historique des livraisons');
