@@ -15,9 +15,21 @@ class DashboardController extends Controller{
     {
         $id=$request->id;
         $modal="";
+        $getNonActiveDriver=array();
         if($id){
             $getVehicleInfo=User::find($id);
             $modal="addVehicle";
+            if($getVehicleInfo['activated']=='0'){
+              $modal="updateDriver";
+              $getDriver=User::where('activated', 0)->where('type', Config::get('constants.Users.Driver'))->get();
+              if($getDriver){
+                foreach($getDriver as $driver){
+                  if($driver['id']!=$getVehicleInfo['id']){
+                    $getNonActiveDriver[$driver['id']]=$driver['user_first_name'].' '.$driver['user_last_name'];
+                  }
+                }
+              }
+            }
         }
         else{
             $getVehicleInfo=new User;
@@ -26,7 +38,7 @@ class DashboardController extends Controller{
             $modal=$request->get('modal');
         }
         $driverList=User::where('type', Config::get('constants.Users.Driver'))->orderBy('id', 'desc')->get();
-        return View::make('admin.dashboard.default')->with(['drivers'=>$driverList,'modal'=>$modal,'vehicle'=>$getVehicleInfo]);
+        return View::make('admin.dashboard.default')->with(['nonActive'=>$getNonActiveDriver,'drivers'=>$driverList,'modal'=>$modal,'vehicle'=>$getVehicleInfo]);
     }
     public function pEditVehicle(Request $request)
     {
@@ -77,5 +89,22 @@ class DashboardController extends Controller{
         }
         $columns = ["id", "type", "user_first_name", "user_last_name", "vehicle_name"];
         return Datatables::of($driverArray)->rawColumns(['type'])->make(true);
+    }
+    public function pEditDriver(Request $request)
+    {
+        $id=$request->driver;
+        if($id){
+            $addUser=User::find($id);
+        }
+        $addUser->vehicle_name=$request->vehicle_name;
+        $addUser->number_plate=$request->number_plate;
+        $addUser->activated=$request->activated;
+        if($request->password)
+        {
+            $addUser->password=Hash::make($request->password);
+        }
+        $addUser->save();
+        $updateUser=User::find($request->id)->delete();
+        return Redirect::route('dashboard.default')->withMessage('Les informations sur le véhicule ont été modifiées.');
     }
 }
