@@ -141,16 +141,6 @@ class UserController extends Controller {
                 return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors("Il y a déjà un ".$type." dans ce magasin.");
             }
         }
-
-        if ($id && !empty($request->password))
-        {
-            $userProfile = User::find($id);
-            $oldPassword = $request->old_password;
-            if (!Hash::check($oldPassword, $userProfile->password)){
-                return Redirect::route("users.list", ['modal'=>'addUser'])->withInput()->withErrors("Votre ancien mot de passe est incorrect");
-            }
-        }
-
         DbHelper::startTransaction();
         try
         {
