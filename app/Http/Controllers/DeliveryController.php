@@ -130,7 +130,6 @@ class DeliveryController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
         if($deliveryId) {
             $delivery=Delivery::find($deliveryId);
             $message=Config::get('constants.Edit Delivery');
@@ -200,7 +199,7 @@ class DeliveryController extends Controller
         $delivery->first_name=$request->first_name;
         $delivery->last_name=$request->last_name;
         $delivery->customer_email=$request->customer_email;
-        $delivery->landline=$request->landline;
+        $delivery->landline=str_replace(' ', '',$request->landline);
         $delivery->mobile_number=$request->mobile_number;
         $delivery->order_id=$request->order_id;
         $delivery->delivery_number=$request->delivery_number;
