@@ -103,8 +103,8 @@
                                             <th class="text-center">Client</th>
                                             <th class="text-center">Numero de commande</th>
                                             <th class="text-center">Numero du bon de livraison</th>
-                                            <th class="text-center">Phone</th>
-                                            <th class="text-center">Telephone</th>
+                                            <th class="text-center">Téléphone fixe</th>
+                                            <th class="text-center">Téléphone mobile</th>
                                             <th class="text-center">Adresse</th>
                                             <th class="text-center">Villes</th>
                                             <th class="text-center">Code Postal</th>
