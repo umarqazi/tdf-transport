@@ -46,6 +46,8 @@ Admin area: dashboard
                                     <th>Immatriculation</th>
                                     <th>Chauffeur</th>
                                     <th>Email</th>
+                                    <th>Téléphone fixe</th>
+                                    <th>Téléphone mobile</th>
                                     <th>Statut</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
@@ -57,6 +59,8 @@ Admin area: dashboard
                                     <td>{{$driver['number_plate']}}</td>
                                     <td>{{$driver['user_first_name']}} {{$driver['user_last_name']}}</td>
                                     <td>{{$driver['email']}}</td>
+                                    <td>{{$driver['phone_number']}}</td>
+                                    <td>{{$driver['mobile_number']}}</td>
                                     <td align="center">@if($driver['activated']==1) <i class="fa fa-circle green-color2"></i> @else <i class="fa fa-circle red-color2"></i> @endif</td>
                                     <td class="text-center actions">
                                         <a href="{{route('dashboard.default', ['id'=>$driver->id])}}" class="edit"><i class="fa fa-edit fa-fw"></i></a>
