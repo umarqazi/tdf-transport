@@ -263,6 +263,10 @@ Route::group(['middleware' => ['web']], function ()
             'as'   => 'vehicle.edit',
             'uses' => 'LaravelAcl\Http\Controllers\DashboardController@pEditVehicle'
         ]);
+        Route::post('/admin/driver/edit', [
+            'as'   => 'driver.edit',
+            'uses' => 'LaravelAcl\Http\Controllers\DashboardController@pEditDriver'
+        ]);
 
 
         /****TDF Routes***/
