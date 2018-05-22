@@ -6,6 +6,7 @@ Admin area: dashboard
 
 @section('content')
 @include('admin.popups.add-vehicle-popup')
+@include('admin.popups.updateDriver')
 <div id="page-wrapper">
     <div class="row">
         {{-- successful message --}}
