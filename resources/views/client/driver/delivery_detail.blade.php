@@ -19,9 +19,9 @@
           <li>&nbsp;</li>
           <li>{{$detail['postal_code']}} {{$detail['city']}}</li>
           <li>&nbsp;</li>
-          @if($detail['landline'])<li><i class="fa fa-phone fa-fw"></i><a href="tel:{{$detail['mobile_number']}}">{{$detail['landline']}}</a></li>@endif
+          @if($detail['landline'])<li><i class="fa fa-phone fa-fw"></i><a href="tel:{{$detail['mobile_number']}}">{{chunk_split($detail['landline'], 2, ' ')}}</a></li>@endif
           <li>&nbsp;</li>
-          @if($detail['mobile_number'])<li><i class="fa fa-mobile fa-fw"></i><a href="tel:{{$detail['mobile_number']}}">{{str_replace('+33', '0',$detail['mobile_number'])}}</a></li>@endif
+          @if($detail['mobile_number'])<li><i class="fa fa-mobile fa-fw"></i><a href="tel:{{$detail['mobile_number']}}">{{chunk_split(str_replace('+33', '0',$detail['mobile_number']), 2, ' ')}}</a></li>@endif
         </ul>
       </div>
       <div class="user-row deliveryDetailHeader">
