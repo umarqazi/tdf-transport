@@ -93,14 +93,6 @@
                                     {!! Form::hidden('id') !!}
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::label('mobile_number', 'Mobile') !!}
-                                    <div class="input-group">
-                                        <div class="input-group-addon"><i class="fa fa-mobile"></i></div>
-                                        {!! Form::text('mobile_number', null, ["class"=> "form-control", "placeholder"=>"Mobile"] ) !!}
-                                    </div>
-                                    <span class="text-danger">{!! $errors->first('mobile_number') !!}</span>
-                                </div>
-                                <div class="form-group">
                                     {!! Form::label('activated', 'statut') !!}
                                     <div class="input-group">
                                         {!! Form::select('activated', [""=>"statut","1" => "Actif", "0" => "Inactif"], (isset($vehicle->activated) && $vehicle->activated) ? $vehicle->activated : "", ["class"=> "form-control"] ) !!}
