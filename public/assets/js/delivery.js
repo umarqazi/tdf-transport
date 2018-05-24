@@ -242,5 +242,7 @@ function mobileNumber(number){
 }
 function editDelivery(id){
   $("#delivery_id").val(id);
+  var time_slot=$("input[name=filter_time_slot]").val();
+  $("#time_slot").val(time_slot);
   $('#editDelivery').modal('show');
 }

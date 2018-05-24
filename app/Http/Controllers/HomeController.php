@@ -152,6 +152,7 @@ class HomeController extends Controller
 			}
 			if(session('modal')){
 				$addmodal=session('modal');
+				$request['filter_time_slot']=session('time_slot');
 			}
 			$getDeliveries      = $getDeliveries->get();
 			$tours=self::manageTours($user_id, $nextDay);

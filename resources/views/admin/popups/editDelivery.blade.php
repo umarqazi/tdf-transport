@@ -50,6 +50,7 @@
                   <i class="fa fa-plus"></i>
                 </button>
                 {{Form::hidden('id',null, ['id'=>'delivery_id'])}}
+                {{Form::hidden('time_slot',null, ['id'=>'time_slot'])}}
                 <a data-dismiss="modal" aria-label="Close" class="modal-close btn btn-danger">Annuler <i class="fa fa-undo"></i></a>
               </div>
             </div>
