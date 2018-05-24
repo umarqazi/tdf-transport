@@ -103,14 +103,16 @@
                                             <th class="text-center">Client</th>
                                             <th class="text-center">Numero de commande</th>
                                             <th class="text-center">Numero du bon de livraison</th>
-                                            <th class="text-center">Telephone</th>
+                                            <th class="text-center">Téléphone fixe</th>
+                                            <th class="text-center">Téléphone mobile</th>
                                             <th class="text-center">Adresse</th>
                                             <th class="text-center">Villes</th>
                                             <th class="text-center">Code Postal</th>
-                                            <th class="text-center">Fonction de Prestation</th>
+                                            <th class="text-center">Type de prestation</th>
                                             <th class="text-center">Produit(s) commande(s)</th>
                                             <th class="text-center">Prix de la livraison</th>
                                             <th class="text-center">Sélection de la livraison</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -136,7 +138,8 @@
                                                     <td>{{$delivery['first_name']}} {{$delivery['last_name']}}</td>
                                                     <td>@if($delivery['order_pdf'])<a href="{{asset('assets/images')}}/{{$delivery['stores_id']}}/{{$delivery['order_pdf']}}" target="_blank"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['order_id']}}</td>
                                                     <td>@if($delivery['delivery_pdf'])<a href="{{asset('assets/images')}}/{{$delivery['stores_id']}}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink"><i class="fa fa-2x fa-file-pdf-o pdf-font"></i></a>@endif {{$delivery['delivery_number']}}</td>
-                                                    <td>{{$delivery['mobile_number']}}</td>
+                                                    <td>{{chunk_split($delivery['landline'], 2, ' ')}}</td>
+                                                    <td>{{chunk_split(str_replace("+33","0",$delivery['mobile_number']), 2, ' ')}}</td>
                                                     <td>{{$delivery['address']}}</td>
                                                     <td>{{$delivery['city']}}</td>
                                                     <td>{{$delivery['postal_code']}}</td>
@@ -146,6 +149,7 @@
                                                     <td>
                                                         <div class="checkboxDiv"><input type="checkbox" name="delivery_id[]" value="{{$delivery['id']}}"></div>
                                                     </td>
+                                                    <td><a class="btn btn-primary" onclick="editDelivery({{$delivery['id']}})"><i class="fa fa-edit"></i></a></td>
                                                 </tr>
                                             @endforeach
                                         @else

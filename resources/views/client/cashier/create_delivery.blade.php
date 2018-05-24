@@ -131,10 +131,11 @@
                             <span class="text-danger" id="showOrderErrorPdf">{!! $errors->first('order_pdf') !!}</span>
                         </div>
                         <div class="form-group">
-                            <input type="hidden" name="orderDummy" class="form-control" id="OrderdummyFile" placeholder="Numero du bon de livraison">
-                            <table @if(!$delivery['order_pdf']) style="display: none" @endif id="OrderShowPdftable">
+                            <input type="hidden" value="{{Input::old('orderDummy')}}" name="orderDummy" class="form-control" id="OrderdummyFile" placeholder="Numero du bon de livraison">
+                            <table @if(!$delivery['order_pdf']) style="display: {{(Input::old('orderDummy')!=NULL)? '': 'none'}}" @endif id="OrderShowPdftable">
                                 <tr>
-                                    <td><a href="{{asset('assets/images')}}/{{ $delivery['stores_id'] }}/{{$delivery['order_pdf']}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a></td>
+                                    <?php if(empty(Input::old('orderDummy'))) {$variable=$delivery['stores_id']."/".$delivery['order_pdf']; }else{$variable="dummyImages/".Input::old('orderDummy');}?>
+                                    <td><a href="{{asset('assets/images')}}/{{$variable}}" target="_blank" id="OrderAddPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a></td>
                                     <td>&nbsp;</td>
                                     <td><a onclick="cancelpdf('order')" class="cancelpdf"><i class="fa fa-close"></i></a></td>
                                 </tr>
@@ -171,10 +172,11 @@
                             <span class="text-danger" id="showErrorPdf">{!! $errors->first('pdf') !!}</span>
                         </div>
                         <div class="form-group">
-                            <input type="hidden" name="dummy" class="form-control" id="dummyFile" placeholder="Numero du bon de livraison">
-                            <table @if(!$delivery['delivery_pdf']) style="display: none" @endif id="showPdftable">
+                            <input type="hidden" name="dummy" value="{{Input::old('dummy')}}" class="form-control" id="dummyFile" placeholder="Numero du bon de livraison">
+                            <table @if(!$delivery['delivery_pdf']) style="display: {{(Input::old('dummy')!=NULL)? '': 'none'}}" @endif id="showPdftable">
                                 <tr>
-                                    <td><a href="{{asset('assets/images')}}/{{ $delivery['stores_id']  }}/{{$delivery['delivery_pdf']}}" target="_blank" id="addPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a></td>
+                                  <?php if(empty(Input::old('dummy'))) {$variable2=$delivery['stores_id']."/".$delivery['delivery_pdf']; }else{$variable2="dummyImages/".Input::old('dummy');}?>
+                                  <td><a href="{{asset('assets/images')}}/{{$variable2}}" target="_blank" id="addPdfLink"><i class="fa fa-2x fa-file-pdf-o"></i></a></td>
                                     <td>&nbsp;</td>
                                     <td><a onclick="cancelpdf('delivery')" class="cancelpdf"><i class="fa fa-close"></i></a></td>
                                 </tr>

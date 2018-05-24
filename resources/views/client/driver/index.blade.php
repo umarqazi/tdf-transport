@@ -32,7 +32,7 @@ TDF Driver
                     <li><i class="fa fa-user fa-fw"></i> {{$tour['delivery']['first_name']}} {{$tour['delivery']['last_name']}}</li>
                     <li class="delivery-detail-address"> {{$tour['delivery']['address']}}</li>
                     <li class="delivery-detail-address"> {{$tour['delivery']['city']}} - {{$tour['delivery']['postal_code']}}</li>
-                    <li><i class="fa fa-phone fa-fw"></i> {{$tour['delivery']['mobile_number']}}</li>
+                    <li><i class="fa fa-phone fa-fw"></i> {{chunk_split(str_replace("+33","0",$tour['delivery']['mobile_number']), 2, ' ')}}</li>
                     <li><i class="fa fa-cubes fa-fw"></i> {{$tour['delivery']['order_id']}}</li>
                   </ul>
                 </a>

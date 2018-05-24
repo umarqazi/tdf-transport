@@ -6,6 +6,7 @@
 
 @section('content')
     @include('admin.popups.assign_deliveries')
+    @include('admin.popups.editDelivery')
     <style>
         .bs-placeholder{
             display: none;

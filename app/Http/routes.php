@@ -109,11 +109,6 @@ Route::group(['middleware' => ['web']], function ()
             "as"   => "create.delivery.period",
             "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@index'
         ]);
-
-        Route::post('/uploadPdf', [
-            "as"   => "upload.pdf",
-            "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@uploadPdf'
-        ]);
         Route::post('/delivery/uploadPdf', [
             "as"   => "delivery.upload.pdf",
             "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@uploadPdf'
@@ -136,7 +131,10 @@ Route::group(['middleware' => ['web']], function ()
             "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@history'
         ]);
     });
-
+    Route::post('/uploadPdf', [
+        "as"   => "upload.pdf",
+        "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@uploadPdf'
+    ]);
     Route::get('/delivery/{id}', [
         "as"   => "edit.delivery",
         "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@index'
@@ -144,6 +142,10 @@ Route::group(['middleware' => ['web']], function ()
     Route::post('/delivery', [
         "as"   => "delivery.edit",
         "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@create'
+    ]);
+    Route::post('/deliveryNote', [
+        "as"   => "delivery.note.edit",
+        "uses" => 'LaravelAcl\Http\Controllers\DeliveryController@editDelivery'
     ]);
     Route::get('/search/{from}/{to}', [
         "as"   => "delivery.search",
@@ -262,6 +264,10 @@ Route::group(['middleware' => ['web']], function ()
         Route::post('/admin/vehicle/edit', [
             'as'   => 'vehicle.edit',
             'uses' => 'LaravelAcl\Http\Controllers\DashboardController@pEditVehicle'
+        ]);
+        Route::post('/admin/driver/edit', [
+            'as'   => 'driver.edit',
+            'uses' => 'LaravelAcl\Http\Controllers\DashboardController@pEditDriver'
         ]);
 
 

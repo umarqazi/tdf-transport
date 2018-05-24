@@ -230,8 +230,19 @@ $(document).ready(function() {
 
         window.location.href = '/search/'+from+'/'+to;
     });
+    $('#file-upload').change(function() {
+        var i = $(this).prev('label').clone();
+        var file = $('#file-upload')[0].files[0].name;
+        $('#fileName').text(file);
+    });
 })
 function mobileNumber(number){
   var mobile=number.value;
    number.value =  number.value.replace(/[^\dA-Z]/g, '').replace(/(.{2})/g, '$1 ').trim();
+}
+function editDelivery(id){
+  $("#delivery_id").val(id);
+  var time_slot=$("input[name=filter_time_slot]").val();
+  $("#time_slot").val(time_slot);
+  $('#editDelivery').modal('show');
 }

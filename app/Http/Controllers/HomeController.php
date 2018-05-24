@@ -93,7 +93,7 @@ class HomeController extends Controller
 		$drivers=[''=>'Choisir un vehicule'];
 		$user_id=$request->id;
 		$tour_plan=$request->tourPlan;
-		$getDrivers=User::where('type', Config::get('constants.Users.Driver'))->get();
+		$getDrivers=User::where('type', Config::get('constants.Users.Driver'))->where('activated', 1)->get();
 		foreach($getDrivers as $driver){
 			$drivers[$driver['id']]=$driver['vehicle_name'].', '.$driver['number_plate'];
 		}
@@ -149,6 +149,10 @@ class HomeController extends Controller
 					$getDeliveries = $getDeliveries->whereIn('deliveries.product_id', $request->filterProducts);
 				}
 				$addmodal="deliveries";
+			}
+			if(session('modal')){
+				$addmodal=session('modal');
+				$request['filter_time_slot']=session('time_slot');
 			}
 			$getDeliveries      = $getDeliveries->get();
 			$tours=self::manageTours($user_id, $nextDay);
