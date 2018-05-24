@@ -131,11 +131,11 @@ class DeliveryController extends Controller
           $name2='';
           if($request->file('order_pdf')){
             $type=date('Y-m-d h:i:s');
-            $name=self::storeImage($request->file('order_pdf'), 'dummyImages', $type+1);
+            $name=self::storeImage($request->file('order_pdf'), 'dummyImages', $type);
           }
           if($request->file('pdf')){
             $type2=date('Y-m-d h:i:s');
-            $name2=self::storeImage($request->file('pdf'), 'dummyImages', $type2+2);
+            $name2=self::storeImage($request->file('pdf'), 'dummyImages', $type2);
 
           }
           Input::replace(['orderDummy' => $name, 'dummy' => $name2]);
