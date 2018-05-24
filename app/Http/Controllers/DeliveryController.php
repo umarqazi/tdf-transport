@@ -132,13 +132,14 @@ class DeliveryController extends Controller
           if($request->file('order_pdf')){
             $type=date('Y-m-d h:i:s');
             $name=self::storeImage($request->file('order_pdf'), 'dummyImages', $type);
+            Input::merge(['orderDummy' => $name]);
           }
           if($request->file('pdf')){
             $type2=date('Y-m-d h:i:s');
             $name2=self::storeImage($request->file('pdf'), 'dummyImages', $type2);
-
+            Input::merge(['dummy' => $name2]);
           }
-          Input::merge(['orderDummy' => $name, 'dummy' => $name2]);
+
             return redirect::back()
                 ->withErrors($validator)
                 ->withInput();
