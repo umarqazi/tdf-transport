@@ -150,6 +150,9 @@ class HomeController extends Controller
 				}
 				$addmodal="deliveries";
 			}
+			if(session('modal')){
+				$addmodal=session('modal');
+			}
 			$getDeliveries      = $getDeliveries->get();
 			$tours=self::manageTours($user_id, $nextDay);
 		}

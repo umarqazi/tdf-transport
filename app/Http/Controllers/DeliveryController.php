@@ -522,6 +522,6 @@ Merci,
       $getDelivery->delivery_number=$request->delivery_note;
       $getDelivery->save();
       Toast::success(Config::get('constants.Edit Delivery'));
-      return redirect::back();
+      return redirect::back()->with('modal', 'deliveries');
     }
 }
