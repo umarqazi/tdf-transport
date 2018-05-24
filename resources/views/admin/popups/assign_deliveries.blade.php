@@ -112,6 +112,7 @@
                                             <th class="text-center">Produit(s) commande(s)</th>
                                             <th class="text-center">Prix de la livraison</th>
                                             <th class="text-center">Sélection de la livraison</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -148,6 +149,7 @@
                                                     <td>
                                                         <div class="checkboxDiv"><input type="checkbox" name="delivery_id[]" value="{{$delivery['id']}}"></div>
                                                     </td>
+                                                    <td><a class="btn btn-primary" onclick="editDelivery({{$delivery['id']}})"><i class="fa fa-edit"></i></a></td>
                                                 </tr>
                                             @endforeach
                                         @else

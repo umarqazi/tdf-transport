@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\App;
 use LaravelAcl\Notifications\DeliveryNotification;
 use Jenssegers\Date\Date;
 use LaravelAcl\Ovh;
+use Input;
 class DeliveryController extends Controller
 {
     public $authUser;
@@ -112,7 +113,7 @@ class DeliveryController extends Controller
             'service'           => 'required',
             'address'           => 'required',
             'pdf'               => 'mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
-            'order_pdf'         => 'required_without:id|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
+            'order_pdf'         => 'required_without_all:id,orderDummy|mimes:pdf,jpeg,jpg,png,doc,docx,zip'.$request->id,
             'delivery_price'    =>'required',
             'customer_email'    =>'required|email'
         ]);
@@ -126,6 +127,18 @@ class DeliveryController extends Controller
             }
         }
         if ($validator->fails()) {
+          $name='';
+          $name2='';
+          if($request->file('order_pdf')){
+            $type=date('Y-m-d h:i:s');
+            $name=self::storeImage($request->file('order_pdf'), 'dummyImages', $type+1);
+          }
+          if($request->file('pdf')){
+            $type2=date('Y-m-d h:i:s');
+            $name2=self::storeImage($request->file('pdf'), 'dummyImages', $type2+2);
+
+          }
+          Input::replace(['orderDummy' => $name, 'dummy' => $name2]);
             return redirect::back()
                 ->withErrors($validator)
                 ->withInput();
@@ -496,5 +509,18 @@ Merci,
         }
         Toast::success(Config::get('constants.Send SMS'));
         return redirect::back();
+    }
+    public function editDelivery(Request $request){
+      $getDelivery=Delivery::find($request->id);
+      if($request->file('pdf')){
+        $pdf=$request->file('pdf');
+        $type="DeliveryNote".$request->id;
+        $name=self::storeImage($pdf, $getDelivery->store_id, $type);
+        $getDelivery->delivery_pdf=$name;
+      }
+      $getDelivery->delivery_number=$request->delivery_note;
+      $getDelivery->save();
+      Toast::success(Config::get('constants.Edit Delivery'));
+      return redirect::back();
     }
 }
