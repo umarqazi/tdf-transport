@@ -138,7 +138,7 @@ class DeliveryController extends Controller
             $name2=self::storeImage($request->file('pdf'), 'dummyImages', $type2);
 
           }
-          Input::replace(['orderDummy' => $name, 'dummy' => $name2]);
+          Input::merge(['orderDummy' => $name, 'dummy' => $name2]);
             return redirect::back()
                 ->withErrors($validator)
                 ->withInput();
